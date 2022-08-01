@@ -37,5 +37,13 @@
             box.Show();
             Close();
         }
+
+        private void NumberSason(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar))
+                e.Handled = true;
+            else
+                e.Handled = false;
+        }
     }
 }

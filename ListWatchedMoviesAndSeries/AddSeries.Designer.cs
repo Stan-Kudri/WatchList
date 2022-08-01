@@ -50,6 +50,7 @@
             this.txtAddNumberSeason.Name = "txtAddNumberSeason";
             this.txtAddNumberSeason.Size = new System.Drawing.Size(125, 23);
             this.txtAddNumberSeason.TabIndex = 3;
+            this.txtAddNumberSeason.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumberSason);
             // 
             // labelNameSeries
             // 
@@ -107,7 +108,7 @@
             this.btnBackFormSeries.UseVisualStyleBackColor = false;
             this.btnBackFormSeries.Click += new System.EventHandler(this.btnBackFormSeries_Click);
             // 
-            // addSeries
+            // TVSeries
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -122,7 +123,7 @@
             this.Controls.Add(this.txtAddSeries);
             this.MaximumSize = new System.Drawing.Size(435, 190);
             this.MinimumSize = new System.Drawing.Size(435, 190);
-            this.Name = "addSeries";
+            this.Name = "TVSeries";
             this.Text = "Series";
             this.ResumeLayout(false);
             this.PerformLayout();
