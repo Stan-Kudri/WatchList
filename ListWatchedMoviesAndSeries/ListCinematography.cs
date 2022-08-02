@@ -1,6 +1,6 @@
 namespace ListWatchedMoviesAndSeries
 {
-    public partial class BoxCinema : Form
+    public partial class BoxCinemaForm : Form
     {
         public void SetNameCinema(string value)
         {
@@ -26,7 +26,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        public BoxCinema()
+        public BoxCinemaForm()
         {
             InitializeComponent();
         }
@@ -34,16 +34,18 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnFormMovie_Click(object sender, EventArgs e)
         {
-            Visible = false;
-            Movie moveAddForm = new Movie(this);
-            moveAddForm.Show();
+            using (var form = new MovieForm(this))
+            {
+                form.ShowDialog();
+            }
         }
 
         private void btnFormSeries_Click(object sender, EventArgs e)
         {
-            Visible = false;
-            TVSeries moveAddForm = new TVSeries(this);
-            moveAddForm.Show();
+            using (var form = new TVSeriesForm(this))
+            {
+                form.ShowDialog();
+            }
         }
 
         private void btnDeliteMovie_Click(object sender, EventArgs e)

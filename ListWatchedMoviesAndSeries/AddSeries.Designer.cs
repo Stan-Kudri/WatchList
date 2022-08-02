@@ -1,6 +1,6 @@
 ﻿namespace ListWatchedMoviesAndSeries
 {
-    partial class TVSeries
+    partial class TVSeriesForm
     {
         /// <summary>
         /// Required designer variable.

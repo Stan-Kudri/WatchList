@@ -1,6 +1,6 @@
 ﻿namespace ListWatchedMoviesAndSeries
 {
-    partial class BoxCinema
+    partial class BoxCinemaForm
     {
         /// <summary>
         ///  Required designer variable.

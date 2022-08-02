@@ -1,10 +1,10 @@
 ﻿namespace ListWatchedMoviesAndSeries
 {
-    public partial class TVSeries : Form
+    public partial class TVSeriesForm : Form
     {
-        private BoxCinema box;
+        private BoxCinemaForm box;
 
-        public TVSeries(BoxCinema formBoxCinema)
+        public TVSeriesForm(BoxCinemaForm formBoxCinema)
         {
             box = formBoxCinema;
             InitializeComponent();
@@ -15,7 +15,7 @@
             if (txtAddSeries.Text.Length <= 0)
                 MessageBox.Show("Enter series name");
 
-            if (txtAddNumberSeason.Text.Length <= 0)
+            else if (txtAddNumberSeason.Text.Length <= 0)
                 MessageBox.Show("Enter namber season");
 
             else
@@ -34,7 +34,6 @@
 
         private void btnBackFormSeries_Click(object sender, EventArgs e)
         {
-            box.Show();
             Close();
         }
 

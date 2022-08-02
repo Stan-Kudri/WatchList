@@ -1,10 +1,10 @@
 ﻿namespace ListWatchedMoviesAndSeries
 {
-    public partial class Movie : Form
+    public partial class MovieForm : Form
     {
-        private BoxCinema box;
+        private BoxCinemaForm box;
 
-        public Movie(BoxCinema formBoxCinema)
+        public MovieForm(BoxCinemaForm formBoxCinema)
         {
             box = formBoxCinema;
             InitializeComponent();
@@ -30,7 +30,6 @@
 
         private void btnBackFormMovie_Click(object sender, EventArgs e)
         {
-            box.Show();
             Close();
         }
     }
