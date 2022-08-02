@@ -1,6 +1,6 @@
 ﻿namespace ListWatchedMoviesAndSeries
 {
-    partial class BoxCinema
+    partial class BoxCinemaForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -32,13 +32,13 @@
             this.btnDeliteMovie = new System.Windows.Forms.Button();
             this.listAllBoxName = new System.Windows.Forms.ListBox();
             this.btnFormSeries = new System.Windows.Forms.Button();
-            this.listBoxName = new System.Windows.Forms.TabControl();
+            this.BoxName = new System.Windows.Forms.TabControl();
             this.tabMovePage = new System.Windows.Forms.TabPage();
             this.listCinemaBoxName = new System.Windows.Forms.ListBox();
             this.tabSeriesPage = new System.Windows.Forms.TabPage();
             this.listSeriesBoxName = new System.Windows.Forms.ListBox();
             this.tabAllCinemaPage = new System.Windows.Forms.TabPage();
-            this.listBoxName.SuspendLayout();
+            this.BoxName.SuspendLayout();
             this.tabMovePage.SuspendLayout();
             this.tabSeriesPage.SuspendLayout();
             this.tabAllCinemaPage.SuspendLayout();
@@ -66,6 +66,7 @@
             this.btnDeliteMovie.TabIndex = 2;
             this.btnDeliteMovie.Text = "Delite Cinema";
             this.btnDeliteMovie.UseVisualStyleBackColor = false;
+            this.btnDeliteMovie.Click += new System.EventHandler(this.btnDeliteMovie_Click);
             // 
             // listAllBoxName
             // 
@@ -87,18 +88,18 @@
             this.btnFormSeries.UseVisualStyleBackColor = false;
             this.btnFormSeries.Click += new System.EventHandler(this.btnFormSeries_Click);
             // 
-            // listBoxName
+            // BoxName
             // 
-            this.listBoxName.Controls.Add(this.tabMovePage);
-            this.listBoxName.Controls.Add(this.tabSeriesPage);
-            this.listBoxName.Controls.Add(this.tabAllCinemaPage);
-            this.listBoxName.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.listBoxName.ItemSize = new System.Drawing.Size(50, 20);
-            this.listBoxName.Location = new System.Drawing.Point(10, 10);
-            this.listBoxName.Name = "listBoxName";
-            this.listBoxName.SelectedIndex = 0;
-            this.listBoxName.Size = new System.Drawing.Size(340, 300);
-            this.listBoxName.TabIndex = 10;
+            this.BoxName.Controls.Add(this.tabMovePage);
+            this.BoxName.Controls.Add(this.tabSeriesPage);
+            this.BoxName.Controls.Add(this.tabAllCinemaPage);
+            this.BoxName.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.BoxName.ItemSize = new System.Drawing.Size(50, 20);
+            this.BoxName.Location = new System.Drawing.Point(10, 12);
+            this.BoxName.Name = "BoxName";
+            this.BoxName.SelectedIndex = 0;
+            this.BoxName.Size = new System.Drawing.Size(340, 300);
+            this.BoxName.TabIndex = 10;
             // 
             // tabMovePage
             // 
@@ -154,7 +155,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(359, 381);
-            this.Controls.Add(this.listBoxName);
+            this.Controls.Add(this.BoxName);
             this.Controls.Add(this.btnFormSeries);
             this.Controls.Add(this.btnDeliteMovie);
             this.Controls.Add(this.btnFormMovie);
@@ -163,7 +164,7 @@
             this.MinimumSize = new System.Drawing.Size(375, 420);
             this.Name = "BoxCinema";
             this.Text = "BoxCinema";
-            this.listBoxName.ResumeLayout(false);
+            this.BoxName.ResumeLayout(false);
             this.tabMovePage.ResumeLayout(false);
             this.tabSeriesPage.ResumeLayout(false);
             this.tabAllCinemaPage.ResumeLayout(false);
@@ -177,7 +178,7 @@
         private Button btnDeliteMovie;
         public ListBox listAllBoxName;
         private Button btnFormSeries;
-        private TabControl listBoxName;
+        private TabControl BoxName;
         private TabPage tabMovePage;
         private TabPage tabSeriesPage;
         public ListBox listCinemaBoxName;
