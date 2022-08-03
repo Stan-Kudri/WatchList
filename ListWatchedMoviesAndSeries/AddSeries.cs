@@ -15,34 +15,26 @@
             if (txtAddSeries.Text.Length <= 0)
                 MessageBox.Show("Enter series name");
 
-            else if (txtAddNumberSeason.Text.Length <= 0)
+            else if (numericSeason.Value == 0)
                 MessageBox.Show("Enter namber season");
 
             else
             {
-                box.SetNameSeries($"{txtAddSeries.Text} - {txtAddNumberSeason.Text} Season");
+                box.SetNameSeries($"{txtAddSeries.Text} - {numericSeason.Text} Season");
                 txtAddSeries.Text = string.Empty;
-                txtAddNumberSeason.Text = string.Empty;
+                numericSeason.Value = 0;
             }
         }
 
         private void btnClearTxtSeries_Click(object sender, EventArgs e)
         {
-            txtAddNumberSeason.Text = string.Empty;
+            numericSeason.Value = 0;
             txtAddSeries.Text = string.Empty;
         }
 
         private void btnBackFormSeries_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void NumberSason(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar))
-                e.Handled = true;
-            else
-                e.Handled = false;
         }
     }
 }

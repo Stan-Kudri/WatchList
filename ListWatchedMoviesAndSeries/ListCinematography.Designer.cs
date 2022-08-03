@@ -46,11 +46,12 @@
             // 
             // btnFormMovie
             // 
-            this.btnFormMovie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnFormMovie.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnFormMovie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFormMovie.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnFormMovie.Location = new System.Drawing.Point(10, 320);
             this.btnFormMovie.Name = "btnFormMovie";
-            this.btnFormMovie.Size = new System.Drawing.Size(100, 50);
+            this.btnFormMovie.Size = new System.Drawing.Size(80, 30);
             this.btnFormMovie.TabIndex = 1;
             this.btnFormMovie.Text = "Add Movie";
             this.btnFormMovie.UseVisualStyleBackColor = false;
@@ -58,11 +59,12 @@
             // 
             // btnDeliteMovie
             // 
-            this.btnDeliteMovie.BackColor = System.Drawing.Color.IndianRed;
+            this.btnDeliteMovie.BackColor = System.Drawing.Color.LightCoral;
+            this.btnDeliteMovie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeliteMovie.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDeliteMovie.Location = new System.Drawing.Point(250, 320);
+            this.btnDeliteMovie.Location = new System.Drawing.Point(270, 320);
             this.btnDeliteMovie.Name = "btnDeliteMovie";
-            this.btnDeliteMovie.Size = new System.Drawing.Size(100, 50);
+            this.btnDeliteMovie.Size = new System.Drawing.Size(80, 30);
             this.btnDeliteMovie.TabIndex = 2;
             this.btnDeliteMovie.Text = "Delite Cinema";
             this.btnDeliteMovie.UseVisualStyleBackColor = false;
@@ -78,11 +80,12 @@
             // 
             // btnFormSeries
             // 
-            this.btnFormSeries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnFormSeries.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnFormSeries.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFormSeries.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnFormSeries.Location = new System.Drawing.Point(130, 320);
+            this.btnFormSeries.Location = new System.Drawing.Point(140, 320);
             this.btnFormSeries.Name = "btnFormSeries";
-            this.btnFormSeries.Size = new System.Drawing.Size(100, 50);
+            this.btnFormSeries.Size = new System.Drawing.Size(80, 30);
             this.btnFormSeries.TabIndex = 9;
             this.btnFormSeries.Text = "Add Series";
             this.btnFormSeries.UseVisualStyleBackColor = false;
@@ -149,20 +152,20 @@
             this.tabAllCinemaPage.TabIndex = 2;
             this.tabAllCinemaPage.Text = "All Cinema";
             // 
-            // BoxCinema
+            // BoxCinemaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(359, 381);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ClientSize = new System.Drawing.Size(359, 356);
             this.Controls.Add(this.BoxName);
             this.Controls.Add(this.btnFormSeries);
             this.Controls.Add(this.btnDeliteMovie);
             this.Controls.Add(this.btnFormMovie);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(375, 420);
-            this.MinimumSize = new System.Drawing.Size(375, 420);
-            this.Name = "BoxCinema";
+            this.MaximumSize = new System.Drawing.Size(375, 395);
+            this.MinimumSize = new System.Drawing.Size(375, 395);
+            this.Name = "BoxCinemaForm";
             this.Text = "BoxCinema";
             this.BoxName.ResumeLayout(false);
             this.tabMovePage.ResumeLayout(false);

@@ -23,6 +23,10 @@ namespace ListWatchedMoviesAndSeries
                     listSeriesBoxName.Items.Add(value);
                     listAllBoxName.Items.Add(value);
                 }
+                else
+                {
+                    MessageBox.Show("There is such a series");
+                }
             }
         }
 
