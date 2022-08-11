@@ -2,35 +2,58 @@
 {
     public partial class MovieForm : Form
     {
-        private BoxCinemaForm box;
+        private BoxCinemaForm _box;
+        private bool checkValueData = false;
 
         public MovieForm(BoxCinemaForm formBoxCinema)
         {
-            box = formBoxCinema;
+            _box = formBoxCinema;
             InitializeComponent();
+
         }
 
-        private void btnAddMovie_Click(object sender, EventArgs e)
+        private void BtnAddMovie_Click(object sender, EventArgs e)
         {
             if (txtAddMovie.Text.Length <= 0)
-                MessageBox.Show("Enter movie name");
+            {
+                MessageBox.Show("Enter movie name", "Indication");
+            }
 
             else
             {
-                box.SetNameCinema(txtAddMovie.Text);
-                txtAddMovie.Text = string.Empty;
+                if (checkValueData)
+                {
+                    _box.SetNameCinema(new Cinema(txtAddMovie.Text, dateTimePickerMovie.Value, numericGradeMovie.Value));
+                }
+                else
+                {
+                    _box.SetNameCinema(new Cinema(txtAddMovie.Text));
+                }
+
+                DefoultValue();
             }
 
         }
 
-        private void btnClearTxtMovie_Click(object sender, EventArgs e)
+
+
+        private void BtnClearTxtMovie_Click(object sender, EventArgs e) => DefoultValue();
+
+        private void BtnBackFormMovie_Click(object sender, EventArgs e) => Close();
+
+        private void DateTimePickerMovie_ValueChanged(object sender, EventArgs e)
         {
-            txtAddMovie.Text = string.Empty;
+            checkValueData = true;
+            numericGradeMovie.ReadOnly = false;
         }
 
-        private void btnBackFormMovie_Click(object sender, EventArgs e)
+        private void DefoultValue()
         {
-            Close();
+            txtAddMovie.Text = string.Empty;
+            checkValueData = false;
+            numericGradeMovie.Value = 1;
+            numericGradeMovie.ReadOnly = true;
         }
+
     }
 }

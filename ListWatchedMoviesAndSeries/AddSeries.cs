@@ -1,40 +1,57 @@
-﻿namespace ListWatchedMoviesAndSeries
+﻿using ListWatchedMoviesAndSeries.Models;
+
+namespace ListWatchedMoviesAndSeries
 {
     public partial class TVSeriesForm : Form
     {
-        private BoxCinemaForm box;
+        private BoxCinemaForm _box;
+        private bool checkValueData = false;
 
         public TVSeriesForm(BoxCinemaForm formBoxCinema)
         {
-            box = formBoxCinema;
+            _box = formBoxCinema;
             InitializeComponent();
         }
 
-        private void btnAddSeries_Click(object sender, EventArgs e)
+        private void BtnAddSeries_Click(object sender, EventArgs e)
         {
             if (txtAddSeries.Text.Length <= 0)
-                MessageBox.Show("Enter series name");
+                MessageBox.Show("Enter series name", "Indication");
 
             else if (numericSeason.Value == 0)
-                MessageBox.Show("Enter namber season");
+                MessageBox.Show("Enter namber season", "Indication");
 
             else
             {
-                box.SetNameSeries($"{txtAddSeries.Text} - {numericSeason.Text} Season");
-                txtAddSeries.Text = string.Empty;
-                numericSeason.Value = 0;
+                if (checkValueData)
+                {
+                    _box.SetNameSeries(new Series(txtAddSeries.Text, numericSeason.Value, dateTimePickerSeries.Value, numericGradeSeries.Value));
+                }
+                else
+                {
+                    _box.SetNameSeries(new Series(txtAddSeries.Text, numericSeason.Value));
+                }
+
+                DefoultValue();
             }
         }
 
-        private void btnClearTxtSeries_Click(object sender, EventArgs e)
+        private void BtnClearTxtSeries_Click(object sender, EventArgs e) => DefoultValue();
+
+        private void BtnBackFormSeries_Click(object sender, EventArgs e) => Close();
+
+        private void DateTimePickerSeries_ValueChanged(object sender, EventArgs e)
         {
-            numericSeason.Value = 0;
-            txtAddSeries.Text = string.Empty;
+            checkValueData = true;
+            numericGradeSeries.ReadOnly = false;
         }
 
-        private void btnBackFormSeries_Click(object sender, EventArgs e)
+        private void DefoultValue()
         {
-            Close();
+            txtAddSeries.Text = string.Empty;
+            checkValueData = false;
+            numericGradeSeries.Value = 1;
+            numericGradeSeries.ReadOnly = true;
         }
     }
 }

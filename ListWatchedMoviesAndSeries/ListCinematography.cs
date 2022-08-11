@@ -1,31 +1,27 @@
+using ListWatchedMoviesAndSeries.Models;
+
 namespace ListWatchedMoviesAndSeries
 {
     public partial class BoxCinemaForm : Form
     {
-        public void SetNameCinema(string value)
+        public void SetNameCinema(Cinema move)
         {
-            if (value != null)
+            if (move != null)
             {
-                if (!listAllBoxName.Items.Contains(value) && !listCinemaBoxName.Items.Contains(value))
+                if (move.Name != null)
                 {
-                    listCinemaBoxName.Items.Add(value);
-                    listAllBoxName.Items.Add(value);
+                    AddCinemaGridRow(dgvMove, move);
                 }
             }
         }
 
-        public void SetNameSeries(string value)
+        public void SetNameSeries(Series series)
         {
-            if (value != null)
+            if (series != null)
             {
-                if (!listAllBoxName.Items.Contains(value) && !listSeriesBoxName.Items.Contains(value))
+                if (series.Name != null)
                 {
-                    listSeriesBoxName.Items.Add(value);
-                    listAllBoxName.Items.Add(value);
-                }
-                else
-                {
-                    MessageBox.Show("There is such a series");
+                    AddCinemaGridRow(dgvSeries, series);
                 }
             }
         }
@@ -57,43 +53,47 @@ namespace ListWatchedMoviesAndSeries
             if (BoxName.SelectedTab != null)
             {
                 var page = BoxName.SelectedTab;
+
                 if (page == tabMovePage)
-                {
-                    ItemListBox(listCinemaBoxName, out var movie);
-                }
-                else if (page == tabSeriesPage)
-                {
-                    ItemListBox(listSeriesBoxName, out var series);
-                }
-                else if (page == tabAllCinemaPage)
-                {
-                    ItemListBox(listAllBoxName, out var cinema);
-                    RemoveElement(cinema);
-                }
+                    RemoveRowGrid(dgvMove);
+                if (page == tabSeriesPage)
+                    RemoveRowGrid(dgvSeries);
+                /*
+                if (page == tabAllCinemaPage)
+                    RemoveRowGrid(dgvCinema);
+                */
             }
         }
 
-        private void ItemListBox(ListBox box, out string cinema)
+        private void RemoveRowGrid(DataGridView dataGridCinema)
         {
-            if (box.SelectedItems.Count < 0)
-                cinema = string.Empty;
+            if (dataGridCinema.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Highlight the desired line", "Information");
+                return;
+            }
+
+            for (var index = dataGridCinema.SelectedRows.Count - 1; index > -1; index--)
+            {
+                var grdUsersSelectedRow = dataGridCinema.SelectedRows[index];
+                dataGridCinema.Rows.Remove(grdUsersSelectedRow);
+            }
+        }
+
+        private void AddCinemaGridRow(DataGridView dataGridCinema, Cinema cinema)
+        {
+            string? partOrSeason = SeasonOrEmpty(cinema);
+            if (cinema.Date != null)
+            {
+                DateTime date = (DateTime)cinema.Date;
+                dataGridCinema.Rows.Add(cinema.Name, partOrSeason, cinema.View, date.ToString("dd.MM.yyyy"), cinema.Grade.ToString());
+            }
             else
             {
-                cinema = box.Text;
-                box.Items.Remove(cinema);
-                if (box != listAllBoxName)
-                {
-                    listAllBoxName.Items.Remove(cinema);
-                }
+                dataGridCinema.Rows.Add(cinema.Name, partOrSeason, cinema.View, string.Empty, string.Empty);
             }
         }
 
-        private void RemoveElement(string cinema)
-        {
-            if (listCinemaBoxName.Items.Contains(cinema))
-                listCinemaBoxName.Items.Remove(cinema);
-            else
-                listSeriesBoxName.Items.Remove(cinema);
-        }
+        private string? SeasonOrEmpty(Cinema cinema) => cinema.Part == null ? string.Empty : cinema.Part.ToString();
     }
 }

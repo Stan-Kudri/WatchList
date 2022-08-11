@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="AddSeries.cs">
       <SubType>Form</SubType>
     </Compile>
