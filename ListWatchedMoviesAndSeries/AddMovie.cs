@@ -1,4 +1,6 @@
-﻿namespace ListWatchedMoviesAndSeries
+﻿using ListWatchedMoviesAndSeries.Models.View;
+
+namespace ListWatchedMoviesAndSeries
 {
     public partial class MovieForm : Form
     {
@@ -23,11 +25,11 @@
             {
                 if (checkValueData)
                 {
-                    _box.SetNameCinema(new Cinema(txtAddMovie.Text, dateTimePickerMovie.Value, numericGradeMovie.Value));
+                    _box.SetNameMove(new Movie(txtAddMovie.Text, dateTimePickerMovie.Value, numericGradeMovie.Value));
                 }
                 else
                 {
-                    _box.SetNameCinema(new Cinema(txtAddMovie.Text));
+                    _box.SetNameMove(new Movie(txtAddMovie.Text));
                 }
 
                 DefoultValue();
@@ -45,6 +47,7 @@
         {
             checkValueData = true;
             numericGradeMovie.ReadOnly = false;
+            numericGradeMovie.Maximum = 10;
         }
 
         private void DefoultValue()
@@ -53,6 +56,7 @@
             checkValueData = false;
             numericGradeMovie.Value = 1;
             numericGradeMovie.ReadOnly = true;
+            numericGradeMovie.Maximum = 1;
         }
 
     }

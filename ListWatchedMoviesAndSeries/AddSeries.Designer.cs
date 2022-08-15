@@ -1,4 +1,6 @@
-﻿namespace ListWatchedMoviesAndSeries
+﻿using ListWatchedMoviesAndSeries.Models.View;
+
+namespace ListWatchedMoviesAndSeries
 {
     partial class TVSeriesForm
     {
@@ -30,21 +32,21 @@
         {
             this.components = new System.ComponentModel.Container();
             this.txtAddSeries = new System.Windows.Forms.TextBox();
+            this.seriesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelNameSeries = new System.Windows.Forms.Label();
             this.labelNumberSeason = new System.Windows.Forms.Label();
             this.btnAddSeries = new System.Windows.Forms.Button();
             this.btnClearTxtSeries = new System.Windows.Forms.Button();
             this.btnBackFormSeries = new System.Windows.Forms.Button();
             this.numericSeason = new System.Windows.Forms.NumericUpDown();
-            this.cinemaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dateTimePickerSeries = new System.Windows.Forms.DateTimePicker();
+            this.watchDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.numericGradeSeries = new System.Windows.Forms.NumericUpDown();
             this.labelGradeSeries = new System.Windows.Forms.Label();
-            this.seriesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.numericSeason)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericGradeSeries)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seriesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSeason)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericGradeSeries)).BeginInit();
             this.SuspendLayout();
             // 
             // txtAddSeries
@@ -54,6 +56,10 @@
             this.txtAddSeries.Name = "txtAddSeries";
             this.txtAddSeries.Size = new System.Drawing.Size(352, 23);
             this.txtAddSeries.TabIndex = 1;
+            // 
+            // seriesBindingSource
+            // 
+            this.seriesBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.View.Series);
             // 
             // labelNameSeries
             // 
@@ -105,7 +111,7 @@
             // 
             // btnBackFormSeries
             // 
-            this.btnBackFormSeries.BackColor = System.Drawing.Color.LightCoral;
+            this.btnBackFormSeries.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnBackFormSeries.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackFormSeries.Location = new System.Drawing.Point(355, 70);
             this.btnBackFormSeries.Name = "btnBackFormSeries";
@@ -117,20 +123,21 @@
             // 
             // numericSeason
             // 
-            this.numericSeason.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.seriesBindingSource, "Grade", true));
+            this.numericSeason.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.seriesBindingSource, "Season", true));
             this.numericSeason.Location = new System.Drawing.Point(215, 40);
             this.numericSeason.Name = "numericSeason";
             this.numericSeason.Size = new System.Drawing.Size(145, 23);
             this.numericSeason.TabIndex = 11;
-            // 
-            // cinemaBindingSource
-            // 
-            this.cinemaBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Cinema);
+            this.numericSeason.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // dateTimePickerSeries
             // 
             this.dateTimePickerSeries.CustomFormat = "\"dd.MM.yyyy\"";
-            this.dateTimePickerSeries.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.seriesBindingSource, "Date", true));
+            this.dateTimePickerSeries.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "DateWatch", true));
             this.dateTimePickerSeries.Location = new System.Drawing.Point(9, 70);
             this.dateTimePickerSeries.MaxDate = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
             this.dateTimePickerSeries.MinDate = new System.DateTime(1949, 12, 31, 0, 0, 0, 0);
@@ -140,12 +147,17 @@
             this.dateTimePickerSeries.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
             this.dateTimePickerSeries.ValueChanged += new System.EventHandler(this.DateTimePickerSeries_ValueChanged);
             // 
+            // watchDetailBindingSource
+            // 
+            this.watchDetailBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.Item.WatchDetail);
+            // 
             // numericGradeSeries
             // 
-            this.numericGradeSeries.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.seriesBindingSource, "Grade", true));
+            this.numericGradeSeries.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "Grade", true));
+            this.numericGradeSeries.InterceptArrowKeys = false;
             this.numericGradeSeries.Location = new System.Drawing.Point(9, 40);
             this.numericGradeSeries.Maximum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -174,10 +186,6 @@
             this.labelGradeSeries.TabIndex = 18;
             this.labelGradeSeries.Text = "Grade Series";
             // 
-            // seriesBindingSource
-            // 
-            this.seriesBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.Series);
-            // 
             // TVSeriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -198,10 +206,10 @@
             this.MinimumSize = new System.Drawing.Size(435, 150);
             this.Name = "TVSeriesForm";
             this.Text = "Series";
-            ((System.ComponentModel.ISupportInitialize)(this.numericSeason)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericGradeSeries)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seriesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSeason)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericGradeSeries)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,7 +226,7 @@
         private DateTimePicker dateTimePickerSeries;
         private NumericUpDown numericGradeSeries;
         private Label labelGradeSeries;
-        private BindingSource cinemaBindingSource;
+        private BindingSource watchDetailBindingSource;
         private BindingSource seriesBindingSource;
     }
 }

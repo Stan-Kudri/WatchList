@@ -1,4 +1,6 @@
-﻿namespace ListWatchedMoviesAndSeries
+﻿using ListWatchedMoviesAndSeries.Models.View;
+
+namespace ListWatchedMoviesAndSeries
 {
     partial class MovieForm
     {
@@ -30,31 +32,27 @@
         {
             this.components = new System.ComponentModel.Container();
             this.txtAddMovie = new System.Windows.Forms.TextBox();
-            this.cinemaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelNameMovie = new System.Windows.Forms.Label();
             this.btnBackFormMovie = new System.Windows.Forms.Button();
             this.btnClearTxtMovie = new System.Windows.Forms.Button();
             this.btnAddMovie = new System.Windows.Forms.Button();
             this.dateTimePickerMovie = new System.Windows.Forms.DateTimePicker();
+            this.watchDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.numericGradeMovie = new System.Windows.Forms.NumericUpDown();
             this.labelGradeMovie = new System.Windows.Forms.Label();
-            this.seriesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).BeginInit();
+            this.movieBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericGradeMovie)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seriesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.movieBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // txtAddMovie
             // 
-            this.txtAddMovie.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cinemaBindingSource, "Name", true));
+            this.txtAddMovie.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.movieBindingSource, "Name", true));
             this.txtAddMovie.Location = new System.Drawing.Point(10, 12);
             this.txtAddMovie.Name = "txtAddMovie";
             this.txtAddMovie.Size = new System.Drawing.Size(350, 23);
             this.txtAddMovie.TabIndex = 2;
-            // 
-            // cinemaBindingSource
-            // 
-            this.cinemaBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Cinema);
             // 
             // labelNameMovie
             // 
@@ -69,7 +67,7 @@
             // 
             // btnBackFormMovie
             // 
-            this.btnBackFormMovie.BackColor = System.Drawing.Color.LightCoral;
+            this.btnBackFormMovie.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnBackFormMovie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackFormMovie.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnBackFormMovie.Location = new System.Drawing.Point(355, 65);
@@ -109,7 +107,7 @@
             // dateTimePickerMovie
             // 
             this.dateTimePickerMovie.CustomFormat = "\"dd.MM.yyyy\"";
-            this.dateTimePickerMovie.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.cinemaBindingSource, "Date", true));
+            this.dateTimePickerMovie.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "DateWatch", true));
             this.dateTimePickerMovie.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePickerMovie.Location = new System.Drawing.Point(10, 65);
             this.dateTimePickerMovie.MaxDate = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
@@ -120,12 +118,16 @@
             this.dateTimePickerMovie.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
             this.dateTimePickerMovie.ValueChanged += new System.EventHandler(this.DateTimePickerMovie_ValueChanged);
             // 
+            // watchDetailBindingSource
+            // 
+            this.watchDetailBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.Item.WatchDetail);
+            // 
             // numericGradeMovie
             // 
-            this.numericGradeMovie.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.cinemaBindingSource, "Grade", true));
+            this.numericGradeMovie.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "Grade", true));
             this.numericGradeMovie.Location = new System.Drawing.Point(10, 37);
             this.numericGradeMovie.Maximum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -155,9 +157,9 @@
             this.labelGradeMovie.TabIndex = 17;
             this.labelGradeMovie.Text = "Grade Movie";
             // 
-            // seriesBindingSource
+            // movieBindingSource
             // 
-            this.seriesBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.Series);
+            this.movieBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.View.Movie);
             // 
             // MovieForm
             // 
@@ -177,9 +179,9 @@
             this.MinimumSize = new System.Drawing.Size(435, 140);
             this.Name = "MovieForm";
             this.Text = "Movie";
-            ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericGradeMovie)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seriesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.movieBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,7 +197,7 @@
         private DateTimePicker dateTimePickerMovie;
         private NumericUpDown numericGradeMovie;
         private Label labelGradeMovie;
-        private BindingSource cinemaBindingSource;
-        private BindingSource seriesBindingSource;
+        private BindingSource watchDetailBindingSource;
+        private BindingSource movieBindingSource;
     }
 }

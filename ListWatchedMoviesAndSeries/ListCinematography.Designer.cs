@@ -1,4 +1,6 @@
-﻿namespace ListWatchedMoviesAndSeries
+﻿using ListWatchedMoviesAndSeries.Models.View;
+
+namespace ListWatchedMoviesAndSeries
 {
     partial class BoxCinemaForm
     {
@@ -80,7 +82,7 @@
             // 
             // btnDeliteMovie
             // 
-            this.btnDeliteMovie.BackColor = System.Drawing.Color.LightCoral;
+            this.btnDeliteMovie.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnDeliteMovie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeliteMovie.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnDeliteMovie.Location = new System.Drawing.Point(445, 300);
@@ -274,10 +276,6 @@
             // 
             this.GradeCinema.HeaderText = "Grade";
             this.GradeCinema.Name = "GradeCinema";
-            // 
-            // cinemaBindingSource
-            // 
-            this.cinemaBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Cinema);
             // 
             // BoxCinemaForm
             // 

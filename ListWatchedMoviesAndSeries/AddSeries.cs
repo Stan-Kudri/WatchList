@@ -1,4 +1,4 @@
-﻿using ListWatchedMoviesAndSeries.Models;
+﻿using ListWatchedMoviesAndSeries.Models.View;
 
 namespace ListWatchedMoviesAndSeries
 {
@@ -44,6 +44,7 @@ namespace ListWatchedMoviesAndSeries
         {
             checkValueData = true;
             numericGradeSeries.ReadOnly = false;
+            numericGradeSeries.Maximum = 10;
         }
 
         private void DefoultValue()
@@ -52,6 +53,7 @@ namespace ListWatchedMoviesAndSeries
             checkValueData = false;
             numericGradeSeries.Value = 1;
             numericGradeSeries.ReadOnly = true;
+            numericGradeSeries.Minimum = 1;
         }
     }
 }

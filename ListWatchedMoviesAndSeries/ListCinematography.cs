@@ -1,16 +1,18 @@
 using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.Models.View;
 
 namespace ListWatchedMoviesAndSeries
 {
     public partial class BoxCinemaForm : Form
     {
-        public void SetNameCinema(Cinema move)
+        public void SetNameMove(Movie move)
         {
             if (move != null)
             {
                 if (move.Name != null)
                 {
                     AddCinemaGridRow(dgvMove, move);
+                    AddCinemaGridRow(dgvCinema, move);
                 }
             }
         }
@@ -22,6 +24,7 @@ namespace ListWatchedMoviesAndSeries
                 if (series.Name != null)
                 {
                     AddCinemaGridRow(dgvSeries, series);
+                    AddCinemaGridRow(dgvCinema, series);
                 }
             }
         }
@@ -55,45 +58,82 @@ namespace ListWatchedMoviesAndSeries
                 var page = BoxName.SelectedTab;
 
                 if (page == tabMovePage)
-                    RemoveRowGrid(dgvMove);
-                if (page == tabSeriesPage)
-                    RemoveRowGrid(dgvSeries);
-                /*
-                if (page == tabAllCinemaPage)
-                    RemoveRowGrid(dgvCinema);
-                */
+                {
+                    RemoveRowGrid(dgvMove, out string titleItem);
+                    RemoveItemRowGrid(dgvCinema, titleItem);
+                }
+                else if (page == tabSeriesPage)
+                {
+                    RemoveRowGrid(dgvSeries, out string titleItem);
+                    RemoveItemRowGrid(dgvCinema, titleItem);
+                }
+                else if (page == tabAllCinemaPage)
+                {
+                    RemoveRowGrid(dgvCinema, out string titleItem);
+                    if (CheckItemGridMove(titleItem))
+                    {
+                        RemoveItemRowGrid(dgvMove, titleItem);
+                    }
+                    else
+                    {
+                        RemoveItemRowGrid(dgvSeries, titleItem);
+                    }
+
+                }
             }
         }
 
-        private void RemoveRowGrid(DataGridView dataGridCinema)
+        private void RemoveRowGrid(DataGridView dataGridCinema, out string name)
         {
+            name = string.Empty;
+
             if (dataGridCinema.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Highlight the desired line", "Information");
                 return;
             }
+            //[0, dataGridCinema.RowCount - 1].Value.ToString();
+            name = dataGridCinema[0, dataGridCinema.SelectedRows.Count - 1].Value.ToString();
 
             for (var index = dataGridCinema.SelectedRows.Count - 1; index > -1; index--)
             {
                 var grdUsersSelectedRow = dataGridCinema.SelectedRows[index];
                 dataGridCinema.Rows.Remove(grdUsersSelectedRow);
             }
+
         }
 
-        private void AddCinemaGridRow(DataGridView dataGridCinema, Cinema cinema)
+        private void RemoveItemRowGrid(DataGridView dataGridCinema, string title)
         {
-            string? partOrSeason = SeasonOrEmpty(cinema);
-            if (cinema.Date != null)
+            foreach (DataGridViewRow row in dataGridCinema.Rows)
             {
-                DateTime date = (DateTime)cinema.Date;
-                dataGridCinema.Rows.Add(cinema.Name, partOrSeason, cinema.View, date.ToString("dd.MM.yyyy"), cinema.Grade.ToString());
-            }
-            else
-            {
-                dataGridCinema.Rows.Add(cinema.Name, partOrSeason, cinema.View, string.Empty, string.Empty);
+                if (row.Cells[0].Value.Equals(title))
+                {
+                    dataGridCinema.Rows.RemoveAt(row.Index);
+                    break;
+                }
             }
         }
 
-        private string? SeasonOrEmpty(Cinema cinema) => cinema.Part == null ? string.Empty : cinema.Part.ToString();
+        private void AddCinemaGridRow(DataGridView dataGridCinema, WatchItem cinema)
+        {
+            string? partOrSeason = Sequel(cinema);
+
+            string formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
+
+            dataGridCinema.Rows.Add(cinema.Name, partOrSeason, cinema.GetView(), formatDate, cinema.Detail?.Grade);
+        }
+
+        private bool CheckItemGridMove(string cinema)
+        {
+            foreach (DataGridViewRow row in dgvMove.Rows)
+            {
+                if (row.Cells["MoveTitle"].Value.Equals(cinema))
+                    return true;
+            }
+            return false;
+        }
+
+        private string? Sequel(WatchItem cinema) => cinema != null ? cinema.GetSequel() : string.Empty;
     }
 }
