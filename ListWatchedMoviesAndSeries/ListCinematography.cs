@@ -59,38 +59,39 @@ namespace ListWatchedMoviesAndSeries
 
                 if (page == tabMovePage)
                 {
-                    RemoveRowGrid(dgvMove, out string titleItem);
-                    RemoveItemRowGrid(dgvCinema, titleItem);
+                    if (RemoveRowGrid(dgvMove, out string titleItem))
+                        RemoveItemRowGrid(dgvCinema, titleItem);
                 }
                 else if (page == tabSeriesPage)
                 {
-                    RemoveRowGrid(dgvSeries, out string titleItem);
-                    RemoveItemRowGrid(dgvCinema, titleItem);
+                    if (RemoveRowGrid(dgvSeries, out string titleItem))
+                        RemoveItemRowGrid(dgvCinema, titleItem);
                 }
                 else if (page == tabAllCinemaPage)
                 {
-                    RemoveRowGrid(dgvCinema, out string titleItem);
-                    if (CheckItemGridMove(titleItem))
+                    if (RemoveRowGrid(dgvCinema, out string titleItem))
                     {
-                        RemoveItemRowGrid(dgvMove, titleItem);
+                        if (CheckItemGridMove(titleItem))
+                        {
+                            RemoveItemRowGrid(dgvMove, titleItem);
+                        }
+                        else
+                        {
+                            RemoveItemRowGrid(dgvSeries, titleItem);
+                        }
                     }
-                    else
-                    {
-                        RemoveItemRowGrid(dgvSeries, titleItem);
-                    }
-
                 }
             }
         }
 
-        private void RemoveRowGrid(DataGridView dataGridCinema, out string? name)
+        private bool RemoveRowGrid(DataGridView dataGridCinema, out string? name)
         {
             name = string.Empty;
 
             if (dataGridCinema.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Highlight the desired line", "Information");
-                return;
+                return false;
             }
 
             name = SelectedRowCinemaName(dataGridCinema);
@@ -100,6 +101,8 @@ namespace ListWatchedMoviesAndSeries
                 var grdUsersSelectedRow = dataGridCinema.SelectedRows[index];
                 dataGridCinema.Rows.Remove(grdUsersSelectedRow);
             }
+
+            return true;
 
         }
 

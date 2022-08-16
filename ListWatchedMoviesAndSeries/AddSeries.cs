@@ -21,6 +21,9 @@ namespace ListWatchedMoviesAndSeries
             else if (numericSeason.Value == 0)
                 MessageBox.Show("Enter namber season", "Indication");
 
+            else if (checkValueData == true && numericSeason.Value == 0)
+                MessageBox.Show("Grade movie above in  zero", "Indication");
+
             else
             {
                 if (checkValueData)
@@ -44,16 +47,16 @@ namespace ListWatchedMoviesAndSeries
         {
             checkValueData = true;
             numericGradeSeries.ReadOnly = false;
-            numericGradeSeries.Maximum = 10;
+            numericGradeSeries.Enabled = true;
         }
 
         private void DefoultValue()
         {
             txtAddSeries.Text = string.Empty;
             checkValueData = false;
-            numericGradeSeries.Value = 1;
+            numericGradeSeries.Enabled = false;
+            numericGradeSeries.Value = 0;
             numericGradeSeries.ReadOnly = true;
-            numericGradeSeries.Minimum = 1;
         }
     }
 }

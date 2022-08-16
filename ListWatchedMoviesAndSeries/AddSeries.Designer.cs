@@ -128,11 +128,6 @@ namespace ListWatchedMoviesAndSeries
             this.numericSeason.Name = "numericSeason";
             this.numericSeason.Size = new System.Drawing.Size(145, 23);
             this.numericSeason.TabIndex = 11;
-            this.numericSeason.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // dateTimePickerSeries
             // 
@@ -154,15 +149,11 @@ namespace ListWatchedMoviesAndSeries
             // numericGradeSeries
             // 
             this.numericGradeSeries.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "Grade", true));
+            this.numericGradeSeries.Enabled = false;
             this.numericGradeSeries.InterceptArrowKeys = false;
             this.numericGradeSeries.Location = new System.Drawing.Point(9, 40);
             this.numericGradeSeries.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericGradeSeries.Minimum = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
@@ -170,11 +161,6 @@ namespace ListWatchedMoviesAndSeries
             this.numericGradeSeries.ReadOnly = true;
             this.numericGradeSeries.Size = new System.Drawing.Size(101, 23);
             this.numericGradeSeries.TabIndex = 17;
-            this.numericGradeSeries.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // labelGradeSeries
             // 

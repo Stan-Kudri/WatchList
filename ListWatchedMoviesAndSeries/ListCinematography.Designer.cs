@@ -143,6 +143,7 @@ namespace ListWatchedMoviesAndSeries
             this.dgvMove.MaximumSize = new System.Drawing.Size(543, 250);
             this.dgvMove.MinimumSize = new System.Drawing.Size(543, 250);
             this.dgvMove.Name = "dgvMove";
+            this.dgvMove.ReadOnly = true;
             this.dgvMove.RowTemplate.Height = 25;
             this.dgvMove.Size = new System.Drawing.Size(543, 250);
             this.dgvMove.TabIndex = 11;
@@ -151,26 +152,31 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.MoveTitle.HeaderText = "Title";
             this.MoveTitle.Name = "MoveTitle";
+            this.MoveTitle.ReadOnly = true;
             // 
             // MovePart
             // 
             this.MovePart.HeaderText = "Part";
             this.MovePart.Name = "MovePart";
+            this.MovePart.ReadOnly = true;
             // 
             // MoveWatched
             // 
             this.MoveWatched.HeaderText = "The Watched Cinema";
             this.MoveWatched.Name = "MoveWatched";
+            this.MoveWatched.ReadOnly = true;
             // 
             // DataWatchedMove
             // 
             this.DataWatchedMove.HeaderText = "Data";
             this.DataWatchedMove.Name = "DataWatchedMove";
+            this.DataWatchedMove.ReadOnly = true;
             // 
             // GradeMove
             // 
             this.GradeMove.HeaderText = "Grade";
             this.GradeMove.Name = "GradeMove";
+            this.GradeMove.ReadOnly = true;
             // 
             // tabSeriesPage
             // 
@@ -196,6 +202,7 @@ namespace ListWatchedMoviesAndSeries
             this.dgvSeries.MaximumSize = new System.Drawing.Size(543, 250);
             this.dgvSeries.MinimumSize = new System.Drawing.Size(543, 250);
             this.dgvSeries.Name = "dgvSeries";
+            this.dgvSeries.ReadOnly = true;
             this.dgvSeries.RowTemplate.Height = 25;
             this.dgvSeries.Size = new System.Drawing.Size(543, 250);
             this.dgvSeries.TabIndex = 12;
@@ -248,6 +255,7 @@ namespace ListWatchedMoviesAndSeries
             this.dgvCinema.MaximumSize = new System.Drawing.Size(543, 250);
             this.dgvCinema.MinimumSize = new System.Drawing.Size(543, 250);
             this.dgvCinema.Name = "dgvCinema";
+            this.dgvCinema.ReadOnly = true;
             this.dgvCinema.RowTemplate.Height = 25;
             this.dgvCinema.Size = new System.Drawing.Size(543, 250);
             this.dgvCinema.TabIndex = 12;

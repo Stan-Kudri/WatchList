@@ -32,6 +32,7 @@ namespace ListWatchedMoviesAndSeries
         {
             this.components = new System.ComponentModel.Container();
             this.txtAddMovie = new System.Windows.Forms.TextBox();
+            this.movieBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelNameMovie = new System.Windows.Forms.Label();
             this.btnBackFormMovie = new System.Windows.Forms.Button();
             this.btnClearTxtMovie = new System.Windows.Forms.Button();
@@ -40,10 +41,9 @@ namespace ListWatchedMoviesAndSeries
             this.watchDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.numericGradeMovie = new System.Windows.Forms.NumericUpDown();
             this.labelGradeMovie = new System.Windows.Forms.Label();
-            this.movieBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.movieBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericGradeMovie)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.movieBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // txtAddMovie
@@ -53,6 +53,10 @@ namespace ListWatchedMoviesAndSeries
             this.txtAddMovie.Name = "txtAddMovie";
             this.txtAddMovie.Size = new System.Drawing.Size(350, 23);
             this.txtAddMovie.TabIndex = 2;
+            // 
+            // movieBindingSource
+            // 
+            this.movieBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.View.Movie);
             // 
             // labelNameMovie
             // 
@@ -125,14 +129,10 @@ namespace ListWatchedMoviesAndSeries
             // numericGradeMovie
             // 
             this.numericGradeMovie.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "Grade", true));
+            this.numericGradeMovie.Enabled = false;
             this.numericGradeMovie.Location = new System.Drawing.Point(10, 37);
             this.numericGradeMovie.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericGradeMovie.Minimum = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
@@ -141,11 +141,6 @@ namespace ListWatchedMoviesAndSeries
             this.numericGradeMovie.Size = new System.Drawing.Size(101, 23);
             this.numericGradeMovie.TabIndex = 16;
             this.numericGradeMovie.ThousandsSeparator = true;
-            this.numericGradeMovie.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // labelGradeMovie
             // 
@@ -156,10 +151,6 @@ namespace ListWatchedMoviesAndSeries
             this.labelGradeMovie.Size = new System.Drawing.Size(88, 19);
             this.labelGradeMovie.TabIndex = 17;
             this.labelGradeMovie.Text = "Grade Movie";
-            // 
-            // movieBindingSource
-            // 
-            this.movieBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.View.Movie);
             // 
             // MovieForm
             // 
@@ -179,9 +170,9 @@ namespace ListWatchedMoviesAndSeries
             this.MinimumSize = new System.Drawing.Size(435, 140);
             this.Name = "MovieForm";
             this.Text = "Movie";
+            ((System.ComponentModel.ISupportInitialize)(this.movieBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericGradeMovie)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.movieBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

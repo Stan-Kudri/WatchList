@@ -17,9 +17,11 @@ namespace ListWatchedMoviesAndSeries
         private void BtnAddMovie_Click(object sender, EventArgs e)
         {
             if (txtAddMovie.Text.Length <= 0)
-            {
                 MessageBox.Show("Enter movie name", "Indication");
-            }
+
+            else if (checkValueData == true && numericGradeMovie.Value == 0)
+                MessageBox.Show("Grade movie above in  zero", "Indication");
+
 
             else
             {
@@ -47,16 +49,16 @@ namespace ListWatchedMoviesAndSeries
         {
             checkValueData = true;
             numericGradeMovie.ReadOnly = false;
-            numericGradeMovie.Maximum = 10;
+            numericGradeMovie.Enabled = true;
         }
 
         private void DefoultValue()
         {
             txtAddMovie.Text = string.Empty;
             checkValueData = false;
-            numericGradeMovie.Value = 1;
+            numericGradeMovie.Enabled = false;
+            numericGradeMovie.Value = 0;
             numericGradeMovie.ReadOnly = true;
-            numericGradeMovie.Maximum = 1;
         }
 
     }
