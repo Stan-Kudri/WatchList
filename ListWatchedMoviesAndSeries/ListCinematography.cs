@@ -83,7 +83,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void RemoveRowGrid(DataGridView dataGridCinema, out string name)
+        private void RemoveRowGrid(DataGridView dataGridCinema, out string? name)
         {
             name = string.Empty;
 
@@ -92,8 +92,8 @@ namespace ListWatchedMoviesAndSeries
                 MessageBox.Show("Highlight the desired line", "Information");
                 return;
             }
-            //[0, dataGridCinema.RowCount - 1].Value.ToString();
-            name = dataGridCinema[0, dataGridCinema.SelectedRows.Count - 1].Value.ToString();
+
+            name = SelectedRowCinemaName(dataGridCinema);
 
             for (var index = dataGridCinema.SelectedRows.Count - 1; index > -1; index--)
             {
@@ -101,6 +101,13 @@ namespace ListWatchedMoviesAndSeries
                 dataGridCinema.Rows.Remove(grdUsersSelectedRow);
             }
 
+        }
+
+        private string? SelectedRowCinemaName(DataGridView gridCinema)
+        {
+            int rowIndex = gridCinema.CurrentCell.RowIndex;
+            int columnIndex = 0; //Column "Name" in DataGridView
+            return gridCinema.Rows[rowIndex].Cells[columnIndex].Value.ToString();
         }
 
         private void RemoveItemRowGrid(DataGridView dataGridCinema, string title)
