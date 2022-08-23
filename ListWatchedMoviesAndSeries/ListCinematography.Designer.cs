@@ -1,5 +1,4 @@
-﻿using ListWatchedMoviesAndSeries.Models.View;
-
+﻿
 namespace ListWatchedMoviesAndSeries
 {
     partial class BoxCinemaForm
@@ -57,6 +56,7 @@ namespace ListWatchedMoviesAndSeries
             this.DataWatchedCinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GradeCinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cinemaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnEditCinema = new System.Windows.Forms.Button();
             this.BoxName.SuspendLayout();
             this.tabMovePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMove)).BeginInit();
@@ -98,7 +98,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormSeries.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnFormSeries.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFormSeries.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnFormSeries.Location = new System.Drawing.Point(228, 300);
+            this.btnFormSeries.Location = new System.Drawing.Point(157, 300);
             this.btnFormSeries.Name = "btnFormSeries";
             this.btnFormSeries.Size = new System.Drawing.Size(120, 30);
             this.btnFormSeries.TabIndex = 9;
@@ -211,26 +211,31 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.SeriesName.HeaderText = "Title";
             this.SeriesName.Name = "SeriesName";
+            this.SeriesName.ReadOnly = true;
             // 
             // NumberSeason
             // 
             this.NumberSeason.HeaderText = "Season";
             this.NumberSeason.Name = "NumberSeason";
+            this.NumberSeason.ReadOnly = true;
             // 
             // WatchedSeries
             // 
             this.WatchedSeries.HeaderText = "The Watched Cinema";
             this.WatchedSeries.Name = "WatchedSeries";
+            this.WatchedSeries.ReadOnly = true;
             // 
             // DataWatchedSeries
             // 
             this.DataWatchedSeries.HeaderText = "Data";
             this.DataWatchedSeries.Name = "DataWatchedSeries";
+            this.DataWatchedSeries.ReadOnly = true;
             // 
             // GradeSeries
             // 
             this.GradeSeries.HeaderText = "Grade";
             this.GradeSeries.Name = "GradeSeries";
+            this.GradeSeries.ReadOnly = true;
             // 
             // tabAllCinemaPage
             // 
@@ -264,26 +269,44 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.NameCinema.HeaderText = "Title";
             this.NameCinema.Name = "NameCinema";
+            this.NameCinema.ReadOnly = true;
             // 
             // NumberCinema
             // 
             this.NumberCinema.HeaderText = "Season/Part";
             this.NumberCinema.Name = "NumberCinema";
+            this.NumberCinema.ReadOnly = true;
             // 
             // WatchedCinema
             // 
             this.WatchedCinema.HeaderText = "The Watched Cinema";
             this.WatchedCinema.Name = "WatchedCinema";
+            this.WatchedCinema.ReadOnly = true;
             // 
             // DataWatchedCinema
             // 
             this.DataWatchedCinema.HeaderText = "Data";
             this.DataWatchedCinema.Name = "DataWatchedCinema";
+            this.DataWatchedCinema.ReadOnly = true;
             // 
             // GradeCinema
             // 
             this.GradeCinema.HeaderText = "Grade";
             this.GradeCinema.Name = "GradeCinema";
+            this.GradeCinema.ReadOnly = true;
+            // 
+            // btnEditCinema
+            // 
+            this.btnEditCinema.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnEditCinema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditCinema.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnEditCinema.Location = new System.Drawing.Point(305, 300);
+            this.btnEditCinema.Name = "btnEditCinema";
+            this.btnEditCinema.Size = new System.Drawing.Size(120, 30);
+            this.btnEditCinema.TabIndex = 11;
+            this.btnEditCinema.Text = "Edit";
+            this.btnEditCinema.UseVisualStyleBackColor = false;
+            this.btnEditCinema.Click += new System.EventHandler(this.btnEditCinema_Click);
             // 
             // BoxCinemaForm
             // 
@@ -291,6 +314,7 @@ namespace ListWatchedMoviesAndSeries
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(574, 341);
+            this.Controls.Add(this.btnEditCinema);
             this.Controls.Add(this.BoxName);
             this.Controls.Add(this.btnFormSeries);
             this.Controls.Add(this.btnDeliteMovie);
@@ -340,5 +364,6 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn WatchedCinema;
         private DataGridViewTextBoxColumn DataWatchedCinema;
         private DataGridViewTextBoxColumn GradeCinema;
+        private Button btnEditCinema;
     }
 }

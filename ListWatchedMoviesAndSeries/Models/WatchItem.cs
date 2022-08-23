@@ -2,11 +2,15 @@
 
 namespace ListWatchedMoviesAndSeries.Models
 {
-    public abstract class WatchItem : ModelsBase
+    public class WatchItem : ModelsBase
     {
-        private string? _name = null;
+        public const string WatchCinema = "+";
+        public const string NotWatchCinema = "-";
 
+        private string? _name = null;
         private WatchDetail? _detail = null;
+        private TypeCinema? _type = null;
+        private decimal? _numberSequel = null;
 
         public string? Name
         {
@@ -20,8 +24,35 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _detail, value);
         }
 
-        public abstract string GetView();
+        public decimal? NumberSequel
+        {
+            get => _numberSequel;
+            set => SetField(ref _numberSequel, value);
+        }
 
-        public abstract string GetSequel();
+        public TypeCinema? Type
+        {
+            get => _type;
+            set => SetField(ref _type, value);
+        }
+
+        public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type)
+        {
+        }
+
+        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type)
+        {
+            if (name == null)
+                throw new ArgumentException("Name cinema not null", "Exception");
+
+            _name = name;
+            Detail = new WatchDetail(date, grade);
+            _numberSequel = numberSequel;
+            _type = type;
+        }
+
+        public string GetView() => Detail?.DateWatch == null ? NotWatchCinema : WatchCinema;
+
+        public string GetTypeSequel() => _type == TypeCinema.Movie ? TypeCinema.Movie.Name : TypeCinema.Series.Name;
     }
 }

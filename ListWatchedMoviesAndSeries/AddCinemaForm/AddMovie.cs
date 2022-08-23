@@ -1,4 +1,5 @@
-﻿using ListWatchedMoviesAndSeries.Models.View;
+﻿using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries
 {
@@ -11,35 +12,36 @@ namespace ListWatchedMoviesAndSeries
         {
             _box = formBoxCinema;
             InitializeComponent();
-
         }
 
         private void BtnAddMovie_Click(object sender, EventArgs e)
         {
             if (txtAddMovie.Text.Length <= 0)
-                MessageBox.Show("Enter movie name", "Indication");
-
+            {
+                MessageBoxProvider.ShowWarning("Enter movie name");
+            }
+            else if (numericPart.Value == 0)
+            {
+                MessageBoxProvider.ShowWarning("Enter namber part");
+            }
             else if (checkValueData == true && numericGradeMovie.Value == 0)
-                MessageBox.Show("Grade movie above in  zero", "Indication");
-
-
+            {
+                MessageBoxProvider.ShowWarning("Grade movie above in  zero");
+            }
             else
             {
                 if (checkValueData)
                 {
-                    _box.SetNameMove(new Movie(txtAddMovie.Text, dateTimePickerMovie.Value, numericGradeMovie.Value));
+                    _box.SetNameGrid(new WatchItem(txtAddMovie.Text, numericPart.Value, dateTimePickerMovie.Value, numericGradeMovie.Value, TypeCinema.Movie));
                 }
                 else
                 {
-                    _box.SetNameMove(new Movie(txtAddMovie.Text));
+                    _box.SetNameGrid(new WatchItem(txtAddMovie.Text, numericPart.Value, TypeCinema.Movie));
                 }
 
                 DefoultValue();
             }
-
         }
-
-
 
         private void BtnClearTxtMovie_Click(object sender, EventArgs e) => DefoultValue();
 
@@ -60,6 +62,5 @@ namespace ListWatchedMoviesAndSeries
             numericGradeMovie.Value = 0;
             numericGradeMovie.ReadOnly = true;
         }
-
     }
 }

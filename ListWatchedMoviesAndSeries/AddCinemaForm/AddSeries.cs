@@ -1,4 +1,5 @@
-﻿using ListWatchedMoviesAndSeries.Models.View;
+﻿using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries
 {
@@ -16,23 +17,26 @@ namespace ListWatchedMoviesAndSeries
         private void BtnAddSeries_Click(object sender, EventArgs e)
         {
             if (txtAddSeries.Text.Length <= 0)
-                MessageBox.Show("Enter series name", "Indication");
-
+            {
+                MessageBoxProvider.ShowWarning("Enter series name");
+            }
             else if (numericSeason.Value == 0)
-                MessageBox.Show("Enter namber season", "Indication");
-
-            else if (checkValueData == true && numericSeason.Value == 0)
-                MessageBox.Show("Grade movie above in  zero", "Indication");
-
+            {
+                MessageBoxProvider.ShowWarning("Enter namber season");
+            }
+            else if (checkValueData == true && numericGradeSeries.Value == 0)
+            {
+                MessageBoxProvider.ShowWarning("Grade movie above in  zero");
+            }
             else
             {
                 if (checkValueData)
                 {
-                    _box.SetNameSeries(new Series(txtAddSeries.Text, numericSeason.Value, dateTimePickerSeries.Value, numericGradeSeries.Value));
+                    _box.SetNameGrid(new WatchItem(txtAddSeries.Text, numericSeason.Value, dateTimePickerSeries.Value, numericGradeSeries.Value, TypeCinema.Series));
                 }
                 else
                 {
-                    _box.SetNameSeries(new Series(txtAddSeries.Text, numericSeason.Value));
+                    _box.SetNameGrid(new WatchItem(txtAddSeries.Text, numericSeason.Value, TypeCinema.Series));
                 }
 
                 DefoultValue();
