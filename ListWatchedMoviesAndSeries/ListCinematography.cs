@@ -50,7 +50,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnFormMovie_Click(object sender, EventArgs e)
         {
-            using (var form = new MovieForm(this))
+            using (var form = new AddCinemaForm(this, TypeCinema.Movie))
             {
                 form.ShowDialog();
             }
@@ -58,7 +58,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnFormSeries_Click(object sender, EventArgs e)
         {
-            using (var form = new TVSeriesForm(this))
+            using (var form = new AddCinemaForm(this, TypeCinema.Series))
             {
                 form.ShowDialog();
             }
