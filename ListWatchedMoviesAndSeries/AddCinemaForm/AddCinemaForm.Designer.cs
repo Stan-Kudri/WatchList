@@ -94,7 +94,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnAddCinema.TabIndex = 8;
             this.btnAddCinema.Text = "Add";
             this.btnAddCinema.UseVisualStyleBackColor = false;
-            this.btnAddCinema.Click += new System.EventHandler(this.BtnAddSeries_Click);
+            this.btnAddCinema.Click += new System.EventHandler(this.BtnAddSCinema_Click);
             // 
             // btnClearTxtCinema
             // 
@@ -106,7 +106,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnClearTxtCinema.TabIndex = 9;
             this.btnClearTxtCinema.Text = "Clear";
             this.btnClearTxtCinema.UseVisualStyleBackColor = false;
-            this.btnClearTxtCinema.Click += new System.EventHandler(this.BtnClearTxtSeries_Click);
+            this.btnClearTxtCinema.Click += new System.EventHandler(this.BtnClearTxtCinema_Click);
             // 
             // btnBackFormCinema
             // 
@@ -118,7 +118,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnBackFormCinema.TabIndex = 10;
             this.btnBackFormCinema.Text = "Close";
             this.btnBackFormCinema.UseVisualStyleBackColor = false;
-            this.btnBackFormCinema.Click += new System.EventHandler(this.BtnBackFormSeries_Click);
+            this.btnBackFormCinema.Click += new System.EventHandler(this.BtnBackFormCinema_Click);
             // 
             // numericSeaquel
             // 
@@ -139,7 +139,7 @@ namespace ListWatchedMoviesAndSeries
             this.dateTimePickerCinema.Size = new System.Drawing.Size(200, 23);
             this.dateTimePickerCinema.TabIndex = 13;
             this.dateTimePickerCinema.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
-            this.dateTimePickerCinema.ValueChanged += new System.EventHandler(this.DateTimePickerSeries_ValueChanged);
+            this.dateTimePickerCinema.ValueChanged += new System.EventHandler(this.DateTimePickerCinema_ValueChanged);
             // 
             // watchDetailBindingSource
             // 

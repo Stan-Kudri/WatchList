@@ -10,10 +10,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private bool _valueDateChanget;
         private BoxCinemaForm _box;
         private readonly WatchItem _cinema;
-        private readonly string _sequel;
 
         private readonly int _numberRowCinema;
         private readonly int _numberRowAllCinema;
+
+        private string getType => _cinema != null ? _cinema?.Type?.Name : string.Empty;
 
         private bool CheckСhanges
         {
@@ -47,7 +48,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             _box = formBoxCinema;
 
             _cinema = cinema;
-            _sequel = cinema.GetTypeSequel();
             _numberRowCinema = numberRowCinema;
             _numberRowAllCinema = numberRowAllCinema;
 
@@ -57,29 +57,18 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private void btnSaveEdit_Click(object sender, EventArgs e)
         {
-            if (txtEditName.Text.Length <= 0)
+            if (ValidateCinemaPaddingFields(out string errorMessage) == false)
             {
-                MessageBoxProvider.ShowWarning("Enter movie name");
+                MessageBoxProvider.ShowWarning(errorMessage);
             }
-            if (numericEditSequel.Value == 0)
+            else if (CheckСhanges)
             {
-                MessageBoxProvider.ShowWarning($"Enter namber {_sequel}");
-            }
-            if (_valueDateChanget == true || _cinema.Detail.DateWatch != null)
-            {
-                if (numericEditGradeCinema.Value == 0)
+                if (MessageBoxProvider.ShowQuestion("Save edit item Cinema?"))
                 {
-                    MessageBoxProvider.ShowWarning("Grade movie above in  zero");
-                }
-                else if (CheckСhanges)
-                {
-                    if (MessageBoxProvider.ShowQuestion("Save edit item Cinema?"))
-                    {
-                        var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, _cinema.Type);
-                        _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
+                    var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, _cinema.Type);
+                    _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
 
-                        Close();
-                    }
+                    Close();
                 }
             }
         }
@@ -94,9 +83,9 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             labelNumberSequel.Text = _cinema.GetTypeSequel();
             if (_cinema.GetView() == WatchCinema)
             {
-                this.dateTPCinema.Value = _cinema.Detail.DateWatch.Value;
+                dateTPCinema.Value = _cinema.Detail.DateWatch.Value;
                 if (decimal.TryParse(_cinema.Detail.Grade, out decimal value))
-                    this.numericEditGradeCinema.Value = value;
+                    numericEditGradeCinema.Value = value;
             }
             numericEditSequel.Value = _cinema.NumberSequel.Value;
         }
@@ -106,6 +95,32 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             _valueDateChanget = true;
             numericEditGradeCinema.ReadOnly = false;
             numericEditGradeCinema.Enabled = true;
+        }
+
+        private bool ValidateCinemaPaddingFields(out string errorMessage)
+        {
+            if (txtEditName.Text.Length <= 0)
+            {
+                errorMessage = $"Enter {getType} name";
+                return false;
+            }
+            else if (numericEditSequel.Value == 0)
+            {
+                errorMessage = $"Enter namber {getType}";
+                return false;
+            }
+            else if (_valueDateChanget == true && _cinema?.Detail?.DateWatch == null)
+            {
+                if (numericEditGradeCinema.Value == 0)
+                {
+                    errorMessage = $"Grade {getType} above in zero";
+                    return false;
+                }
+
+            }
+
+            errorMessage = string.Empty;
+            return true;
         }
     }
 }
