@@ -13,7 +13,7 @@ namespace ListWatchedMoviesAndSeries.Models
         private TypeCinema? _type = null;
         private decimal? _numberSequel = null;
 
-        public Guid? ID => _id;
+        public Guid? Id => _id;
 
         public string? Name
         {

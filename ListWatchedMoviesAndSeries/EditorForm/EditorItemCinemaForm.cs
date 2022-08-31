@@ -7,19 +7,18 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public const string WatchCinema = "+";
         public const string NotWatchCinema = "-";
 
-        private bool _valueDateChanget = false;
+        private bool _valueDateChanget = false;//Поле для контроля использования DataTimePicker или уже выставленной даты просмотра.
         private BoxCinemaForm _box;
         private readonly WatchItem _cinema;
 
         private readonly int _numberRowCinema;
         private readonly int _numberRowAllCinema;
 
-        private string _getType => _cinema != null ? _cinema?.Type?.Name : string.Empty;
+        private string _typeCinema => _cinema != null ? _cinema?.Type?.Name : string.Empty;
 
         public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, WatchItem? cinema, int numberRowCinema, int numberRowAllCinema)
         {
             _box = formBoxCinema;
-
             _cinema = cinema;
             _numberRowCinema = numberRowCinema;
             _numberRowAllCinema = numberRowAllCinema;
@@ -40,15 +39,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                 {
                     if (_valueDateChanget == true)
                     {
-                        var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, _cinema.Type, _cinema.ID.ToString());
+                        var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, _cinema.Type, _cinema.Id.ToString());
                         _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
                     }
                     else
                     {
-                        var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, null, null, _cinema.Type, _cinema.ID.ToString());
+                        var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, null, null, _cinema.Type, _cinema.Id.ToString());
                         _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
                     }
-
                     Close();
                 }
             }
@@ -83,24 +81,22 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         {
             if (txtEditName.Text.Length <= 0)
             {
-                errorMessage = $"Enter {_getType} name";
+                errorMessage = $"Enter {_typeCinema} name";
                 return false;
             }
             else if (numericEditSequel.Value == 0)
             {
-                errorMessage = $"Enter namber {_getType}";
+                errorMessage = $"Enter namber {_typeCinema}";
                 return false;
             }
             else if (_valueDateChanget == true && _cinema?.Detail?.DateWatch == null)
             {
                 if (numericEditGradeCinema.Value == 0)
                 {
-                    errorMessage = $"Grade {_getType} above in zero";
+                    errorMessage = $"Grade {_typeCinema} above in zero";
                     return false;
                 }
-
             }
-
             errorMessage = string.Empty;
             return true;
         }

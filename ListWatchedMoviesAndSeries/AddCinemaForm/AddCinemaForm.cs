@@ -6,7 +6,7 @@ namespace ListWatchedMoviesAndSeries
     public partial class AddCinemaForm : Form
     {
         private BoxCinemaForm _box;
-        private bool _checkValueData = false;
+        private bool _checkValueData = false;//Поле для контроля использования DataTimePicker даты просмотра.
         private readonly TypeCinema _type;
 
         public AddCinemaForm(BoxCinemaForm formBoxCinema, TypeCinema type)
@@ -33,7 +33,6 @@ namespace ListWatchedMoviesAndSeries
                 {
                     _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, _type));
                 }
-
                 DefoultValue();
             }
         }
@@ -75,7 +74,6 @@ namespace ListWatchedMoviesAndSeries
                 errorMessage = "Grade cinema above in zero";
                 return false;
             }
-
             errorMessage = string.Empty;
             return true;
         }

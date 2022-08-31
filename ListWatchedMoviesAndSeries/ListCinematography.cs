@@ -18,11 +18,14 @@ namespace ListWatchedMoviesAndSeries
                 if (cinema.Name != null)
                 {
                     if (cinema.Type == TypeCinema.Series)
+                    {
                         AddCinemaGridRow(dgvSeries, cinema);
+                    }
 
                     else if (cinema.Type == TypeCinema.Movie)
+                    {
                         AddCinemaGridRow(dgvMove, cinema);
-
+                    }
                     AddCinemaGridRow(dgvCinema, cinema);
                 }
             }
@@ -42,7 +45,6 @@ namespace ListWatchedMoviesAndSeries
                     {
                         ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
                     }
-
                     ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
                 }
             }
@@ -66,20 +68,15 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnEditCinema_Click(object sender, EventArgs e)
         {
-            if (BoxName.SelectedTab == null)
-            {
-                return;
-            }
-
             var page = BoxName.SelectedTab;
 
             if (page == tabMovePage)
             {
-                if (EditRowGrid(dgvMove, out int indexRowMove, out WatchItem? item))
+                if (IsEditRowGrid(dgvMove, out int indexRowMove, out WatchItem? item))
                 {
                     item.Type = TypeCinema.Movie;
-                    var id = item?.ID.ToString();
-                    var indexRowAllCinema = NumberItemGridCinema(dgvCinema, id);
+                    var id = item?.Id.ToString();
+                    var indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
                     using (var form = new EditorItemCinemaForm(this, item, indexRowMove, indexRowAllCinema))
                     {
                         form.ShowDialog();
@@ -88,11 +85,11 @@ namespace ListWatchedMoviesAndSeries
             }
             else if (page == tabSeriesPage)
             {
-                if (EditRowGrid(dgvSeries, out int indexRowSeries, out WatchItem? item))
+                if (IsEditRowGrid(dgvSeries, out int indexRowSeries, out WatchItem? item))
                 {
                     item.Type = TypeCinema.Series;
-                    var id = item?.ID.ToString();
-                    var indexRowAllCinema = NumberItemGridCinema(dgvCinema, id);
+                    var id = item?.Id.ToString();
+                    var indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
                     using (var form = new EditorItemCinemaForm(this, item, indexRowSeries, indexRowAllCinema))
                     {
                         form.ShowDialog();
@@ -101,11 +98,11 @@ namespace ListWatchedMoviesAndSeries
             }
             else if (page == tabAllCinemaPage)
             {
-                if (EditRowGrid(dgvCinema, out int indexRowAllCinema, out WatchItem? item))
+                if (IsEditRowGrid(dgvCinema, out int indexRowAllCinema, out WatchItem? item))
                 {
-                    var id = item?.ID.ToString();
-                    var dataGrid = CheckItemGridMove(id) ? dgvMove : dgvSeries;
-                    var indexRow = NumberItemGridCinema(dataGrid, id);
+                    var id = item?.Id.ToString();
+                    var dataGrid = IsCheckItemGridMove(id) ? dgvMove : dgvSeries;
+                    var indexRow = GetNumberItemGridCinema(dataGrid, id);
                     var type = dataGrid == dgvMove ? TypeCinema.Movie : TypeCinema.Series;
                     item.Type = type;
                     using (var form = new EditorItemCinemaForm(this, item, indexRow, indexRowAllCinema))
@@ -118,11 +115,6 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnDeliteMovie_Click(object sender, EventArgs e)
         {
-            if (BoxName.SelectedTab == null)
-            {
-                return;
-            }
-
             var page = BoxName.SelectedTab;
 
             if (page == tabMovePage)
@@ -139,7 +131,7 @@ namespace ListWatchedMoviesAndSeries
             {
                 if (RemoveRowGrid(dgvCinema, out string? idItem))
                 {
-                    if (CheckItemGridMove(idItem))
+                    if (IsCheckItemGridMove(idItem))
                     {
                         RemoveItemRowGrid(dgvMove, idItem);
                     }
@@ -161,7 +153,6 @@ namespace ListWatchedMoviesAndSeries
             }
 
             id = SelectedRowCinemaId(dataGridCinema);
-
             RemoveItemRowGrid(dataGridCinema, id);
 
             return true;
@@ -171,6 +162,7 @@ namespace ListWatchedMoviesAndSeries
         {
             int rowIndex = gridCinema.CurrentCell.RowIndex;
             int columnIndex = 5; //Column "ID" in DataGridView
+
             return gridCinema.Rows[rowIndex].Cells[columnIndex].Value.ToString();
         }
 
@@ -190,10 +182,10 @@ namespace ListWatchedMoviesAndSeries
         {
             var partOrSeason = cinema.NumberSequel;
             string formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.ID.ToString());
+            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString());
         }
 
-        private bool CheckItemGridMove(string? id)
+        private bool IsCheckItemGridMove(string? id)
         {
             var countRowGridMove = dgvMove.RowCount;
             if (countRowGridMove == 0)
@@ -208,7 +200,7 @@ namespace ListWatchedMoviesAndSeries
             return false;
         }
 
-        private bool EditRowGrid(DataGridView cinema, out int rowIndex, out WatchItem? cinemaItem)
+        private bool IsEditRowGrid(DataGridView cinema, out int rowIndex, out WatchItem? cinemaItem)
         {
 
             if (cinema.SelectedRows.Count == 0)
@@ -229,7 +221,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var title = cinema.Rows[rowIndex].Cells[0].Value.ToString();
             var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[1].Value.ToString());
-            var Id = cinema.Rows[rowIndex].Cells[5].Value.ToString();
+            var id = cinema.Rows[rowIndex].Cells[5].Value.ToString();
 
             if (cinema.Rows[rowIndex].Cells[3].Value.ToString() != string.Empty)
             {
@@ -243,7 +235,7 @@ namespace ListWatchedMoviesAndSeries
                                                    dateWatch,
                                                    grade,
                                                    TypeCinema.Unknown,
-                                                   Id);
+                                                   id);
                 return cinemaItem;
             }
             else
@@ -252,12 +244,12 @@ namespace ListWatchedMoviesAndSeries
                                                   title,
                                                   sequel,
                                                   TypeCinema.Unknown,
-                                                  Id);
+                                                  id);
                 return cinemaItem;
             }
         }
 
-        private int NumberItemGridCinema(DataGridView cinema, string id)
+        private int GetNumberItemGridCinema(DataGridView cinema, string id)
         {
             foreach (DataGridViewRow row in cinema.Rows)
             {
@@ -273,7 +265,7 @@ namespace ListWatchedMoviesAndSeries
         {
             cinema.Rows[rowItem].Cells[0].Value = cinemaItem.Name;
             cinema.Rows[rowItem].Cells[1].Value = cinemaItem.NumberSequel;
-            cinema.Rows[rowItem].Cells[5].Value = cinemaItem.ID;
+            cinema.Rows[rowItem].Cells[5].Value = cinemaItem.Id;
 
             if (cinemaItem.Detail?.DateWatch != null)
             {
