@@ -7,10 +7,13 @@ namespace ListWatchedMoviesAndSeries.Models
         public const string WatchCinema = "+";
         public const string NotWatchCinema = "-";
 
+        private Guid _id;
         private string? _name = null;
         private WatchDetail? _detail = null;
         private TypeCinema? _type = null;
         private decimal? _numberSequel = null;
+
+        public Guid? ID => _id;
 
         public string? Name
         {
@@ -36,15 +39,24 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _type, value);
         }
 
-        public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type)
+        public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid().ToString())
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type)
+        public WatchItem(string name, decimal? numberSequel, TypeCinema type, string Id) : this(name, numberSequel, null, null, type, Id)
+        {
+        }
+
+        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid().ToString())
+        {
+        }
+
+        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, string Id)
         {
             if (name == null)
                 throw new ArgumentException("Name cinema not null", "Exception");
 
+            _id = Guid.Parse(Id);
             _name = name;
             Detail = new WatchDetail(date, grade);
             _numberSequel = numberSequel;
