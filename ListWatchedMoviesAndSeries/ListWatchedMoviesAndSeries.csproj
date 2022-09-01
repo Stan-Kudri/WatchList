@@ -9,7 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="AddSeries.cs">
+    <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AddCinemaForm\AddCinemaForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
