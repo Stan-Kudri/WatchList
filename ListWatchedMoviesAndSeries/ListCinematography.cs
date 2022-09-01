@@ -19,7 +19,6 @@ namespace ListWatchedMoviesAndSeries
                 {
                     AddCinemaGridRow(dgvSeries, cinema);
                 }
-
                 else if (cinema.Type == TypeCinema.Movie)
                 {
                     AddCinemaGridRow(dgvMove, cinema);
@@ -196,7 +195,6 @@ namespace ListWatchedMoviesAndSeries
 
         private bool IsEditRowGrid(DataGridView cinema, out int rowIndex, out WatchItem? cinemaItem)
         {
-
             if (cinema.SelectedRows.Count == 0)
             {
                 rowIndex = -1;

@@ -10,7 +10,6 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 
         private TypeCinema(string category, int value) : base(category, value)
         {
-
         }
     }
 }
