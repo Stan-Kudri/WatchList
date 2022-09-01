@@ -9,7 +9,6 @@
         public WatchDetail(DateTime? dateWatch, decimal? grade)
         {
             Grade = dateWatch != null ? grade.ToString() : string.Empty;
-
             DateWatch = dateWatch;
         }
     }

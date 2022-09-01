@@ -15,19 +15,16 @@ namespace ListWatchedMoviesAndSeries
         {
             if (cinema != null)
             {
-                if (cinema.Name != null)
+                if (cinema.Type == TypeCinema.Series)
                 {
-                    if (cinema.Type == TypeCinema.Series)
-                    {
-                        AddCinemaGridRow(dgvSeries, cinema);
-                    }
-
-                    else if (cinema.Type == TypeCinema.Movie)
-                    {
-                        AddCinemaGridRow(dgvMove, cinema);
-                    }
-                    AddCinemaGridRow(dgvCinema, cinema);
+                    AddCinemaGridRow(dgvSeries, cinema);
                 }
+
+                else if (cinema.Type == TypeCinema.Movie)
+                {
+                    AddCinemaGridRow(dgvMove, cinema);
+                }
+                AddCinemaGridRow(dgvCinema, cinema);
             }
         }
 
@@ -35,18 +32,15 @@ namespace ListWatchedMoviesAndSeries
         {
             if (cinemaItem != null)
             {
-                if (cinemaItem.Name != null)
+                if (cinemaItem.Type == TypeCinema.Series)
                 {
-                    if (cinemaItem.Type == TypeCinema.Series)
-                    {
-                        ReplacementEditItem(dgvSeries, cinemaItem, numberRowGridCinema);
-                    }
-                    else if (cinemaItem.Type == TypeCinema.Movie)
-                    {
-                        ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
-                    }
-                    ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
+                    ReplacementEditItem(dgvSeries, cinemaItem, numberRowGridCinema);
                 }
+                else if (cinemaItem.Type == TypeCinema.Movie)
+                {
+                    ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
+                }
+                ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
             }
         }
 
@@ -75,7 +69,7 @@ namespace ListWatchedMoviesAndSeries
                 if (IsEditRowGrid(dgvMove, out int indexRowMove, out WatchItem? item))
                 {
                     item.Type = TypeCinema.Movie;
-                    var id = item?.Id.ToString();
+                    var id = item.Id.ToString();
                     var indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
                     using (var form = new EditorItemCinemaForm(this, item, indexRowMove, indexRowAllCinema))
                     {
@@ -88,7 +82,7 @@ namespace ListWatchedMoviesAndSeries
                 if (IsEditRowGrid(dgvSeries, out int indexRowSeries, out WatchItem? item))
                 {
                     item.Type = TypeCinema.Series;
-                    var id = item?.Id.ToString();
+                    var id = item.Id.ToString();
                     var indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
                     using (var form = new EditorItemCinemaForm(this, item, indexRowSeries, indexRowAllCinema))
                     {
