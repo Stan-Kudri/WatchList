@@ -56,11 +56,11 @@ namespace ListWatchedMoviesAndSeries.Models
             if (name == null)
                 throw new ArgumentException("Name cinema not null", "Exception");
 
-            _id = Id == string.Empty ? Guid.Parse(Id) : Guid.NewGuid();
+            _id = Id != string.Empty ? Guid.Parse(Id) : Guid.NewGuid();
             _name = name;
             Detail = new WatchDetail(date, grade);
             _numberSequel = numberSequel;
-            _type = type == null ? type : TypeCinema.Unknown;
+            _type = type != null ? type : TypeCinema.Unknown;
         }
 
         public string GetView() => Detail?.DateWatch == null ? NotWatchCinema : WatchCinema;
