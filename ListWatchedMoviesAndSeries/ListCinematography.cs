@@ -1,14 +1,19 @@
 using ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
+using System.Text.Json;
 
 namespace ListWatchedMoviesAndSeries
 {
     public partial class BoxCinemaForm : Form
     {
+        private string path = @"C:\\Grid\";
+
         public BoxCinemaForm()
         {
             InitializeComponent();
+            if (Directory.Exists(path) == false)
+                Directory.CreateDirectory(path);
         }
 
         public void SetNameGrid(WatchItem cinema)
@@ -136,6 +141,13 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            GridSerializer(dgvMove);
+            GridSerializer(dgvSeries);
+            GridSerializer(dgvCinema);
+        }
+
         private bool RemoveRowGrid(DataGridView dataGridCinema, out string? id)
         {
             if (dataGridCinema.SelectedRows.Count == 0)
@@ -209,6 +221,7 @@ namespace ListWatchedMoviesAndSeries
             return true;
         }
 
+        //Выдача нового элемента таблицы по номеру строки.
         private WatchItem GetItem(DataGridView cinema, int rowIndex)
         {
             var title = cinema.Rows[rowIndex].Cells[0].Value.ToString();
@@ -220,6 +233,39 @@ namespace ListWatchedMoviesAndSeries
                 var strDateWatch = cinema.Rows[rowIndex].Cells[3].Value.ToString();
                 var dateWatch = DateTime.Parse(strDateWatch);
                 var grade = decimal.Parse(cinema.Rows[rowIndex].Cells[4].Value.ToString());
+
+                WatchItem cinemaItem = new WatchItem(
+                                                   title,
+                                                   sequel,
+                                                   dateWatch,
+                                                   grade,
+                                                   TypeCinema.Unknown,
+                                                   id);
+                return cinemaItem;
+            }
+            else
+            {
+                WatchItem cinemaItem = new WatchItem(
+                                                  title,
+                                                  sequel,
+                                                  TypeCinema.Unknown,
+                                                  id);
+                return cinemaItem;
+            }
+        }
+
+        //Выдача нового элемента таблицы из строки.
+        private WatchItem GetItem(DataGridViewRow row)
+        {
+            var title = row.Cells[0].Value.ToString();
+            var sequel = decimal.Parse(row.Cells[1].Value.ToString());
+            var id = row.Cells[5].Value.ToString();
+
+            if (row.Cells[3].Value.ToString() != string.Empty)
+            {
+                var strDateWatch = row.Cells[3].Value.ToString();
+                var dateWatch = DateTime.Parse(strDateWatch);
+                var grade = decimal.Parse(row.Cells[4].Value.ToString());
 
                 WatchItem cinemaItem = new WatchItem(
                                                    title,
@@ -271,6 +317,36 @@ namespace ListWatchedMoviesAndSeries
                 cinema.Rows[rowItem].Cells[3].Value = string.Empty;
                 cinema.Rows[rowItem].Cells[4].Value = string.Empty;
             }
+        }
+
+        //Запись JSON в файл, по пути каталога path и с названием, в зависимости от таблицы.
+        private void GridSerializer(DataGridView grid)
+        {
+            if (grid.Rows.Count < 0)
+                MessageBoxProvider.ShowError("Grid without elements.");
+
+            var itemList = new List<WatchItem>();
+            foreach (DataGridViewRow row in grid.Rows)
+            {
+                if (row.Cells[5].Value == null)
+                    break;
+                itemList.Add(GetItem(row));
+            }
+
+            using (FileStream stream = new FileStream(@$"{path}Grid{GridType(grid)}.json", FileMode.OpenOrCreate))
+            {
+                JsonSerializer.SerializeAsync(stream, itemList);
+            }
+        }
+
+        //Получение названия типа таблицы.
+        private string GridType(DataGridView grid)
+        {
+            if (grid == dgvMove)
+                return "Move";
+            else if (grid == dgvSeries)
+                return "Series";
+            return "Cinema";
         }
     }
 }

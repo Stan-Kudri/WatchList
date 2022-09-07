@@ -60,6 +60,7 @@ namespace ListWatchedMoviesAndSeries
             this.IdCinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cinemaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnEditCinema = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.BoxName.SuspendLayout();
             this.tabMovePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMove)).BeginInit();
@@ -335,20 +336,33 @@ namespace ListWatchedMoviesAndSeries
             this.btnEditCinema.UseVisualStyleBackColor = false;
             this.btnEditCinema.Click += new System.EventHandler(this.btnEditCinema_Click);
             // 
+            // btnSave
+            // 
+            this.btnSave.BackColor = System.Drawing.Color.Azure;
+            this.btnSave.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnSave.Location = new System.Drawing.Point(305, 336);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(120, 30);
+            this.btnSave.TabIndex = 12;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // BoxCinemaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(574, 341);
+            this.ClientSize = new System.Drawing.Size(574, 371);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnEditCinema);
             this.Controls.Add(this.BoxName);
             this.Controls.Add(this.btnFormSeries);
             this.Controls.Add(this.btnDeliteMovie);
             this.Controls.Add(this.btnFormMovie);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(590, 380);
-            this.MinimumSize = new System.Drawing.Size(590, 380);
+            this.MaximumSize = new System.Drawing.Size(590, 410);
+            this.MinimumSize = new System.Drawing.Size(590, 410);
             this.Name = "BoxCinemaForm";
             this.Text = "BoxCinema";
             this.BoxName.ResumeLayout(false);
@@ -395,5 +409,6 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn DataWatchedCinema;
         private DataGridViewTextBoxColumn GradeCinema;
         private DataGridViewTextBoxColumn IdCinema;
+        private Button btnSave;
     }
 }
