@@ -28,6 +28,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
             InitializeComponent();
             DefoultCinemaItem();
+
+            dateTPCinema.MaxDate = DateTime.Now;
         }
 
         private void btnSaveEdit_Click(object sender, EventArgs e)

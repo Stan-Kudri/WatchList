@@ -15,6 +15,7 @@ namespace ListWatchedMoviesAndSeries
             _type = type;
             InitializeComponent();
             labelNumberSeaquel.Text = _type.Name;
+            dateTimePickerCinema.MaxDate = DateTime.Now;
         }
 
         private void BtnAddSCinema_Click(object sender, EventArgs e)
@@ -54,6 +55,7 @@ namespace ListWatchedMoviesAndSeries
             _checkDataWatch = false;
             numericGradeCinema.Enabled = false;
             numericGradeCinema.Value = 0;
+            numericSeaquel.Value = 0;
             numericGradeCinema.ReadOnly = true;
         }
 
