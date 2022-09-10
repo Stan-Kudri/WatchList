@@ -7,6 +7,13 @@ namespace ListWatchedMoviesAndSeries
 {
     public partial class BoxCinemaForm : Form
     {
+        private const int IndexColumnName = 0;
+        private const int IndexColumnSequel = 1;
+        private const int IndexColumnIsWatch = 2;
+        private const int IndexColumnDate = 3;
+        private const int IndexColumnGrade = 4;
+        private const int IndexColumnId = 5;
+
         private string path = @"C:\\Grid\";
         private readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
@@ -176,16 +183,14 @@ namespace ListWatchedMoviesAndSeries
         private string? SelectedRowCinemaId(DataGridView gridCinema)
         {
             int rowIndex = gridCinema.CurrentCell.RowIndex;
-            int columnIndex = 5; //Column "ID" in DataGridView
-
-            return gridCinema.Rows[rowIndex].Cells[columnIndex].Value.ToString();
+            return gridCinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString();
         }
 
         private void RemoveItemRowGrid(DataGridView dataGridCinema, string? id)
         {
             foreach (DataGridViewRow row in dataGridCinema.Rows)
             {
-                if (row.Cells[5].Value.ToString() == id)
+                if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
                     dataGridCinema.Rows.RemoveAt(row.Index);
                     break;
@@ -207,7 +212,7 @@ namespace ListWatchedMoviesAndSeries
                 return false;
             for (int i = 0; i < countRowGridMove; i++)
             {
-                var titleItem = dgvMove.Rows[i].Cells[5].Value;
+                var titleItem = dgvMove.Rows[i].Cells[IndexColumnId].Value;
                 if (titleItem != null && titleItem.Equals(id))
                     return true;
             }
@@ -231,15 +236,15 @@ namespace ListWatchedMoviesAndSeries
         //Выдача нового элемента таблицы по номеру строки.
         private WatchItem GetItem(DataGridView cinema, int rowIndex)
         {
-            var title = cinema.Rows[rowIndex].Cells[0].Value.ToString();
-            var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[1].Value.ToString());
-            var id = cinema.Rows[rowIndex].Cells[5].Value.ToString();
+            var title = cinema.Rows[rowIndex].Cells[IndexColumnName].Value.ToString();
+            var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnSequel].Value.ToString());
+            var id = cinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString();
 
-            if (cinema.Rows[rowIndex].Cells[3].Value.ToString() != string.Empty)
+            if (cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
-                var strDateWatch = cinema.Rows[rowIndex].Cells[3].Value.ToString();
+                var strDateWatch = cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString();
                 var dateWatch = DateTime.Parse(strDateWatch);
-                var grade = decimal.Parse(cinema.Rows[rowIndex].Cells[4].Value.ToString());
+                var grade = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnGrade].Value.ToString());
                 WatchItem cinemaItem = new WatchItem(
                                                    title,
                                                    sequel,
@@ -263,14 +268,14 @@ namespace ListWatchedMoviesAndSeries
         //Выдача нового элемента таблицы из строки.
         private WatchItem GetItem(DataGridViewRow row)
         {
-            var title = row.Cells[0].Value.ToString();
-            var sequel = decimal.Parse(row.Cells[1].Value.ToString());
-            var id = row.Cells[5].Value.ToString();
-            if (row.Cells[3].Value.ToString() != string.Empty)
+            var title = row.Cells[IndexColumnName].Value.ToString();
+            var sequel = decimal.Parse(row.Cells[IndexColumnSequel].Value.ToString());
+            var id = row.Cells[IndexColumnId].Value.ToString();
+            if (row.Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
-                var strDateWatch = row.Cells[3].Value.ToString();
+                var strDateWatch = row.Cells[IndexColumnDate].Value.ToString();
                 var dateWatch = DateTime.Parse(strDateWatch);
-                var grade = decimal.Parse(row.Cells[4].Value.ToString());
+                var grade = decimal.Parse(row.Cells[IndexColumnGrade].Value.ToString());
 
                 WatchItem cinemaItem = new WatchItem(
                                                    title,
@@ -296,7 +301,7 @@ namespace ListWatchedMoviesAndSeries
         {
             foreach (DataGridViewRow row in cinema.Rows)
             {
-                if (row.Cells[5].Value.ToString() == id)
+                if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
                     return row.Index;
                 }
@@ -306,21 +311,21 @@ namespace ListWatchedMoviesAndSeries
 
         private void ReplacementEditItem(DataGridView cinema, WatchItem cinemaItem, int rowItem)
         {
-            cinema.Rows[rowItem].Cells[0].Value = cinemaItem.Name;
-            cinema.Rows[rowItem].Cells[1].Value = cinemaItem.NumberSequel;
-            cinema.Rows[rowItem].Cells[5].Value = cinemaItem.Id;
+            cinema.Rows[rowItem].Cells[IndexColumnName].Value = cinemaItem.Name;
+            cinema.Rows[rowItem].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
+            cinema.Rows[rowItem].Cells[IndexColumnId].Value = cinemaItem.Id;
 
             if (cinemaItem.Detail?.DateWatch != null)
             {
-                cinema.Rows[rowItem].Cells[2].Value = "+";
-                cinema.Rows[rowItem].Cells[3].Value = cinemaItem.Detail?.DateWatch?.ToString("dd.MM.yyyy");
-                cinema.Rows[rowItem].Cells[4].Value = cinemaItem.Detail?.Grade;
+                cinema.Rows[rowItem].Cells[IndexColumnIsWatch].Value = "+";
+                cinema.Rows[rowItem].Cells[IndexColumnDate].Value = cinemaItem.Detail?.DateWatch?.ToString("dd.MM.yyyy");
+                cinema.Rows[rowItem].Cells[IndexColumnGrade].Value = cinemaItem.Detail?.Grade;
             }
             else
             {
-                cinema.Rows[rowItem].Cells[2].Value = "-";
-                cinema.Rows[rowItem].Cells[3].Value = string.Empty;
-                cinema.Rows[rowItem].Cells[4].Value = string.Empty;
+                cinema.Rows[rowItem].Cells[IndexColumnIsWatch].Value = "-";
+                cinema.Rows[rowItem].Cells[IndexColumnDate].Value = string.Empty;
+                cinema.Rows[rowItem].Cells[IndexColumnGrade].Value = string.Empty;
             }
         }
 
@@ -332,7 +337,7 @@ namespace ListWatchedMoviesAndSeries
             var itemList = new List<WatchItem>();
             foreach (DataGridViewRow row in grid.Rows)
             {
-                if (row.Cells[5].Value == null)
+                if (row.Cells[IndexColumnId].Value == null)
                     break;
                 var item = GetItem(row);
                 item.Type = GetType(grid);
