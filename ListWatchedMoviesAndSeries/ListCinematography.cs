@@ -1,4 +1,4 @@
-using ListWatchedMoviesAndSeries.EditorForm;
+п»їusing ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using System.Text.Json;
@@ -8,6 +8,10 @@ namespace ListWatchedMoviesAndSeries
     public partial class BoxCinemaForm : Form
     {
         private string path = @"C:\\Grid\";
+        private readonly JsonSerializerOptions _options = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
 
         public BoxCinemaForm()
         {
@@ -70,10 +74,10 @@ namespace ListWatchedMoviesAndSeries
 
             if (page == tabMovePage)
             {
-                if (IsEditRowGrid(dgvMove, out int indexRowMove, out WatchItem? item))
+                if (IsEditRowGrid(dgvMove, out int indexRowMove, out WatchItem? item) && item != null)
                 {
                     item.Type = TypeCinema.Movie;
-                    var id = item.Id.ToString();
+                    var id = item.Id?.ToString() ?? string.Empty;
                     var indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
                     using (var form = new EditorItemCinemaForm(this, item, indexRowMove, indexRowAllCinema))
                     {
@@ -83,10 +87,10 @@ namespace ListWatchedMoviesAndSeries
             }
             else if (page == tabSeriesPage)
             {
-                if (IsEditRowGrid(dgvSeries, out int indexRowSeries, out WatchItem? item))
+                if (IsEditRowGrid(dgvSeries, out int indexRowSeries, out WatchItem? item) && item != null)
                 {
                     item.Type = TypeCinema.Series;
-                    var id = item.Id.ToString();
+                    var id = item.Id?.ToString() ?? string.Empty;
                     var indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
                     using (var form = new EditorItemCinemaForm(this, item, indexRowSeries, indexRowAllCinema))
                     {
@@ -96,9 +100,9 @@ namespace ListWatchedMoviesAndSeries
             }
             else if (page == tabAllCinemaPage)
             {
-                if (IsEditRowGrid(dgvCinema, out int indexRowAllCinema, out WatchItem? item))
+                if (IsEditRowGrid(dgvCinema, out int indexRowAllCinema, out WatchItem? item) && item != null)
                 {
-                    var id = item?.Id.ToString();
+                    var id = item?.Id?.ToString() ?? string.Empty;
                     var dataGrid = IsCheckItemGridMove(id) ? dgvMove : dgvSeries;
                     var indexRow = GetNumberItemGridCinema(dataGrid, id);
                     var type = dataGrid == dgvMove ? TypeCinema.Movie : TypeCinema.Series;
@@ -148,6 +152,13 @@ namespace ListWatchedMoviesAndSeries
             GridSerializer(dgvCinema);
         }
 
+        private void btnPullingFile_Click(object sender, EventArgs e)
+        {
+            GetItemDeserialize(dgvMove);
+            GetItemDeserialize(dgvSeries);
+            GetItemDeserialize(dgvCinema);
+        }
+
         private bool RemoveRowGrid(DataGridView dataGridCinema, out string? id)
         {
             if (dataGridCinema.SelectedRows.Count == 0)
@@ -156,7 +167,6 @@ namespace ListWatchedMoviesAndSeries
                 MessageBoxProvider.ShowWarning("Highlight the desired line");
                 return false;
             }
-
             id = SelectedRowCinemaId(dataGridCinema);
             RemoveItemRowGrid(dataGridCinema, id);
 
@@ -195,7 +205,6 @@ namespace ListWatchedMoviesAndSeries
             var countRowGridMove = dgvMove.RowCount;
             if (countRowGridMove == 0)
                 return false;
-
             for (int i = 0; i < countRowGridMove; i++)
             {
                 var titleItem = dgvMove.Rows[i].Cells[5].Value;
@@ -214,14 +223,12 @@ namespace ListWatchedMoviesAndSeries
                 MessageBoxProvider.ShowWarning("Highlight the desired line");
                 return false;
             }
-
             rowIndex = cinema.CurrentCell.RowIndex;
             cinemaItem = GetItem(cinema, rowIndex);
-
             return true;
         }
 
-        //Выдача нового элемента таблицы по номеру строки.
+        //Р’С‹РґР°С‡Р° РЅРѕРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° С‚Р°Р±Р»РёС†С‹ РїРѕ РЅРѕРјРµСЂСѓ СЃС‚СЂРѕРєРё.
         private WatchItem GetItem(DataGridView cinema, int rowIndex)
         {
             var title = cinema.Rows[rowIndex].Cells[0].Value.ToString();
@@ -233,7 +240,6 @@ namespace ListWatchedMoviesAndSeries
                 var strDateWatch = cinema.Rows[rowIndex].Cells[3].Value.ToString();
                 var dateWatch = DateTime.Parse(strDateWatch);
                 var grade = decimal.Parse(cinema.Rows[rowIndex].Cells[4].Value.ToString());
-
                 WatchItem cinemaItem = new WatchItem(
                                                    title,
                                                    sequel,
@@ -254,13 +260,12 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        //Выдача нового элемента таблицы из строки.
+        //Р’С‹РґР°С‡Р° РЅРѕРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° С‚Р°Р±Р»РёС†С‹ РёР· СЃС‚СЂРѕРєРё.
         private WatchItem GetItem(DataGridViewRow row)
         {
             var title = row.Cells[0].Value.ToString();
             var sequel = decimal.Parse(row.Cells[1].Value.ToString());
             var id = row.Cells[5].Value.ToString();
-
             if (row.Cells[3].Value.ToString() != string.Empty)
             {
                 var strDateWatch = row.Cells[3].Value.ToString();
@@ -319,27 +324,28 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        //Запись JSON в файл, по пути каталога path и с названием, в зависимости от таблицы.
+        //Р—Р°РїРёСЃСЊ JSON РІ С„Р°Р№Р», РїРѕ РїСѓС‚Рё РєР°С‚Р°Р»РѕРіР° path Рё СЃ РЅР°Р·РІР°РЅРёРµРј, РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚Р°Р±Р»РёС†С‹.
         private void GridSerializer(DataGridView grid)
         {
             if (grid.Rows.Count < 0)
                 MessageBoxProvider.ShowError("Grid without elements.");
-
             var itemList = new List<WatchItem>();
             foreach (DataGridViewRow row in grid.Rows)
             {
                 if (row.Cells[5].Value == null)
                     break;
+                var item = GetItem(row);
+                item.Type = GetType(grid);
                 itemList.Add(GetItem(row));
             }
 
-            using (FileStream stream = new FileStream(@$"{path}Grid{GridType(grid)}.json", FileMode.OpenOrCreate))
+            using (FileStream stream = new FileStream(@$"{path}Grid{GridType(grid)}.json", FileMode.Create))
             {
-                JsonSerializer.SerializeAsync(stream, itemList);
+                JsonSerializer.Serialize(stream, itemList, _options);
             }
         }
 
-        //Получение названия типа таблицы.
+        //РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ С‚РёРїР° С‚Р°Р±Р»РёС†С‹.
         private string GridType(DataGridView grid)
         {
             if (grid == dgvMove)
@@ -347,6 +353,36 @@ namespace ListWatchedMoviesAndSeries
             else if (grid == dgvSeries)
                 return "Series";
             return "Cinema";
+        }
+
+        private TypeCinema GetType(DataGridView grid)
+        {
+            if (grid == dgvMove)
+                return TypeCinema.Movie;
+            else if (grid == dgvSeries)
+                return TypeCinema.Series;
+            return TypeCinema.Unknown;
+        }
+
+        private void GetItemDeserialize(DataGridView grid)
+        {
+            grid.Rows.Clear();
+            var pathFile = @$"{path}Grid{GridType(grid)}.json";
+            if (!File.Exists(pathFile))
+            {
+                MessageBoxProvider.ShowError("File missing.");
+                return;
+            }
+            using (FileStream stream = new FileStream(pathFile, FileMode.Open))
+            {
+                var itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
+                if (itemList == null || itemList.Count <= 0)
+                    return;
+                foreach (var item in itemList)
+                {
+                    AddCinemaGridRow(grid, item);
+                }
+            }
         }
     }
 }

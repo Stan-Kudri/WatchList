@@ -61,6 +61,7 @@ namespace ListWatchedMoviesAndSeries
             this.cinemaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnEditCinema = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.btnPullingFile = new System.Windows.Forms.Button();
             this.BoxName.SuspendLayout();
             this.tabMovePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMove)).BeginInit();
@@ -344,9 +345,21 @@ namespace ListWatchedMoviesAndSeries
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 30);
             this.btnSave.TabIndex = 12;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Save File";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnPullingFile
+            // 
+            this.btnPullingFile.BackColor = System.Drawing.Color.Azure;
+            this.btnPullingFile.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnPullingFile.Location = new System.Drawing.Point(445, 336);
+            this.btnPullingFile.Name = "btnPullingFile";
+            this.btnPullingFile.Size = new System.Drawing.Size(120, 30);
+            this.btnPullingFile.TabIndex = 13;
+            this.btnPullingFile.Text = "Pulling File Data";
+            this.btnPullingFile.UseVisualStyleBackColor = false;
+            this.btnPullingFile.Click += new System.EventHandler(this.btnPullingFile_Click);
             // 
             // BoxCinemaForm
             // 
@@ -354,6 +367,7 @@ namespace ListWatchedMoviesAndSeries
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(574, 371);
+            this.Controls.Add(this.btnPullingFile);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnEditCinema);
             this.Controls.Add(this.BoxName);
@@ -410,5 +424,6 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn GradeCinema;
         private DataGridViewTextBoxColumn IdCinema;
         private Button btnSave;
+        private Button btnPullingFile;
     }
 }
