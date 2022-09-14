@@ -5,7 +5,7 @@ namespace ListWatchedMoviesAndSeries
 {
     public partial class AddCinemaForm : Form
     {
-        private BoxCinemaForm _box;
+        private readonly BoxCinemaForm _box;
         private bool _checkDataWatch; //Поле для контроля использования DataTimePicker даты просмотра.
         private readonly TypeCinema _type;
 

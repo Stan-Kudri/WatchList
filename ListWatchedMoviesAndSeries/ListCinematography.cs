@@ -18,7 +18,7 @@ namespace ListWatchedMoviesAndSeries
         private const string TypeTagMove = "Move";
         private const string TypeTagSeries = "Series";
 
-        private string _path = @"C:\\Grid\";
+        private readonly string _path = @"C:\\Grid\";
         private readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
             WriteIndented = true

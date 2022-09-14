@@ -8,7 +8,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public const string NotWatchCinema = "-";
 
         private bool _checkDataWatch;//Поле для контроля использования DataTimePicker или уже выставленной даты просмотра.
-        private BoxCinemaForm _box;
+        private readonly BoxCinemaForm _box;
         private readonly WatchItem _cinema;
 
         private readonly int _numberRowCinema;
@@ -20,15 +20,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         {
             if (cinema == null)
                 throw new ArgumentException("Item cinema not null");
-
+            //Инициализация всех переменных, необходимых для изменения.
             _cinema = cinema;
             _box = formBoxCinema;
             _numberRowCinema = numberRowCinema;
             _numberRowAllCinema = numberRowAllCinema;
-
             InitializeComponent();
             DefoultCinemaItem();
-
+            //Максимальная дата, которую можно установить в DataTimePicker - это дата запуска программы.
             dateTPCinema.MaxDate = DateTime.Now;
         }
 
