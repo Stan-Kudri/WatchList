@@ -44,7 +44,7 @@ namespace ListWatchedMoviesAndSeries
             this.IdMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabSeriesPage = new System.Windows.Forms.TabPage();
             this.dgvSeries = new System.Windows.Forms.DataGridView();
-            this.SeriesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SeriesTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NumberSeason = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.WatchedSeries = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DataWatchedSeries = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,7 +79,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormMovie.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnFormMovie.Location = new System.Drawing.Point(10, 300);
             this.btnFormMovie.Name = "btnFormMovie";
-            this.btnFormMovie.Size = new System.Drawing.Size(120, 30);
+            this.btnFormMovie.Size = new System.Drawing.Size(80, 30);
             this.btnFormMovie.TabIndex = 1;
             this.btnFormMovie.Text = "Add Movie";
             this.btnFormMovie.UseVisualStyleBackColor = false;
@@ -90,11 +90,11 @@ namespace ListWatchedMoviesAndSeries
             this.btnDeliteMovie.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnDeliteMovie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeliteMovie.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDeliteMovie.Location = new System.Drawing.Point(445, 300);
+            this.btnDeliteMovie.Location = new System.Drawing.Point(295, 300);
             this.btnDeliteMovie.Name = "btnDeliteMovie";
-            this.btnDeliteMovie.Size = new System.Drawing.Size(120, 30);
+            this.btnDeliteMovie.Size = new System.Drawing.Size(80, 30);
             this.btnDeliteMovie.TabIndex = 2;
-            this.btnDeliteMovie.Text = "Delite Cinema";
+            this.btnDeliteMovie.Text = "Delite";
             this.btnDeliteMovie.UseVisualStyleBackColor = false;
             this.btnDeliteMovie.Click += new System.EventHandler(this.btnDeliteMovie_Click);
             // 
@@ -103,9 +103,9 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormSeries.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnFormSeries.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFormSeries.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnFormSeries.Location = new System.Drawing.Point(157, 300);
+            this.btnFormSeries.Location = new System.Drawing.Point(105, 300);
             this.btnFormSeries.Name = "btnFormSeries";
-            this.btnFormSeries.Size = new System.Drawing.Size(120, 30);
+            this.btnFormSeries.Size = new System.Drawing.Size(80, 30);
             this.btnFormSeries.TabIndex = 9;
             this.btnFormSeries.Text = "Add Series";
             this.btnFormSeries.UseVisualStyleBackColor = false;
@@ -123,6 +123,7 @@ namespace ListWatchedMoviesAndSeries
             this.BoxName.SelectedIndex = 0;
             this.BoxName.Size = new System.Drawing.Size(555, 280);
             this.BoxName.TabIndex = 10;
+            this.BoxName.Tag = "Cinema";
             // 
             // tabMovePage
             // 
@@ -153,6 +154,7 @@ namespace ListWatchedMoviesAndSeries
             this.dgvMove.RowTemplate.Height = 25;
             this.dgvMove.Size = new System.Drawing.Size(543, 250);
             this.dgvMove.TabIndex = 11;
+            this.dgvMove.Tag = "Move";
             // 
             // MoveTitle
             // 
@@ -206,7 +208,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.dgvSeries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSeries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.SeriesName,
+            this.SeriesTitle,
             this.NumberSeason,
             this.WatchedSeries,
             this.DataWatchedSeries,
@@ -220,12 +222,13 @@ namespace ListWatchedMoviesAndSeries
             this.dgvSeries.RowTemplate.Height = 25;
             this.dgvSeries.Size = new System.Drawing.Size(543, 250);
             this.dgvSeries.TabIndex = 12;
+            this.dgvSeries.Tag = "Series";
             // 
-            // SeriesName
+            // SeriesTitle
             // 
-            this.SeriesName.HeaderText = "Title";
-            this.SeriesName.Name = "SeriesName";
-            this.SeriesName.ReadOnly = true;
+            this.SeriesTitle.HeaderText = "Title";
+            this.SeriesTitle.Name = "SeriesTitle";
+            this.SeriesTitle.ReadOnly = true;
             // 
             // NumberSeason
             // 
@@ -286,6 +289,7 @@ namespace ListWatchedMoviesAndSeries
             this.dgvCinema.RowTemplate.Height = 25;
             this.dgvCinema.Size = new System.Drawing.Size(543, 250);
             this.dgvCinema.TabIndex = 12;
+            this.dgvCinema.Tag = "Cinema";
             // 
             // NameCinema
             // 
@@ -329,9 +333,9 @@ namespace ListWatchedMoviesAndSeries
             this.btnEditCinema.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnEditCinema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditCinema.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnEditCinema.Location = new System.Drawing.Point(305, 300);
+            this.btnEditCinema.Location = new System.Drawing.Point(200, 300);
             this.btnEditCinema.Name = "btnEditCinema";
-            this.btnEditCinema.Size = new System.Drawing.Size(120, 30);
+            this.btnEditCinema.Size = new System.Drawing.Size(80, 30);
             this.btnEditCinema.TabIndex = 11;
             this.btnEditCinema.Text = "Edit";
             this.btnEditCinema.UseVisualStyleBackColor = false;
@@ -341,9 +345,9 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.btnSave.BackColor = System.Drawing.Color.Azure;
             this.btnSave.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSave.Location = new System.Drawing.Point(305, 336);
+            this.btnSave.Location = new System.Drawing.Point(390, 300);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(120, 30);
+            this.btnSave.Size = new System.Drawing.Size(80, 30);
             this.btnSave.TabIndex = 12;
             this.btnSave.Text = "Save File";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -353,11 +357,11 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.btnPullingFile.BackColor = System.Drawing.Color.Azure;
             this.btnPullingFile.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnPullingFile.Location = new System.Drawing.Point(445, 336);
+            this.btnPullingFile.Location = new System.Drawing.Point(485, 300);
             this.btnPullingFile.Name = "btnPullingFile";
-            this.btnPullingFile.Size = new System.Drawing.Size(120, 30);
+            this.btnPullingFile.Size = new System.Drawing.Size(80, 30);
             this.btnPullingFile.TabIndex = 13;
-            this.btnPullingFile.Text = "Pulling File Data";
+            this.btnPullingFile.Text = "Load File";
             this.btnPullingFile.UseVisualStyleBackColor = false;
             this.btnPullingFile.Click += new System.EventHandler(this.btnPullingFile_Click);
             // 
@@ -366,7 +370,7 @@ namespace ListWatchedMoviesAndSeries
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(574, 371);
+            this.ClientSize = new System.Drawing.Size(574, 341);
             this.Controls.Add(this.btnPullingFile);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnEditCinema);
@@ -375,8 +379,8 @@ namespace ListWatchedMoviesAndSeries
             this.Controls.Add(this.btnDeliteMovie);
             this.Controls.Add(this.btnFormMovie);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(590, 410);
-            this.MinimumSize = new System.Drawing.Size(590, 410);
+            this.MaximumSize = new System.Drawing.Size(590, 380);
+            this.MinimumSize = new System.Drawing.Size(590, 380);
             this.Name = "BoxCinemaForm";
             this.Text = "BoxCinema";
             this.BoxName.ResumeLayout(false);
@@ -411,12 +415,6 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn DataWatchedMove;
         private DataGridViewTextBoxColumn GradeMove;
         private DataGridViewTextBoxColumn IdMove;
-        private DataGridViewTextBoxColumn SeriesName;
-        private DataGridViewTextBoxColumn NumberSeason;
-        private DataGridViewTextBoxColumn WatchedSeries;
-        private DataGridViewTextBoxColumn DataWatchedSeries;
-        private DataGridViewTextBoxColumn GradeSeries;
-        private DataGridViewTextBoxColumn IdSeries;
         private DataGridViewTextBoxColumn NameCinema;
         private DataGridViewTextBoxColumn NumberCinema;
         private DataGridViewTextBoxColumn WatchedCinema;
@@ -425,5 +423,11 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn IdCinema;
         private Button btnSave;
         private Button btnPullingFile;
+        private DataGridViewTextBoxColumn SeriesTitle;
+        private DataGridViewTextBoxColumn NumberSeason;
+        private DataGridViewTextBoxColumn WatchedSeries;
+        private DataGridViewTextBoxColumn DataWatchedSeries;
+        private DataGridViewTextBoxColumn GradeSeries;
+        private DataGridViewTextBoxColumn IdSeries;
     }
 }

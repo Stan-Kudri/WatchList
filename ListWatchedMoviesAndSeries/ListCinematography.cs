@@ -1,6 +1,7 @@
 ﻿using ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
+using ListWatchedMoviesAndSeries.Repository;
 using System.Text.Json;
 
 namespace ListWatchedMoviesAndSeries
@@ -14,7 +15,10 @@ namespace ListWatchedMoviesAndSeries
         private const int IndexColumnGrade = 4;
         private const int IndexColumnId = 5;
 
-        private string path = @"C:\\Grid\";
+        private const string TypeTagMove = "Move";
+        private const string TypeTagSeries = "Series";
+
+        private string _path = @"C:\\Grid\";
         private readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
             WriteIndented = true
@@ -23,8 +27,8 @@ namespace ListWatchedMoviesAndSeries
         public BoxCinemaForm()
         {
             InitializeComponent();
-            if (Directory.Exists(path) == false)
-                Directory.CreateDirectory(path);
+            if (Directory.Exists(_path) == false)
+                Directory.CreateDirectory(_path);
         }
 
         public void SetNameGrid(WatchItem cinema)
@@ -341,30 +345,18 @@ namespace ListWatchedMoviesAndSeries
                     break;
                 var item = GetItem(row);
                 item.Type = GetType(grid);
-                itemList.Add(GetItem(row));
+                itemList.Add(item);
             }
-
-            using (FileStream stream = new FileStream(@$"{path}Grid{GridType(grid)}.json", FileMode.Create))
-            {
-                JsonSerializer.Serialize(stream, itemList, _options);
-            }
-        }
-
-        //Получение названия типа таблицы.
-        private string GridType(DataGridView grid)
-        {
-            if (grid == dgvMove)
-                return "Move";
-            else if (grid == dgvSeries)
-                return "Series";
-            return "Cinema";
+            var path = @$"{_path}Grid{grid.Tag}.json";
+            var fileRepository = new FileWatchItemRepository(path);
+            fileRepository.Save(itemList);
         }
 
         private TypeCinema GetType(DataGridView grid)
         {
-            if (grid == dgvMove)
+            if (grid.Tag == TypeTagMove)
                 return TypeCinema.Movie;
-            else if (grid == dgvSeries)
+            else if (grid.Tag == TypeTagSeries)
                 return TypeCinema.Series;
             return TypeCinema.Unknown;
         }
@@ -372,21 +364,19 @@ namespace ListWatchedMoviesAndSeries
         private void GetItemDeserialize(DataGridView grid)
         {
             grid.Rows.Clear();
-            var pathFile = @$"{path}Grid{GridType(grid)}.json";
+            var pathFile = @$"{_path}Grid{grid.Tag}.json";
             if (!File.Exists(pathFile))
             {
                 MessageBoxProvider.ShowError("File missing.");
                 return;
             }
-            using (FileStream stream = new FileStream(pathFile, FileMode.Open))
+            var fileRepository = new FileWatchItemRepository(pathFile);
+            var itemGrid = fileRepository.GetAll();
+            if (itemGrid == null || itemGrid.Count <= 0)
+                return;
+            foreach (var item in itemGrid)
             {
-                var itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
-                if (itemList == null || itemList.Count <= 0)
-                    return;
-                foreach (var item in itemList)
-                {
-                    AddCinemaGridRow(grid, item);
-                }
+                AddCinemaGridRow(grid, item);
             }
         }
     }
