@@ -53,7 +53,6 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public WatchItem()
         {
-
         }
 
         public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid().ToString())

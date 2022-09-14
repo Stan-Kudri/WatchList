@@ -5,7 +5,6 @@ namespace ListWatchedMoviesAndSeries.Repository
 {
     public class FileWatchItemRepository : IWatchItemRepository
     {
-        //var items = new FileWatchItemRepository(path).GetAll();AddToGrid(items);
         private readonly string _path;
 
         private readonly JsonSerializerOptions _options = new JsonSerializerOptions
