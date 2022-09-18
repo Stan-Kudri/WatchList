@@ -84,7 +84,7 @@
             this.dateTPCinema.Size = new System.Drawing.Size(200, 23);
             this.dateTPCinema.TabIndex = 26;
             this.dateTPCinema.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
-            this.dateTPCinema.ValueChanged += new System.EventHandler(this.DateTimePicker_ValueChanged);
+            this.dateTPCinema.ValueChanged += new System.EventHandler(this.Dtp_ValueChanged);
             // 
             // numericEditSequel
             // 
@@ -104,7 +104,7 @@
             this.btnCloseEdit.TabIndex = 24;
             this.btnCloseEdit.Text = "Close";
             this.btnCloseEdit.UseVisualStyleBackColor = false;
-            this.btnCloseEdit.Click += new System.EventHandler(this.btnCloseEdit_Click);
+            this.btnCloseEdit.Click += new System.EventHandler(this.BtnCloseEdit_Click);
             // 
             // btnReturnDataCinema
             // 
@@ -116,7 +116,7 @@
             this.btnReturnDataCinema.TabIndex = 23;
             this.btnReturnDataCinema.Text = "Return";
             this.btnReturnDataCinema.UseVisualStyleBackColor = false;
-            this.btnReturnDataCinema.Click += new System.EventHandler(this.btnReturnDataCinema_Click);
+            this.btnReturnDataCinema.Click += new System.EventHandler(this.BtnReturnDataCinema_Click);
             // 
             // btnSaveEdit
             // 
@@ -129,7 +129,7 @@
             this.btnSaveEdit.TabIndex = 22;
             this.btnSaveEdit.Text = "Save";
             this.btnSaveEdit.UseVisualStyleBackColor = false;
-            this.btnSaveEdit.Click += new System.EventHandler(this.btnSaveEdit_Click);
+            this.btnSaveEdit.Click += new System.EventHandler(this.BtnSaveEdit_Click);
             // 
             // labelNumberSequel
             // 

@@ -19,7 +19,7 @@ namespace ListWatchedMoviesAndSeries.Models
         public Guid? Id
         {
             get => _id;
-            set => SetField<Guid>(ref _id, (Guid)value);
+            set => SetField(ref _id, (Guid)value);
         }
 
         [JsonPropertyName("Name")]
@@ -36,19 +36,19 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _detail, value);
         }
 
-        [JsonPropertyName("NumberSequel")]
-        public decimal? NumberSequel
-        {
-            get => _numberSequel;
-            set => SetField(ref _numberSequel, value);
-        }
-
         [JsonPropertyName("Type")]
         [JsonConverter(typeof(SmartEnumValueConverter<TypeCinema, int>))]
         public TypeCinema? Type
         {
             get => _type;
             set => SetField(ref _type, value);
+        }
+
+        [JsonPropertyName("NumberSequel")]
+        public decimal? NumberSequel
+        {
+            get => _numberSequel;
+            set => SetField(ref _numberSequel, value);
         }
 
         public WatchItem()

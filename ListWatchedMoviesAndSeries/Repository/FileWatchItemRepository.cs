@@ -17,10 +17,6 @@ namespace ListWatchedMoviesAndSeries.Repository
             if (path == null) throw new ArgumentNullException("path");
             _path = path;
         }
-        public void Add(WatchItem item)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<WatchItem> GetAll()
         {
@@ -37,6 +33,11 @@ namespace ListWatchedMoviesAndSeries.Repository
                 MessageBoxProvider.ShowError(ex.Message);
                 return new List<WatchItem>();
             }
+        }
+
+        public void Add(WatchItem item)
+        {
+            throw new NotImplementedException();
         }
 
         public void Save(List<WatchItem> items)

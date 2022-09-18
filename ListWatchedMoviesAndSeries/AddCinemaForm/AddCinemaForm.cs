@@ -20,7 +20,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnAddSCinema_Click(object sender, EventArgs e)
         {
-            if (ValidateCinemaPaddingFields(out var errorMessage) == false)
+            if (!ValidateFields(out var errorMessage))
             {
                 MessageBoxProvider.ShowWarning(errorMessage);
             }
@@ -42,7 +42,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
-        private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
+        private void DtpCinema_ValueChanged(object sender, EventArgs e)
         {
             _checkDataWatch = true;
             numericGradeCinema.ReadOnly = false;
@@ -59,7 +59,7 @@ namespace ListWatchedMoviesAndSeries
             numericGradeCinema.ReadOnly = true;
         }
 
-        private bool ValidateCinemaPaddingFields(out string errorMessage)
+        private bool ValidateFields(out string errorMessage)
         {
             if (txtAddCinema.Text.Length <= 0)
             {

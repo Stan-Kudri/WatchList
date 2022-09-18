@@ -14,4 +14,5 @@ namespace ListWatchedMoviesAndSeries
             Application.Run(new BoxCinemaForm());
         }
     }
+
 }
