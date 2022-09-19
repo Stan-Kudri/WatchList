@@ -1,4 +1,4 @@
-namespace ListWatchedMoviesAndSeries
+﻿namespace ListWatchedMoviesAndSeries
 {
     internal static class Program
     {
