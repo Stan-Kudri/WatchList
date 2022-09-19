@@ -20,13 +20,12 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         {
             if (cinema == null)
                 throw new ArgumentException("Item cinema not null");
-            //Инициализация всех переменных, необходимых для изменения.
             _cinema = cinema;
             _box = formBoxCinema;
             _numberRowCinema = numberRowCinema;
             _numberRowAllCinema = numberRowAllCinema;
             InitializeComponent();
-            DefoultCinemaItem();
+            DefaultCinemaItem();
             //Максимальная дата, которую можно установить в DataTimePicker - это дата запуска программы.
             dateTPCinema.MaxDate = DateTime.Now;
         }
@@ -47,11 +46,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => DefoultCinemaItem();
+        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => DefaultCinemaItem();
 
         private void BtnCloseEdit_Click(object sender, EventArgs e) => Close();
 
-        private void DefoultCinemaItem()
+        private void DefaultCinemaItem()
         {
             txtEditName.Text = _cinema.Name;
             labelNumberSequel.Text = _cinema.GetTypeSequel();
@@ -66,7 +65,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                 numericEditSequel.Value = _cinema.NumberSequel.Value;
         }
 
-        private void Dtp_ValueChanged(object sender, EventArgs e)
+        private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
         {
             _checkDataWatch = true;
             numericEditGradeCinema.ReadOnly = false;

@@ -84,7 +84,7 @@
             this.dateTPCinema.Size = new System.Drawing.Size(200, 23);
             this.dateTPCinema.TabIndex = 26;
             this.dateTPCinema.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
-            this.dateTPCinema.ValueChanged += new System.EventHandler(this.Dtp_ValueChanged);
+            this.dateTPCinema.ValueChanged += new System.EventHandler(this.DateTimePickerCinema_ValueChanged);
             // 
             // numericEditSequel
             // 

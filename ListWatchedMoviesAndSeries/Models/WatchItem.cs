@@ -51,7 +51,7 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _numberSequel, value);
         }
 
-        public WatchItem()
+        private WatchItem()
         {
         }
 

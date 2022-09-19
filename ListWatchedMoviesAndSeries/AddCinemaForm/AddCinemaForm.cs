@@ -23,6 +23,7 @@ namespace ListWatchedMoviesAndSeries
             if (!ValidateFields(out var errorMessage))
             {
                 MessageBoxProvider.ShowWarning(errorMessage);
+                return;
             }
             else
             {
@@ -42,7 +43,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
-        private void DtpCinema_ValueChanged(object sender, EventArgs e)
+        private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
         {
             _checkDataWatch = true;
             numericGradeCinema.ReadOnly = false;
