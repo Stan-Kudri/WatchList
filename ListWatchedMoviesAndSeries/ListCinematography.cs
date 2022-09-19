@@ -83,15 +83,6 @@ namespace ListWatchedMoviesAndSeries
                 if (IsEditRowGrid(dgvMove, out int indexRowMove, out WatchItem? item) && item != null)
                 {
                     ShowEditCinema(dgvMove, item, indexRowMove);
-                    /*
-                    item.Type = TypeCinema.Movie;
-                    var id = item.Id?.ToString() ?? string.Empty;
-                    var indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
-                    using (var form = new EditorItemCinemaForm(this, item, indexRowMove, indexRowAllCinema))
-                    {
-                        form.ShowDialog();
-                    }
-                    */
                 }
             }
             else if (page == tabSeriesPage)
@@ -99,15 +90,6 @@ namespace ListWatchedMoviesAndSeries
                 if (IsEditRowGrid(dgvSeries, out int indexRowSeries, out WatchItem? item) && item != null)
                 {
                     ShowEditCinema(dgvSeries, item, indexRowSeries);
-                    /*
-                    item.Type = TypeCinema.Series;
-                    var id = item.Id?.ToString() ?? string.Empty;
-                    var indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
-                    using (var form = new EditorItemCinemaForm(this, item, indexRowSeries, indexRowAllCinema))
-                    {
-                        form.ShowDialog();
-                    }
-                    */
                 }
             }
             else if (page == tabAllCinemaPage)
@@ -115,38 +97,7 @@ namespace ListWatchedMoviesAndSeries
                 if (IsEditRowGrid(dgvCinema, out int indexRowAllCinema, out WatchItem? item) && item != null)
                 {
                     ShowEditCinema(dgvCinema, item, indexRowAllCinema);
-                    /*
-                    var id = item?.Id?.ToString() ?? string.Empty;
-                    var dataGrid = IsCheckItemGridMove(id) ? dgvMove : dgvSeries;
-                    var indexRow = GetNumberItemGridCinema(dataGrid, id);
-                    var type = dataGrid == dgvMove ? TypeCinema.Movie : TypeCinema.Series;
-                    item.Type = type ?? TypeCinema.Unknown;
-                    using (var form = new EditorItemCinemaForm(this, item, indexRow, indexRowAllCinema))
-                    {
-                        form.ShowDialog();
-                    }
-                    */
                 }
-            }
-        }
-
-        private void ShowEditCinema(DataGridView grid, WatchItem item, int indexRow)
-        {
-            item.Type = GetType(grid);
-            var id = item.Id?.ToString() ?? string.Empty;
-            var indexRowAllCinema = indexRow;
-            if (grid == dgvCinema)
-            {
-                var dataGrid = IsCheckItemGridMove(id) ? dgvMove : dgvSeries;
-                indexRow = GetNumberItemGridCinema(dataGrid, id);
-            }
-            else
-            {
-                indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
-            }
-            using (var form = new EditorItemCinemaForm(this, item, indexRow, indexRowAllCinema))
-            {
-                form.ShowDialog();
             }
         }
 
@@ -259,6 +210,26 @@ namespace ListWatchedMoviesAndSeries
             rowIndex = cinema.CurrentCell.RowIndex;
             cinemaItem = GetItem(cinema, rowIndex);
             return true;
+        }
+
+        private void ShowEditCinema(DataGridView grid, WatchItem item, int indexRow)
+        {
+            item.Type = GetType(grid);
+            var id = item.Id?.ToString() ?? string.Empty;
+            var indexRowAllCinema = indexRow;
+            if (grid == dgvCinema)
+            {
+                var dataGrid = IsCheckItemGridMove(id) ? dgvMove : dgvSeries;
+                indexRow = GetNumberItemGridCinema(dataGrid, id);
+            }
+            else
+            {
+                indexRowAllCinema = GetNumberItemGridCinema(dgvCinema, id);
+            }
+            using (var form = new EditorItemCinemaForm(this, item, indexRow, indexRowAllCinema))
+            {
+                form.ShowDialog();
+            }
         }
 
         //Выдача нового элемента таблицы по номеру строки.

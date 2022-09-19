@@ -14,7 +14,8 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         public FileWatchItemRepository(string path)
         {
-            if (path == null) throw new ArgumentNullException("path");
+            if (path == null)
+                throw new ArgumentNullException("Path");
             _path = path;
         }
 
