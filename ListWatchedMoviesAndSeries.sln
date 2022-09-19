@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32708.82
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListWatchedMoviesAndSeries", "ListWatchedMoviesAndSeries\ListWatchedMoviesAndSeries.csproj", "{FB7271D4-FA52-4609-8066-71B1F4BE3CFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListWatchedMoviesAndSeries", "ListWatchedMoviesAndSeries\ListWatchedMoviesAndSeries.csproj", "{FB7271D4-FA52-4609-8066-71B1F4BE3CFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
