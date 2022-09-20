@@ -25,10 +25,6 @@ namespace ListWatchedMoviesAndSeries.Repository
                 List<WatchItem>? itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
                 return itemList ?? new List<WatchItem>();
             }
-            catch (FieldAccessException error)
-            {
-                throw new FileNotFoundException("No file on path.", error);
-            }
             catch (Exception error)
             {
                 throw new Exception("Unknown error.", error);
