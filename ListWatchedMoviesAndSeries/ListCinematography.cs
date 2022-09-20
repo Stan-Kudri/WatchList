@@ -344,7 +344,6 @@ namespace ListWatchedMoviesAndSeries
             }
             var path = @$"{_path}Grid{grid.Tag}.json";
             var fileRepository = new FileWatchItemRepository(path);
-
             try
             {
                 fileRepository.Save(itemList);
@@ -374,7 +373,6 @@ namespace ListWatchedMoviesAndSeries
                 return;
             }
             var fileRepository = new FileWatchItemRepository(pathFile);
-
             try
             {
                 var itemGrid = fileRepository.GetAll();
