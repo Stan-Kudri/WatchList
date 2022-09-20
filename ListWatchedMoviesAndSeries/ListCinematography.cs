@@ -344,7 +344,15 @@ namespace ListWatchedMoviesAndSeries
             }
             var path = @$"{_path}Grid{grid.Tag}.json";
             var fileRepository = new FileWatchItemRepository(path);
-            fileRepository.Save(itemList);
+
+            try
+            {
+                fileRepository.Save(itemList);
+            }
+            catch(Exception error)
+            {
+                MessageBoxProvider.ShowError(error.Message);
+            }
         }
 
         private TypeCinema GetType(DataGridView grid)
@@ -366,12 +374,20 @@ namespace ListWatchedMoviesAndSeries
                 return;
             }
             var fileRepository = new FileWatchItemRepository(pathFile);
-            var itemGrid = fileRepository.GetAll();
-            if (itemGrid == null || itemGrid.Count <= 0)
-                return;
-            foreach (var item in itemGrid)
+
+            try
             {
-                AddCinemaGridRow(grid, item);
+                var itemGrid = fileRepository.GetAll();
+                if (itemGrid == null || itemGrid.Count <= 0)
+                    return;
+                foreach (var item in itemGrid)
+                {
+                    AddCinemaGridRow(grid, item);
+                }
+            }
+            catch(Exception error)
+            {
+                MessageBoxProvider.ShowError(error.Message);
             }
         }
     }

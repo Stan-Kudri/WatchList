@@ -25,15 +25,14 @@ namespace ListWatchedMoviesAndSeries.Repository
                 List<WatchItem>? itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
                 return itemList ?? new List<WatchItem>();
             }
-            catch
+            catch (FieldAccessException error)
             {
-                throw new FileNotFoundException("No file on path.");
+                throw new FileNotFoundException("No file on path.", error);
             }
-        }
-
-        public void Add(WatchItem item)
-        {
-            throw new NotImplementedException();
+            catch (Exception error)
+            {
+                throw new Exception("Unknown error.", error);
+            }
         }
 
         public void Save(List<WatchItem> items)
@@ -43,9 +42,13 @@ namespace ListWatchedMoviesAndSeries.Repository
                 using FileStream stream = new(_path, FileMode.Create);
                 JsonSerializer.Serialize(stream, items, _options);
             }
-            catch
+            catch (NullReferenceException error)
             {
-                throw new NullReferenceException("Item not null.");
+                throw new NullReferenceException("Item not null.", error);
+            }
+            catch (Exception error)
+            {
+                throw new Exception("Unknown error.", error);
             }
         }
     }

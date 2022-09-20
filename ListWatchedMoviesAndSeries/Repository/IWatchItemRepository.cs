@@ -6,7 +6,6 @@ namespace ListWatchedMoviesAndSeries.Repository
     {
         List<WatchItem> GetAll();
 
-        void Add(WatchItem item);
         void Save(List<WatchItem> items);
     }
 }

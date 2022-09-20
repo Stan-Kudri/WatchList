@@ -25,7 +25,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             _numberRowCinema = numberRowCinema;
             _numberRowAllCinema = numberRowAllCinema;
             InitializeComponent();
-            DefaultCinemaItem();
+            SetupDefaultValues();
             //Максимальная дата, которую можно установить в DataTimePicker - это дата запуска программы.
             dateTPCinema.MaxDate = DateTime.Now;
         }
@@ -46,11 +46,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => DefaultCinemaItem();
+        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
 
         private void BtnCloseEdit_Click(object sender, EventArgs e) => Close();
 
-        private void DefaultCinemaItem()
+        private void SetupDefaultValues()
         {
             txtEditName.Text = _cinema.Name;
             labelNumberSequel.Text = _cinema.GetTypeSequel();

@@ -25,18 +25,15 @@ namespace ListWatchedMoviesAndSeries
                 MessageBoxProvider.ShowWarning(errorMessage);
                 return;
             }
+            if (_checkDataWatch)
+            {
+                _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
+            }
             else
             {
-                if (_checkDataWatch)
-                {
-                    _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
-                }
-                else
-                {
-                    _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, _type));
-                }
-                DefoultValue();
+                _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, _type));
             }
+            DefoultValue();
         }
 
         private void BtnClearTxtCinema_Click(object sender, EventArgs e) => DefoultValue();
@@ -72,7 +69,7 @@ namespace ListWatchedMoviesAndSeries
                 errorMessage = $"Enter namber {_type.Name}";
                 return false;
             }
-            else if (_checkDataWatch == true && numericGradeCinema.Value == 0)
+            else if (_checkDataWatch && numericGradeCinema.Value == 0)
             {
                 errorMessage = "Grade cinema above in zero";
                 return false;
