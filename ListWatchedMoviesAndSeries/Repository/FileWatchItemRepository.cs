@@ -38,10 +38,6 @@ namespace ListWatchedMoviesAndSeries.Repository
                 using FileStream stream = new(_path, FileMode.Create);
                 JsonSerializer.Serialize(stream, items, _options);
             }
-            catch (NullReferenceException error)
-            {
-                throw new NullReferenceException("Item not null.", error);
-            }
             catch (Exception error)
             {
                 throw new Exception("Unknown error.", error);
