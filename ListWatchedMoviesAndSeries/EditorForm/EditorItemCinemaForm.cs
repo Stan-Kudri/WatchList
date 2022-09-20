@@ -7,7 +7,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public const string WatchCinema = "+";
         public const string NotWatchCinema = "-";
 
-        private bool _checkDataWatch;//Поле для контроля использования DataTimePicker или уже выставленной даты просмотра.
+        //private bool _checkDataWatch;//Поле для контроля использования DataTimePicker или уже выставленной даты просмотра.
         private readonly BoxCinemaForm _box;
         private readonly WatchItem _cinema;
 
@@ -56,7 +56,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             labelNumberSequel.Text = _cinema.GetTypeSequel();
             if (_cinema.GetView() == WatchCinema && _cinema.Detail?.DateWatch != null)
             {
-                _checkDataWatch = true;
+                numericEditGradeCinema.Enabled = true;
                 dateTPCinema.Value = _cinema.Detail.DateWatch.Value;
                 if (decimal.TryParse(_cinema.Detail.Grade, out decimal value))
                     numericEditGradeCinema.Value = value;
@@ -67,7 +67,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
         {
-            _checkDataWatch = true;
             numericEditGradeCinema.ReadOnly = false;
             numericEditGradeCinema.Enabled = true;
         }
@@ -76,7 +75,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         {
             var type = _cinema.Type ?? Models.Item.TypeCinema.Unknown;
             var id = _cinema.Id ?? Guid.NewGuid();
-            if (_checkDataWatch)
+            if (numericEditGradeCinema.Enabled)
             {
                 var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id.ToString());
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
@@ -100,7 +99,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                 errorMessage = $"Enter namber {Type}";
                 return false;
             }
-            else if (_checkDataWatch && _cinema?.Detail?.DateWatch == null)
+            else if (numericEditGradeCinema.Enabled && _cinema?.Detail?.DateWatch == null)
             {
                 if (numericEditGradeCinema.Value == 0)
                 {
