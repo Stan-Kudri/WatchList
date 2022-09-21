@@ -7,7 +7,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public const string WatchCinema = "+";
         public const string NotWatchCinema = "-";
 
-        //private bool _checkDataWatch;//Поле для контроля использования DataTimePicker или уже выставленной даты просмотра.
         private readonly BoxCinemaForm _box;
         private readonly WatchItem _cinema;
 

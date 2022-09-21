@@ -348,7 +348,7 @@ namespace ListWatchedMoviesAndSeries
             {
                 fileRepository.Save(itemList);
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 MessageBoxProvider.ShowError(error.Message);
             }
@@ -369,7 +369,7 @@ namespace ListWatchedMoviesAndSeries
             var pathFile = @$"{_path}Grid{grid.Tag}.json";
             if (!File.Exists(pathFile))
             {
-                MessageBoxProvider.ShowError("No file on path.");
+                MessageBoxProvider.ShowError("File not found.");
                 return;
             }
             var fileRepository = new FileWatchItemRepository(pathFile);
@@ -383,7 +383,7 @@ namespace ListWatchedMoviesAndSeries
                     AddCinemaGridRow(grid, item);
                 }
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 MessageBoxProvider.ShowError(error.Message);
             }

@@ -3,6 +3,11 @@ using System.Text.Json;
 
 namespace ListWatchedMoviesAndSeries.Repository
 {
+    public class ReadRepositoryException : Exception
+    {
+
+    }
+
     public class FileWatchItemRepository : IWatchItemRepository
     {
         private readonly string _path;
@@ -14,34 +19,20 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         public FileWatchItemRepository(string path)
         {
-            _path = path ?? throw new ArgumentNullException("Path");
+            _path = path ?? throw new ArgumentNullException("File path not specified");
         }
 
         public List<WatchItem> GetAll()
         {
-            try
-            {
-                using FileStream stream = new(_path, FileMode.Open);
-                List<WatchItem>? itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
-                return itemList ?? new List<WatchItem>();
-            }
-            catch (Exception error)
-            {
-                throw new Exception("Unknown error.", error);
-            }
+            using FileStream stream = new(_path, FileMode.Open);
+            List<WatchItem>? itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
+            return itemList ?? new List<WatchItem>();
         }
 
         public void Save(List<WatchItem> items)
         {
-            try
-            {
-                using FileStream stream = new(_path, FileMode.Create);
-                JsonSerializer.Serialize(stream, items, _options);
-            }
-            catch (Exception error)
-            {
-                throw new Exception("Unknown error.", error);
-            }
+            using FileStream stream = new(_path, FileMode.Create);
+            JsonSerializer.Serialize(stream, items, _options);
         }
     }
 }
