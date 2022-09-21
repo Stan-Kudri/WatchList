@@ -1,4 +1,4 @@
-﻿using ListWatchedMoviesAndSeries.EditorForm;
+using ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;

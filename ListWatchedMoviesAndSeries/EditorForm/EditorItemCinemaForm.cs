@@ -1,4 +1,4 @@
-﻿using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.Models;
 
 namespace ListWatchedMoviesAndSeries.EditorForm
 {

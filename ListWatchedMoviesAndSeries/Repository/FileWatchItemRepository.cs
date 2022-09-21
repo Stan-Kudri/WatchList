@@ -1,5 +1,5 @@
-﻿using ListWatchedMoviesAndSeries.Models;
 using System.Text.Json;
+using ListWatchedMoviesAndSeries.Models;
 
 namespace ListWatchedMoviesAndSeries.Repository
 {

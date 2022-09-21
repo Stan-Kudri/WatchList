@@ -1,6 +1,6 @@
-﻿using Ardalis.SmartEnum.SystemTextJson;
-using ListWatchedMoviesAndSeries.Models.Item;
 using System.Text.Json.Serialization;
+using Ardalis.SmartEnum.SystemTextJson;
+using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.Models
 {
