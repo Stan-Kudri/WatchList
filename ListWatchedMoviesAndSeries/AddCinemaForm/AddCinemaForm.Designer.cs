@@ -133,7 +133,7 @@ namespace ListWatchedMoviesAndSeries
             this.dateTimePickerCinema.CustomFormat = "\"dd.MM.yyyy\"";
             this.dateTimePickerCinema.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "DateWatch", true));
             this.dateTimePickerCinema.Location = new System.Drawing.Point(9, 70);
-            this.dateTimePickerCinema.MaxDate = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
+            this.dateTimePickerCinema.MaxDate = new System.DateTime(2022, 9, 7, 0, 0, 0, 0);
             this.dateTimePickerCinema.MinDate = new System.DateTime(1949, 12, 31, 0, 0, 0, 0);
             this.dateTimePickerCinema.Name = "dateTimePickerCinema";
             this.dateTimePickerCinema.Size = new System.Drawing.Size(200, 23);

@@ -1,12 +1,11 @@
-﻿using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries
 {
     public partial class AddCinemaForm : Form
     {
-        private BoxCinemaForm _box;
-        private bool _checkDataWatch; //Поле для контроля использования DataTimePicker даты просмотра.
+        private readonly BoxCinemaForm _box;
         private readonly TypeCinema _type;
 
         public AddCinemaForm(BoxCinemaForm formBoxCinema, TypeCinema type)
@@ -15,26 +14,25 @@ namespace ListWatchedMoviesAndSeries
             _type = type;
             InitializeComponent();
             labelNumberSeaquel.Text = _type.Name;
+            dateTimePickerCinema.MaxDate = DateTime.Now;
         }
 
         private void BtnAddSCinema_Click(object sender, EventArgs e)
         {
-            if (ValidateCinemaPaddingFields(out var errorMessage) == false)
+            if (!ValidateFields(out var errorMessage))
             {
                 MessageBoxProvider.ShowWarning(errorMessage);
+                return;
+            }
+            if (numericGradeCinema.Enabled)
+            {
+                _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
             }
             else
             {
-                if (_checkDataWatch)
-                {
-                    _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
-                }
-                else
-                {
-                    _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, _type));
-                }
-                DefoultValue();
+                _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, _type));
             }
+            DefoultValue();
         }
 
         private void BtnClearTxtCinema_Click(object sender, EventArgs e) => DefoultValue();
@@ -43,7 +41,6 @@ namespace ListWatchedMoviesAndSeries
 
         private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
         {
-            _checkDataWatch = true;
             numericGradeCinema.ReadOnly = false;
             numericGradeCinema.Enabled = true;
         }
@@ -51,13 +48,13 @@ namespace ListWatchedMoviesAndSeries
         private void DefoultValue()
         {
             txtAddCinema.Text = string.Empty;
-            _checkDataWatch = false;
             numericGradeCinema.Enabled = false;
             numericGradeCinema.Value = 0;
+            numericSeaquel.Value = 0;
             numericGradeCinema.ReadOnly = true;
         }
 
-        private bool ValidateCinemaPaddingFields(out string errorMessage)
+        private bool ValidateFields(out string errorMessage)
         {
             if (txtAddCinema.Text.Length <= 0)
             {
@@ -69,7 +66,7 @@ namespace ListWatchedMoviesAndSeries
                 errorMessage = $"Enter namber {_type.Name}";
                 return false;
             }
-            else if (_checkDataWatch == true && numericGradeCinema.Value == 0)
+            else if (numericGradeCinema.Enabled && numericGradeCinema.Value == 0)
             {
                 errorMessage = "Grade cinema above in zero";
                 return false;

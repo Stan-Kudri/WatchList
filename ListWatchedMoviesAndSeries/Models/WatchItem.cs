@@ -1,4 +1,6 @@
-﻿using ListWatchedMoviesAndSeries.Models.Item;
+using System.Text.Json.Serialization;
+using Ardalis.SmartEnum.SystemTextJson;
+using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.Models
 {
@@ -13,30 +15,44 @@ namespace ListWatchedMoviesAndSeries.Models
         private TypeCinema? _type = null;
         private decimal? _numberSequel = null;
 
-        public Guid? Id => _id;
+        [JsonPropertyName("Id")]
+        public Guid? Id
+        {
+            get => _id;
+            set => SetField(ref _id, (Guid)value);
+        }
 
+        [JsonPropertyName("Name")]
         public string? Name
         {
             get => _name;
             set => SetField(ref _name, value);
         }
 
+        [JsonPropertyName("Detail")]
         public WatchDetail? Detail
         {
             get => _detail;
             set => SetField(ref _detail, value);
         }
 
+        [JsonPropertyName("Type")]
+        [JsonConverter(typeof(SmartEnumValueConverter<TypeCinema, int>))]
+        public TypeCinema? Type
+        {
+            get => _type;
+            set => SetField(ref _type, value);
+        }
+
+        [JsonPropertyName("NumberSequel")]
         public decimal? NumberSequel
         {
             get => _numberSequel;
             set => SetField(ref _numberSequel, value);
         }
 
-        public TypeCinema? Type
+        private WatchItem()
         {
-            get => _type;
-            set => SetField(ref _type, value);
         }
 
         public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid().ToString())

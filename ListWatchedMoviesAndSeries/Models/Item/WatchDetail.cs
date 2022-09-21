@@ -1,10 +1,18 @@
-﻿namespace ListWatchedMoviesAndSeries.Models.Item
+using System.Text.Json.Serialization;
+
+namespace ListWatchedMoviesAndSeries.Models.Item
 {
     public class WatchDetail
     {
+        [JsonPropertyName("DateWatch")]
         public DateTime? DateWatch { get; set; }
 
+        [JsonPropertyName("Grade")]
         public string? Grade { get; set; } = null;
+
+        private WatchDetail()
+        {
+        }
 
         public WatchDetail(DateTime? dateWatch, decimal? grade)
         {
