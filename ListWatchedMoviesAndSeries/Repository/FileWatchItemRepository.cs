@@ -3,11 +3,6 @@ using System.Text.Json;
 
 namespace ListWatchedMoviesAndSeries.Repository
 {
-    public class ReadRepositoryException : Exception
-    {
-
-    }
-
     public class FileWatchItemRepository : IWatchItemRepository
     {
         private readonly string _path;
