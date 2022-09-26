@@ -8,14 +8,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public const string NotWatchCinema = "-";
 
         private readonly BoxCinemaForm _box;
-        private readonly WatchItem _cinema;
+        private readonly CinemaModels _cinema;
 
         private readonly int _numberRowCinema;
         private readonly int _numberRowAllCinema;
 
         private string Type => _cinema?.Type?.Name ?? string.Empty;
 
-        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, WatchItem? cinema, int numberRowCinema, int numberRowAllCinema)
+        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModels? cinema, int numberRowCinema, int numberRowAllCinema)
         {
             if (cinema == null)
                 throw new ArgumentException("Item cinema not null");
@@ -25,8 +25,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             _numberRowAllCinema = numberRowAllCinema;
             InitializeComponent();
             SetupDefaultValues();
-            //Максимальная дата, которую можно установить в DataTimePicker - это дата запуска программы.
-            dateTPCinema.MaxDate = DateTime.Now;
         }
 
         private void BtnSaveEdit_Click(object sender, EventArgs e)
@@ -53,6 +51,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         {
             txtEditName.Text = _cinema.Name;
             labelNumberSequel.Text = _cinema.GetTypeSequel();
+            dateTPCinema.MaxDate = DateTime.Now;
             if (_cinema.GetView() == WatchCinema && _cinema.Detail?.DateWatch != null)
             {
                 numericEditGradeCinema.Enabled = true;
@@ -76,12 +75,12 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             var id = _cinema.Id ?? Guid.NewGuid();
             if (numericEditGradeCinema.Enabled)
             {
-                var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id.ToString());
+                var itemWatch = new CinemaModels(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id.ToString());
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
             }
             else
             {
-                var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, null, null, type, id.ToString());
+                var itemWatch = new CinemaModels(txtEditName.Text, numericEditSequel.Value, null, null, type, id.ToString());
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
             }
         }

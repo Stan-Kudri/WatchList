@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="AddCinemaForm\AddCinemaForm.cs">
       <SubType>Form</SubType>
     </Compile>

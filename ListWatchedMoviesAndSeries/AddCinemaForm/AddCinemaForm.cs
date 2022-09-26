@@ -26,11 +26,11 @@ namespace ListWatchedMoviesAndSeries
             }
             if (numericGradeCinema.Enabled)
             {
-                _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
+                _box.SetNameGrid(new CinemaModels(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
             }
             else
             {
-                _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, _type));
+                _box.SetNameGrid(new CinemaModels(txtAddCinema.Text, numericSeaquel.Value, _type));
             }
             DefoultValue();
         }
