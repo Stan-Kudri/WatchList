@@ -8,14 +8,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public const string NotWatchCinema = "-";
 
         private readonly BoxCinemaForm _box;
-        private readonly CinemaModels _cinema;
+        private readonly CinemaModel _cinema;
 
         private readonly int _numberRowCinema;
         private readonly int _numberRowAllCinema;
 
         private string Type => _cinema?.Type?.Name ?? string.Empty;
 
-        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModels? cinema, int numberRowCinema, int numberRowAllCinema)
+        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel? cinema, int numberRowCinema, int numberRowAllCinema)
         {
             if (cinema == null)
                 throw new ArgumentException("Item cinema not null");
@@ -75,12 +75,12 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             var id = _cinema.Id ?? Guid.NewGuid();
             if (numericEditGradeCinema.Enabled)
             {
-                var itemWatch = new CinemaModels(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id.ToString());
+                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id.ToString());
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
             }
             else
             {
-                var itemWatch = new CinemaModels(txtEditName.Text, numericEditSequel.Value, null, null, type, id.ToString());
+                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, type, id.ToString());
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
             }
         }

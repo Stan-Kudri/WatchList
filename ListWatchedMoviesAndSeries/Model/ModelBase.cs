@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace ListWatchedMoviesAndSeries.Models
 {
-    public class ModelsBase : INotifyPropertyChanged
+    public class ModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -169,7 +169,7 @@
             // 
             // cinemaModelsBindingSource
             // 
-            this.cinemaModelsBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.CinemaModels);
+            this.cinemaModelsBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.CinemaModel);
             // 
             // EditorItemCinemaForm
             // 

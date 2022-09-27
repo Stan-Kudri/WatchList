@@ -30,7 +30,7 @@ namespace ListWatchedMoviesAndSeries
                 Directory.CreateDirectory(_path);
         }
 
-        public void SetNameGrid(CinemaModels cinema)
+        public void SetNameGrid(CinemaModel cinema)
         {
             if (cinema != null)
             {
@@ -46,7 +46,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        public void EditItemGrid(CinemaModels cinemaItem, int numberRowGridCinema, int numberRowAllGridCinema)
+        public void EditItemGrid(CinemaModel cinemaItem, int numberRowGridCinema, int numberRowAllGridCinema)
         {
             if (cinemaItem != null)
             {
@@ -84,21 +84,21 @@ namespace ListWatchedMoviesAndSeries
 
             if (page == tabMovePage)
             {
-                if (IsEditRowGrid(dgvMove, out int indexRowMove, out CinemaModels? item) && item != null)
+                if (IsEditRowGrid(dgvMove, out int indexRowMove, out CinemaModel? item) && item != null)
                 {
                     ShowEditCinema(dgvMove, item, indexRowMove);
                 }
             }
             else if (page == tabSeriesPage)
             {
-                if (IsEditRowGrid(dgvSeries, out int indexRowSeries, out CinemaModels? item) && item != null)
+                if (IsEditRowGrid(dgvSeries, out int indexRowSeries, out CinemaModel? item) && item != null)
                 {
                     ShowEditCinema(dgvSeries, item, indexRowSeries);
                 }
             }
             else if (page == tabAllCinemaPage)
             {
-                if (IsEditRowGrid(dgvCinema, out int indexRowAllCinema, out CinemaModels? item) && item != null)
+                if (IsEditRowGrid(dgvCinema, out int indexRowAllCinema, out CinemaModel? item) && item != null)
                 {
                     ShowEditCinema(dgvCinema, item, indexRowAllCinema);
                 }
@@ -181,7 +181,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void AddCinemaGridRow(DataGridView dataGridCinema, CinemaModels cinema)
+        private void AddCinemaGridRow(DataGridView dataGridCinema, CinemaModel cinema)
         {
             var partOrSeason = cinema.NumberSequel;
             string formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
@@ -209,7 +209,7 @@ namespace ListWatchedMoviesAndSeries
             return false;
         }
 
-        private bool IsEditRowGrid(DataGridView cinema, out int rowIndex, out CinemaModels? cinemaItem)
+        private bool IsEditRowGrid(DataGridView cinema, out int rowIndex, out CinemaModel? cinemaItem)
         {
             if (cinema.SelectedRows.Count == 0)
             {
@@ -223,7 +223,7 @@ namespace ListWatchedMoviesAndSeries
             return true;
         }
 
-        private void ShowEditCinema(DataGridView grid, CinemaModels item, int indexRow)
+        private void ShowEditCinema(DataGridView grid, CinemaModel item, int indexRow)
         {
             item.Type = GetType(grid);
             var id = item.Id?.ToString() ?? string.Empty;
@@ -244,7 +244,7 @@ namespace ListWatchedMoviesAndSeries
         }
 
         //Выдача нового элемента таблицы по номеру строки.
-        private static CinemaModels GetItem(DataGridView cinema, int rowIndex)
+        private static CinemaModel GetItem(DataGridView cinema, int rowIndex)
         {
             var title = cinema.Rows[rowIndex].Cells[IndexColumnName].Value.ToString();
             var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnSequel].Value.ToString());
@@ -255,7 +255,7 @@ namespace ListWatchedMoviesAndSeries
                 var strDateWatch = cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString();
                 var dateWatch = DateTime.Parse(strDateWatch);
                 var grade = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnGrade].Value.ToString() ?? "0");
-                CinemaModels cinemaItem = new CinemaModels(
+                CinemaModel cinemaItem = new CinemaModel(
                                                    title,
                                                    sequel,
                                                    dateWatch,
@@ -266,7 +266,7 @@ namespace ListWatchedMoviesAndSeries
             }
             else
             {
-                CinemaModels cinemaItem = new CinemaModels(
+                CinemaModel cinemaItem = new CinemaModel(
                                                   title,
                                                   sequel,
                                                   TypeCinema.Unknown,
@@ -319,7 +319,7 @@ namespace ListWatchedMoviesAndSeries
             return -1;
         }
 
-        private void ReplacementEditItem(DataGridView cinema, CinemaModels cinemaItem, int rowItem)
+        private void ReplacementEditItem(DataGridView cinema, CinemaModel cinemaItem, int rowItem)
         {
             cinema.Rows[rowItem].Cells[IndexColumnName].Value = cinemaItem.Name;
             cinema.Rows[rowItem].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
