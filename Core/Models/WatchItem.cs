@@ -13,50 +13,6 @@ namespace ListWatchedMoviesAndSeries.Models
         public const string WatchCinema = "+";
         public const string NotWatchCinema = "-";
 
-        /*
-        private Guid _id;
-        private string? _name = null;
-        private WatchDetail? _detail = null;
-        private TypeCinema? _type = null;
-        private decimal? _numberSequel = null;
-
-        [JsonPropertyName("Id")]
-        public Guid? Id
-        {
-            get => _id;
-            set => _id = (Guid)value;
-        }
-
-        [JsonPropertyName("Name")]
-        public string? Name
-        {
-            get => _name;
-            set => _name = value;
-        }
-
-        [JsonPropertyName("Detail")]
-        public WatchDetail? Detail
-        {
-            get => _detail;
-            set => _detail = value;
-        }
-
-        [JsonPropertyName("Type")]
-        [JsonConverter(typeof(SmartEnumValueConverter<TypeCinema, int>))]
-        public TypeCinema? Type
-        {
-            get => _type;
-            set => _type = value;
-        }
-
-        [JsonPropertyName("NumberSequel")]
-        public decimal? NumberSequel
-        {
-            get => _numberSequel;
-            set => _numberSequel = value;
-        }        
-        */
-
         private Guid _id;
 
         [JsonPropertyName("Id")]
