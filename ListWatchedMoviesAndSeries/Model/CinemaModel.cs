@@ -2,7 +2,8 @@ using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.Models
 {
-    public class CinemaModels : ModelsBase
+    public class CinemaModel : ModelBase
+
     {
         public const string WatchCinema = "+";
         public const string NotWatchCinema = "-";
@@ -43,24 +44,24 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _numberSequel, value);
         }
 
-        private CinemaModels()
+        private CinemaModel()
         {
 
         }
 
-        public CinemaModels(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid().ToString())
+        public CinemaModel(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid().ToString())
         {
         }
 
-        public CinemaModels(string name, decimal? numberSequel, TypeCinema type, string Id) : this(name, numberSequel, null, null, type, Id)
+        public CinemaModel(string name, decimal? numberSequel, TypeCinema type, string Id) : this(name, numberSequel, null, null, type, Id)
         {
         }
 
-        public CinemaModels(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid().ToString())
+        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid().ToString())
         {
         }
 
-        public CinemaModels(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, string Id)
+        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, string Id)
         {
             if (name == null)
                 throw new ArgumentException("Name cinema not null", "Exception");

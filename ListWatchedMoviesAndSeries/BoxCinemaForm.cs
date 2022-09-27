@@ -149,6 +149,8 @@ namespace ListWatchedMoviesAndSeries
             GetItemDeserialize(dgvCinema);
         }
 
+        //Удаление строки из переданной таблицы, по выбранной строке.
+        //out параметр является id фильма/сериала, который необходимо удалить с таблицы (Если это Move/Series тогла с Cinema и наоборот).
         private bool RemoveRowGrid(DataGridView dataGridCinema, out string? id)
         {
             if (dataGridCinema.SelectedRows.Count == 0)
@@ -163,12 +165,14 @@ namespace ListWatchedMoviesAndSeries
             return true;
         }
 
+        //Нахождения id по выбранной строке.
         private string? SelectedRowCinemaId(DataGridView gridCinema)
         {
             int rowIndex = gridCinema.CurrentCell.RowIndex;
             return gridCinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString();
         }
 
+        //Удаление строки из таблицы по значению id.
         private void RemoveItemRowGrid(DataGridView dataGridCinema, string? id)
         {
             foreach (DataGridViewRow row in dataGridCinema.Rows)
@@ -181,6 +185,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        //Добавить элемент в таблицу.
         private void AddCinemaGridRow(DataGridView dataGridCinema, CinemaModel cinema)
         {
             var partOrSeason = cinema.NumberSequel;
@@ -188,11 +193,14 @@ namespace ListWatchedMoviesAndSeries
             dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString());
         }
 
-        private void AddCinemaGridRow(DataGridView dataGridCinema, WatchItem cinema)
+        private void AddCinemaGrid(DataGridView dataGridCinema, List<WatchItem> itemGrid)
         {
-            var partOrSeason = cinema.NumberSequel;
-            string formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString());
+            foreach (var item in itemGrid)
+            {
+                var partOrSeason = item.NumberSequel;
+                string formatDate = item.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
+                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString());
+            }
         }
 
         private bool IsCheckItemGridMove(string? id)
@@ -365,6 +373,29 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        private void GetItemDeserialize(DataGridView grid)
+        {
+            grid.Rows.Clear();
+            var pathFile = @$"{_path}Grid{grid.Tag}.json";
+            if (!File.Exists(pathFile))
+            {
+                MessageBoxProvider.ShowError("File not found.");
+                return;
+            }
+            var fileRepository = new FileWatchItemRepository(pathFile);
+            try
+            {
+                var itemGrid = fileRepository.GetAll();
+                if (itemGrid == null || itemGrid.Count <= 0)
+                    return;
+                AddCinemaGrid(grid, itemGrid);
+            }
+            catch (Exception error)
+            {
+                MessageBoxProvider.ShowError(error.Message);
+            }
+        }
+
         private int NumberType(DataGridView grid)
         {
             if ((string)grid.Tag == TypeTagMove)
@@ -381,32 +412,6 @@ namespace ListWatchedMoviesAndSeries
             else if ((string)grid.Tag == TypeTagSeries)
                 return TypeCinema.Series;
             return TypeCinema.Unknown;
-        }
-
-        private void GetItemDeserialize(DataGridView grid)
-        {
-            grid.Rows.Clear();
-            var pathFile = @$"{_path}Grid{grid.Tag}.json";
-            if (!File.Exists(pathFile))
-            {
-                MessageBoxProvider.ShowError("File not found.");
-                return;
-            }
-            var fileRepository = new FileWatchItemRepository(pathFile);
-            try
-            {
-                var itemGrid = fileRepository.GetAll();
-                if (itemGrid == null || itemGrid.Count <= 0)
-                    return;
-                foreach (var item in itemGrid)
-                {
-                    AddCinemaGridRow(grid, item);
-                }
-            }
-            catch (Exception error)
-            {
-                MessageBoxProvider.ShowError(error.Message);
-            }
         }
     }
 }
