@@ -193,6 +193,7 @@ namespace ListWatchedMoviesAndSeries
             dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString());
         }
 
+        //Заполнение таблицы по списку данных cinema.
         private void AddCinemaGrid(DataGridView dataGridCinema, List<WatchItem> itemGrid)
         {
             foreach (var item in itemGrid)
@@ -203,6 +204,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        //Поиск элемента по id в таблице с фильмами, если его нет, тогда он находится в сериалах.
         private bool IsCheckItemGridMove(string? id)
         {
             var countRowGridMove = dgvMove.RowCount;
@@ -217,6 +219,7 @@ namespace ListWatchedMoviesAndSeries
             return false;
         }
 
+        //Изменение выбранного элемента(если его выбрали).
         private bool IsEditRowGrid(DataGridView cinema, out int rowIndex, out CinemaModel? cinemaItem)
         {
             if (cinema.SelectedRows.Count == 0)
@@ -231,6 +234,7 @@ namespace ListWatchedMoviesAndSeries
             return true;
         }
 
+        //Изменение элемента в форме Edit...
         private void ShowEditCinema(DataGridView grid, CinemaModel item, int indexRow)
         {
             item.Type = GetType(grid);
@@ -315,6 +319,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        //Получение номера строки, который необходимо изменить
         private int GetNumberItemGridCinema(DataGridView cinema, string id)
         {
             foreach (DataGridViewRow row in cinema.Rows)
@@ -327,6 +332,7 @@ namespace ListWatchedMoviesAndSeries
             return -1;
         }
 
+        //Изменение табличных данных по номеру строки и типу таблицы, измененного элемента.
         private void ReplacementEditItem(DataGridView cinema, CinemaModel cinemaItem, int rowItem)
         {
             cinema.Rows[rowItem].Cells[IndexColumnName].Value = cinemaItem.Name;
@@ -373,6 +379,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        //Заполнение таблицы данными их JSON файла.
         private void GetItemDeserialize(DataGridView grid)
         {
             grid.Rows.Clear();
@@ -396,6 +403,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        //Номер типа Film/Series/Cinema(AllCinema) в Enum.
         private int NumberType(DataGridView grid)
         {
             if ((string)grid.Tag == TypeTagMove)
@@ -405,6 +413,7 @@ namespace ListWatchedMoviesAndSeries
             return NumberTypeAllCinema;
         }
 
+        //Тип фильма, Value из TypeCinema (SmartEnam).
         private TypeCinema GetType(DataGridView grid)
         {
             if ((string)grid.Tag == TypeTagMove)
