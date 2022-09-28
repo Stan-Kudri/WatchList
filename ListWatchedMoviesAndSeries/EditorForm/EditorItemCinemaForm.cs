@@ -75,12 +75,12 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             var id = _cinema.Id ?? Guid.NewGuid();
             if (numericEditGradeCinema.Enabled)
             {
-                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id.ToString());
+                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id);
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
             }
             else
             {
-                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, type, id.ToString());
+                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, type, id);
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
             }
         }

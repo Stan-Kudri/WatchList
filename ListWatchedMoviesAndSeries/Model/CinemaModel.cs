@@ -49,23 +49,23 @@ namespace ListWatchedMoviesAndSeries.Models
 
         }
 
-        public CinemaModel(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid().ToString())
+        public CinemaModel(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid())
         {
         }
 
-        public CinemaModel(string name, decimal? numberSequel, TypeCinema type, string Id) : this(name, numberSequel, null, null, type, Id)
+        public CinemaModel(string name, decimal? numberSequel, TypeCinema type, Guid? Id) : this(name, numberSequel, null, null, type, Id)
         {
         }
 
-        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid().ToString())
+        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid())
         {
         }
 
-        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, string Id)
+        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, Guid? Id)
         {
             if (name == null)
                 throw new ArgumentException("Name cinema not null", "Exception");
-            _id = Id != string.Empty ? Guid.Parse(Id) : Guid.NewGuid();
+            _id = Id ?? Guid.NewGuid();
             _name = name;
             Detail = new WatchDetailModels(date, grade);
             _numberSequel = numberSequel;

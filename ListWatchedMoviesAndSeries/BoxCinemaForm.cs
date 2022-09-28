@@ -253,7 +253,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var title = cinema.Rows[rowIndex].Cells[IndexColumnName].Value.ToString();
             var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnSequel].Value.ToString());
-            var id = cinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString() ?? string.Empty;
+            var id = cinema.Rows[rowIndex].Cells[IndexColumnId].Value ?? Guid.NewGuid();
             var type = TypeCinema.FromName(cinema.Rows[rowIndex].Cells[IndexColumnType].Value.ToString());
             if (cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
@@ -266,7 +266,7 @@ namespace ListWatchedMoviesAndSeries
                                                    dateWatch,
                                                    grade,
                                                    type,
-                                                   id);
+                                                   Guid.Parse(id.ToString()));
                 return cinemaItem;
             }
             else
@@ -275,7 +275,7 @@ namespace ListWatchedMoviesAndSeries
                                                   title,
                                                   sequel,
                                                   type,
-                                                  id);
+                                                  Guid.Parse(id.ToString()));
                 return cinemaItem;
             }
         }
@@ -285,7 +285,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var title = row.Cells[IndexColumnName].Value.ToString();
             var sequel = decimal.Parse(row.Cells[IndexColumnSequel].Value.ToString());
-            var id = row.Cells[IndexColumnId].Value.ToString() ?? string.Empty;
+            var id = row.Cells[IndexColumnId].Value ?? Guid.NewGuid();
             var type = TypeCinema.FromName(row.Cells[IndexColumnType].Value.ToString());
             if (row.Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
@@ -299,7 +299,7 @@ namespace ListWatchedMoviesAndSeries
                                                    dateWatch,
                                                    grade,
                                                    type,
-                                                   id);
+                                                   Guid.Parse(id.ToString()));
                 return cinemaItem;
             }
             else
@@ -308,7 +308,7 @@ namespace ListWatchedMoviesAndSeries
                                                   title,
                                                   sequel,
                                                   type,
-                                                  id);
+                                                  Guid.Parse(id.ToString()));
                 return cinemaItem;
             }
         }
