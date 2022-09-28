@@ -187,7 +187,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var partOrSeason = cinema.NumberSequel;
             string formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type?.Value);
+            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
         }
 
         //Заполнение таблицы по списку данных cinema.
@@ -197,7 +197,7 @@ namespace ListWatchedMoviesAndSeries
             {
                 var partOrSeason = item.NumberSequel;
                 var formatDate = item.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type?.Value);
+                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
             }
         }
 
@@ -234,7 +234,6 @@ namespace ListWatchedMoviesAndSeries
         //Изменение элемента в форме Edit...
         private void ShowEditCinema(DataGridView grid, CinemaModel item, int indexRow)
         {
-            item.Type = GetType(grid);
             var id = item.Id?.ToString() ?? string.Empty;
             var indexRowAllCinema = indexRow;
             if (grid == dgvCinema)
@@ -258,7 +257,8 @@ namespace ListWatchedMoviesAndSeries
             var title = cinema.Rows[rowIndex].Cells[IndexColumnName].Value.ToString();
             var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnSequel].Value.ToString());
             var id = cinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString() ?? string.Empty;
-            var type = TypeCinema.FromValue((int)cinema.Rows[rowIndex].Cells[IndexColumnType].Value);
+            var type = TypeCinema.FromName(cinema.Rows[rowIndex].Cells[IndexColumnType].Value.ToString());
+            //var type = TypeCinema.FromValue((int)cinema.Rows[rowIndex].Cells[IndexColumnType].Value);
             if (cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
                 var strDateWatch = cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString();
@@ -290,7 +290,8 @@ namespace ListWatchedMoviesAndSeries
             var title = row.Cells[IndexColumnName].Value.ToString();
             var sequel = decimal.Parse(row.Cells[IndexColumnSequel].Value.ToString());
             var id = row.Cells[IndexColumnId].Value.ToString() ?? string.Empty;
-            var type = TypeCinema.FromValue((int)row.Cells[IndexColumnType].Value);
+            var type = TypeCinema.FromName(row.Cells[IndexColumnType].Value.ToString());
+            //var type = TypeCinema.FromValue((int)row.Cells[IndexColumnType].Value);
             if (row.Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
                 var strDateWatch = row.Cells[IndexColumnDate].Value.ToString();
@@ -318,7 +319,7 @@ namespace ListWatchedMoviesAndSeries
         }
 
         //Получение номера строки, который необходимо изменить
-        private int GetNumberItemGridCinema(DataGridView cinema, string id)
+        private static int GetNumberItemGridCinema(DataGridView cinema, string id)
         {
             foreach (DataGridViewRow row in cinema.Rows)
             {
@@ -400,16 +401,6 @@ namespace ListWatchedMoviesAndSeries
             {
                 MessageBoxProvider.ShowError(error.Message);
             }
-        }
-
-        //Тип фильма, Value из TypeCinema (SmartEnam).
-        private TypeCinema GetType(DataGridView grid)
-        {
-            if ((string)grid.Tag == TypeTagMove)
-                return TypeCinema.Movie;
-            else if ((string)grid.Tag == TypeTagSeries)
-                return TypeCinema.Series;
-            return TypeCinema.Unknown;
         }
     }
 }
