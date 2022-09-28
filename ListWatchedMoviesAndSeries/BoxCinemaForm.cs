@@ -13,10 +13,7 @@ namespace ListWatchedMoviesAndSeries
         private const int IndexColumnDate = 3;
         private const int IndexColumnGrade = 4;
         private const int IndexColumnId = 5;
-
-        public const int NumberTypeAllCinema = 0;
-        public const int NumberTypeMove = 1;
-        public const int NumberTypeSeries = 2;
+        private const int IndexColumnType = 6;
 
         private const string TypeTagMove = "Move";
         private const string TypeTagSeries = "Series";
@@ -166,9 +163,9 @@ namespace ListWatchedMoviesAndSeries
         }
 
         //Нахождения id по выбранной строке.
-        private string? SelectedRowCinemaId(DataGridView gridCinema)
+        private static string? SelectedRowCinemaId(DataGridView gridCinema)
         {
-            int rowIndex = gridCinema.CurrentCell.RowIndex;
+            var rowIndex = gridCinema.CurrentCell.RowIndex;
             return gridCinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString();
         }
 
@@ -190,7 +187,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var partOrSeason = cinema.NumberSequel;
             string formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString());
+            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type?.Value);
         }
 
         //Заполнение таблицы по списку данных cinema.
@@ -199,8 +196,8 @@ namespace ListWatchedMoviesAndSeries
             foreach (var item in itemGrid)
             {
                 var partOrSeason = item.NumberSequel;
-                string formatDate = item.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString());
+                var formatDate = item.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
+                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type?.Value);
             }
         }
 
@@ -261,7 +258,7 @@ namespace ListWatchedMoviesAndSeries
             var title = cinema.Rows[rowIndex].Cells[IndexColumnName].Value.ToString();
             var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnSequel].Value.ToString());
             var id = cinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString() ?? string.Empty;
-
+            var type = TypeCinema.FromValue((int)cinema.Rows[rowIndex].Cells[IndexColumnType].Value);
             if (cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
                 var strDateWatch = cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString();
@@ -272,7 +269,7 @@ namespace ListWatchedMoviesAndSeries
                                                    sequel,
                                                    dateWatch,
                                                    grade,
-                                                   TypeCinema.Unknown,
+                                                   type,
                                                    id);
                 return cinemaItem;
             }
@@ -281,7 +278,7 @@ namespace ListWatchedMoviesAndSeries
                 CinemaModel cinemaItem = new CinemaModel(
                                                   title,
                                                   sequel,
-                                                  TypeCinema.Unknown,
+                                                  type,
                                                   id);
                 return cinemaItem;
             }
@@ -293,6 +290,7 @@ namespace ListWatchedMoviesAndSeries
             var title = row.Cells[IndexColumnName].Value.ToString();
             var sequel = decimal.Parse(row.Cells[IndexColumnSequel].Value.ToString());
             var id = row.Cells[IndexColumnId].Value.ToString() ?? string.Empty;
+            var type = TypeCinema.FromValue((int)row.Cells[IndexColumnType].Value);
             if (row.Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
                 var strDateWatch = row.Cells[IndexColumnDate].Value.ToString();
@@ -304,7 +302,7 @@ namespace ListWatchedMoviesAndSeries
                                                    sequel,
                                                    dateWatch,
                                                    grade,
-                                                   null,
+                                                   type,
                                                    id);
                 return cinemaItem;
             }
@@ -313,7 +311,7 @@ namespace ListWatchedMoviesAndSeries
                 var cinemaItem = new WatchItem(
                                                   title,
                                                   sequel,
-                                                  null,
+                                                  type,
                                                   id);
                 return cinemaItem;
             }
@@ -338,6 +336,7 @@ namespace ListWatchedMoviesAndSeries
             cinema.Rows[rowItem].Cells[IndexColumnName].Value = cinemaItem.Name;
             cinema.Rows[rowItem].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
             cinema.Rows[rowItem].Cells[IndexColumnId].Value = cinemaItem.Id;
+            cinema.Rows[rowItem].Cells[IndexColumnType].Value = cinemaItem.Type;
 
             if (cinemaItem.Detail?.DateWatch != null)
             {
@@ -364,7 +363,7 @@ namespace ListWatchedMoviesAndSeries
                 if (row.Cells[IndexColumnId].Value == null)
                     break;
                 var item = GetItem(row);
-                item.InstallationType(NumberType(grid));
+                item.InstallationType(item.Type?.Value ?? 0);
                 itemList.Add(item);
             }
             var path = @$"{_path}Grid{grid.Tag}.json";
@@ -401,16 +400,6 @@ namespace ListWatchedMoviesAndSeries
             {
                 MessageBoxProvider.ShowError(error.Message);
             }
-        }
-
-        //Номер типа Film/Series/Cinema(AllCinema) в Enum.
-        private int NumberType(DataGridView grid)
-        {
-            if ((string)grid.Tag == TypeTagMove)
-                return NumberTypeMove;
-            if ((string)grid.Tag == TypeTagSeries)
-                return NumberTypeSeries;
-            return NumberTypeAllCinema;
         }
 
         //Тип фильма, Value из TypeCinema (SmartEnam).

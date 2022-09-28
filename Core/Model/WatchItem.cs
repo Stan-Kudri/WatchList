@@ -6,12 +6,12 @@ namespace ListWatchedMoviesAndSeries.Models
 {
     public class WatchItem
     {
-        public const int NumberTypeAllCinema = 0;
-        public const int NumberTypeMove = 1;
-        public const int NumberTypeSeries = 2;
+        private const int NumberTypeAllCinema = 0;
+        private const int NumberTypeMove = 1;
+        private const int NumberTypeSeries = 2;
 
-        public const string WatchCinema = "+";
-        public const string NotWatchCinema = "-";
+        private const string WatchCinema = "+";
+        private const string NotWatchCinema = "-";
 
         private Guid _id;
 
@@ -73,7 +73,7 @@ namespace ListWatchedMoviesAndSeries.Models
                 Type = TypeCinema.Movie;
             else if (numberType == NumberTypeSeries)
                 Type = TypeCinema.Series;
-            else
+            else if (numberType == NumberTypeAllCinema)
                 Type = TypeCinema.Unknown;
         }
     }
