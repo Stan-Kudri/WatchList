@@ -75,6 +75,8 @@ namespace ListWatchedMoviesAndSeries.Models
                 Type = TypeCinema.Series;
             else if (numberType == NumberTypeAllCinema)
                 Type = TypeCinema.Unknown;
+            else
+                throw new ArgumentException("No value number <TypeCinema>.");
         }
     }
 }

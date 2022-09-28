@@ -15,9 +15,6 @@ namespace ListWatchedMoviesAndSeries
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
-        private const string TypeTagMove = "Move";
-        private const string TypeTagSeries = "Series";
-
         private readonly string _path = @"C:\\Grid\";
 
         public BoxCinemaForm()
@@ -258,7 +255,6 @@ namespace ListWatchedMoviesAndSeries
             var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnSequel].Value.ToString());
             var id = cinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString() ?? string.Empty;
             var type = TypeCinema.FromName(cinema.Rows[rowIndex].Cells[IndexColumnType].Value.ToString());
-            //var type = TypeCinema.FromValue((int)cinema.Rows[rowIndex].Cells[IndexColumnType].Value);
             if (cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
                 var strDateWatch = cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString();
@@ -291,7 +287,6 @@ namespace ListWatchedMoviesAndSeries
             var sequel = decimal.Parse(row.Cells[IndexColumnSequel].Value.ToString());
             var id = row.Cells[IndexColumnId].Value.ToString() ?? string.Empty;
             var type = TypeCinema.FromName(row.Cells[IndexColumnType].Value.ToString());
-            //var type = TypeCinema.FromValue((int)row.Cells[IndexColumnType].Value);
             if (row.Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
                 var strDateWatch = row.Cells[IndexColumnDate].Value.ToString();
