@@ -56,7 +56,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void BtnFormMovie_Click(object sender, EventArgs e)
+        private void btnFormMovie_Click(object sender, EventArgs e)
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Movie))
             {
@@ -64,7 +64,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void BtnFormSeries_Click(object sender, EventArgs e)
+        private void btnFormSeries_Click(object sender, EventArgs e)
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Series))
             {
@@ -72,7 +72,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void BtnEditRow_Click(object sender, EventArgs e)
+        private void btnEditRow_Click(object sender, EventArgs e)
         {
             var page = BoxName.SelectedTab;
 
@@ -99,7 +99,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void BtnDeliteMovie_Click(object sender, EventArgs e)
+        private void btnDeliteMovie_Click(object sender, EventArgs e)
         {
             var page = BoxName.SelectedTab;
 
@@ -143,8 +143,13 @@ namespace ListWatchedMoviesAndSeries
             GetItemDeserialize(dgvCinema);
         }
 
-        //Удаление строки из переданной таблицы, по выбранной строке.
-        //out параметр является id фильма/сериала, который необходимо удалить с таблицы (Если это Move/Series тогла с Cinema и наоборот).
+        /// <summary>
+        /// Deleting a row of table data.
+        /// Out ID in delete from another table.
+        /// </summary>
+        /// <param name="dataGridCinema">Table</param>
+        /// <param name="id">Object ID to delete</param>
+        /// <returns></returns>
         private bool RemoveRowGrid(DataGridView dataGridCinema, out string? id)
         {
             if (dataGridCinema.SelectedRows.Count == 0)
@@ -159,14 +164,22 @@ namespace ListWatchedMoviesAndSeries
             return true;
         }
 
-        //Нахождения id по выбранной строке.
+        /// <summary>
+        /// Get ID on the selected line table.
+        /// </summary>
+        /// <param name="gridCinema">Table with element</param>
+        /// <returns></returns>
         private static string? SelectedRowCinemaId(DataGridView gridCinema)
         {
             var rowIndex = gridCinema.CurrentCell.RowIndex;
             return gridCinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString();
         }
 
-        //Удаление строки из таблицы по значению id.
+        /// <summary>
+        /// Delete line by Id.
+        /// </summary>
+        /// <param name="dataGridCinema">Table with element row.</param>
+        /// <param name="id">Object ID to delete</param>
         private void RemoveItemRowGrid(DataGridView dataGridCinema, string? id)
         {
             foreach (DataGridViewRow row in dataGridCinema.Rows)
@@ -179,7 +192,11 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        //Добавить элемент в таблицу.
+        /// <summary>
+        /// Add element in table.
+        /// </summary>
+        /// <param name="dataGridCinema">Table</param>
+        /// <param name="cinema">Add element </param>
         private void AddCinemaGridRow(DataGridView dataGridCinema, CinemaModel cinema)
         {
             var partOrSeason = cinema.NumberSequel;
@@ -187,7 +204,11 @@ namespace ListWatchedMoviesAndSeries
             dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
         }
 
-        //Заполнение таблицы по списку данных cinema.
+        /// <summary>
+        /// Filling the table with data.
+        /// </summary>
+        /// <param name="dataGridCinema">Table to fill</param>
+        /// <param name="itemGrid">List of elements</param>
         private void AddCinemaGrid(DataGridView dataGridCinema, List<WatchItem> itemGrid)
         {
             foreach (var item in itemGrid)
@@ -198,7 +219,14 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        //Поиск элемента по id в таблице с фильмами, если его нет, тогда он находится в сериалах.
+        /// <summary>
+        /// Finding ID an element in a Move table.
+        /// </summary>
+        /// <param name="id">ID element</param>
+        /// <returns>
+        /// True:item in Move table.
+        /// False:item in Series table.
+        /// </returns>
         private bool IsCheckItemGridMove(string? id)
         {
             var countRowGridMove = dgvMove.RowCount;
@@ -213,22 +241,36 @@ namespace ListWatchedMoviesAndSeries
             return false;
         }
 
-        //Изменение выбранного элемента(если его выбрали).
-        private bool IsEditRowGrid(DataGridView cinema, out int rowIndex, out CinemaModel? cinemaItem)
+        /// <summary>
+        /// Edit the selected item.
+        /// </summary>
+        /// <param name="grid">Table with element</param>
+        /// <param name="rowIndex">Number row element</param>
+        /// <param name="cinemaItem">Element to сhange</param>
+        /// <returns>
+        /// True:Row selected.
+        /// False:Row not selected.
+        /// </returns>
+        private bool IsEditRowGrid(DataGridView grid, out int rowIndex, out CinemaModel? cinemaItem)
         {
-            if (cinema.SelectedRows.Count == 0)
+            if (grid.SelectedRows.Count == 0)
             {
                 rowIndex = -1;
                 cinemaItem = null;
                 MessageBoxProvider.ShowWarning("Highlight the desired line");
                 return false;
             }
-            rowIndex = cinema.CurrentCell.RowIndex;
-            cinemaItem = GetItem(cinema, rowIndex);
+            rowIndex = grid.CurrentCell.RowIndex;
+            cinemaItem = GetItem(grid, rowIndex);
             return true;
         }
 
-        //Изменение элемента в форме Edit...
+        /// <summary>
+        /// Change the selected element in the EditorItemCinemaForm.
+        /// </summary>
+        /// <param name="grid">Table with element</param>
+        /// <param name="item">Element to сhange</param>
+        /// <param name="indexRow">Number row element</param>
         private void ShowEditCinema(DataGridView grid, CinemaModel item, int indexRow)
         {
             var id = item.Id?.ToString() ?? string.Empty;
@@ -248,18 +290,27 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        //Выдача нового элемента таблицы по номеру строки.
-        private static CinemaModel GetItem(DataGridView cinema, int rowIndex)
+        /// <summary>
+        /// Get item by ID from the table.
+        /// </summary>
+        /// <param name="grid">Table with element</param>
+        /// <param name="indexRow">Number row element</param>
+        /// <returns>
+        /// The filling of all fields of the element depends on the data in the table.
+        /// Type: CinemaModel.
+        /// </returns>
+        private static CinemaModel GetItem(DataGridView grid, int indexRow)
         {
-            var title = cinema.Rows[rowIndex].Cells[IndexColumnName].Value.ToString();
-            var sequel = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnSequel].Value.ToString());
-            var id = cinema.Rows[rowIndex].Cells[IndexColumnId].Value ?? Guid.NewGuid();
-            var type = TypeCinema.FromName(cinema.Rows[rowIndex].Cells[IndexColumnType].Value.ToString());
-            if (cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString() != string.Empty)
+            var rowItems = grid.Rows[indexRow];
+            var title = rowItems.Cells[IndexColumnName].Value.ToString();
+            var sequel = decimal.Parse(rowItems.Cells[IndexColumnSequel].Value.ToString());
+            var id = rowItems.Cells[IndexColumnId].Value ?? Guid.NewGuid();
+            var type = TypeCinema.FromName(rowItems.Cells[IndexColumnType].Value.ToString());
+            if (rowItems.Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
-                var strDateWatch = cinema.Rows[rowIndex].Cells[IndexColumnDate].Value.ToString();
+                var strDateWatch = rowItems.Cells[IndexColumnDate].Value.ToString();
                 var dateWatch = DateTime.Parse(strDateWatch);
-                var grade = decimal.Parse(cinema.Rows[rowIndex].Cells[IndexColumnGrade].Value.ToString() ?? "0");
+                var grade = decimal.Parse(rowItems.Cells[IndexColumnGrade].Value.ToString() ?? "0");
                 CinemaModel cinemaItem = new CinemaModel(
                                                    title,
                                                    sequel,
@@ -280,7 +331,14 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        //Выдача нового элемента таблицы из строки.
+        /// <summary>
+        /// Get item by ID from the data row table.
+        /// </summary>
+        /// <param name="row">Item data row</param>
+        /// <returns>
+        /// The filling of all fields of the element depends on the data in the row data table.
+        /// Type: WatchItem.
+        /// </returns>
         private static WatchItem GetItem(DataGridViewRow row)
         {
             var title = row.Cells[IndexColumnName].Value.ToString();
@@ -313,10 +371,18 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        //Получение номера строки, который необходимо изменить
-        private static int GetNumberItemGridCinema(DataGridView cinema, string id)
+        /// <summary>
+        /// Get number row to change.
+        /// </summary>
+        /// <param name="grid">Table with element</param>
+        /// <param name="id">Number ID</param>
+        /// <returns>
+        /// The row number of the element in the table.
+        /// If there is no element, return -1.
+        /// </returns>
+        private static int GetNumberItemGridCinema(DataGridView grid, string id)
         {
-            foreach (DataGridViewRow row in cinema.Rows)
+            foreach (DataGridViewRow row in grid.Rows)
             {
                 if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
@@ -326,29 +392,38 @@ namespace ListWatchedMoviesAndSeries
             return -1;
         }
 
-        //Изменение табличных данных по номеру строки и типу таблицы, измененного элемента.
-        private void ReplacementEditItem(DataGridView cinema, CinemaModel cinemaItem, int rowItem)
+        /// <summary>
+        /// Changing a table element.
+        /// </summary>
+        /// <param name="grid">Table with element</param>
+        /// <param name="cinemaItem">Element to change</param>
+        /// <param name="rowIndex">Number row element</param>
+        private void ReplacementEditItem(DataGridView grid, CinemaModel cinemaItem, int rowIndex)
         {
-            cinema.Rows[rowItem].Cells[IndexColumnName].Value = cinemaItem.Name;
-            cinema.Rows[rowItem].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
-            cinema.Rows[rowItem].Cells[IndexColumnId].Value = cinemaItem.Id;
-            cinema.Rows[rowItem].Cells[IndexColumnType].Value = cinemaItem.Type;
+            grid.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Name;
+            grid.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
+            grid.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
+            grid.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
 
             if (cinemaItem.Detail?.DateWatch != null)
             {
-                cinema.Rows[rowItem].Cells[IndexColumnIsWatch].Value = "+";
-                cinema.Rows[rowItem].Cells[IndexColumnDate].Value = cinemaItem.Detail?.DateWatch?.ToString("dd.MM.yyyy");
-                cinema.Rows[rowItem].Cells[IndexColumnGrade].Value = cinemaItem.Detail?.Grade;
+                grid.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "+";
+                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail?.DateWatch?.ToString("dd.MM.yyyy");
+                grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail?.Grade;
             }
             else
             {
-                cinema.Rows[rowItem].Cells[IndexColumnIsWatch].Value = "-";
-                cinema.Rows[rowItem].Cells[IndexColumnDate].Value = string.Empty;
-                cinema.Rows[rowItem].Cells[IndexColumnGrade].Value = string.Empty;
+                grid.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "-";
+                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
+                grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
             }
         }
 
-        //Запись JSON в файл, по пути каталога path и с названием, в зависимости от таблицы.
+        /// <summary>
+        /// Recording JSON Serializer grid in files.
+        /// Path in the field "_path".
+        /// </summary>
+        /// <param name="grid">Table for writing</param>
         private void GridSerializer(DataGridView grid)
         {
             if (grid.Rows.Count < 0)
@@ -374,7 +449,11 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        //Заполнение таблицы данными их JSON файла.
+        /// <summary>
+        /// Filling in tabular data from a file.
+        /// (JsonSerializer.Deserialize)
+        /// </summary>
+        /// <param name="grid">Table to fill</param>
         private void GetItemDeserialize(DataGridView grid)
         {
             grid.Rows.Clear();

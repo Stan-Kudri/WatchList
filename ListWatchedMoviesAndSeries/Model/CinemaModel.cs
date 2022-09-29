@@ -1,3 +1,4 @@
+using ListWatchedMoviesAndSeries.Model;
 using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.Models

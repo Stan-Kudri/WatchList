@@ -108,7 +108,7 @@
             this.btnCloseEdit.TabIndex = 24;
             this.btnCloseEdit.Text = "Close";
             this.btnCloseEdit.UseVisualStyleBackColor = false;
-            this.btnCloseEdit.Click += new System.EventHandler(this.BtnCloseEdit_Click);
+            this.btnCloseEdit.Click += new System.EventHandler(this.btnCloseEdit_Click);
             // 
             // btnReturnDataCinema
             // 
@@ -120,7 +120,7 @@
             this.btnReturnDataCinema.TabIndex = 23;
             this.btnReturnDataCinema.Text = "Return";
             this.btnReturnDataCinema.UseVisualStyleBackColor = false;
-            this.btnReturnDataCinema.Click += new System.EventHandler(this.BtnReturnDataCinema_Click);
+            this.btnReturnDataCinema.Click += new System.EventHandler(this.btnReturnDataCinema_Click);
             // 
             // btnSaveEdit
             // 
@@ -133,7 +133,7 @@
             this.btnSaveEdit.TabIndex = 22;
             this.btnSaveEdit.Text = "Save";
             this.btnSaveEdit.UseVisualStyleBackColor = false;
-            this.btnSaveEdit.Click += new System.EventHandler(this.BtnSaveEdit_Click);
+            this.btnSaveEdit.Click += new System.EventHandler(this.btnSaveEdit_Click);
             // 
             // labelNumberSequel
             // 

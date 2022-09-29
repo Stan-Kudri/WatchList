@@ -1,4 +1,4 @@
-namespace ListWatchedMoviesAndSeries.Models.Item
+namespace ListWatchedMoviesAndSeries.Model
 {
     public class WatchDetailModels
     {

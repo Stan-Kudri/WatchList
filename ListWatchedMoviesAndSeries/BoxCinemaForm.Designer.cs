@@ -86,7 +86,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormMovie.TabIndex = 1;
             this.btnFormMovie.Text = "Add Movie";
             this.btnFormMovie.UseVisualStyleBackColor = false;
-            this.btnFormMovie.Click += new System.EventHandler(this.BtnFormMovie_Click);
+            this.btnFormMovie.Click += new System.EventHandler(this.btnFormMovie_Click);
             // 
             // btnDeliteMovie
             // 
@@ -99,7 +99,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnDeliteMovie.TabIndex = 2;
             this.btnDeliteMovie.Text = "Delite";
             this.btnDeliteMovie.UseVisualStyleBackColor = false;
-            this.btnDeliteMovie.Click += new System.EventHandler(this.BtnDeliteMovie_Click);
+            this.btnDeliteMovie.Click += new System.EventHandler(this.btnDeliteMovie_Click);
             // 
             // btnFormSeries
             // 
@@ -112,7 +112,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormSeries.TabIndex = 9;
             this.btnFormSeries.Text = "Add Series";
             this.btnFormSeries.UseVisualStyleBackColor = false;
-            this.btnFormSeries.Click += new System.EventHandler(this.BtnFormSeries_Click);
+            this.btnFormSeries.Click += new System.EventHandler(this.btnFormSeries_Click);
             // 
             // BoxName
             // 
@@ -234,7 +234,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnEditCinema.TabIndex = 11;
             this.btnEditCinema.Text = "Edit";
             this.btnEditCinema.UseVisualStyleBackColor = false;
-            this.btnEditCinema.Click += new System.EventHandler(this.BtnEditRow_Click);
+            this.btnEditCinema.Click += new System.EventHandler(this.btnEditRow_Click);
             // 
             // btnSave
             // 

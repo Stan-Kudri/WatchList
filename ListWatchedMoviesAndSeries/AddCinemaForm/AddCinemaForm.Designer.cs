@@ -1,4 +1,6 @@
-﻿
+
+using ListWatchedMoviesAndSeries.Model;
+
 namespace ListWatchedMoviesAndSeries
 {
     partial class AddCinemaForm
@@ -90,7 +92,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnAddCinema.TabIndex = 8;
             this.btnAddCinema.Text = "Add";
             this.btnAddCinema.UseVisualStyleBackColor = false;
-            this.btnAddCinema.Click += new System.EventHandler(this.BtnAddSCinema_Click);
+            this.btnAddCinema.Click += new System.EventHandler(this.btnAddSCinema_Click);
             // 
             // btnClearTxtCinema
             // 
@@ -102,7 +104,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnClearTxtCinema.TabIndex = 9;
             this.btnClearTxtCinema.Text = "Clear";
             this.btnClearTxtCinema.UseVisualStyleBackColor = false;
-            this.btnClearTxtCinema.Click += new System.EventHandler(this.BtnClearTxtCinema_Click);
+            this.btnClearTxtCinema.Click += new System.EventHandler(this.btnClearTxtCinema_Click);
             // 
             // btnBackFormCinema
             // 
@@ -114,7 +116,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnBackFormCinema.TabIndex = 10;
             this.btnBackFormCinema.Text = "Close";
             this.btnBackFormCinema.UseVisualStyleBackColor = false;
-            this.btnBackFormCinema.Click += new System.EventHandler(this.BtnBackFormCinema_Click);
+            this.btnBackFormCinema.Click += new System.EventHandler(this.btnBackFormCinema_Click);
             // 
             // numericSeaquel
             // 
@@ -169,7 +171,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // watchDetailModelsBindingSource
             // 
-            this.watchDetailModelsBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.Item.WatchDetailModels);
+            this.watchDetailModelsBindingSource.DataSource = typeof(WatchDetailModels);
             // 
             // AddCinemaForm
             // 

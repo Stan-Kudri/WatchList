@@ -27,7 +27,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             SetupDefaultValues();
         }
 
-        private void BtnSaveEdit_Click(object sender, EventArgs e)
+        private void btnSaveEdit_Click(object sender, EventArgs e)
         {
             if (!ValidateFields(out string errorMessage))
             {
@@ -43,9 +43,9 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
+        private void btnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
 
-        private void BtnCloseEdit_Click(object sender, EventArgs e) => Close();
+        private void btnCloseEdit_Click(object sender, EventArgs e) => Close();
 
         private void SetupDefaultValues()
         {
