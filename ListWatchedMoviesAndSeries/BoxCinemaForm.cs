@@ -31,12 +31,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinema.Type == TypeCinema.Series)
                 {
                     AddCinemaGridRow(dgvSeries, cinema);
+                    GridSerializer(dgvSeries);
                 }
                 else if (cinema.Type == TypeCinema.Movie)
                 {
                     AddCinemaGridRow(dgvMove, cinema);
+                    GridSerializer(dgvMove);
                 }
                 AddCinemaGridRow(dgvCinema, cinema);
+                GridSerializer(dgvCinema);
             }
         }
 
@@ -47,12 +50,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinemaItem.Type == TypeCinema.Series)
                 {
                     ReplacementEditItem(dgvSeries, cinemaItem, numberRowGridCinema);
+                    GridSerializer(dgvSeries);
                 }
                 else if (cinemaItem.Type == TypeCinema.Movie)
                 {
                     ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
+                    GridSerializer(dgvMove);
                 }
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
+                GridSerializer(dgvCinema);
             }
         }
 
@@ -102,16 +108,25 @@ namespace ListWatchedMoviesAndSeries
         private void btnDeliteMovie_Click(object sender, EventArgs e)
         {
             var page = BoxName.SelectedTab;
+            var deliteRow = false;
 
             if (page == tabMovePage)
             {
                 if (RemoveRowGrid(dgvMove, out string? idItem))
+                {
+                    deliteRow = true;
                     RemoveItemRowGrid(dgvCinema, idItem);
+                    GridSerializer(dgvMove);
+                }
             }
             else if (page == tabSeriesPage)
             {
                 if (RemoveRowGrid(dgvSeries, out string? idItem))
+                {
+                    deliteRow = true;
                     RemoveItemRowGrid(dgvCinema, idItem);
+                    GridSerializer(dgvSeries);
+                }
             }
             else if (page == tabAllCinemaPage)
             {
@@ -120,20 +135,18 @@ namespace ListWatchedMoviesAndSeries
                     if (IsCheckItemGridMove(idItem))
                     {
                         RemoveItemRowGrid(dgvMove, idItem);
+                        GridSerializer(dgvMove);
                     }
                     else
                     {
                         RemoveItemRowGrid(dgvSeries, idItem);
+                        GridSerializer(dgvSeries);
                     }
+                    deliteRow = true;
                 }
             }
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            GridSerializer(dgvMove);
-            GridSerializer(dgvSeries);
-            GridSerializer(dgvCinema);
+            if (deliteRow)
+                GridSerializer(dgvCinema);
         }
 
         private void btnPullingFile_Click(object sender, EventArgs e)
