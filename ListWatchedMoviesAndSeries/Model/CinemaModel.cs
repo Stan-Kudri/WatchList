@@ -4,7 +4,6 @@ using ListWatchedMoviesAndSeries.Models.Item;
 namespace ListWatchedMoviesAndSeries.Models
 {
     public class CinemaModel : ModelBase
-
     {
         public const string WatchCinema = "+";
         public const string NotWatchCinema = "-";
@@ -43,11 +42,6 @@ namespace ListWatchedMoviesAndSeries.Models
         {
             get => _numberSequel;
             set => SetField(ref _numberSequel, value);
-        }
-
-        private CinemaModel()
-        {
-
         }
 
         public CinemaModel(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid())
