@@ -108,24 +108,19 @@ namespace ListWatchedMoviesAndSeries
         private void btnDeliteMovie_Click(object sender, EventArgs e)
         {
             var page = BoxName.SelectedTab;
-            var deliteRow = false;
 
             if (page == tabMovePage)
             {
                 if (RemoveRowGrid(dgvMove, out string? idItem))
                 {
-                    deliteRow = true;
                     RemoveItemRowGrid(dgvCinema, idItem);
-                    GridSerializer(dgvMove);
                 }
             }
             else if (page == tabSeriesPage)
             {
                 if (RemoveRowGrid(dgvSeries, out string? idItem))
                 {
-                    deliteRow = true;
                     RemoveItemRowGrid(dgvCinema, idItem);
-                    GridSerializer(dgvSeries);
                 }
             }
             else if (page == tabAllCinemaPage)
@@ -135,18 +130,13 @@ namespace ListWatchedMoviesAndSeries
                     if (IsCheckItemGridMove(idItem))
                     {
                         RemoveItemRowGrid(dgvMove, idItem);
-                        GridSerializer(dgvMove);
                     }
                     else
                     {
                         RemoveItemRowGrid(dgvSeries, idItem);
-                        GridSerializer(dgvSeries);
                     }
-                    deliteRow = true;
                 }
             }
-            if (deliteRow)
-                GridSerializer(dgvCinema);
         }
 
         private void btnPullingFile_Click(object sender, EventArgs e)
@@ -200,6 +190,7 @@ namespace ListWatchedMoviesAndSeries
                 if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
                     dataGridCinema.Rows.RemoveAt(row.Index);
+                    GridSerializer(dataGridCinema);
                     break;
                 }
             }
