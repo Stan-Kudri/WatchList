@@ -20,7 +20,7 @@ namespace ListWatchedMoviesAndSeries.Repository
         public List<WatchItem> GetAll()
         {
             using FileStream stream = new(_path, FileMode.Open);
-            List<WatchItem>? itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
+            var itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
             return itemList ?? new List<WatchItem>();
         }
 

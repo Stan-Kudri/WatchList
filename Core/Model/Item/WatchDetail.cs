@@ -10,7 +10,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         [JsonPropertyName("Grade")]
         public string? Grade { get; set; } = null;
 
-        private WatchDetail()
+        public WatchDetail()
         {
         }
 

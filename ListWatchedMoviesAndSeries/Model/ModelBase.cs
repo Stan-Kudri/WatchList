@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace ListWatchedMoviesAndSeries.Models
 {
-    public class ModelsBase : INotifyPropertyChanged
+    public class ModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -16,7 +16,6 @@ namespace ListWatchedMoviesAndSeries.Models
         {
             if (EqualityComparer<T>.Default.Equals(field, value))
                 return false;
-
             field = value;
             OnPropertyChanged(propertyName);
             return true;

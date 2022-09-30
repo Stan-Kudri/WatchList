@@ -1,82 +1,70 @@
-using System.Text.Json.Serialization;
-using Ardalis.SmartEnum.SystemTextJson;
+using ListWatchedMoviesAndSeries.Model;
 using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.Models
 {
-    public class WatchItem : ModelsBase
+    public class CinemaModel : ModelBase
     {
         public const string WatchCinema = "+";
         public const string NotWatchCinema = "-";
 
         private Guid _id;
         private string? _name = null;
-        private WatchDetail? _detail = null;
+        private WatchDetailModels? _detail = null;
         private TypeCinema? _type = null;
         private decimal? _numberSequel = null;
 
-        [JsonPropertyName("Id")]
         public Guid? Id
         {
             get => _id;
             set => SetField(ref _id, (Guid)value);
         }
 
-        [JsonPropertyName("Name")]
         public string? Name
         {
             get => _name;
             set => SetField(ref _name, value);
         }
 
-        [JsonPropertyName("Detail")]
-        public WatchDetail? Detail
+        public WatchDetailModels? Detail
         {
             get => _detail;
             set => SetField(ref _detail, value);
         }
 
-        [JsonPropertyName("Type")]
-        [JsonConverter(typeof(SmartEnumValueConverter<TypeCinema, int>))]
         public TypeCinema? Type
         {
             get => _type;
             set => SetField(ref _type, value);
         }
 
-        [JsonPropertyName("NumberSequel")]
         public decimal? NumberSequel
         {
             get => _numberSequel;
             set => SetField(ref _numberSequel, value);
         }
 
-        private WatchItem()
+        public CinemaModel(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid())
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid().ToString())
+        public CinemaModel(string name, decimal? numberSequel, TypeCinema type, Guid? Id) : this(name, numberSequel, null, null, type, Id)
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, TypeCinema type, string Id) : this(name, numberSequel, null, null, type, Id)
+        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid())
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid().ToString())
-        {
-        }
-
-        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, string Id)
+        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, Guid? Id)
         {
             if (name == null)
                 throw new ArgumentException("Name cinema not null", "Exception");
-
-            _id = Id != string.Empty ? Guid.Parse(Id) : Guid.NewGuid();
+            _id = Id ?? Guid.NewGuid();
             _name = name;
-            Detail = new WatchDetail(date, grade);
+            Detail = new WatchDetailModels(date, grade);
             _numberSequel = numberSequel;
-            _type = type != null ? type : TypeCinema.Unknown;
+            _type = type ?? TypeCinema.Unknown;
         }
 
         public string GetView() => Detail?.DateWatch == null ? NotWatchCinema : WatchCinema;

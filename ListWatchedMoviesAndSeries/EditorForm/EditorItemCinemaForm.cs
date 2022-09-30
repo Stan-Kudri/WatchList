@@ -8,14 +8,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public const string NotWatchCinema = "-";
 
         private readonly BoxCinemaForm _box;
-        private readonly WatchItem _cinema;
+        private readonly CinemaModel _cinema;
 
         private readonly int _numberRowCinema;
         private readonly int _numberRowAllCinema;
 
         private string Type => _cinema?.Type?.Name ?? string.Empty;
 
-        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, WatchItem? cinema, int numberRowCinema, int numberRowAllCinema)
+        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel? cinema, int numberRowCinema, int numberRowAllCinema)
         {
             if (cinema == null)
                 throw new ArgumentException("Item cinema not null");
@@ -25,11 +25,9 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             _numberRowAllCinema = numberRowAllCinema;
             InitializeComponent();
             SetupDefaultValues();
-            //Максимальная дата, которую можно установить в DataTimePicker - это дата запуска программы.
-            dateTPCinema.MaxDate = DateTime.Now;
         }
 
-        private void BtnSaveEdit_Click(object sender, EventArgs e)
+        private void btnSaveEdit_Click(object sender, EventArgs e)
         {
             if (!ValidateFields(out string errorMessage))
             {
@@ -45,14 +43,15 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
+        private void btnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
 
-        private void BtnCloseEdit_Click(object sender, EventArgs e) => Close();
+        private void btnCloseEdit_Click(object sender, EventArgs e) => Close();
 
         private void SetupDefaultValues()
         {
             txtEditName.Text = _cinema.Name;
             labelNumberSequel.Text = _cinema.GetTypeSequel();
+            dateTPCinema.MaxDate = DateTime.Now;
             if (_cinema.GetView() == WatchCinema && _cinema.Detail?.DateWatch != null)
             {
                 numericEditGradeCinema.Enabled = true;
@@ -76,12 +75,12 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             var id = _cinema.Id ?? Guid.NewGuid();
             if (numericEditGradeCinema.Enabled)
             {
-                var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id.ToString());
+                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id);
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
             }
             else
             {
-                var itemWatch = new WatchItem(txtEditName.Text, numericEditSequel.Value, null, null, type, id.ToString());
+                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, type, id);
                 _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
             }
         }

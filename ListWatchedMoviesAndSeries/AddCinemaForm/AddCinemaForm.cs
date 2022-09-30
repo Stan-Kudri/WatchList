@@ -17,7 +17,7 @@ namespace ListWatchedMoviesAndSeries
             dateTimePickerCinema.MaxDate = DateTime.Now;
         }
 
-        private void BtnAddSCinema_Click(object sender, EventArgs e)
+        private void btnAddSCinema_Click(object sender, EventArgs e)
         {
             if (!ValidateFields(out var errorMessage))
             {
@@ -26,18 +26,18 @@ namespace ListWatchedMoviesAndSeries
             }
             if (numericGradeCinema.Enabled)
             {
-                _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
+                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
             }
             else
             {
-                _box.SetNameGrid(new WatchItem(txtAddCinema.Text, numericSeaquel.Value, _type));
+                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _type));
             }
             DefoultValue();
         }
 
-        private void BtnClearTxtCinema_Click(object sender, EventArgs e) => DefoultValue();
+        private void btnClearTxtCinema_Click(object sender, EventArgs e) => DefoultValue();
 
-        private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
+        private void btnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
         private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
         {
