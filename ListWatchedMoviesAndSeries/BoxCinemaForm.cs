@@ -31,15 +31,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinema.Type == TypeCinema.Series)
                 {
                     AddCinemaGridRow(dgvSeries, cinema);
-                    GridSerializer(dgvSeries);
+                    SavingSerializedDataJSON(dgvSeries);
                 }
                 else if (cinema.Type == TypeCinema.Movie)
                 {
                     AddCinemaGridRow(dgvMove, cinema);
-                    GridSerializer(dgvMove);
+                    SavingSerializedDataJSON(dgvMove);
                 }
                 AddCinemaGridRow(dgvCinema, cinema);
-                GridSerializer(dgvCinema);
+                SavingSerializedDataJSON(dgvCinema);
             }
         }
 
@@ -50,15 +50,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinemaItem.Type == TypeCinema.Series)
                 {
                     ReplacementEditItem(dgvSeries, cinemaItem, numberRowGridCinema);
-                    GridSerializer(dgvSeries);
+                    SavingSerializedDataJSON(dgvSeries);
                 }
                 else if (cinemaItem.Type == TypeCinema.Movie)
                 {
                     ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
-                    GridSerializer(dgvMove);
+                    SavingSerializedDataJSON(dgvMove);
                 }
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
-                GridSerializer(dgvCinema);
+                SavingSerializedDataJSON(dgvCinema);
             }
         }
 
@@ -190,7 +190,7 @@ namespace ListWatchedMoviesAndSeries
                 if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
                     dataGridCinema.Rows.RemoveAt(row.Index);
-                    GridSerializer(dataGridCinema);
+                    SavingSerializedDataJSON(dataGridCinema);
                     break;
                 }
             }
@@ -428,7 +428,7 @@ namespace ListWatchedMoviesAndSeries
         /// Path in the field "_path".
         /// </summary>
         /// <param name="grid">Table for writing</param>
-        private void GridSerializer(DataGridView grid)
+        private void SavingSerializedDataJSON(DataGridView grid)
         {
             if (grid.Rows.Count < 0)
                 MessageBoxProvider.ShowError("Grid without elements.");
