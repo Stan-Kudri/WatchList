@@ -31,15 +31,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinema.Type == TypeCinema.Series)
                 {
                     AddCinemaGridRow(dgvSeries, cinema);
-                    SavingSerializedDataJSON(dgvSeries);
+                    SaveSerializedDataJSON(dgvSeries);
                 }
                 else if (cinema.Type == TypeCinema.Movie)
                 {
                     AddCinemaGridRow(dgvMove, cinema);
-                    SavingSerializedDataJSON(dgvMove);
+                    SaveSerializedDataJSON(dgvMove);
                 }
                 AddCinemaGridRow(dgvCinema, cinema);
-                SavingSerializedDataJSON(dgvCinema);
+                SaveSerializedDataJSON(dgvCinema);
             }
         }
 
@@ -50,15 +50,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinemaItem.Type == TypeCinema.Series)
                 {
                     ReplacementEditItem(dgvSeries, cinemaItem, numberRowGridCinema);
-                    SavingSerializedDataJSON(dgvSeries);
+                    SaveSerializedDataJSON(dgvSeries);
                 }
                 else if (cinemaItem.Type == TypeCinema.Movie)
                 {
                     ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
-                    SavingSerializedDataJSON(dgvMove);
+                    SaveSerializedDataJSON(dgvMove);
                 }
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
-                SavingSerializedDataJSON(dgvCinema);
+                SaveSerializedDataJSON(dgvCinema);
             }
         }
 
@@ -190,7 +190,7 @@ namespace ListWatchedMoviesAndSeries
                 if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
                     dataGridCinema.Rows.RemoveAt(row.Index);
-                    SavingSerializedDataJSON(dataGridCinema);
+                    SaveSerializedDataJSON(dataGridCinema);
                     break;
                 }
             }
@@ -427,13 +427,13 @@ namespace ListWatchedMoviesAndSeries
         /// Recording JSON Serializer grid in files.
         /// Path in the field "_path".
         /// </summary>
-        /// <param name="grid">Table for writing</param>
-        private void SavingSerializedDataJSON(DataGridView grid)
+        /// <param name="date">Table for writing</param>
+        private void SaveSerializedDataJSON(DataGridView date)
         {
-            if (grid.Rows.Count < 0)
+            if (date.Rows.Count < 0)
                 MessageBoxProvider.ShowError("Grid without elements.");
             var itemList = new List<WatchItem>();
-            foreach (DataGridViewRow row in grid.Rows)
+            foreach (DataGridViewRow row in date.Rows)
             {
                 if (row.Cells[IndexColumnId].Value == null)
                     break;
@@ -441,7 +441,7 @@ namespace ListWatchedMoviesAndSeries
                 item.InstallationType(item.Type?.Value ?? 0);
                 itemList.Add(item);
             }
-            var path = @$"{_path}Grid{grid.Tag}.json";
+            var path = @$"{_path}Grid{date.Tag}.json";
             var fileRepository = new FileWatchItemRepository(path);
             try
             {
