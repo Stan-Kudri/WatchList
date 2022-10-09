@@ -5,9 +5,6 @@ namespace ListWatchedMoviesAndSeries.Models
 {
     public class CinemaModel : ModelBase
     {
-        public const string WatchCinema = "+";
-        public const string NotWatchCinema = "-";
-
         private Guid _id;
         private string? _name = null;
         private WatchDetailModels? _detail = null;

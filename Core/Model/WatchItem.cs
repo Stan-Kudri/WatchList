@@ -10,9 +10,6 @@ namespace ListWatchedMoviesAndSeries.Models
         private const int NumberTypeMove = 1;
         private const int NumberTypeSeries = 2;
 
-        private const string WatchCinema = "+";
-        private const string NotWatchCinema = "-";
-
         public Guid Id { get; set; }
 
         public string? Name { get; set; } = null;
