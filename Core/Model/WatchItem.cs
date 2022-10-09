@@ -52,8 +52,6 @@ namespace ListWatchedMoviesAndSeries.Models
             Type = type ?? TypeCinema.Unknown;
         }
 
-        public string GetView() => Detail?.DateWatch == null ? NotWatchCinema : WatchCinema;
-
         public void InitializationType(int numberType)
         {
             if (numberType == NumberTypeMove)

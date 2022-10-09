@@ -205,7 +205,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var partOrSeason = cinema.NumberSequel;
             var formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
+            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.Detail?.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace ListWatchedMoviesAndSeries
             {
                 var partOrSeason = item.NumberSequel;
                 var formatDate = item.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
+                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.Detail?.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
             }
         }
 

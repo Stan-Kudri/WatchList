@@ -4,6 +4,9 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 {
     public class WatchDetail
     {
+        private const string WatchCinema = "+";
+        private const string NotWatchCinema = "-";
+
         [JsonPropertyName("DateWatch")]
         public DateTime? DateWatch { get; set; }
 
@@ -19,5 +22,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
             Grade = dateWatch != null ? grade.ToString() : string.Empty;
             DateWatch = dateWatch;
         }
+
+        public string GetView() => DateWatch == null ? NotWatchCinema : WatchCinema;
     }
 }

@@ -66,7 +66,5 @@ namespace ListWatchedMoviesAndSeries.Models
             _numberSequel = numberSequel;
             _type = type ?? TypeCinema.Unknown;
         }
-
-        public string GetView() => Detail?.DateWatch == null ? NotWatchCinema : WatchCinema;
     }
 }
