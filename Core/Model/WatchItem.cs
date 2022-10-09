@@ -13,26 +13,15 @@ namespace ListWatchedMoviesAndSeries.Models
         private const string WatchCinema = "+";
         private const string NotWatchCinema = "-";
 
-        private Guid _id;
+        public Guid Id { get; set; }
 
-        [JsonPropertyName("Id")]
-        public Guid? Id
-        {
-            get => _id;
-            set => _id = (Guid)value;
-        }
-
-        [JsonPropertyName("Name")]
         public string? Name { get; set; } = null;
 
-        [JsonPropertyName("Detail")]
         public WatchDetail? Detail { get; set; } = null;
 
-        [JsonPropertyName("Type")]
         [JsonConverter(typeof(SmartEnumValueConverter<TypeCinema, int>))]
         public TypeCinema? Type { get; set; } = null;
 
-        [JsonPropertyName("NumberSequel")]
         public decimal? NumberSequel { get; set; } = null;
 
         public WatchItem()
@@ -43,7 +32,7 @@ namespace ListWatchedMoviesAndSeries.Models
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, TypeCinema? type, Guid? Id) : this(name, numberSequel, null, null, type, Id)
+        public WatchItem(string name, decimal? numberSequel, TypeCinema? type, Guid? id) : this(name, numberSequel, null, null, type, id)
         {
         }
 
@@ -51,12 +40,12 @@ namespace ListWatchedMoviesAndSeries.Models
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema? type, Guid? Id)
+        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema? type, Guid? id)
         {
             if (name == null)
-                throw new ArgumentException("Name cinema not null", "Exception");
+                throw new ArgumentException("Name cinema not null", nameof(name));
 
-            _id = Id ?? Guid.NewGuid();
+            Id = id ?? Guid.NewGuid();
             Name = name;
             Detail = new WatchDetail(date, grade);
             NumberSequel = numberSequel;
@@ -65,9 +54,7 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public string GetView() => Detail?.DateWatch == null ? NotWatchCinema : WatchCinema;
 
-        public string GetTypeSequel() => Type == TypeCinema.Movie ? TypeCinema.Movie.Name : TypeCinema.Series.Name;
-
-        public void InstallationType(int numberType)
+        public void InitializationType(int numberType)
         {
             if (numberType == NumberTypeMove)
                 Type = TypeCinema.Movie;
@@ -76,7 +63,7 @@ namespace ListWatchedMoviesAndSeries.Models
             else if (numberType == NumberTypeAllCinema)
                 Type = TypeCinema.Unknown;
             else
-                throw new ArgumentException("No value number <TypeCinema>.");
+                throw new ArgumentException("No value number <TypeCinema>.", nameof(numberType));
         }
     }
 }

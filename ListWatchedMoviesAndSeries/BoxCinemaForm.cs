@@ -31,15 +31,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinema.Type == TypeCinema.Series)
                 {
                     AddCinemaGridRow(dgvSeries, cinema);
-                    SaveSerializedDataJSON(dgvSeries);
+                    SaveData(dgvSeries);
                 }
                 else if (cinema.Type == TypeCinema.Movie)
                 {
                     AddCinemaGridRow(dgvMove, cinema);
-                    SaveSerializedDataJSON(dgvMove);
+                    SaveData(dgvMove);
                 }
                 AddCinemaGridRow(dgvCinema, cinema);
-                SaveSerializedDataJSON(dgvCinema);
+                SaveData(dgvCinema);
             }
         }
 
@@ -50,15 +50,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinemaItem.Type == TypeCinema.Series)
                 {
                     ReplacementEditItem(dgvSeries, cinemaItem, numberRowGridCinema);
-                    SaveSerializedDataJSON(dgvSeries);
+                    SaveData(dgvSeries);
                 }
                 else if (cinemaItem.Type == TypeCinema.Movie)
                 {
                     ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
-                    SaveSerializedDataJSON(dgvMove);
+                    SaveData(dgvMove);
                 }
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
-                SaveSerializedDataJSON(dgvCinema);
+                SaveData(dgvCinema);
             }
         }
 
@@ -190,7 +190,7 @@ namespace ListWatchedMoviesAndSeries
                 if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
                     dataGridCinema.Rows.RemoveAt(row.Index);
-                    SaveSerializedDataJSON(dataGridCinema);
+                    SaveData(dataGridCinema);
                     break;
                 }
             }
@@ -204,7 +204,7 @@ namespace ListWatchedMoviesAndSeries
         private void AddCinemaGridRow(DataGridView dataGridCinema, CinemaModel cinema)
         {
             var partOrSeason = cinema.NumberSequel;
-            string formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
+            var formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
             dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
         }
 
@@ -428,7 +428,7 @@ namespace ListWatchedMoviesAndSeries
         /// Path in the field "_path".
         /// </summary>
         /// <param name="date">Table for writing</param>
-        private void SaveSerializedDataJSON(DataGridView date)
+        private void SaveData(DataGridView date)
         {
             if (date.Rows.Count < 0)
                 MessageBoxProvider.ShowError("Grid without elements.");
@@ -438,7 +438,7 @@ namespace ListWatchedMoviesAndSeries
                 if (row.Cells[IndexColumnId].Value == null)
                     break;
                 var item = GetItem(row);
-                item.InstallationType(item.Type?.Value ?? 0);
+                item.InitializationType(item.Type?.Value ?? 0);
                 itemList.Add(item);
             }
             var path = @$"{_path}Grid{date.Tag}.json";

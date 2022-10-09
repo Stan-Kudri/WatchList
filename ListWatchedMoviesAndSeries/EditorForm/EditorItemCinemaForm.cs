@@ -50,7 +50,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private void SetupDefaultValues()
         {
             txtEditName.Text = _cinema.Name;
-            labelNumberSequel.Text = _cinema.GetTypeSequel();
+            labelNumberSequel.Text = _cinema.Type.Name;
             dateTPCinema.MaxDate = DateTime.Now;
             if (_cinema.GetView() == WatchCinema && _cinema.Detail?.DateWatch != null)
             {
