@@ -24,5 +24,9 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         }
 
         public string GetView() => DateWatch == null ? NotWatchCinema : WatchCinema;
+
+        public string GetWatchData() => DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
+
+        public bool ValidDateField() => DateWatch != null && GetView() == WatchCinema;
     }
 }

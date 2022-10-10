@@ -49,7 +49,7 @@ namespace ListWatchedMoviesAndSeries.Models
             Type = type ?? TypeCinema.Unknown;
         }
 
-        public void InitializationType(int numberType)
+        public void InitializType(int numberType)
         {
             if (numberType == NumberTypeMove)
                 Type = TypeCinema.Movie;

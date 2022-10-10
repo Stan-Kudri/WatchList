@@ -204,7 +204,7 @@ namespace ListWatchedMoviesAndSeries
         private void AddCinemaGridRow(DataGridView dataGridCinema, CinemaModel cinema)
         {
             var partOrSeason = cinema.NumberSequel;
-            var formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
+            var formatDate = cinema.Detail?.GetWatchData();
             dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.Detail?.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
         }
 
@@ -218,7 +218,7 @@ namespace ListWatchedMoviesAndSeries
             foreach (var item in itemGrid)
             {
                 var partOrSeason = item.NumberSequel;
-                var formatDate = item.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
+                var formatDate = item.Detail?.GetWatchData();
                 dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.Detail?.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
             }
         }
@@ -412,7 +412,7 @@ namespace ListWatchedMoviesAndSeries
             if (cinemaItem.Detail?.DateWatch != null)
             {
                 grid.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "+";
-                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail?.DateWatch?.ToString("dd.MM.yyyy");
+                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail?.GetWatchData();
                 grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail?.Grade;
             }
             else
@@ -438,7 +438,7 @@ namespace ListWatchedMoviesAndSeries
                 if (row.Cells[IndexColumnId].Value == null)
                     break;
                 var item = GetItem(row);
-                item.InitializationType(item.Type?.Value ?? 0);
+                item.InitializType(item.Type?.Value ?? 0);
                 itemList.Add(item);
             }
             var path = @$"{_path}Grid{date.Tag}.json";
