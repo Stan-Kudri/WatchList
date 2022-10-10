@@ -6,14 +6,14 @@ namespace ListWatchedMoviesAndSeries.Models
     {
         private Guid _id;
         private string? _name = null;
-        private WatchDetail? _detail = null;
+        private WatchDetail _detail;
         private TypeCinema? _type = null;
         private decimal? _numberSequel = null;
 
-        public Guid? Id
+        public Guid Id
         {
             get => _id;
-            set => SetField(ref _id, (Guid)value);
+            set => SetField(ref _id, value);
         }
 
         public string? Name
@@ -22,7 +22,7 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _name, value);
         }
 
-        public WatchDetail? Detail
+        public WatchDetail Detail
         {
             get => _detail;
             set => SetField(ref _detail, value);

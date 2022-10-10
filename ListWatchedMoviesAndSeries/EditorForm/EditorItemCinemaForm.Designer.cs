@@ -32,7 +32,6 @@
             this.labelGradeCinema = new System.Windows.Forms.Label();
             this.numericEditGradeCinema = new System.Windows.Forms.NumericUpDown();
             this.dateTPCinema = new System.Windows.Forms.DateTimePicker();
-            this.watchDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.numericEditSequel = new System.Windows.Forms.NumericUpDown();
             this.btnCloseEdit = new System.Windows.Forms.Button();
             this.btnReturnDataCinema = new System.Windows.Forms.Button();
@@ -40,11 +39,12 @@
             this.labelNumberSequel = new System.Windows.Forms.Label();
             this.labelNameCinema = new System.Windows.Forms.Label();
             this.txtEditName = new System.Windows.Forms.TextBox();
-            this.cinemaModelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cinemaModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.watchDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numericEditGradeCinema)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericEditSequel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cinemaModelsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cinemaModelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // labelGradeCinema
@@ -86,13 +86,9 @@
             this.dateTPCinema.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
             this.dateTPCinema.ValueChanged += new System.EventHandler(this.DateTimePickerCinema_ValueChanged);
             // 
-            // watchDetailBindingSource
-            // 
-            this.watchDetailBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.Item.WatchDetail);
-            // 
             // numericEditSequel
             // 
-            this.numericEditSequel.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.cinemaModelsBindingSource, "Type", true));
+            this.numericEditSequel.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.cinemaModelBindingSource, "NumberSequel", true));
             this.numericEditSequel.Location = new System.Drawing.Point(217, 42);
             this.numericEditSequel.Name = "numericEditSequel";
             this.numericEditSequel.Size = new System.Drawing.Size(145, 23);
@@ -160,16 +156,20 @@
             // 
             // txtEditName
             // 
-            this.txtEditName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cinemaModelsBindingSource, "Name", true));
+            this.txtEditName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cinemaModelBindingSource, "Name", true));
             this.txtEditName.Location = new System.Drawing.Point(12, 12);
             this.txtEditName.Multiline = true;
             this.txtEditName.Name = "txtEditName";
             this.txtEditName.Size = new System.Drawing.Size(352, 23);
             this.txtEditName.TabIndex = 19;
             // 
-            // cinemaModelsBindingSource
+            // cinemaModelBindingSource
             // 
-            this.cinemaModelsBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.CinemaModel);
+            this.cinemaModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.CinemaModel);
+            // 
+            // watchDetailBindingSource
+            // 
+            this.watchDetailBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.Item.WatchDetail);
             // 
             // EditorItemCinemaForm
             // 
@@ -192,9 +192,9 @@
             this.Name = "EditorItemCinemaForm";
             this.Text = "EditorItemCinemaForm";
             ((System.ComponentModel.ISupportInitialize)(this.numericEditGradeCinema)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericEditSequel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cinemaModelsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cinemaModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,6 +213,6 @@
         protected DateTimePicker dateTPCinema;
         protected NumericUpDown numericEditSequel;
         private BindingSource watchDetailBindingSource;
-        private BindingSource cinemaModelsBindingSource;
+        private BindingSource cinemaModelBindingSource;
     }
 }

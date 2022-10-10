@@ -13,6 +13,9 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         [JsonPropertyName("Grade")]
         public string? Grade { get; set; } = null;
 
+        [JsonIgnore]
+        public string Watch => DateWatch == null ? NotWatchCinema : WatchCinema;
+
         public WatchDetail()
         {
         }
@@ -23,10 +26,8 @@ namespace ListWatchedMoviesAndSeries.Models.Item
             DateWatch = dateWatch;
         }
 
-        public string GetView() => DateWatch == null ? NotWatchCinema : WatchCinema;
-
         public string GetWatchData() => DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
 
-        public bool ValidDateField() => DateWatch != null && GetView() == WatchCinema;
+        public bool ValidDateField() => DateWatch != null && Watch == WatchCinema;
     }
 }

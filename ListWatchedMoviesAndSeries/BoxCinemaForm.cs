@@ -205,7 +205,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var partOrSeason = cinema.NumberSequel;
             var formatDate = cinema.Detail?.GetWatchData();
-            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.Detail?.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
+            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.Detail?.Watch, formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace ListWatchedMoviesAndSeries
             {
                 var partOrSeason = item.NumberSequel;
                 var formatDate = item.Detail?.GetWatchData();
-                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.Detail?.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
+                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.Detail?.Watch, formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
             }
         }
 
@@ -277,7 +277,7 @@ namespace ListWatchedMoviesAndSeries
         /// <param name="indexRow">Number row element</param>
         private void ShowEditCinema(DataGridView grid, CinemaModel item, int indexRow)
         {
-            var id = item.Id?.ToString() ?? string.Empty;
+            var id = item.Id.ToString() ?? string.Empty;
             var indexRowAllCinema = indexRow;
             if (grid == dgvCinema)
             {
@@ -409,11 +409,11 @@ namespace ListWatchedMoviesAndSeries
             grid.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             grid.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
 
-            if (cinemaItem.Detail?.DateWatch != null)
+            if (cinemaItem.Detail.DateWatch != null)
             {
                 grid.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "+";
-                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail?.GetWatchData();
-                grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail?.Grade;
+                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();
+                grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail.Grade;
             }
             else
             {
