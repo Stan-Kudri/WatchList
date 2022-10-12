@@ -14,7 +14,7 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public string? Name { get; set; } = null;
 
-        public WatchDetail Detail { get; set; }
+        public WatchDetail Detail { get; set; } = new WatchDetail();
 
         [JsonConverter(typeof(SmartEnumValueConverter<TypeCinema, int>))]
         public TypeCinema? Type { get; set; } = null;
