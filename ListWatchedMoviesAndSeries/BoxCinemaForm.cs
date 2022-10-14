@@ -31,12 +31,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinema.Type == TypeCinema.Series)
                 {
                     AddCinemaGridRow(dgvSeries, cinema);
+                    SaveData(dgvSeries);
                 }
                 else if (cinema.Type == TypeCinema.Movie)
                 {
                     AddCinemaGridRow(dgvMove, cinema);
+                    SaveData(dgvMove);
                 }
                 AddCinemaGridRow(dgvCinema, cinema);
+                SaveData(dgvCinema);
             }
         }
 
@@ -47,12 +50,15 @@ namespace ListWatchedMoviesAndSeries
                 if (cinemaItem.Type == TypeCinema.Series)
                 {
                     ReplacementEditItem(dgvSeries, cinemaItem, numberRowGridCinema);
+                    SaveData(dgvSeries);
                 }
                 else if (cinemaItem.Type == TypeCinema.Movie)
                 {
                     ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
+                    SaveData(dgvMove);
                 }
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
+                SaveData(dgvCinema);
             }
         }
 
@@ -106,12 +112,16 @@ namespace ListWatchedMoviesAndSeries
             if (page == tabMovePage)
             {
                 if (RemoveRowGrid(dgvMove, out string? idItem))
+                {
                     RemoveItemRowGrid(dgvCinema, idItem);
+                }
             }
             else if (page == tabSeriesPage)
             {
                 if (RemoveRowGrid(dgvSeries, out string? idItem))
+                {
                     RemoveItemRowGrid(dgvCinema, idItem);
+                }
             }
             else if (page == tabAllCinemaPage)
             {
@@ -127,13 +137,6 @@ namespace ListWatchedMoviesAndSeries
                     }
                 }
             }
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            GridSerializer(dgvMove);
-            GridSerializer(dgvSeries);
-            GridSerializer(dgvCinema);
         }
 
         private void btnPullingFile_Click(object sender, EventArgs e)
@@ -187,6 +190,7 @@ namespace ListWatchedMoviesAndSeries
                 if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
                     dataGridCinema.Rows.RemoveAt(row.Index);
+                    SaveData(dataGridCinema);
                     break;
                 }
             }
@@ -200,8 +204,8 @@ namespace ListWatchedMoviesAndSeries
         private void AddCinemaGridRow(DataGridView dataGridCinema, CinemaModel cinema)
         {
             var partOrSeason = cinema.NumberSequel;
-            string formatDate = cinema.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.GetView(), formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
+            var formatDate = cinema.Detail?.GetWatchData();
+            dataGridCinema.Rows.Add(cinema.Name, partOrSeason.ToString(), cinema.Detail?.Watch, formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
         }
 
         /// <summary>
@@ -214,8 +218,8 @@ namespace ListWatchedMoviesAndSeries
             foreach (var item in itemGrid)
             {
                 var partOrSeason = item.NumberSequel;
-                var formatDate = item.Detail?.DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
-                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.GetView(), formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
+                var formatDate = item.Detail?.GetWatchData();
+                dataGridCinema.Rows.Add(item.Name, partOrSeason.ToString(), item.Detail?.Watch, formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
             }
         }
 
@@ -273,7 +277,7 @@ namespace ListWatchedMoviesAndSeries
         /// <param name="indexRow">Number row element</param>
         private void ShowEditCinema(DataGridView grid, CinemaModel item, int indexRow)
         {
-            var id = item.Id?.ToString() ?? string.Empty;
+            var id = item.Id.ToString() ?? string.Empty;
             var indexRowAllCinema = indexRow;
             if (grid == dgvCinema)
             {
@@ -405,11 +409,11 @@ namespace ListWatchedMoviesAndSeries
             grid.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             grid.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
 
-            if (cinemaItem.Detail?.DateWatch != null)
+            if (cinemaItem.Detail.DateWatch != null)
             {
                 grid.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "+";
-                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail?.DateWatch?.ToString("dd.MM.yyyy");
-                grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail?.Grade;
+                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();
+                grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail.Grade;
             }
             else
             {
@@ -423,21 +427,21 @@ namespace ListWatchedMoviesAndSeries
         /// Recording JSON Serializer grid in files.
         /// Path in the field "_path".
         /// </summary>
-        /// <param name="grid">Table for writing</param>
-        private void GridSerializer(DataGridView grid)
+        /// <param name="date">Table for writing</param>
+        private void SaveData(DataGridView date)
         {
-            if (grid.Rows.Count < 0)
+            if (date.Rows.Count < 0)
                 MessageBoxProvider.ShowError("Grid without elements.");
             var itemList = new List<WatchItem>();
-            foreach (DataGridViewRow row in grid.Rows)
+            foreach (DataGridViewRow row in date.Rows)
             {
                 if (row.Cells[IndexColumnId].Value == null)
                     break;
                 var item = GetItem(row);
-                item.InstallationType(item.Type?.Value ?? 0);
+                item.InitializType(item.Type?.Value ?? 0);
                 itemList.Add(item);
             }
-            var path = @$"{_path}Grid{grid.Tag}.json";
+            var path = @$"{_path}Grid{date.Tag}.json";
             var fileRepository = new FileWatchItemRepository(path);
             try
             {

@@ -18,7 +18,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel? cinema, int numberRowCinema, int numberRowAllCinema)
         {
             if (cinema == null)
-                throw new ArgumentException("Item cinema not null");
+                throw new ArgumentException("Item cinema not null", nameof(cinema));
             _cinema = cinema;
             _box = formBoxCinema;
             _numberRowCinema = numberRowCinema;
@@ -50,9 +50,9 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private void SetupDefaultValues()
         {
             txtEditName.Text = _cinema.Name;
-            labelNumberSequel.Text = _cinema.GetTypeSequel();
+            labelNumberSequel.Text = _cinema.Type.Name;
             dateTPCinema.MaxDate = DateTime.Now;
-            if (_cinema.GetView() == WatchCinema && _cinema.Detail?.DateWatch != null)
+            if (_cinema.Detail.ValidDateField())
             {
                 numericEditGradeCinema.Enabled = true;
                 dateTPCinema.Value = _cinema.Detail.DateWatch.Value;
