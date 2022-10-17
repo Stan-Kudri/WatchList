@@ -72,7 +72,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private void SaveEditionElement()
         {
             var type = _cinema.Type ?? Models.Item.TypeCinema.Unknown;
-            var id = _cinema.Id ?? Guid.NewGuid();
+            var id = _cinema.Id;
             if (numericEditGradeCinema.Enabled)
             {
                 var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id);

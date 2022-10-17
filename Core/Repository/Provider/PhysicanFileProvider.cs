@@ -4,7 +4,7 @@ namespace Core.Repository.Provider
     {
         public Stream Open(string path, FileMode mode)
         {
-            using var stream = new FileStream(path, mode);
+            var stream = new FileStream(path, mode);
             return stream;
         }
     }
