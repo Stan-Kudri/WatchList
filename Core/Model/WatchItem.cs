@@ -60,6 +60,7 @@ namespace ListWatchedMoviesAndSeries.Models
             else
                 throw new ArgumentException("No value number <TypeCinema>.", nameof(numberType));
         }
+
         public override int GetHashCode()
         {
             return HashCode.Combine(Id, Name, Detail.GetHashCode, Type, NumberSequel);
