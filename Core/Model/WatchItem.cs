@@ -63,7 +63,7 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name, Detail.GetHashCode, Type, NumberSequel);
+            return HashCode.Combine(Id, Name, Detail, Type, NumberSequel);
         }
 
         public override bool Equals(object? obj)
