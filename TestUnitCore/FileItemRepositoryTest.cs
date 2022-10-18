@@ -1,6 +1,7 @@
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
+using Xunit;
 
 namespace TestUnitCore
 {
