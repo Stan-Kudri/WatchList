@@ -29,5 +29,20 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         public string GetWatchData() => DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
 
         public bool ValidDateField() => DateWatch != null && Watch == WatchCinema;
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(DateWatch, Grade);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as WatchDetail);
+        }
+
+        public bool Equals(WatchDetail? other)
+        {
+            return other != null && DateWatch == other.DateWatch && Grade == other.Grade;
+        }
     }
 }

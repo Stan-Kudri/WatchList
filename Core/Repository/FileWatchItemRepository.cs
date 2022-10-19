@@ -1,3 +1,4 @@
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Core.Repository.Provider;
 using ListWatchedMoviesAndSeries.Models;
@@ -12,6 +13,7 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         private readonly JsonSerializerOptions _options = new()
         {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true
         };
 

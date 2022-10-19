@@ -60,5 +60,20 @@ namespace ListWatchedMoviesAndSeries.Models
             else
                 throw new ArgumentException("No value number <TypeCinema>.", nameof(numberType));
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, Detail, Type, NumberSequel);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as WatchItem);
+        }
+
+        public bool Equals(WatchItem? other)
+        {
+            return other != null && Id == other.Id && Name == other.Name && Detail.Equals(other.Detail) && Type == other.Type && NumberSequel == other.NumberSequel;
+        }
     }
 }
