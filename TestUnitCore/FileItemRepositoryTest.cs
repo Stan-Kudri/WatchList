@@ -7,6 +7,7 @@ namespace TestUnitCore
 {
     public class FileItemRepositoryTest
     {
+        //Test file path.
         const string PathFileJson = "FileDate.json";
 
         [Theory]
