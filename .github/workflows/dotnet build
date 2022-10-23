@@ -30,7 +30,7 @@ jobs:
       
 
     - name: Build
-      run: dotnet build "ListWatchedMoviesAndSeries" --no-restore
+      run: dotnet build "ListWatchedMoviesAndSeries/ListWatchedMoviesAndSeries" --no-restore
 
     - name: Test
-      run: dotnet test "TestUnitCore/TestUnitCore" --no-restore --verbosity normal
+      run: dotnet test "ListWatchedMoviesAndSeries/TestUnitCore" --no-restore --verbosity normal
