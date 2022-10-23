@@ -28,7 +28,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore "ListWatchedMoviesAndSeries"
       
-
     - name: Build
       run: dotnet build "ListWatchedMoviesAndSeries/ListWatchedMoviesAndSeries" --no-restore
 
