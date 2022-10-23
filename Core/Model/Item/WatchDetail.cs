@@ -16,6 +16,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         [JsonIgnore]
         public string Watch => DateWatch == null ? NotWatchCinema : WatchCinema;
 
+        //Конструктор для JSON
         public WatchDetail()
         {
         }
