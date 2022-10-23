@@ -8,6 +8,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         public static readonly TypeCinema Movie = new TypeCinema("Part", 1);
         public static readonly TypeCinema Series = new TypeCinema("Season", 2);
 
+        //Конструктор
         private TypeCinema(string category, int value) : base(category, value)
         {
         }
