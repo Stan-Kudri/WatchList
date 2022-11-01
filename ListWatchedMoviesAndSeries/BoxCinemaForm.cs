@@ -117,41 +117,37 @@ namespace ListWatchedMoviesAndSeries
         private void btnEditRow_Click(object sender, EventArgs e)
         {
             var page = Box.SelectedTab;
+            var dgv = GridOnPage(page);
+            if (IsEditRowGrid(dgv, out int indexRowMove, out CinemaModel? item) && item != null)
+            {
+                ShowEditCinema(dgv, item, indexRowMove);
+            }
+        }
+
+        private DataGridView GridOnPage(TabPage page)
+        {
             if (page == tabMovePage)
             {
-                if (IsEditRowGrid(dgvMove, out int indexRowMove, out CinemaModel? item) && item != null)
-                {
-                    ShowEditCinema(dgvMove, item, indexRowMove);
-                }
+                return dgvMove;
             }
             else if (page == tabSeriesPage)
             {
-                if (IsEditRowGrid(dgvSeries, out int indexRowSeries, out CinemaModel? item) && item != null)
-                {
-                    ShowEditCinema(dgvSeries, item, indexRowSeries);
-                }
+                return dgvMove;
             }
             else if (page == tabAnimePage)
             {
-                if (IsEditRowGrid(dgvAnime, out int indexRowAnime, out CinemaModel? item) && item != null)
-                {
-                    ShowEditCinema(dgvAnime, item, indexRowAnime);
-                }
+                return dgvMove;
             }
             else if (page == tabCartoonPage)
             {
-                if (IsEditRowGrid(dgvCartoon, out int indexRowCartoon, out CinemaModel? item) && item != null)
-                {
-                    ShowEditCinema(dgvCartoon, item, indexRowCartoon);
-                }
+                return dgvMove;
             }
             else if (page == tabAllCinemaPage)
             {
-                if (IsEditRowGrid(dgvCinema, out int indexRowAllCinema, out CinemaModel? item) && item != null)
-                {
-                    ShowEditCinema(dgvCinema, item, indexRowAllCinema);
-                }
+                return dgvMove;
             }
+            else
+                throw new Exception("Page does not exist");
         }
 
         private void btnDeliteMovie_Click(object sender, EventArgs e)
