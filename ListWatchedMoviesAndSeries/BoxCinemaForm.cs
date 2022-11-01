@@ -199,9 +199,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnPullingFile_Click(object sender, EventArgs e)
         {
-            GetItemDeserialize(dgvMove);
-            GetItemDeserialize(dgvSeries);
-            GetItemDeserialize(dgvCinema);
+            GetItemDeserializeOneFile(dgvCinema);
         }
 
         /// <summary>
@@ -532,10 +530,10 @@ namespace ListWatchedMoviesAndSeries
         /// (JsonSerializer.Deserialize)
         /// </summary>
         /// <param name="grid">Table to fill</param>
-        private void GetItemDeserialize(DataGridView grid)
+        private void GetItemDeserializeOneFile(DataGridView grid)
         {
             grid.Rows.Clear();
-            var pathFile = @$"{_path}Grid{grid.Tag}.json";
+            var pathFile = @$"{_path}GridCinema.json";
             if (!File.Exists(pathFile))
             {
                 MessageBoxProvider.ShowError("File not found.");
@@ -544,15 +542,33 @@ namespace ListWatchedMoviesAndSeries
             var fileRepository = new FileWatchItemRepository(pathFile);
             try
             {
-                var itemGrid = fileRepository.GetAll();
-                if (itemGrid == null || itemGrid.Count <= 0)
-                    return;
-                AddCinemaGrid(grid, itemGrid);
+                AddGridCinema(fileRepository);
+                AddGridItemByFile(fileRepository, TypeCinema.Movie);
+                AddGridItemByFile(fileRepository, TypeCinema.Series);
+                AddGridItemByFile(fileRepository, TypeCinema.Anime);
+                AddGridItemByFile(fileRepository, TypeCinema.Cartoon);
             }
             catch (Exception error)
             {
                 MessageBoxProvider.ShowError(error.Message);
             }
+        }
+
+        private void AddGridItemByFile(FileWatchItemRepository fileRepository, TypeCinema type)
+        {
+            var itemGrid = fileRepository.GetAllByType(type);
+            if (itemGrid == null || itemGrid.Count <= 0)
+                return;
+            var grid = DataGrid(type);
+            AddCinemaGrid(grid, itemGrid);
+        }
+
+        private void AddGridCinema(FileWatchItemRepository fileRepository)
+        {
+            var itemGrid = fileRepository.GetAll();
+            if (itemGrid == null || itemGrid.Count <= 0)
+                return;
+            AddCinemaGrid(dgvCinema, itemGrid);
         }
     }
 }
