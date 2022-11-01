@@ -38,6 +38,16 @@ namespace ListWatchedMoviesAndSeries
                     AddCinemaGridRow(dgvMove, cinema);
                     SaveData(dgvMove);
                 }
+                else if (cinema.Type == TypeCinema.Anime)
+                {
+                    AddCinemaGridRow(dgvAnime, cinema);
+                    SaveData(dgvAnime);
+                }
+                else if (cinema.Type == TypeCinema.Cartoon)
+                {
+                    AddCinemaGridRow(dgvCartoon, cinema);
+                    SaveData(dgvCartoon);
+                }
                 AddCinemaGridRow(dgvCinema, cinema);
                 SaveData(dgvCinema);
             }
@@ -56,6 +66,16 @@ namespace ListWatchedMoviesAndSeries
                 {
                     ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
                     SaveData(dgvMove);
+                }
+                else if (cinemaItem.Type == TypeCinema.Anime)
+                {
+                    ReplacementEditItem(dgvAnime, cinemaItem, numberRowGridCinema);
+                    SaveData(dgvAnime);
+                }
+                else if (cinemaItem.Type == TypeCinema.Cartoon)
+                {
+                    ReplacementEditItem(dgvCartoon, cinemaItem, numberRowGridCinema);
+                    SaveData(dgvCartoon);
                 }
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
                 SaveData(dgvCinema);
@@ -78,9 +98,25 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        private void btnFormAnime_Click(object sender, EventArgs e)
+        {
+            using (var form = new AddCinemaForm(this, TypeCinema.Anime))
+            {
+                form.ShowDialog();
+            }
+        }
+
+        private void btnFormCartoon_Click(object sender, EventArgs e)
+        {
+            using (var form = new AddCinemaForm(this, TypeCinema.Cartoon))
+            {
+                form.ShowDialog();
+            }
+        }
+
         private void btnEditRow_Click(object sender, EventArgs e)
         {
-            var page = BoxName.SelectedTab;
+            var page = Box.SelectedTab;
 
             if (page == tabMovePage)
             {
@@ -96,6 +132,20 @@ namespace ListWatchedMoviesAndSeries
                     ShowEditCinema(dgvSeries, item, indexRowSeries);
                 }
             }
+            else if (page == tabAnimePage)
+            {
+                if (IsEditRowGrid(dgvAnime, out int indexRowAnime, out CinemaModel? item) && item != null)
+                {
+                    ShowEditCinema(dgvAnime, item, indexRowAnime);
+                }
+            }
+            else if (page == tabCartoonPage)
+            {
+                if (IsEditRowGrid(dgvCartoon, out int indexRowCartoon, out CinemaModel? item) && item != null)
+                {
+                    ShowEditCinema(dgvCartoon, item, indexRowCartoon);
+                }
+            }
             else if (page == tabAllCinemaPage)
             {
                 if (IsEditRowGrid(dgvCinema, out int indexRowAllCinema, out CinemaModel? item) && item != null)
@@ -107,7 +157,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnDeliteMovie_Click(object sender, EventArgs e)
         {
-            var page = BoxName.SelectedTab;
+            var page = Box.SelectedTab;
 
             if (page == tabMovePage)
             {
@@ -123,18 +173,26 @@ namespace ListWatchedMoviesAndSeries
                     RemoveItemRowGrid(dgvCinema, idItem);
                 }
             }
+            else if (page == tabAnimePage)
+            {
+                if (RemoveRowGrid(dgvAnime, out string? idItem))
+                {
+                    RemoveItemRowGrid(dgvAnime, idItem);
+                }
+            }
+            else if (page == tabCartoonPage)
+            {
+                if (RemoveRowGrid(dgvCartoon, out string? idItem))
+                {
+                    RemoveItemRowGrid(dgvCartoon, idItem);
+                }
+            }
             else if (page == tabAllCinemaPage)
             {
                 if (RemoveRowGrid(dgvCinema, out string? idItem))
                 {
-                    if (IsCheckItemGridMove(idItem))
-                    {
-                        RemoveItemRowGrid(dgvMove, idItem);
-                    }
-                    else
-                    {
-                        RemoveItemRowGrid(dgvSeries, idItem);
-                    }
+                    var dgv = SearchTypeItem(idItem);
+                    RemoveItemRowGrid(dgv, idItem);
                 }
             }
         }
@@ -228,21 +286,37 @@ namespace ListWatchedMoviesAndSeries
         /// </summary>
         /// <param name="id">ID element</param>
         /// <returns>
-        /// True:item in Move table.
-        /// False:item in Series table.
+        /// SFinding an element in a table.
         /// </returns>
-        private bool IsCheckItemGridMove(string? id)
+        private DataGridView SearchTypeItem(string? id)
         {
-            var countRowGridMove = dgvMove.RowCount;
-            if (countRowGridMove == 0)
-                return false;
-            for (int i = 0; i < countRowGridMove; i++)
+            var countRowGridAllCinema = dgvCinema.RowCount;
+            if (countRowGridAllCinema == 0)
+                throw new Exception("Element not found");
+            for (int i = 0; i < countRowGridAllCinema; i++)
             {
-                var titleItem = dgvMove.Rows[i].Cells[IndexColumnId].Value;
+                var titleItem = dgvCinema.Rows[i].Cells[IndexColumnId].Value;
                 if (titleItem != null && titleItem.Equals(id))
-                    return true;
+                {
+                    TypeCinema type = TypeCinema.FromName(dgvCinema.Rows[i].Cells[IndexColumnType].Value.ToString());
+                    return DataGrid(type);
+                }
             }
-            return false;
+            throw new ArgumentException("Type not found");
+        }
+
+        private DataGridView DataGrid(TypeCinema type)
+        {
+            if (TypeCinema.Movie == type)
+                return dgvMove;
+            else if (TypeCinema.Series == type)
+                return dgvSeries;
+            else if (TypeCinema.Anime == type)
+                return dgvAnime;
+            else if (TypeCinema.Cartoon == type)
+                return dgvCartoon;
+            else
+                throw new ArgumentException("Type not found");
         }
 
         /// <summary>
@@ -281,7 +355,7 @@ namespace ListWatchedMoviesAndSeries
             var indexRowAllCinema = indexRow;
             if (grid == dgvCinema)
             {
-                var dataGrid = IsCheckItemGridMove(id) ? dgvMove : dgvSeries;
+                var dataGrid = SearchTypeItem(id);
                 indexRow = GetNumberItemGridCinema(dataGrid, id);
             }
             else

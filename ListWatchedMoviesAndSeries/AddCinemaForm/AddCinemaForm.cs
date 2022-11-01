@@ -13,7 +13,7 @@ namespace ListWatchedMoviesAndSeries
             _box = formBoxCinema;
             _type = type;
             InitializeComponent();
-            labelNumberSeaquel.Text = _type.Name;
+            LableTxtSequel(type);
             dateTimePickerCinema.MaxDate = DateTime.Now;
         }
 
@@ -73,6 +73,22 @@ namespace ListWatchedMoviesAndSeries
             }
             errorMessage = string.Empty;
             return true;
+        }
+
+        private void LableTxtSequel(TypeCinema type)
+        {
+            if (type == TypeCinema.Cartoon || type == TypeCinema.Movie)
+            {
+                labelNumberSeaquel.Text = "Part";
+            }
+            else if (type == TypeCinema.Anime || type == TypeCinema.Series)
+            {
+                labelNumberSeaquel.Text = "Season";
+            }
+            else
+            {
+                labelNumberSeaquel.Text = "Sequel";
+            }
         }
     }
 }
