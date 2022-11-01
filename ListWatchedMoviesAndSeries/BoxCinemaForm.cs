@@ -117,7 +117,6 @@ namespace ListWatchedMoviesAndSeries
         private void btnEditRow_Click(object sender, EventArgs e)
         {
             var page = Box.SelectedTab;
-
             if (page == tabMovePage)
             {
                 if (IsEditRowGrid(dgvMove, out int indexRowMove, out CinemaModel? item) && item != null)
