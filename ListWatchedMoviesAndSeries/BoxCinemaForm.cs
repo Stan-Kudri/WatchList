@@ -31,22 +31,18 @@ namespace ListWatchedMoviesAndSeries
                 if (cinema.Type == TypeCinema.Series)
                 {
                     AddCinemaGridRow(dgvSeries, cinema);
-                    SaveData(dgvSeries);
                 }
                 else if (cinema.Type == TypeCinema.Movie)
                 {
                     AddCinemaGridRow(dgvMove, cinema);
-                    SaveData(dgvMove);
                 }
                 else if (cinema.Type == TypeCinema.Anime)
                 {
                     AddCinemaGridRow(dgvAnime, cinema);
-                    SaveData(dgvAnime);
                 }
                 else if (cinema.Type == TypeCinema.Cartoon)
                 {
                     AddCinemaGridRow(dgvCartoon, cinema);
-                    SaveData(dgvCartoon);
                 }
                 AddCinemaGridRow(dgvCinema, cinema);
                 SaveData(dgvCinema);
@@ -60,22 +56,18 @@ namespace ListWatchedMoviesAndSeries
                 if (cinemaItem.Type == TypeCinema.Series)
                 {
                     ReplacementEditItem(dgvSeries, cinemaItem, numberRowGridCinema);
-                    SaveData(dgvSeries);
                 }
                 else if (cinemaItem.Type == TypeCinema.Movie)
                 {
                     ReplacementEditItem(dgvMove, cinemaItem, numberRowGridCinema);
-                    SaveData(dgvMove);
                 }
                 else if (cinemaItem.Type == TypeCinema.Anime)
                 {
                     ReplacementEditItem(dgvAnime, cinemaItem, numberRowGridCinema);
-                    SaveData(dgvAnime);
                 }
                 else if (cinemaItem.Type == TypeCinema.Cartoon)
                 {
                     ReplacementEditItem(dgvCartoon, cinemaItem, numberRowGridCinema);
-                    SaveData(dgvCartoon);
                 }
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
                 SaveData(dgvCinema);
