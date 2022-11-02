@@ -8,7 +8,7 @@ namespace ListWatchedMoviesAndSeries.Repository
 {
     public class FileWatchItemRepository : IWatchItemRepository
     {
-        private readonly string _path;
+        private static string _path = @"C:\\Grid\GridCinema.json";
 
         private readonly IFileProvider _fileProvider;
 
@@ -17,6 +17,10 @@ namespace ListWatchedMoviesAndSeries.Repository
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true
         };
+
+        public FileWatchItemRepository(IFileProvider? fileProvider = null) : this(_path, fileProvider)
+        {
+        }
 
         public FileWatchItemRepository(string path, IFileProvider? fileProvider = null)
         {

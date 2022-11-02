@@ -15,7 +15,7 @@ namespace ListWatchedMoviesAndSeries
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
-        private readonly string _path = @"C:\\Grid\";
+        private List<TypeCinema> _typeCinema = new List<TypeCinema> { TypeCinema.Movie, TypeCinema.Series, TypeCinema.Anime, TypeCinema.Cartoon };
 
         private Dictionary<TypeCinema, DataGridView> _typeByGrid;
 
@@ -24,8 +24,6 @@ namespace ListWatchedMoviesAndSeries
         public BoxCinemaForm()
         {
             InitializeComponent();
-            if (Directory.Exists(_path) == false)
-                Directory.CreateDirectory(_path);
             InitializeDictionary();
         }
 
@@ -130,7 +128,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnPullingFile_Click(object sender, EventArgs e)
         {
-            GetItemDeserializeOneFile(dgvCinema);
+            ItemDeserializeToFile(dgvCinema);
         }
 
         /// <summary>
@@ -430,8 +428,7 @@ namespace ListWatchedMoviesAndSeries
                 item.InitializType(item.Type?.Value ?? 0);
                 itemList.Add(item);
             }
-            var path = @$"{_path}Grid{date.Tag}.json";
-            var fileRepository = new FileWatchItemRepository(path);
+            var fileRepository = new FileWatchItemRepository();
             try
             {
                 fileRepository.Save(itemList);
@@ -447,23 +444,17 @@ namespace ListWatchedMoviesAndSeries
         /// (JsonSerializer.Deserialize)
         /// </summary>
         /// <param name="grid">Table to fill</param>
-        private void GetItemDeserializeOneFile(DataGridView grid)
+        private void ItemDeserializeToFile(DataGridView gridView)
         {
-            grid.Rows.Clear();
-            var pathFile = @$"{_path}GridCinema.json";
-            if (!File.Exists(pathFile))
-            {
-                MessageBoxProvider.ShowError("File not found.");
-                return;
-            }
-            var fileRepository = new FileWatchItemRepository(pathFile);
+            gridView.Rows.Clear();
+            var fileRepository = new FileWatchItemRepository();
             try
             {
                 AddGridCinema(fileRepository);
-                AddGridItemByFile(fileRepository, TypeCinema.Movie);
-                AddGridItemByFile(fileRepository, TypeCinema.Series);
-                AddGridItemByFile(fileRepository, TypeCinema.Anime);
-                AddGridItemByFile(fileRepository, TypeCinema.Cartoon);
+                foreach (var type in _typeCinema)
+                {
+                    AddGridItemByFile(fileRepository, type);
+                }
             }
             catch (Exception error)
             {
