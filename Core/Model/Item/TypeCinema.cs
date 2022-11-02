@@ -13,5 +13,17 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         private TypeCinema(string category, int value) : base(category, value)
         {
         }
+
+        public static string GetTypeSequel(TypeCinema type)
+        {
+            if (type == Cartoon || type == Movie)
+            {
+                return "Part";
+            }
+            else
+            {
+                return type == Anime || type == Series ? "Season" : "Sequel";
+            }
+        }
     }
 }

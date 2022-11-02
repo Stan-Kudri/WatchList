@@ -56,7 +56,7 @@ namespace ListWatchedMoviesAndSeries
             this.GradeSeries = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdSeries = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Series = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabMovePage = new System.Windows.Forms.TabPage();
+            this.tabMoviePage = new System.Windows.Forms.TabPage();
             this.dgvMove = new System.Windows.Forms.DataGridView();
             this.MoveTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MovePart = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,7 +89,7 @@ namespace ListWatchedMoviesAndSeries
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).BeginInit();
             this.tabSeriesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSeries)).BeginInit();
-            this.tabMovePage.SuspendLayout();
+            this.tabMoviePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMove)).BeginInit();
             this.Box.SuspendLayout();
             this.tabAnimePage.SuspendLayout();
@@ -341,14 +341,14 @@ namespace ListWatchedMoviesAndSeries
             // 
             // tabMovePage
             // 
-            this.tabMovePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.tabMovePage.Controls.Add(this.dgvMove);
-            this.tabMovePage.Location = new System.Drawing.Point(4, 24);
-            this.tabMovePage.Name = "tabMovePage";
-            this.tabMovePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMovePage.Size = new System.Drawing.Size(547, 252);
-            this.tabMovePage.TabIndex = 0;
-            this.tabMovePage.Text = "Move";
+            this.tabMoviePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.tabMoviePage.Controls.Add(this.dgvMove);
+            this.tabMoviePage.Location = new System.Drawing.Point(4, 24);
+            this.tabMoviePage.Name = "tabMovePage";
+            this.tabMoviePage.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMoviePage.Size = new System.Drawing.Size(547, 252);
+            this.tabMoviePage.TabIndex = 0;
+            this.tabMoviePage.Text = "Move";
             // 
             // dgvMove
             // 
@@ -417,7 +417,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // Box
             // 
-            this.Box.Controls.Add(this.tabMovePage);
+            this.Box.Controls.Add(this.tabMoviePage);
             this.Box.Controls.Add(this.tabSeriesPage);
             this.Box.Controls.Add(this.tabAnimePage);
             this.Box.Controls.Add(this.tabCartoonPage);
@@ -607,7 +607,7 @@ namespace ListWatchedMoviesAndSeries
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).EndInit();
             this.tabSeriesPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSeries)).EndInit();
-            this.tabMovePage.ResumeLayout(false);
+            this.tabMoviePage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMove)).EndInit();
             this.Box.ResumeLayout(false);
             this.tabAnimePage.ResumeLayout(false);
@@ -632,7 +632,7 @@ namespace ListWatchedMoviesAndSeries
         private DataGridView dgvCinema;
         private TabPage tabSeriesPage;
         private DataGridView dgvSeries;
-        private TabPage tabMovePage;
+        private TabPage tabMoviePage;
         private DataGridView dgvMove;
         private TabControl Box;
         private TabPage tabAnimePage;
