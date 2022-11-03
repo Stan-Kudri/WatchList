@@ -8,7 +8,7 @@ namespace ListWatchedMoviesAndSeries.Repository
 {
     public class FileWatchItemRepository : IWatchItemRepository
     {
-        private string _path;
+        private readonly string _path;
 
         private readonly IFileProvider _fileProvider;
 
@@ -22,7 +22,7 @@ namespace ListWatchedMoviesAndSeries.Repository
         {
         }
 
-        public FileWatchItemRepository(string basePath, IFileProvider? fileProvider = null)
+        public FileWatchItemRepository(string? basePath, IFileProvider? fileProvider = null)
         {
             if (basePath == null || basePath == string.Empty)
             {

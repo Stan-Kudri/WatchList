@@ -19,7 +19,7 @@ namespace ListWatchedMoviesAndSeries
 
         private Dictionary<TabPage, DataGridView> _gridByPageMap = new Dictionary<TabPage, DataGridView>();
 
-        private FileWatchItemRepository _fileRepository = new FileWatchItemRepository();
+        private readonly FileWatchItemRepository _fileRepository = new FileWatchItemRepository();
 
         public BoxCinemaForm()
         {
@@ -49,7 +49,7 @@ namespace ListWatchedMoviesAndSeries
 
         public void SetNameGrid(CinemaModel cinema)
         {
-            if (cinema != null && _gridByTypeMap.TryGetValue(cinema.Type, out var dgv))
+            if (cinema?.Type != null && _gridByTypeMap.TryGetValue(cinema.Type, out var dgv))
             {
                 AddCinemaGridRow(dgv, cinema);
                 AddCinemaGridRow(dgvCinema, cinema);
@@ -59,7 +59,7 @@ namespace ListWatchedMoviesAndSeries
 
         public void EditItemGrid(CinemaModel cinemaItem, int numberRowGridCinema, int numberRowAllGridCinema)
         {
-            if (cinemaItem != null && _gridByTypeMap.TryGetValue(cinemaItem.Type, out var dgv))
+            if (cinemaItem?.Type != null && _gridByTypeMap.TryGetValue(cinemaItem.Type, out var dgv))
             {
                 ReplacementEditItem(dgv, cinemaItem, numberRowGridCinema);
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
