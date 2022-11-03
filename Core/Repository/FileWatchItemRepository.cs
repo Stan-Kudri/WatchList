@@ -8,7 +8,7 @@ namespace ListWatchedMoviesAndSeries.Repository
 {
     public class FileWatchItemRepository : IWatchItemRepository
     {
-        private static string _path = @"C:\\Grid\GridCinema.json";
+        private string _path;
 
         private readonly IFileProvider _fileProvider;
 
@@ -18,13 +18,17 @@ namespace ListWatchedMoviesAndSeries.Repository
             WriteIndented = true
         };
 
-        public FileWatchItemRepository(IFileProvider? fileProvider = null) : this(_path, fileProvider)
+        public FileWatchItemRepository(IFileProvider? fileProvider = null) : this(null, fileProvider)
         {
         }
 
-        public FileWatchItemRepository(string path, IFileProvider? fileProvider = null)
+        public FileWatchItemRepository(string basePath, IFileProvider? fileProvider = null)
         {
-            _path = path ?? throw new ArgumentNullException("File path not specified", nameof(path));
+            if (basePath == null || basePath == string.Empty)
+            {
+                basePath = @"C:\\";
+            }
+            _path = Path.Combine(basePath, "GridCinema.json");
             _fileProvider = fileProvider ?? new PhysiсFileProvider();
         }
 

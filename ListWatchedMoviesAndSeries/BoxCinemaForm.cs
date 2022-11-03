@@ -15,11 +15,11 @@ namespace ListWatchedMoviesAndSeries
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
-        private List<TypeCinema> _typeCinema = new List<TypeCinema> { TypeCinema.Movie, TypeCinema.Series, TypeCinema.Anime, TypeCinema.Cartoon };
+        private Dictionary<TypeCinema, DataGridView> _gridByTypeMap = new Dictionary<TypeCinema, DataGridView>();
 
-        private Dictionary<TypeCinema, DataGridView> _typeByGrid;
+        private Dictionary<TabPage, DataGridView> _gridByPageMap = new Dictionary<TabPage, DataGridView>();
 
-        private Dictionary<TabPage, DataGridView> _pageByGrid;
+        private FileWatchItemRepository _fileRepository = new FileWatchItemRepository();
 
         public BoxCinemaForm()
         {
@@ -29,7 +29,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void InitializeDictionary()
         {
-            _typeByGrid = new Dictionary<TypeCinema, DataGridView>
+            _gridByTypeMap = new Dictionary<TypeCinema, DataGridView>
             {
                 { TypeCinema.Series, dgvSeries },
                 { TypeCinema.Movie, dgvMove },
@@ -37,7 +37,7 @@ namespace ListWatchedMoviesAndSeries
                 { TypeCinema.Cartoon, dgvCartoon },
                 { TypeCinema.Unknown, dgvCinema }
             };
-            _pageByGrid = new Dictionary<TabPage, DataGridView>
+            _gridByPageMap = new Dictionary<TabPage, DataGridView>
             {
                 { tabSeriesPage, dgvSeries },
                 { tabMoviePage, dgvMove },
@@ -49,9 +49,9 @@ namespace ListWatchedMoviesAndSeries
 
         public void SetNameGrid(CinemaModel cinema)
         {
-            if (cinema != null)
+            if (cinema != null && _gridByTypeMap.TryGetValue(cinema.Type, out var dgv))
             {
-                AddCinemaGridRow(_typeByGrid[cinema.Type], cinema);
+                AddCinemaGridRow(dgv, cinema);
                 AddCinemaGridRow(dgvCinema, cinema);
                 SaveData(dgvCinema);
             }
@@ -59,9 +59,9 @@ namespace ListWatchedMoviesAndSeries
 
         public void EditItemGrid(CinemaModel cinemaItem, int numberRowGridCinema, int numberRowAllGridCinema)
         {
-            if (cinemaItem != null)
+            if (cinemaItem != null && _gridByTypeMap.TryGetValue(cinemaItem.Type, out var dgv))
             {
-                ReplacementEditItem(_typeByGrid[cinemaItem.Type], cinemaItem, numberRowGridCinema);
+                ReplacementEditItem(dgv, cinemaItem, numberRowGridCinema);
                 ReplacementEditItem(dgvCinema, cinemaItem, numberRowAllGridCinema);
                 SaveData(dgvCinema);
             }
@@ -111,15 +111,24 @@ namespace ListWatchedMoviesAndSeries
 
         private DataGridView GridOnPage(TabPage page)
         {
-            return _pageByGrid[page] ?? throw new Exception("Page does not exist");
+            if (_gridByPageMap.TryGetValue(page, out var dgv))
+            {
+                return dgv;
+            }
+            else
+            {
+                throw new Exception("Page does not exist");
+            }
         }
 
         private void btnDeliteMovie_Click(object sender, EventArgs e)
         {
             var page = Box.SelectedTab;
-            if (RemoveRowGrid(_pageByGrid[page], out string? idItem))
+            if (!_gridByPageMap.TryGetValue(page, out var dgv))
+                throw new ArgumentNullException(nameof(page));
+
+            if (RemoveRowGrid(dgv, out string? idItem))
             {
-                var dgv = _pageByGrid[page];
                 if (page == tabAllCinemaPage)
                     dgv = SearchTypeItem(idItem);
                 RemoveItemRowGrid(dgv, idItem);
@@ -128,7 +137,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnPullingFile_Click(object sender, EventArgs e)
         {
-            ItemDeserializeToFile(dgvCinema);
+            Save(dgvCinema);
         }
 
         /// <summary>
@@ -226,7 +235,7 @@ namespace ListWatchedMoviesAndSeries
                 if (titleItem != null && titleItem.Equals(id))
                 {
                     TypeCinema type = TypeCinema.FromName(dgvCinema.Rows[i].Cells[IndexColumnType].Value.ToString());
-                    return _typeByGrid[type];
+                    return _gridByTypeMap[type];
                 }
             }
             throw new ArgumentException("Type not found");
@@ -444,16 +453,16 @@ namespace ListWatchedMoviesAndSeries
         /// (JsonSerializer.Deserialize)
         /// </summary>
         /// <param name="grid">Table to fill</param>
-        private void ItemDeserializeToFile(DataGridView gridView)
+        private void Save(DataGridView gridView)
         {
             gridView.Rows.Clear();
-            var fileRepository = new FileWatchItemRepository();
             try
             {
-                AddGridCinema(fileRepository);
-                foreach (var type in _typeCinema)
+                AddGridCinema();
+                foreach (var type in TypeCinema.List)
                 {
-                    AddGridItemByFile(fileRepository, type);
+                    if (type != TypeCinema.Unknown)
+                        AddGridItemByFile(type);
                 }
             }
             catch (Exception error)
@@ -462,18 +471,18 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void AddGridItemByFile(FileWatchItemRepository fileRepository, TypeCinema type)
+        private void AddGridItemByFile(TypeCinema type)
         {
-            var itemGrid = fileRepository.GetAllByType(type);
+            var itemGrid = _fileRepository.GetAllByType(type);
             if (itemGrid == null || itemGrid.Count <= 0)
                 return;
-            var grid = _typeByGrid[type];
+            var grid = _gridByTypeMap[type];
             AddCinemaGrid(grid, itemGrid);
         }
 
-        private void AddGridCinema(FileWatchItemRepository fileRepository)
+        private void AddGridCinema()
         {
-            var itemGrid = fileRepository.GetAll();
+            var itemGrid = _fileRepository.GetAll();
             if (itemGrid == null || itemGrid.Count <= 0)
                 return;
             AddCinemaGrid(dgvCinema, itemGrid);

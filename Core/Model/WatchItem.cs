@@ -9,6 +9,8 @@ namespace ListWatchedMoviesAndSeries.Models
         private const int NumberTypeAllCinema = 0;
         private const int NumberTypeMove = 1;
         private const int NumberTypeSeries = 2;
+        private const int NumberTypeAnime = 3;
+        private const int NumberTypeCartoon = 4;
 
         public Guid Id { get; set; }
 
@@ -55,6 +57,10 @@ namespace ListWatchedMoviesAndSeries.Models
                 Type = TypeCinema.Movie;
             else if (numberType == NumberTypeSeries)
                 Type = TypeCinema.Series;
+            else if (numberType == NumberTypeAnime)
+                Type = TypeCinema.Anime;
+            else if (numberType == NumberTypeCartoon)
+                Type = TypeCinema.Cartoon;
             else if (numberType == NumberTypeAllCinema)
                 Type = TypeCinema.Unknown;
             else
