@@ -4,26 +4,19 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 {
     public sealed class TypeCinema : SmartEnum<TypeCinema>
     {
-        public static readonly TypeCinema Unknown = new TypeCinema("Sequel", 0);
-        public static readonly TypeCinema Movie = new TypeCinema("Part Movie", 1);
-        public static readonly TypeCinema Series = new TypeCinema("Season Series", 2);
-        public static readonly TypeCinema Anime = new TypeCinema("Season Anime", 3);
-        public static readonly TypeCinema Cartoon = new TypeCinema("Part Cartoon", 4);
+        private readonly string _typeSequel = string.Empty;
 
-        private TypeCinema(string category, int value) : base(category, value)
-        {
-        }
+        public static readonly TypeCinema Unknown = new TypeCinema("Cinema", 0, "Sequel");
+        public static readonly TypeCinema Movie = new TypeCinema("Movie", 1, "Part");
+        public static readonly TypeCinema Series = new TypeCinema("Series", 2, "Season");
+        public static readonly TypeCinema Anime = new TypeCinema("Anime", 3, "Season");
+        public static readonly TypeCinema Cartoon = new TypeCinema("Cartoon", 4, "Part");
 
-        public static string GetTypeSequel(TypeCinema type)
+        public string GetTypeSequel => _typeSequel;
+
+        private TypeCinema(string category, int value, string typeSequel) : base(category, value)
         {
-            if (type == Cartoon || type == Movie)
-            {
-                return "Part";
-            }
-            else
-            {
-                return type == Anime || type == Series ? "Season" : "Sequel";
-            }
+            _typeSequel = typeSequel;
         }
     }
 }
