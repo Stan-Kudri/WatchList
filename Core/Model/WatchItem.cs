@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Ardalis.SmartEnum.Exceptions;
 using Ardalis.SmartEnum.SystemTextJson;
 using ListWatchedMoviesAndSeries.Models.Item;
 
@@ -6,12 +7,6 @@ namespace ListWatchedMoviesAndSeries.Models
 {
     public class WatchItem
     {
-        private const int NumberTypeAllCinema = 0;
-        private const int NumberTypeMove = 1;
-        private const int NumberTypeSeries = 2;
-        private const int NumberTypeAnime = 3;
-        private const int NumberTypeCartoon = 4;
-
         public Guid Id { get; set; }
 
         public string? Name { get; set; } = null;
@@ -53,18 +48,14 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public void InitializType(int numberType)
         {
-            if (numberType == NumberTypeMove)
-                Type = TypeCinema.Movie;
-            else if (numberType == NumberTypeSeries)
-                Type = TypeCinema.Series;
-            else if (numberType == NumberTypeAnime)
-                Type = TypeCinema.Anime;
-            else if (numberType == NumberTypeCartoon)
-                Type = TypeCinema.Cartoon;
-            else if (numberType == NumberTypeAllCinema)
-                Type = TypeCinema.Unknown;
+            if (TypeCinema.TryFromValue(numberType, out var typeCinema))
+            {
+                Type = typeCinema;
+            }
             else
-                throw new ArgumentException("No value number <TypeCinema>.", nameof(numberType));
+            {
+                throw new InvalidFlagEnumValueParseException("No value number <TypeCinema>.");
+            }
         }
 
         public override int GetHashCode()
@@ -77,9 +68,6 @@ namespace ListWatchedMoviesAndSeries.Models
             return Equals(obj as WatchItem);
         }
 
-        public bool Equals(WatchItem? other)
-        {
-            return other != null && Id == other.Id && Name == other.Name && Detail.Equals(other.Detail) && Type == other.Type && NumberSequel == other.NumberSequel;
-        }
+        public bool Equals(WatchItem? other) => other != null && Id == other.Id && Name == other.Name && Detail.Equals(other.Detail) && Type == other.Type && NumberSequel == other.NumberSequel;
     }
 }

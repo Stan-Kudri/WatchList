@@ -15,20 +15,16 @@ namespace ListWatchedMoviesAndSeries
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
-        private Dictionary<TypeCinema, DataGridView> _gridByTypeMap = new Dictionary<TypeCinema, DataGridView>();
+        private readonly Dictionary<TypeCinema, DataGridView> _gridByTypeMap = new Dictionary<TypeCinema, DataGridView>();
 
-        private Dictionary<TabPage, DataGridView> _gridByPageMap = new Dictionary<TabPage, DataGridView>();
+        private readonly Dictionary<TabPage, DataGridView> _gridByPageMap = new Dictionary<TabPage, DataGridView>();
 
         private readonly FileWatchItemRepository _fileRepository = new FileWatchItemRepository();
 
         public BoxCinemaForm()
         {
             InitializeComponent();
-            InitializeDictionary();
-        }
 
-        private void InitializeDictionary()
-        {
             _gridByTypeMap = new Dictionary<TypeCinema, DataGridView>
             {
                 { TypeCinema.Series, dgvSeries },
@@ -437,10 +433,9 @@ namespace ListWatchedMoviesAndSeries
                 item.InitializType(item.Type?.Value ?? 0);
                 itemList.Add(item);
             }
-            var fileRepository = new FileWatchItemRepository();
             try
             {
-                fileRepository.Save(itemList);
+                _fileRepository.Save(itemList);
             }
             catch (Exception error)
             {

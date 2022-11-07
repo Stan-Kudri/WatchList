@@ -24,11 +24,8 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         public FileWatchItemRepository(string? basePath, IFileProvider? fileProvider = null)
         {
-            if (basePath == null || basePath == string.Empty)
-            {
-                basePath = @"C:\\";
-            }
-            _path = Path.Combine(basePath, "GridCinema.json");
+            var nameFile = "GridCinema.json";
+            _path = basePath == null || basePath == string.Empty ? Path.GetFullPath(nameFile) : Path.Combine(basePath, nameFile);
             _fileProvider = fileProvider ?? new PhysiсFileProvider();
         }
 

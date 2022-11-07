@@ -12,7 +12,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         public static readonly TypeCinema Anime = new TypeCinema("Anime", 3, "Season");
         public static readonly TypeCinema Cartoon = new TypeCinema("Cartoon", 4, "Part");
 
-        public string GetTypeSequel => _typeSequel;
+        public string TypeSequel => _typeSequel;
 
         private TypeCinema(string category, int value, string typeSequel) : base(category, value)
         {
