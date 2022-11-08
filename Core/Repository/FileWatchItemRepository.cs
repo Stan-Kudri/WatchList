@@ -2,6 +2,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using Core.Repository.Provider;
 using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.Repository
 {
@@ -17,9 +18,14 @@ namespace ListWatchedMoviesAndSeries.Repository
             WriteIndented = true
         };
 
-        public FileWatchItemRepository(string path, IFileProvider? fileProvider = null)
+        public FileWatchItemRepository(IFileProvider? fileProvider = null) : this(null, fileProvider)
         {
-            _path = path ?? throw new ArgumentNullException("File path not specified", nameof(path));
+        }
+
+        public FileWatchItemRepository(string? basePath, IFileProvider? fileProvider = null)
+        {
+            var nameFile = "GridCinema.json";
+            _path = basePath == null || basePath == string.Empty ? Path.GetFullPath(nameFile) : Path.Combine(basePath, nameFile);
             _fileProvider = fileProvider ?? new PhysiсFileProvider();
         }
 
@@ -34,6 +40,14 @@ namespace ListWatchedMoviesAndSeries.Repository
         {
             using var stream = _fileProvider.Open(_path, FileMode.Create);
             JsonSerializer.Serialize(stream, items, _options);
+        }
+
+        public List<WatchItem> GetAllByType(TypeCinema type)
+        {
+            using var stream = _fileProvider.Open(_path, FileMode.Open);
+            var itemList = JsonSerializer.Deserialize<List<WatchItem>>(stream);
+            var itemListByType = itemList?.Where(x => x.Type == type).ToList() ?? new List<WatchItem>();
+            return itemListByType;
         }
     }
 }

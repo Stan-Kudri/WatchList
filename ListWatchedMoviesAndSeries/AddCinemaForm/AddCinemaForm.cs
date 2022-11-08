@@ -13,7 +13,7 @@ namespace ListWatchedMoviesAndSeries
             _box = formBoxCinema;
             _type = type;
             InitializeComponent();
-            labelNumberSeaquel.Text = _type.Name;
+            labelNumberSeaquel.Text = type.TypeSequel;
             dateTimePickerCinema.MaxDate = DateTime.Now;
         }
 
