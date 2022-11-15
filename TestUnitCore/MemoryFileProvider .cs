@@ -1,5 +1,3 @@
-using Core.Repository.Provider;
-
 namespace TestUnitCore
 {
     public class MemoryFileProvider : IFileProvider

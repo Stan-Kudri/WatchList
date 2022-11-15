@@ -62,5 +62,18 @@ namespace ListWatchedMoviesAndSeries.Models
             _numberSequel = numberSequel;
             _type = type ?? TypeCinema.Unknown;
         }
+
+        public WatchItem ToWatchItem()
+        {
+            if (Detail.DateWatch != null)
+            {
+                var grade = decimal.Parse(Detail.Grade);
+                return new WatchItem(Name, NumberSequel, Detail.DateWatch, grade, Type, Id);
+            }
+            else
+            {
+                return new WatchItem(Name, NumberSequel, Type, Id);
+            }
+        }
     }
 }
