@@ -13,6 +13,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         [JsonPropertyName("Grade")]
         public string? Grade { get; set; } = null;
 
+        [JsonIgnore]
         public string Watch => DateWatch == null ? NotWatchCinema : WatchCinema;
 
         [JsonConstructor]
