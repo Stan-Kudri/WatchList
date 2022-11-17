@@ -1,26 +1,27 @@
+using Core.Repository.DbContex;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace TestUnitCore
 {
-    public class FileItemRepositoryTest
+    public class WatchItemRepositoryTest
     {
-        const string PathFileJson = "FileDate.json";
+        private static DbContextOptionsBuilder _dbContext = new DbContextOptionsBuilder().UseSqlite("Data Source=appTest.db;Mode=Memory;");
 
         [Theory]
         [MemberData(nameof(TestData))]
         public void SaveTest(string expectedDateJson, List<WatchItem> items)
         {
             //Arrange
-            var fileProvider = new MemoryFileProvider();
-            var fileRepository = new FileWatchItemRepository(PathFileJson, fileProvider);
-            //Act
-            fileRepository.Save(items);
-            var actualJson = fileProvider.ReadJson(PathFileJson);
+            var fileRepository = new WatchItemRepository(new WatchCinemaDbContext(_dbContext.Options));
+            //Act            
+            fileRepository.AddAllItem(items);
+            var actualJson = fileRepository.GetAll();
             //Assert
-            Assert.Equal(expectedDateJson, actualJson);
+            Assert.Equal(expectedDateJson, actualJson.ToString());
         }
 
         [Theory]
@@ -28,8 +29,7 @@ namespace TestUnitCore
         public void GetAllTest(string dateJsonFile, List<WatchItem> expectItem)
         {
             //Arrange
-            var fileProvider = new MemoryFileProvider().WriteJson(PathFileJson, dateJsonFile);
-            var fileRepository = new FileWatchItemRepository(PathFileJson, fileProvider);
+            var fileRepository = new WatchItemRepository(new WatchCinemaDbContext(_dbContext.Options));
             //Act
             var actualDateJson = fileRepository.GetAll();
             //Assert

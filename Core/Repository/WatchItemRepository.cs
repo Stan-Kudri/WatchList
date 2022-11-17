@@ -20,6 +20,15 @@ namespace ListWatchedMoviesAndSeries.Repository
             _db.SaveChanges();
         }
 
+        public void AddAllItem(List<WatchItem> item)
+        {
+            foreach (var element in item)
+            {
+                _db.Add(element);
+                _db.SaveChanges();
+            }
+        }
+
         public void Delite(Guid id)
         {
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);

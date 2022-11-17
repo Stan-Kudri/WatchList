@@ -1,4 +1,7 @@
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using Ardalis.SmartEnum.Exceptions;
 using ListWatchedMoviesAndSeries.Models.Item;
 
@@ -68,5 +71,14 @@ namespace ListWatchedMoviesAndSeries.Models
         }
 
         public bool Equals(WatchItem? other) => other != null && Id == other.Id && Name == other.Name && Detail.Equals(other.Detail) && Type == other.Type && NumberSequel == other.NumberSequel;
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+            });
+        }
     }
 }
