@@ -2,7 +2,6 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
-using Ardalis.SmartEnum.Exceptions;
 using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.Models
@@ -46,18 +45,6 @@ namespace ListWatchedMoviesAndSeries.Models
             Detail = new WatchDetail(date, grade);
             NumberSequel = numberSequel;
             Type = type ?? TypeCinema.Unknown;
-        }
-
-        public void InitializType(int numberType)
-        {
-            if (TypeCinema.TryFromValue(numberType, out var typeCinema))
-            {
-                Type = typeCinema;
-            }
-            else
-            {
-                throw new InvalidFlagEnumValueParseException("No value number <TypeCinema>.");
-            }
         }
 
         public override int GetHashCode()

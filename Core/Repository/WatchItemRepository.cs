@@ -20,15 +20,6 @@ namespace ListWatchedMoviesAndSeries.Repository
             _db.SaveChanges();
         }
 
-        public void AddAllItem(List<WatchItem> item)
-        {
-            foreach (var element in item)
-            {
-                _db.Add(element);
-                _db.SaveChanges();
-            }
-        }
-
         public void Delite(Guid id)
         {
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);
@@ -37,11 +28,14 @@ namespace ListWatchedMoviesAndSeries.Repository
             _db.SaveChanges();
         }
 
-        public void UpDate(WatchItem item)
+        public void UpDate(WatchItem editItem)
         {
-            if (item != null)
+            if (editItem != null)
             {
-                _db.WatchItem.Update(item);
+                var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
+                item.NumberSequel = editItem.NumberSequel;
+                item.Detail = editItem.Detail;
+                item.Name = editItem.Name;
                 _db.SaveChanges();
             }
         }
