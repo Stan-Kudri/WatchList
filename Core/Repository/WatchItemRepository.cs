@@ -33,10 +33,13 @@ namespace ListWatchedMoviesAndSeries.Repository
             if (editItem != null)
             {
                 var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
-                item.NumberSequel = editItem.NumberSequel;
-                item.Detail = editItem.Detail;
-                item.Name = editItem.Name;
-                _db.SaveChanges();
+                if (item != null)
+                {
+                    item.NumberSequel = editItem.NumberSequel;
+                    item.Detail = editItem.Detail;
+                    item.Name = editItem.Name;
+                    _db.SaveChanges();
+                }
             }
         }
     }

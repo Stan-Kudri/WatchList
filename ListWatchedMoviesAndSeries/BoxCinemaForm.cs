@@ -142,7 +142,10 @@ namespace ListWatchedMoviesAndSeries
             {
                 if (page == tabAllCinemaPage)
                     dgv = SearchTypeItem(idItem);
+                else
+                    dgv = dgvCinema;
                 RemoveItemRowGrid(dgv, idItem);
+                _repository.Delite(Guid.Parse(idItem));
             }
         }
 
@@ -190,12 +193,13 @@ namespace ListWatchedMoviesAndSeries
         /// <param name="id">Object ID to delete</param>
         private void RemoveItemRowGrid(DataGridView dataGridCinema, string? id)
         {
+            if (dataGridCinema.RowCount == 0)
+                MessageBoxProvider.ShowError("The element is missing from the table.");
             foreach (DataGridViewRow row in dataGridCinema.Rows)
             {
                 if (row.Cells[IndexColumnId].Value.ToString() == id)
                 {
                     dataGridCinema.Rows.RemoveAt(row.Index);
-                    _repository.Delite(Guid.Parse(id));
                     break;
                 }
             }
