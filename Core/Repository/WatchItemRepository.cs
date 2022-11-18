@@ -35,7 +35,7 @@ namespace ListWatchedMoviesAndSeries.Repository
                 var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
                 if (item != null)
                 {
-                    item.NumberSequel = editItem.NumberSequel;
+                    item.NumberSequel = editItem.NumberSequel ?? 0;
                     item.Detail = editItem.Detail;
                     item.Name = editItem.Name;
                     _db.SaveChanges();

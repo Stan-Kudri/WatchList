@@ -145,7 +145,11 @@ namespace ListWatchedMoviesAndSeries
                 else
                     dgv = dgvCinema;
                 RemoveItemRowGrid(dgv, idItem);
-                _repository.Delite(Guid.Parse(idItem));
+                var strId = Guid.Parse(idItem);
+                if (strId != null)
+                    _repository.Delite(Guid.Parse(idItem));
+                else
+                    MessageBoxProvider.ShowError("Id not null");
             }
         }
 
