@@ -8,6 +8,6 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         void Add(WatchItem items);
 
-        void Delite(Guid id);
+        void Remove(Guid id);
     }
 }

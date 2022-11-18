@@ -147,7 +147,7 @@ namespace ListWatchedMoviesAndSeries
                 RemoveItemRowGrid(dgv, idItem);
                 var strId = Guid.Parse(idItem);
                 if (strId != null)
-                    _repository.Delite(Guid.Parse(idItem));
+                    _repository.Remove(Guid.Parse(idItem));
                 else
                     MessageBoxProvider.ShowError("Id not null");
             }
