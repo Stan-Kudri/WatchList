@@ -143,9 +143,9 @@ namespace ListWatchedMoviesAndSeries
                 dgv = page == tabAllCinemaPage ? SearchTypeItem(idItem) : dgvCinema;
                 RemoveItemRowGrid(dgv, idItem);
                 var strId = Guid.Parse(idItem);
-                if (strId != null)
+                if (strId.GetType() == typeof(Guid))
                 {
-                    _repository.Remove(Guid.Parse(idItem));
+                    _repository.Remove(strId);
                 }
                 else
                 {
