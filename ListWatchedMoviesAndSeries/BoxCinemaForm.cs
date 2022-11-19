@@ -140,16 +140,17 @@ namespace ListWatchedMoviesAndSeries
 
             if (RemoveRowGrid(dgv, out string? idItem))
             {
-                if (page == tabAllCinemaPage)
-                    dgv = SearchTypeItem(idItem);
-                else
-                    dgv = dgvCinema;
+                dgv = page == tabAllCinemaPage ? SearchTypeItem(idItem) : dgvCinema;
                 RemoveItemRowGrid(dgv, idItem);
                 var strId = Guid.Parse(idItem);
                 if (strId != null)
+                {
                     _repository.Remove(Guid.Parse(idItem));
+                }
                 else
+                {
                     MessageBoxProvider.ShowError("Id not null");
+                }
             }
         }
 
@@ -187,7 +188,8 @@ namespace ListWatchedMoviesAndSeries
         private static string? SelectedRowCinemaId(DataGridView gridCinema)
         {
             var rowIndex = gridCinema.CurrentCell.RowIndex;
-            return gridCinema.Rows[rowIndex].Cells[IndexColumnId].Value.ToString();
+            var id = gridCinema.Rows[rowIndex].Cells[IndexColumnId].Value;
+            return id.ToString();
         }
 
         /// <summary>

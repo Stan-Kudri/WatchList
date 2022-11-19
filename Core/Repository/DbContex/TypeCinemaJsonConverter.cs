@@ -34,7 +34,9 @@ namespace Core.Repository.JSONConverter
                     throw new InvalidOperationException("Value property in class TypeCinema above zero");
             }
             else
+            {
                 throw new JsonException();
+            }
 
             SkipPropertyName(ref reader);
             СomparePropertyName(ref reader, NameOfTypeSequel);
