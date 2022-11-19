@@ -38,10 +38,10 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            return Equals(obj as WatchDetail);
+            return Equals(obj is WatchDetail);
         }
 
-        public bool Equals(WatchDetail? other)
+        public bool Equals(WatchDetail other)
         {
             return DateWatch == other.DateWatch && Grade == other.Grade;
         }
