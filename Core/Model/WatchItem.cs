@@ -56,10 +56,10 @@ namespace ListWatchedMoviesAndSeries.Models
         {
             if (obj == null)
                 return false;
-            return Equals(obj as WatchItem);
+            return Equals(obj is WatchItem);
         }
 
-        public bool Equals(WatchItem? other) => Id == other.Id
+        public bool Equals(WatchItem other) => Id == other.Id
             && Name == other.Name
             && Detail.Equals(other.Detail)
             && Type == other.Type
