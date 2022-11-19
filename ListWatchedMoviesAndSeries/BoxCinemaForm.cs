@@ -138,11 +138,11 @@ namespace ListWatchedMoviesAndSeries
             if (!_gridByPageMap.TryGetValue(page, out var dgv))
                 throw new ArgumentNullException(nameof(page));
 
-            if (RemoveRowGrid(dgv, out string? idItem))
+            if (RemoveRowGrid(dgv, out string idItem))
             {
                 dgv = page == tabAllCinemaPage ? SearchTypeItem(idItem) : dgvCinema;
                 RemoveItemRowGrid(dgv, idItem);
-                var strId = Guid.Parse(idItem);
+                var strId = Guid.Parse(idItem) ?? throw MessageBoxProvider.ShowWarning("Id not null.");
                 if (strId.GetType() == typeof(Guid))
                 {
                     _repository.Remove(strId);
@@ -166,7 +166,7 @@ namespace ListWatchedMoviesAndSeries
         /// <param name="dataGridCinema">Table</param>
         /// <param name="id">Object ID to delete</param>
         /// <returns></returns>
-        private bool RemoveRowGrid(DataGridView dataGridCinema, out string? id)
+        private bool RemoveRowGrid(DataGridView dataGridCinema, out string id)
         {
             if (dataGridCinema.SelectedRows.Count == 0)
             {
