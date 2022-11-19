@@ -142,14 +142,16 @@ namespace ListWatchedMoviesAndSeries
             {
                 dgv = page == tabAllCinemaPage ? SearchTypeItem(idItem) : dgvCinema;
                 RemoveItemRowGrid(dgv, idItem);
-                var strId = Guid.Parse(idItem) ?? throw MessageBoxProvider.ShowWarning("Id not null.");
-                if (strId.GetType() == typeof(Guid))
+                if (Guid.TryParse(idItem, out var id))
                 {
-                    _repository.Remove(strId);
-                }
-                else
-                {
-                    MessageBoxProvider.ShowError("Id not null");
+                    if (id.GetType() == typeof(Guid))
+                    {
+                        _repository.Remove(id);
+                    }
+                    else
+                    {
+                        MessageBoxProvider.ShowError("Id not null");
+                    }
                 }
             }
         }
