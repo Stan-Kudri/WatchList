@@ -60,6 +60,7 @@ namespace ListWatchedMoviesAndSeries.Models
         public bool Equals(WatchItem? other) => other != null
             && Id == other.Id
             && Name == other.Name
+            && Detail != null
             && Detail.Equals(other.Detail)
             && Type == other.Type
             && NumberSequel == other.NumberSequel;
