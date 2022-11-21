@@ -37,14 +37,14 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 
         public override bool Equals(object? obj)
         {
-            if (obj == null)
-                throw new ArgumentNullException(nameof(obj));
-            return Equals(obj is WatchDetail);
+            return Equals(obj as WatchDetail);
         }
 
-        public bool Equals(WatchDetail other)
+        public bool Equals(WatchDetail? other)
         {
-            return DateWatch == other.DateWatch && Grade == other.Grade;
+            return other != null
+                && DateWatch == other.DateWatch
+                && Grade == other.Grade;
         }
     }
 }
