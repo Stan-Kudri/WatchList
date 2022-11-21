@@ -54,13 +54,13 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public override bool Equals(object? obj)
         {
-            return Equals(obj as WatchItem);
+            if (Equals(obj is WatchItem))
+                return true;
+            return false;
         }
 
-        public bool Equals(WatchItem? other) => other != null
-            && Id == other.Id
+        public bool Equals(WatchItem other) => Id == other.Id
             && Name == other.Name
-            && Detail != null
             && Detail.Equals(other.Detail)
             && Type == other.Type
             && NumberSequel == other.NumberSequel;
