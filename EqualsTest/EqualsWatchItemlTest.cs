@@ -11,6 +11,7 @@ namespace EqualsTest
         {
             //Arrange
             var сomparisonList = new List<bool>();
+
             //Act
             foreach (var element in items)
                 сomparisonList.Add(element.Equals(element));
@@ -138,7 +139,6 @@ namespace EqualsTest
                         new ("Ход королевы", 1, null, null, TypeCinema.Series, Guid.Parse("5bbb70a3-0be8-4970-a95e-a5fbad2d1c72")),
                         new ("Хоббит", 1, new DateTime(2022,03,22, 00, 00, 00), 10, TypeCinema.Movie, Guid.Parse("7a7d2f55-03e9-450e-955e-4e132c956d7e"))
                     }
-
                 },
             };
         }
@@ -154,7 +154,6 @@ namespace EqualsTest
                         new ("Тор", 1, new DateTime(2022,08,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7")),
                         new ("Тор", 2, new DateTime(2022,09,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     }
-
                 },
             };
         }

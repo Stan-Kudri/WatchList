@@ -13,6 +13,7 @@ namespace EqualsTest
             var firstWatch = new WatchDetail(
                                     new DateTime(year, month, day),
                                     grade);
+
             var secondWatch = new WatchDetail(
                                     new DateTime(year, month, day),
                                     grade);
