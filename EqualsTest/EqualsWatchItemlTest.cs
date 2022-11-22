@@ -5,45 +5,166 @@ namespace EqualsTest
 {
     public class EqualsWatchItemlTest
     {
-        public static WatchItem? _firstWathchItem = new WatchItem("Тор", 1, TypeCinema.Movie, Guid.NewGuid());
-        public static WatchItem? _secondWathchItem = new WatchItem("Озарк", 2, TypeCinema.Series, Guid.NewGuid());
-        public static WatchItem? _thirdWatchItem = new WatchItem("Муви 43", 3, DateTime.Now, 5, TypeCinema.Movie, Guid.NewGuid());
-
-        //(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema? type
         [Theory]
-        [InlineData()]
-        public void EquelsTrueTest()
+        [MemberData(nameof(WatchItemDate))]
+        public void Equals_Two_Element_With_Same_Fields(List<WatchItem> items)
         {
-            Assert.Equal(_firstWathchItem, _firstWathchItem);
-            Assert.Equal(_secondWathchItem, _secondWathchItem);
-            Assert.Equal(_thirdWatchItem, _thirdWatchItem);
+            //Arrange
+            var сomparisonList = new List<bool>();
+            //Act
+            foreach (var element in items)
+                сomparisonList.Add(element.Equals(element));
+
+            //Assert
+            foreach (var compare in сomparisonList)
+                Assert.True(compare);
         }
 
         [Theory]
-        [InlineData()]
-        public void EquelsFalseTest()
+        [MemberData(nameof(WatchItemTwoElementsNotCompare))]
+        public void Equals_Two_Element_Not_With_Same_Fields(List<WatchItem> items)
         {
-            Assert.False(_firstWathchItem.Equals(_secondWathchItem));
-            Assert.False(_thirdWatchItem.Equals(_secondWathchItem));
-            Assert.False(_firstWathchItem.Equals(_thirdWatchItem));
+            //Arrange
+            var firstWatch = items[0];
+            var secondWatch = items[1];
+
+            //Act
+            var comparison = firstWatch.Equals(secondWatch);
+
+            //Assert
+            Assert.False(comparison);
         }
 
         [Theory]
-        [InlineData()]
-        public void NullObjectTest()
+        [MemberData(nameof(WatchItemElement))]
+        public void Non_Equality_Of_Two_Elements_With_One_Non_Identical_Null_Field(WatchItem item)
         {
-            var firstWatch = new WatchItem() { Name = _firstWathchItem.Name, Detail = null, Id = _firstWathchItem.Id, NumberSequel = _firstWathchItem.NumberSequel, Type = _firstWathchItem.Type };
+            //Arrange
+            var firstWatch = new WatchItem(
+                                    item.Name,
+                                    item.NumberSequel,
+                                    item.Detail.DateWatch,
+                                    decimal.Parse(item.Detail.Grade),
+                                    item.Type,
+                                    item.Id);
 
-            var secondWatch = new WatchItem { Name = _secondWathchItem.Name, Detail = _secondWathchItem.Detail, Id = _secondWathchItem.Id, NumberSequel = _secondWathchItem.NumberSequel, Type = null };
+            var secondWatch = new WatchItem(
+                                    item.Name,
+                                    item.NumberSequel,
+                                    item.Detail.DateWatch,
+                                    decimal.Parse(item.Detail.Grade),
+                                    null,
+                                    item.Id);
 
-            var thirdWatch = null as WatchItem;
+            //Act
+            var comparison = firstWatch.Equals(secondWatch);
 
-            Assert.False(firstWatch.Equals(secondWatch));
-            Assert.False(firstWatch.Equals(thirdWatch));
-            Assert.False(secondWatch.Equals(thirdWatch));
+            //Assert
+            Assert.False(comparison);
+        }
 
-            Assert.Equal(thirdWatch, thirdWatch);
-            Assert.True(secondWatch.Equals(secondWatch));
+        [Theory]
+        [MemberData(nameof(WatchItemElement))]
+        public void Equality_Two_Elements_With_One_Null_Field(WatchItem item)
+        {
+            //Arrange
+            var firstWatch = new WatchItem(
+                                    item.Name,
+                                    item.NumberSequel,
+                                    item.Detail.DateWatch,
+                                    decimal.Parse(item.Detail.Grade),
+                                    null,
+                                    item.Id);
+
+            var secondWatch = new WatchItem(
+                                    item.Name,
+                                    item.NumberSequel,
+                                    item.Detail.DateWatch,
+                                    decimal.Parse(item.Detail.Grade),
+                                    null,
+                                    item.Id);
+
+            //Act
+            var comparison = firstWatch.Equals(secondWatch);
+
+            //Assert
+            Assert.True(comparison);
+        }
+
+        [Theory]
+        [MemberData(nameof(WatchItemElement))]
+        public void Equality_Two_Elements_With_Null_Detail(WatchItem item)
+        {
+            //Arrange
+            var itemWithNullDatail = new WatchItem(
+                                    item.Name,
+                                    item.NumberSequel,
+                                    item.Detail.DateWatch,
+                                    decimal.Parse(item.Detail.Grade),
+                                    item.Type,
+                                    item.Id);
+            itemWithNullDatail.Detail = null;
+
+            //Act
+            var comparison = item.Equals(itemWithNullDatail);
+
+            //Assert
+            Assert.False(comparison);
+        }
+
+        [Theory]
+        [MemberData(nameof(WatchItemElement))]
+        public void Compare_Elements_With_Null_Object(WatchItem item)
+        {
+            //Arrange
+            var nullItem = (WatchItem?)null;
+
+            //Act
+            var comparison = item.Equals(nullItem);
+
+            //Assert
+            Assert.False(comparison);
+        }
+
+        public static IEnumerable<object[]> WatchItemDate()
+        {
+            return new List<object[]>
+            {
+                new object[]
+                {
+                    new List<WatchItem>()
+                    {
+                        new ("Тор", 1, new DateTime(2022,08,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7")),
+                        new ("Ход королевы", 1, null, null, TypeCinema.Series, Guid.Parse("5bbb70a3-0be8-4970-a95e-a5fbad2d1c72")),
+                        new ("Хоббит", 1, new DateTime(2022,03,22, 00, 00, 00), 10, TypeCinema.Movie, Guid.Parse("7a7d2f55-03e9-450e-955e-4e132c956d7e"))
+                    }
+
+                },
+            };
+        }
+
+        public static IEnumerable<object[]> WatchItemTwoElementsNotCompare()
+        {
+            return new List<object[]>
+            {
+                new object[]
+                {
+                    new List<WatchItem>()
+                    {
+                        new ("Тор", 1, new DateTime(2022,08,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7")),
+                        new ("Тор", 2, new DateTime(2022,09,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a999-ca7a-4b24-a78a-65733ba419a7")),
+                    }
+
+                },
+            };
+        }
+
+        public static IEnumerable<object[]> WatchItemElement()
+        {
+            yield return new object[]
+            {
+                new WatchItem("Тор", 1, new DateTime(2022,08,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7")),
+            };
         }
     }
 }

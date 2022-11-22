@@ -7,66 +7,100 @@ namespace EqualsTest
         [Theory]
         [InlineData(2000, 10, 10, 8)]
         [InlineData(2022, 7, 19, 6)]
-        public void EquelsTrueTest(int year, int month, int day, int grade)
+        public void Equals_Two_Element_With_Same_Fields(int year, int month, int day, int grade)
         {
+            // Arrange
             var firstWatch = new WatchDetail(
                                     new DateTime(year, month, day),
-                                    (decimal)grade);
+                                    grade);
             var secondWatch = new WatchDetail(
                                     new DateTime(year, month, day),
-                                    (decimal)grade);
-            Assert.True(firstWatch.Equals(secondWatch));
+                                    grade);
+            //Act
+            var comparison = firstWatch.Equals(secondWatch);
+
+            //Assert
+            Assert.True(comparison);
         }
 
         [Theory]
         [InlineData(2000, 10, 10, 8)]
         [InlineData(2022, 7, 19, 6)]
-        public void EquelsFalseTest(int year, int month, int day, int grade)
+        public void Equals_Two_Element_Not_With_Same_Fields(int year, int month, int day, int grade)
         {
+            //Arrange
             var firstWatch = new WatchDetail(
                                     new DateTime(year, month, day),
-                                    (decimal)grade);
+                                    grade);
 
-            var newDay = day - 2;
-            if (newDay <= 0)
-                newDay = day + 2;
+            var newDay = (day - 1) > 0 ? day - 1 : day + 1;
             var secondWatch = new WatchDetail(
                                     new DateTime(year, month, newDay),
-                                    (decimal)grade);
+                                    grade);
 
-            var newGrade = grade - 1;
-            if (newGrade == 0)
-                newGrade = grade++;
-            var thirdWatch = new WatchDetail(
-                                    new DateTime(year, month, newDay),
-                                    (decimal)newGrade);
+            //Act
+            var comparison = firstWatch.Equals(secondWatch);
 
-            Assert.False(firstWatch.Equals(secondWatch));
-            Assert.False(firstWatch.Equals(thirdWatch));
-            Assert.False(secondWatch.Equals(thirdWatch));
+            //Assert
+            Assert.False(comparison);
         }
 
         [Theory]
         [InlineData(2000, 10, 10, 8)]
         [InlineData(2022, 7, 19, 6)]
-        public void NullObjectTest(int year, int month, int day, int grade)
+        public void Non_Equality_Of_Two_Elements_With_One_Non_Identical_Null_Field(int year, int month, int day, int grade)
         {
+            //Arrange
             var firstWatch = new WatchDetail(
                                     new DateTime(year, month, day),
-                                    (decimal)grade);
+                                    grade);
 
             var secondWatch = new WatchDetail(
                                     new DateTime(year, month, day),
                                     null);
 
-            var thirdWatch = null as WatchDetail;
+            //Act
+            var comparison = firstWatch.Equals(secondWatch);
 
-            Assert.False(firstWatch.Equals(secondWatch));
-            Assert.False(firstWatch.Equals(thirdWatch));
-            Assert.False(secondWatch.Equals(thirdWatch));
+            //Assert
+            Assert.False(comparison);
+        }
 
-            Assert.Equal(thirdWatch, thirdWatch);
-            Assert.True(secondWatch.Equals(secondWatch));
+        [Theory]
+        [InlineData(2000, 10, 10)]
+        [InlineData(2022, 7, 19)]
+        public void Equality_Two_Elements_With_One_Zero_Field(int year, int month, int day)
+        {
+            //Arrange
+            var firstWatch = new WatchDetail(
+                                    new DateTime(year, month, day),
+                                    null);
+
+            var secondWatch = new WatchDetail(
+                                    new DateTime(year, month, day),
+                                    null);
+
+            //Act
+            var comparison = firstWatch.Equals(secondWatch);
+
+            //Assert
+            Assert.True(comparison);
+        }
+
+        [Fact]
+        public void Compare_Elements_With_Null_Object()
+        {
+            //Arrange
+            var watchDetail = new WatchDetail(
+                                    new DateTime(2000, 10, 10),
+                                    7);
+            var nullDetail = (WatchDetail?)null;
+
+            //Act
+            var comparison = watchDetail.Equals(nullDetail);
+
+            //Assert
+            Assert.False(comparison);
         }
     }
 }

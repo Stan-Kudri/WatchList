@@ -62,7 +62,8 @@ namespace ListWatchedMoviesAndSeries.Models
             if (this == null || other == null)
                 return false;
 
-            return Id == other.Id
+            return Detail != null
+            && Id == other.Id
             && Name == other.Name
             && Detail.Equals(other.Detail)
             && Type == other.Type
