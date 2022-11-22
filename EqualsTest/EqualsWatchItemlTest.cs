@@ -20,9 +20,8 @@ namespace EqualsTest
         }
 
         [Theory]
-        [InlineData(2000, 10, 10, 8)]
-        [InlineData(2022, 7, 19, 6)]
-        public void EquelsFalseTest(int year, int month, int day, int grade)
+        [InlineData()]
+        public void EquelsFalseTest()
         {
             Assert.False(_firstWathchItem.Equals(_secondWathchItem));
             Assert.False(_thirdWatchItem.Equals(_secondWathchItem));
@@ -30,9 +29,8 @@ namespace EqualsTest
         }
 
         [Theory]
-        [InlineData(2000, 10, 10, 8)]
-        [InlineData(2022, 7, 19, 6)]
-        public void NullObjectTest(int year, int month, int day, int grade)
+        [InlineData()]
+        public void NullObjectTest()
         {
             var firstWatch = new WatchItem() { Name = _firstWathchItem.Name, Detail = null, Id = _firstWathchItem.Id, NumberSequel = _firstWathchItem.NumberSequel, Type = _firstWathchItem.Type };
 
