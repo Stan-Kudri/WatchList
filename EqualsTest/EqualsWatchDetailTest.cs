@@ -95,6 +95,7 @@ namespace EqualsTest
             var watchDetail = new WatchDetail(
                                     new DateTime(2000, 10, 10),
                                     7);
+
             var nullDetail = (WatchDetail?)null;
 
             //Act
