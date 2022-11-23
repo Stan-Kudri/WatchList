@@ -12,7 +12,7 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public string? Name { get; set; } = null;
 
-        public WatchDetail? Detail { get; set; } = new WatchDetail();
+        public WatchDetail Detail { get; set; } = new WatchDetail();
 
         [JsonPropertyName("TypeCinema")]
         public TypeCinema? Type { get; set; } = null;
@@ -59,15 +59,14 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public bool Equals(WatchItem? other)
         {
-            if (this == null || other == null)
+            if (other == null)
                 return false;
 
-            return Detail != null
-            && Id == other.Id
-            && Name == other.Name
-            && Detail.Equals(other.Detail)
-            && Type == other.Type
-            && NumberSequel == other.NumberSequel;
+            return Id == other.Id
+                && Name == other.Name
+                && Detail.Equals(other.Detail)
+                && Type == other.Type
+                && NumberSequel == other.NumberSequel;
         }
 
         public override string ToString()

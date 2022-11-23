@@ -2,7 +2,7 @@ using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace EqualsTest
 {
-    public class WatchDetailTest
+    public class EqualsWatchDetailTest
     {
         [Theory]
         [InlineData(2000, 10, 10, 8)]
@@ -70,7 +70,7 @@ namespace EqualsTest
         [Theory]
         [InlineData(2000, 10, 10)]
         [InlineData(2022, 7, 19)]
-        public void Equality_Two_Elements_With_One_Zero_Field(int year, int month, int day)
+        public void Equality_Two_Elements_With_Null_Field(int year, int month, int day)
         {
             //Arrange
             var firstWatch = new WatchDetail(

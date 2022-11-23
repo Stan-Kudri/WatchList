@@ -32,7 +32,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(DateWatch, Grade);
+            return HashCode.Combine(DateWatch, Grade, Watch);
         }
 
         public override bool Equals(object? obj)
@@ -42,7 +42,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 
         public bool Equals(WatchDetail? other)
         {
-            if (this == null || other == null)
+            if (other == null)
                 return false;
 
             return Watch == other.Watch
