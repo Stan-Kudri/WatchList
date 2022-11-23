@@ -6,9 +6,11 @@ name: builder
 
 on:
   push:
-    branches: [ "Sqlite" ]
+    paths-ignore:
+      - 'README.md'
   pull_request:
-    branches: [ "Sqlite" ]
+    paths-ignore:
+      - 'README.md'
 
 jobs:
   build:
@@ -31,8 +33,7 @@ jobs:
       run: dotnet restore "ListWatchedMoviesAndSeries"
 
     - name: Build
-      run: dotnet build "ListWatchedMoviesAndSeries/Core" --no-restore
+      run: dotnet build "ListWatchedMoviesAndSeries" --no-restore
 
     - name: Test
-      run: dotnet test "ListWatchedMoviesAndSeries/EqualsTest" --no-build --verbosity normal
-0 comments on commit 167132e
+      run: dotnet test "EqualsTest" --no-build --verbosity normal
