@@ -18,28 +18,19 @@ namespace Core.Repository.JSONConverter
             if (reader.TokenType != JsonTokenType.StartObject)
                 throw new JsonException();
 
-            SkipPropertyName(ref reader);
-            СomparePropertyName(ref reader, NameOfName);
+            SkipPropertyName(ref reader, NameOfName);
 
             reader.Read();
             var name = reader.GetString() ?? throw new InvalidOperationException("Name property in class TypeCinema not null");
 
-            SkipPropertyName(ref reader);
-            СomparePropertyName(ref reader, NameOfValue);
+            SkipPropertyName(ref reader, NameOfValue);
 
             reader.Read();
-            if (int.TryParse(reader.GetString(), out var value))
-            {
-                if (value < 0)
-                    throw new InvalidOperationException("Value property in class TypeCinema above zero");
-            }
-            else
-            {
-                throw new JsonException();
-            }
+            var value = reader.GetUInt16();
+            if (value < 0)
+                throw new InvalidOperationException("Value property in class TypeCinema above zero");
 
-            SkipPropertyName(ref reader);
-            СomparePropertyName(ref reader, NameOfTypeSequel);
+            SkipPropertyName(ref reader, NameOfTypeSequel);
 
             reader.Read();
 
@@ -62,22 +53,19 @@ namespace Core.Repository.JSONConverter
             writer.WriteStartObject();
 
             writer.WriteString(NameOfName, value.Name);
-            writer.WriteString(NameOfValue, value.Value.ToString());
+            writer.WriteNumber(NameOfValue, value.Value);
             writer.WriteString(NameOfTypeSequel, value.TypeSequel);
 
             writer.WriteEndObject();
         }
 
-        private void SkipPropertyName(ref Utf8JsonReader reader)
+        private void SkipPropertyName(ref Utf8JsonReader reader, string nameofValue)
         {
             if (!reader.Read())
                 throw new JsonException();
             if (reader.TokenType != JsonTokenType.PropertyName)
                 throw new JsonException();
-        }
 
-        private void СomparePropertyName(ref Utf8JsonReader reader, string nameofValue)
-        {
             string? propertyName = reader.GetString();
             if (propertyName != nameofValue)
                 throw new JsonException();
