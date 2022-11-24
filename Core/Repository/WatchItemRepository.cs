@@ -30,7 +30,7 @@ namespace ListWatchedMoviesAndSeries.Repository
             }
         }
 
-        public void UpDate(WatchItem editItem)
+        public void Update(WatchItem editItem)
         {
             if (editItem != null)
             {

@@ -74,7 +74,7 @@ namespace ListWatchedMoviesAndSeries
             {
                 ReplacementEditItem(dgv, cinema, numberRowGridCinema);
                 ReplacementEditItem(dgvCinema, cinema, numberRowAllGridCinema);
-                _repository.UpDate(cinema.ToWatchItem());
+                _repository.Update(cinema.ToWatchItem());
             }
         }
 
