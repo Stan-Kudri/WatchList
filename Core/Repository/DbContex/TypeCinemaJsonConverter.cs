@@ -8,8 +8,6 @@ namespace Core.Repository.JSONConverter
     public class TypeCinemaJsonConverter : JsonConverter<TypeCinema>
     {
         private const string NameOfName = "Name";
-        private const string NameOfValue = "Value";
-        private const string NameOfTypeSequel = "TypeSequel";
 
         public override TypeCinema? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
