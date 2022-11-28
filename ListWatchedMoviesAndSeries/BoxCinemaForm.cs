@@ -329,13 +329,14 @@ namespace ListWatchedMoviesAndSeries
         private static CinemaModel GetItem(DataGridView grid, int indexRow)
         {
             var rowItems = grid.Rows[indexRow];
-            var title = rowItems.Cells[IndexColumnName].Value.ToString();
+            var title = rowItems.Cells[IndexColumnName].Value.ToString() ?? throw new ArgumentNullException("String cannot be null.");
             var sequel = decimal.Parse(rowItems.Cells[IndexColumnSequel].Value.ToString() ?? "0");
-            var id = rowItems.Cells[IndexColumnId].Value ?? Guid.NewGuid();
+            if (!Guid.TryParse(rowItems.Cells[IndexColumnId].Value.ToString(), out var id))
+                throw new InvalidCastException("Invalid cast.");
             var type = TypeCinema.FromName(rowItems.Cells[IndexColumnType].Value.ToString());
             if (rowItems.Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
-                var strDateWatch = rowItems.Cells[IndexColumnDate].Value.ToString() ?? throw new ArgumentNullException("String cannot be null");
+                var strDateWatch = rowItems.Cells[IndexColumnDate].Value.ToString() ?? throw new ArgumentNullException("String cannot be null.");
                 var dateWatch = DateTime.Parse(strDateWatch);
                 var grade = decimal.Parse(rowItems.Cells[IndexColumnGrade].Value.ToString() ?? "0");
                 var cinemaItem = new CinemaModel(
@@ -344,7 +345,7 @@ namespace ListWatchedMoviesAndSeries
                                                    dateWatch,
                                                    grade,
                                                    type,
-                                                   Guid.Parse(id.ToString()));
+                                                   id);
                 return cinemaItem;
             }
             else
@@ -353,7 +354,7 @@ namespace ListWatchedMoviesAndSeries
                                                   title,
                                                   sequel,
                                                   type,
-                                                  Guid.Parse(id.ToString()));
+                                                  id);
                 return cinemaItem;
             }
         }

@@ -53,7 +53,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             txtEditName.Text = _cinema.Name;
             labelNumberSequel.Text = _cinema.Type.Name;
             dateTPCinema.MaxDate = DateTime.Now;
-            if (_cinema.Detail.ValidDateField())
+            if (_cinema.Detail.ValidDateField() && _cinema.Detail.DateWatch != null)
             {
                 numericEditGradeCinema.Enabled = true;
                 dateTPCinema.Value = _cinema.Detail.DateWatch.Value;

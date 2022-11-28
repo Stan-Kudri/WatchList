@@ -5,10 +5,10 @@ namespace ListWatchedMoviesAndSeries.Models
     public class CinemaModel : ModelBase
     {
         private Guid _id;
-        private string? _name = null;
+        private string _name;
         private WatchDetail _detail;
-        private TypeCinema _type = null;
-        private decimal? _numberSequel = null;
+        private TypeCinema _type;
+        private decimal? _numberSequel;
 
         public Guid Id
         {
@@ -58,7 +58,7 @@ namespace ListWatchedMoviesAndSeries.Models
                 throw new ArgumentException("Name cinema not null", nameof(name));
             _id = id ?? Guid.NewGuid();
             _name = name;
-            Detail = new WatchDetail(date, grade);
+            _detail = new WatchDetail(date, grade);
             _numberSequel = numberSequel;
             _type = type ?? TypeCinema.Unknown;
         }
