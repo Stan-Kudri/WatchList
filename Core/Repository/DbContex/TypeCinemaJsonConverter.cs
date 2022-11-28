@@ -26,8 +26,8 @@ namespace Core.Repository.JSONConverter
             SkipPropertyName(ref reader, NameOfValue);
 
             reader.Read();
-            var value = reader.GetUInt16();
-            if (value < 0)
+            var value = reader.GetInt32();
+            if (!TypeCinema.TryFromValue(value, out _))
                 throw new InvalidOperationException("Value property in class TypeCinema above zero");
 
             SkipPropertyName(ref reader, NameOfTypeSequel);

@@ -20,7 +20,6 @@ namespace Core.Repository.DbContex
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var jsonOptionNull = (JsonSerializerOptions?)null;
 
             modelBuilder.Entity<WatchItem>(buildAction =>
             {
@@ -28,8 +27,8 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Name).HasMaxLength(50).IsRequired();
                 buildAction.Property(x => x.Id).ValueGeneratedOnAdd();
                 buildAction.Property(x => x.Detail).HasConversion(
-                    x => x == null ? null : JsonSerializer.Serialize(x, jsonOptionNull),
-                    json => json == null ? null : JsonSerializer.Deserialize<WatchDetail?>(json, jsonOptionNull));
+                    x => x == null ? null : JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
+                    json => json == null ? null : JsonSerializer.Deserialize<WatchDetail?>(json, (JsonSerializerOptions?)null));
                 buildAction.Property(x => x.Type).HasConversion(
                     x => x == null ? null : JsonSerializer.Serialize(x, _jsonOptionsType),
                     json => json == null ? null : JsonSerializer.Deserialize<TypeCinema?>(json, _jsonOptionsType));
