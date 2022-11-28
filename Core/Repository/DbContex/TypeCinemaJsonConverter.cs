@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Ardalis.SmartEnum;
 using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace Core.Repository.JSONConverter
@@ -23,18 +24,11 @@ namespace Core.Repository.JSONConverter
             reader.Read();
             var name = reader.GetString() ?? throw new InvalidOperationException("Name property in class TypeCinema not null");
 
-            SkipPropertyName(ref reader, NameOfValue);
+            if (!TypeCinema.TryFromName(name, out var value))
+                throw new InvalidOperationException("Erroneous value");
 
-            reader.Read();
-            var value = reader.GetInt32();
-            if (!TypeCinema.TryFromValue(value, out _))
-                throw new InvalidOperationException("Value property in class TypeCinema above zero");
-
-            SkipPropertyName(ref reader, NameOfTypeSequel);
-
-            reader.Read();
-
-            var sequel = reader.GetString() ?? throw new InvalidOperationException("TypeSequel property in class TypeCinema not null");
+            if (!Sequel(name, out var sequel))
+                throw new InvalidOperationException("Erroneous value sequel");
 
             if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject)
                 throw new JsonException();
@@ -51,11 +45,7 @@ namespace Core.Repository.JSONConverter
             }
 
             writer.WriteStartObject();
-
             writer.WriteString(NameOfName, value.Name);
-            writer.WriteNumber(NameOfValue, value.Value);
-            writer.WriteString(NameOfTypeSequel, value.TypeSequel);
-
             writer.WriteEndObject();
         }
 
@@ -69,6 +59,20 @@ namespace Core.Repository.JSONConverter
             string? propertyName = reader.GetString();
             if (propertyName != nameofValue)
                 throw new JsonException();
+        }
+
+        private bool Sequel(string name, out string sequel)
+        {
+            sequel = string.Empty;
+            foreach (var item in SmartEnum<TypeCinema>.List)
+            {
+                if (item.Name == name)
+                {
+                    name = item.TypeSequel;
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
