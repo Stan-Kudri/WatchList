@@ -15,7 +15,7 @@ namespace ListWatchedMoviesAndSeries.Models
         public WatchDetail Detail { get; set; } = new WatchDetail();
 
         [JsonPropertyName("TypeCinema")]
-        public TypeCinema? Type { get; set; } = null;
+        public TypeCinema Type { get; set; }
 
         public decimal? NumberSequel { get; set; } = null;
 
