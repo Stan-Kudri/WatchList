@@ -28,7 +28,7 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Id).ValueGeneratedOnAdd();
                 buildAction.Property(x => x.Detail).HasConversion(
                     x => x == null ? null : JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
-                    json => json == null ? null : JsonSerializer.Deserialize<WatchDetail?>(json, (JsonSerializerOptions?)null));
+                    json => json == null ? null : JsonSerializer.Deserialize<WatchDetail?>(json, (JsonSerializerOptions?)null)); ;
                 buildAction.Property(x => x.Type).HasConversion(
                     x => x == null ? null : JsonSerializer.Serialize(x, _jsonOptionsType),
                     json => json == null ? null : JsonSerializer.Deserialize<TypeCinema?>(json, _jsonOptionsType));
