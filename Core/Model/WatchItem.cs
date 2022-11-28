@@ -23,19 +23,19 @@ namespace ListWatchedMoviesAndSeries.Models
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, TypeCinema? type) : this(name, numberSequel, null, null, type, Guid.NewGuid())
+        public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid())
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, TypeCinema? type, Guid? id) : this(name, numberSequel, null, null, type, id)
+        public WatchItem(string name, decimal? numberSequel, TypeCinema type, Guid? id) : this(name, numberSequel, null, null, type, id)
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema? type) : this(name, numberSequel, date, grade, type, Guid.NewGuid())
+        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid())
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema? type, Guid? id)
+        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, Guid? id)
         {
             if (name == null)
                 throw new ArgumentException("Name cinema not null", nameof(name));
