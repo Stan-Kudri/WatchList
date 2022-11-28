@@ -179,11 +179,11 @@ namespace ListWatchedMoviesAndSeries
         /// </summary>
         /// <param name="gridCinema">Table with element</param>
         /// <returns></returns>
-        private static string? SelectedRowCinemaId(DataGridView gridCinema)
+        private static string SelectedRowCinemaId(DataGridView gridCinema)
         {
             var rowIndex = gridCinema.CurrentCell.RowIndex;
             var id = gridCinema.Rows[rowIndex].Cells[IndexColumnId].Value;
-            return id.ToString();
+            return id.ToString() ?? string.Empty;
         }
 
         /// <summary>
@@ -330,12 +330,12 @@ namespace ListWatchedMoviesAndSeries
         {
             var rowItems = grid.Rows[indexRow];
             var title = rowItems.Cells[IndexColumnName].Value.ToString();
-            var sequel = decimal.Parse(rowItems.Cells[IndexColumnSequel].Value.ToString());
+            var sequel = decimal.Parse(rowItems.Cells[IndexColumnSequel].Value.ToString() ?? "0");
             var id = rowItems.Cells[IndexColumnId].Value ?? Guid.NewGuid();
             var type = TypeCinema.FromName(rowItems.Cells[IndexColumnType].Value.ToString());
             if (rowItems.Cells[IndexColumnDate].Value.ToString() != string.Empty)
             {
-                var strDateWatch = rowItems.Cells[IndexColumnDate].Value.ToString();
+                var strDateWatch = rowItems.Cells[IndexColumnDate].Value.ToString() ?? throw new ArgumentNullException("String cannot be null");
                 var dateWatch = DateTime.Parse(strDateWatch);
                 var grade = decimal.Parse(rowItems.Cells[IndexColumnGrade].Value.ToString() ?? "0");
                 var cinemaItem = new CinemaModel(

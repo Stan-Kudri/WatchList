@@ -7,7 +7,7 @@ namespace ListWatchedMoviesAndSeries.Models
         private Guid _id;
         private string? _name = null;
         private WatchDetail _detail;
-        private TypeCinema? _type = null;
+        private TypeCinema _type = null;
         private decimal? _numberSequel = null;
 
         public Guid Id
@@ -16,7 +16,7 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _id, value);
         }
 
-        public string? Name
+        public string Name
         {
             get => _name;
             set => SetField(ref _name, value);
@@ -28,7 +28,7 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _detail, value);
         }
 
-        public TypeCinema? Type
+        public TypeCinema Type
         {
             get => _type;
             set => SetField(ref _type, value);
@@ -65,7 +65,7 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public WatchItem ToWatchItem()
         {
-            if (Detail.DateWatch != null)
+            if (Detail.DateWatch != null && Detail.Grade != null)
             {
                 var grade = decimal.Parse(Detail.Grade);
                 return new WatchItem(Name, NumberSequel, Detail.DateWatch, grade, Type, Id);

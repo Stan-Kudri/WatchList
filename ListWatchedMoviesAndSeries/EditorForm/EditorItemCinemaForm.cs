@@ -1,4 +1,5 @@
 using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.EditorForm
 {
@@ -71,7 +72,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private void SaveEditionElement()
         {
-            var type = _cinema.Type ?? Models.Item.TypeCinema.Unknown;
+            var type = _cinema.Type ?? TypeCinema.Unknown;
             var id = _cinema.Id;
             if (numericEditGradeCinema.Enabled)
             {

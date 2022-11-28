@@ -14,12 +14,12 @@ namespace Core.Repository.JSONConverter
             if (reader.TokenType != JsonTokenType.String)
                 throw new JsonException();
 
-            var name = reader.GetString() ?? throw new InvalidOperationException("Name property in class TypeCinema not null");
+            var name = reader.GetString() ?? throw new JsonException("Type cinema not null");
 
             if (!TypeCinema.TryFromName(name, out var value))
-                throw new InvalidOperationException("Erroneous value name of type");
+                throw new JsonException("Invalid value name of type");
 
-            return new TypeCinema(name, value, value.TypeSequel);
+            return new TypeCinema(name, value);
         }
 
         public override void Write(Utf8JsonWriter writer, TypeCinema? value, JsonSerializerOptions? options = null)
