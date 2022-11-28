@@ -19,7 +19,6 @@ namespace Core.Repository.JSONConverter
             if (!TypeCinema.TryFromName(name, out var value))
                 throw new InvalidOperationException("Erroneous value name of type");
 
-
             return new TypeCinema(name, value, value.TypeSequel);
         }
 
@@ -30,7 +29,6 @@ namespace Core.Repository.JSONConverter
                 writer.WriteNullValue();
                 return;
             }
-
             writer.WriteStringValue(value.Name);
         }
     }
