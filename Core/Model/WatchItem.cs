@@ -19,10 +19,6 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public decimal? NumberSequel { get; set; } = null;
 
-        public WatchItem()
-        {
-        }
-
         public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid())
         {
         }
