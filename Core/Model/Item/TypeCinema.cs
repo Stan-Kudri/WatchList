@@ -16,10 +16,6 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         [JsonPropertyName("TypeSequel")]
         public string TypeSequel => _typeSequel;
 
-        public TypeCinema(string category, int value) : base(category, value)
-        {
-        }
-
         private TypeCinema(string category, int value, string typeSequel) : base(category, value)
         {
             _typeSequel = typeSequel;

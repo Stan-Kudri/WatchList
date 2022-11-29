@@ -8,14 +8,10 @@ namespace Core.Repository.DbContex
 {
     public class WatchCinemaDbContext : DbContext
     {
-        private readonly JsonSerializerOptions _jsonOptionsType = new JsonSerializerOptions();
-
         public DbSet<WatchItem> WatchItem { get; set; } = null!;
 
         public WatchCinemaDbContext(DbContextOptions options) : base(options)
         {
-            _jsonOptionsType.WriteIndented = true;
-            _jsonOptionsType.Converters.Add(new TypeCinemaJsonConverter());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,9 +25,15 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Detail).HasConversion(
                     x => JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
                     json => JsonSerializer.Deserialize<WatchDetail>(json, (JsonSerializerOptions?)null) ?? new WatchDetail());
+
+                var jsonOptionsType = new JsonSerializerOptions
+                {
+                    WriteIndented = true, 
+                    Converters = { new TypeCinemaJsonConverter() }
+                };
                 buildAction.Property(x => x.Type).HasConversion(
-                    x => JsonSerializer.Serialize(x, _jsonOptionsType),
-                    json => JsonSerializer.Deserialize<TypeCinema>(json, _jsonOptionsType) ?? TypeCinema.Unknown);
+                    x => JsonSerializer.Serialize(x, jsonOptionsType),
+                    json => JsonSerializer.Deserialize<TypeCinema>(json, jsonOptionsType) ?? TypeCinema.Unknown);
             });
         }
     }

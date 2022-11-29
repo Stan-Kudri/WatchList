@@ -23,26 +23,26 @@ namespace ListWatchedMoviesAndSeries.Repository
         public void Remove(Guid id)
         {
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);
-            if (item != null)
-            {
-                _db.WatchItem.Remove(item);
-                _db.SaveChanges();
-            }
+            if (item == null)
+                return;
+
+            _db.WatchItem.Remove(item);
+            _db.SaveChanges();
         }
 
         public void Update(WatchItem editItem)
         {
-            if (editItem != null)
-            {
-                var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
-                if (item != null)
-                {
-                    item.NumberSequel = editItem.NumberSequel ?? 0;
-                    item.Detail = editItem.Detail;
-                    item.Name = editItem.Name;
-                    _db.SaveChanges();
-                }
-            }
+            if (editItem == null)
+                return;
+
+            var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
+            if (item == null)
+                return;
+
+            item.NumberSequel = editItem.NumberSequel ?? 0;
+            item.Detail = editItem.Detail;
+            item.Name = editItem.Name;
+            _db.SaveChanges();
         }
     }
 }
