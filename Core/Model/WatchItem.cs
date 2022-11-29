@@ -10,34 +10,23 @@ namespace ListWatchedMoviesAndSeries.Models
     {
         public Guid Id { get; set; }
 
-        public string? Name { get; set; } = null;
+        public string Name { get; set; }
 
-        public WatchDetail Detail { get; set; } = new WatchDetail();
+        public WatchDetail Detail { get; set; }
 
         [JsonPropertyName("TypeCinema")]
         public TypeCinema Type { get; set; }
 
-        public decimal? NumberSequel { get; set; } = null;
-
-        public WatchItem(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid())
-        {
-        }
+        public decimal? NumberSequel { get; set; }
 
         public WatchItem(string name, decimal? numberSequel, TypeCinema type, Guid? id) : this(name, numberSequel, null, null, type, id)
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid())
-        {
-        }
-
         public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, Guid? id)
         {
-            if (name == null)
-                throw new ArgumentException("Name cinema not null", nameof(name));
-
             Id = id ?? Guid.NewGuid();
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             Detail = new WatchDetail(date, grade);
             NumberSequel = numberSequel;
             Type = type ?? TypeCinema.Unknown;

@@ -27,11 +27,11 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Name).HasMaxLength(50).IsRequired();
                 buildAction.Property(x => x.Id).ValueGeneratedOnAdd();
                 buildAction.Property(x => x.Detail).HasConversion(
-                    x => x == null ? null : JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
-                    json => json == null ? null : JsonSerializer.Deserialize<WatchDetail?>(json, (JsonSerializerOptions?)null));
+                    x => JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
+                    json => JsonSerializer.Deserialize<WatchDetail>(json, (JsonSerializerOptions?)null) ?? new WatchDetail());
                 buildAction.Property(x => x.Type).HasConversion(
-                    x => x == null ? null : JsonSerializer.Serialize(x, _jsonOptionsType),
-                    json => json == null ? null : JsonSerializer.Deserialize<TypeCinema?>(json, _jsonOptionsType));
+                    x => JsonSerializer.Serialize(x, _jsonOptionsType),
+                    json => JsonSerializer.Deserialize<TypeCinema>(json, _jsonOptionsType) ?? TypeCinema.Unknown);
             });
         }
     }

@@ -99,7 +99,7 @@ namespace EqualsTest
                                     decimal.Parse(item.Detail.Grade),
                                     item.Type,
                                     item.Id);
-            itemWithNullDatail.Detail = null;
+            itemWithNullDatail.Detail = new WatchDetail();
 
             //Act
             var comparison = item.Equals(itemWithNullDatail);

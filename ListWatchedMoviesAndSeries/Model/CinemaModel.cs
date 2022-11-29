@@ -54,13 +54,11 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, Guid? id)
         {
-            if (name == null)
-                throw new ArgumentException("Name cinema not null", nameof(name));
             _id = id ?? Guid.NewGuid();
-            _name = name;
+            _name = name ?? throw new ArgumentNullException(nameof(name));
             _detail = new WatchDetail(date, grade);
             _numberSequel = numberSequel;
-            _type = type ?? TypeCinema.Unknown;
+            _type = type;
         }
 
         public WatchItem ToWatchItem()
