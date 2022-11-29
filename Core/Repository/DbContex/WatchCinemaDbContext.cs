@@ -16,7 +16,6 @@ namespace Core.Repository.DbContex
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<WatchItem>(buildAction =>
             {
                 buildAction.HasKey(x => x.Id);
