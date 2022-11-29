@@ -18,18 +18,19 @@ namespace ListWatchedMoviesAndSeries.Models
         public TypeCinema Type { get; set; }
 
         public decimal? NumberSequel { get; set; }
-
-        public WatchItem(string name, decimal? numberSequel, TypeCinema type, Guid? id) : this(name, numberSequel, null, null, type, id)
+        
+        // EF core
+        private WatchItem() : this(string.Empty, null, TypeCinema.Unknown, null, new WatchDetail())
         {
         }
-
-        public WatchItem(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type, Guid? id)
+        
+        public WatchItem(string name, decimal? numberSequel, TypeCinema type, Guid? id, WatchDetail detail)
         {
             Id = id ?? Guid.NewGuid();
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            Detail = new WatchDetail(date, grade);
+            Detail = detail;
             NumberSequel = numberSequel;
-            Type = type ?? TypeCinema.Unknown;
+            Type = type;
         }
 
         public override int GetHashCode()

@@ -39,18 +39,16 @@ namespace EqualsTest
             var firstWatch = new WatchItem(
                                     item.Name,
                                     item.NumberSequel,
-                                    item.Detail.DateWatch,
-                                    decimal.Parse(item.Detail.Grade),
                                     item.Type,
-                                    item.Id);
+                                    item.Id,
+                                    item.Detail.Clone());
 
             var secondWatch = new WatchItem(
                                     item.Name,
                                     item.NumberSequel,
-                                    item.Detail.DateWatch,
-                                    decimal.Parse(item.Detail.Grade),
+                                    item.Type,
                                     null,
-                                    item.Id);
+                                    item.Detail.Clone());
 
             //Act
             var comparison = firstWatch.Equals(secondWatch);
@@ -61,45 +59,15 @@ namespace EqualsTest
 
         [Theory]
         [MemberData(nameof(WatchItemElement))]
-        public void Equality_Two_Elements_With_One_Null_Field(WatchItem item)
-        {
-            //Arrange
-            var firstWatch = new WatchItem(
-                                    item.Name,
-                                    item.NumberSequel,
-                                    item.Detail.DateWatch,
-                                    decimal.Parse(item.Detail.Grade),
-                                    null,
-                                    item.Id);
-
-            var secondWatch = new WatchItem(
-                                    item.Name,
-                                    item.NumberSequel,
-                                    item.Detail.DateWatch,
-                                    decimal.Parse(item.Detail.Grade),
-                                    null,
-                                    item.Id);
-
-            //Act
-            var comparison = firstWatch.Equals(secondWatch);
-
-            //Assert
-            Assert.True(comparison);
-        }
-
-        [Theory]
-        [MemberData(nameof(WatchItemElement))]
         public void Equality_Two_Elements_With_Null_Detail(WatchItem item)
         {
             //Arrange
             var itemWithNullDatail = new WatchItem(
                                     item.Name,
                                     item.NumberSequel,
-                                    item.Detail.DateWatch,
-                                    decimal.Parse(item.Detail.Grade),
                                     item.Type,
-                                    item.Id);
-            itemWithNullDatail.Detail = new WatchDetail();
+                                    item.Id,
+                                    new WatchDetail());
 
             //Act
             var comparison = item.Equals(itemWithNullDatail);
@@ -130,8 +98,8 @@ namespace EqualsTest
                 {
                     new List<WatchItem>()
                     {
-                        new ("Тор", 1, new DateTime(2022,08,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7")),
-                        new ("Тор", 2, new DateTime(2022,09,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a999-ca7a-4b24-a78a-65733ba419a7")),
+                        new WatchItem("Тор", 1, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new WatchDetail(new DateTime(2022,08,10, 00, 00, 00), 8)),
+                        new WatchItem("Тор", 2, TypeCinema.Movie, Guid.Parse("18d4a999-ca7a-4b24-a78a-65733ba419a7"), new WatchDetail(new DateTime(2022,09,10, 00, 00, 00), 8)),
                     }
                 },
             };
@@ -141,7 +109,7 @@ namespace EqualsTest
         {
             yield return new object[]
             {
-                new WatchItem("Тор", 1, new DateTime(2022,08,10, 00, 00, 00), 8, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7")),
+                new WatchItem("Тор", 1, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new WatchDetail(new DateTime(2022,08,10, 00, 00, 00), 8))
             };
         }
     }

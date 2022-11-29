@@ -63,15 +63,7 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public WatchItem ToWatchItem()
         {
-            if (Detail.DateWatch != null && Detail.Grade != null)
-            {
-                var grade = decimal.Parse(Detail.Grade);
-                return new WatchItem(Name, NumberSequel, Detail.DateWatch, grade, Type, Id);
-            }
-            else
-            {
-                return new WatchItem(Name, NumberSequel, Type, Id);
-            }
+            return new WatchItem(Name, NumberSequel, Type, Id, Detail.Clone());
         }
     }
 }

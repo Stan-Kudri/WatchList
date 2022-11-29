@@ -20,9 +20,13 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         {
         }
 
-        public WatchDetail(DateTime? dateWatch, decimal? grade)
+        public WatchDetail(DateTime? dateWatch, decimal? grade) : this(dateWatch, dateWatch != null ? grade.ToString() : string.Empty)
         {
-            Grade = dateWatch != null ? grade.ToString() : string.Empty;
+        }
+
+        private WatchDetail(DateTime? dateWatch, string? grade)
+        {
+            Grade = grade;
             DateWatch = dateWatch;
         }
 
@@ -49,5 +53,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
                 && DateWatch == other.DateWatch
                 && Grade == other.Grade;
         }
+
+        public WatchDetail Clone() => new WatchDetail(DateWatch, Grade);
     }
 }
