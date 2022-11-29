@@ -51,6 +51,7 @@ namespace ListWatchedMoviesAndSeries
             };
 
             Load += BoxCinemaForm_Load;
+            LoadData();
         }
 
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
@@ -150,6 +151,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnPullingFile_Click(object sender, EventArgs e)
         {
+            ClearAllGrid();
             LoadData();
         }
 
@@ -413,7 +415,6 @@ namespace ListWatchedMoviesAndSeries
         /// <param name="grid">Table to fill</param>
         private void LoadData()
         {
-            ClearAllGrid();
             try
             {
                 AddGridCinema(out var itemGridCinema);
