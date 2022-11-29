@@ -18,12 +18,12 @@ namespace ListWatchedMoviesAndSeries.Models
         public TypeCinema Type { get; set; }
 
         public decimal? NumberSequel { get; set; }
-        
+
         // EF core
         private WatchItem() : this(string.Empty, null, TypeCinema.Unknown, null, new WatchDetail())
         {
         }
-        
+
         public WatchItem(string name, decimal? numberSequel, TypeCinema type, Guid? id, WatchDetail detail)
         {
             Id = id ?? Guid.NewGuid();

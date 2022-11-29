@@ -28,7 +28,7 @@ namespace Core.Repository.DbContex
 
                 var jsonOptionsType = new JsonSerializerOptions
                 {
-                    WriteIndented = true, 
+                    WriteIndented = true,
                     Converters = { new TypeCinemaJsonConverter() }
                 };
                 buildAction.Property(x => x.Type).HasConversion(
