@@ -149,10 +149,18 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnPullingFile_Click(object sender, EventArgs e)
+        private void btnReplaceFile_Click(object sender, EventArgs e)
         {
+            var openReplaceDataFromFile = new OpenFileDialog { Filter = "Data Base (*.db)|*.db" };
+            if (openReplaceDataFromFile.ShowDialog() == DialogResult.Cancel)
+                return;
+            string fileName = openReplaceDataFromFile.FileName;
+
+            var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={fileName}");
+            var repository = new WatchItemRepository(new WatchCinemaDbContext(builder.Options));
+
             ClearAllGrid();
-            LoadData();
+            LoadData(repository);
         }
 
         /// <summary>
@@ -440,6 +448,25 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        private void LoadData(WatchItemRepository repository)
+        {
+            try
+            {
+                AddGridCinema(repository, out var itemGridCinema);
+                foreach (var item in itemGridCinema)
+                {
+                    if (item != null)
+                    {
+                        AddCinemaGridRow(_gridByTypeMap[item.Type], item);
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBoxProvider.ShowError(error.Message);
+            }
+        }
+
         private void ClearAllGrid()
         {
             foreach (var item in _gridByTypeMap)
@@ -451,6 +478,14 @@ namespace ListWatchedMoviesAndSeries
         private void AddGridCinema(out List<WatchItem> itemGrid)
         {
             itemGrid = _repository.GetAll();
+            if (itemGrid == null || itemGrid.Count <= 0)
+                return;
+            AddCinemaGrid(dgvCinema, itemGrid);
+        }
+
+        private void AddGridCinema(WatchItemRepository repository, out List<WatchItem> itemGrid)
+        {
+            itemGrid = repository.GetAll();
             if (itemGrid == null || itemGrid.Count <= 0)
                 return;
             AddCinemaGrid(dgvCinema, itemGrid);
