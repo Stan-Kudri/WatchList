@@ -331,16 +331,19 @@ namespace ListWatchedMoviesAndSeries
         private static CinemaModel GetItem(DataGridView grid, int indexRow)
         {
             var rowItems = grid.Rows[indexRow];
-            var title = rowItems.Cells[IndexColumnName].Value.ToString() ?? throw new ArgumentNullException("String cannot be null.");
-            var sequel = decimal.Parse(rowItems.Cells[IndexColumnSequel].Value.ToString() ?? "0");
-            if (!Guid.TryParse(rowItems.Cells[IndexColumnId].Value.ToString(), out var id))
+            var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentNullException("String cannot be null.");
+            var sequel = decimal.Parse(CellElement(rowItems, IndexColumnSequel) ?? "0");
+
+            if (!Guid.TryParse(CellElement(rowItems, IndexColumnId), out var id))
                 throw new InvalidCastException("Invalid cast.");
-            var type = TypeCinema.FromName(rowItems.Cells[IndexColumnType].Value.ToString());
-            if (rowItems.Cells[IndexColumnDate].Value.ToString() != string.Empty)
+
+            var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
+            var strDateWatch = CellElement(rowItems, IndexColumnDate);
+
+            if (strDateWatch != string.Empty && strDateWatch != null)
             {
-                var strDateWatch = rowItems.Cells[IndexColumnDate].Value.ToString() ?? throw new ArgumentNullException("String cannot be null.");
                 var dateWatch = DateTime.Parse(strDateWatch);
-                var grade = decimal.Parse(rowItems.Cells[IndexColumnGrade].Value.ToString() ?? "0");
+                var grade = decimal.Parse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Evaluation is more than zero."));
                 var cinemaItem = new CinemaModel(
                                                    title,
                                                    sequel,
@@ -359,6 +362,11 @@ namespace ListWatchedMoviesAndSeries
                                                   id);
                 return cinemaItem;
             }
+        }
+
+        private static string? CellElement(DataGridViewRow rowItem, int indexColumn)
+        {
+            return rowItem.Cells[indexColumn].Value.ToString();
         }
 
         /// <summary>
