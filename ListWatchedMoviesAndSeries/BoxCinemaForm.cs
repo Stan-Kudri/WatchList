@@ -339,7 +339,7 @@ namespace ListWatchedMoviesAndSeries
         private static CinemaModel GetItem(DataGridView grid, int indexRow)
         {
             var rowItems = grid.Rows[indexRow];
-            var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentNullException("String cannot be null.");
+            var title = CellElement(rowItems, IndexColumnName) ?? throw new NullReferenceException("Name cannot be null.");
             var sequel = decimal.Parse(CellElement(rowItems, IndexColumnSequel) ?? "0");
 
             if (!Guid.TryParse(CellElement(rowItems, IndexColumnId), out var id))
@@ -351,7 +351,7 @@ namespace ListWatchedMoviesAndSeries
             if (strDateWatch != string.Empty && strDateWatch != null)
             {
                 var dateWatch = DateTime.Parse(strDateWatch);
-                var grade = decimal.Parse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Evaluation is more than zero."));
+                var grade = decimal.Parse(CellElement(rowItems, IndexColumnGrade) ?? throw new NullReferenceException("Grade cannot be null."));
                 var cinemaItem = new CinemaModel(
                                                    title,
                                                    sequel,
