@@ -129,7 +129,7 @@ namespace ListWatchedMoviesAndSeries
             }
             else
             {
-                throw new Exception("Page does not exist");
+                throw new ArgumentException("Page does not exist");
             }
         }
 
@@ -342,8 +342,9 @@ namespace ListWatchedMoviesAndSeries
         private static CinemaModel GetItem(DataGridView grid, int indexRow)
         {
             var rowItems = grid.Rows[indexRow];
-            var title = CellElement(rowItems, IndexColumnName) ?? throw new NullReferenceException("Name cannot be null.");
-            var sequel = decimal.Parse(CellElement(rowItems, IndexColumnSequel) ?? "0");
+            var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
+            if (decimal.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
+                throw new InvalidCastException("Invalid cast.");
 
             if (!Guid.TryParse(CellElement(rowItems, IndexColumnId), out var id))
                 throw new InvalidCastException("Invalid cast.");
@@ -354,7 +355,9 @@ namespace ListWatchedMoviesAndSeries
             if (strDateWatch != string.Empty && strDateWatch != null)
             {
                 var dateWatch = DateTime.Parse(strDateWatch);
-                var grade = decimal.Parse(CellElement(rowItems, IndexColumnGrade) ?? throw new NullReferenceException("Grade cannot be null."));
+                if (decimal.TryParse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Grade cannot be null."), out var grade))
+                    throw new InvalidCastException("Invalid cast.");
+
                 var cinemaItem = new CinemaModel(
                                                    title,
                                                    sequel,
