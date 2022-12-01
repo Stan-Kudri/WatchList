@@ -268,7 +268,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var countRowGridAllCinema = dgvCinema.RowCount;
             if (countRowGridAllCinema == 0)
-                throw new Exception("Element not found");
+                throw new ArgumentException("Element not found");
             for (int i = 0; i < countRowGridAllCinema; i++)
             {
                 var titleItem = dgvCinema.Rows[i].Cells[IndexColumnId].Value;
@@ -278,7 +278,7 @@ namespace ListWatchedMoviesAndSeries
                     return _gridByTypeMap[type];
                 }
             }
-            throw new ArgumentException("Type not found");
+            throw new MissingMemberException("Type not found");
         }
 
         /// <summary>
