@@ -343,11 +343,11 @@ namespace ListWatchedMoviesAndSeries
         {
             var rowItems = grid.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
-            if (decimal.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
-                throw new InvalidCastException("Invalid cast.");
+            if (!decimal.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
+                throw new InvalidOperationException("Invalid cast.");
 
             if (!Guid.TryParse(CellElement(rowItems, IndexColumnId), out var id))
-                throw new InvalidCastException("Invalid cast.");
+                throw new InvalidOperationException("Invalid cast.");
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
@@ -355,8 +355,8 @@ namespace ListWatchedMoviesAndSeries
             if (strDateWatch != string.Empty && strDateWatch != null)
             {
                 var dateWatch = DateTime.Parse(strDateWatch);
-                if (decimal.TryParse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Grade cannot be null."), out var grade))
-                    throw new InvalidCastException("Invalid cast.");
+                if (!decimal.TryParse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Grade cannot be null."), out var grade))
+                    throw new InvalidOperationException("Invalid cast.");
 
                 var cinemaItem = new CinemaModel(
                                                    title,
