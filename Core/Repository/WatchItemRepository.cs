@@ -23,9 +23,6 @@ namespace ListWatchedMoviesAndSeries.Repository
         public void Add(List<WatchItem> item)
         {
             _db.AddRange(item);
-            foreach (var element in item)
-                _db.Add(element);
-
             _db.SaveChanges();
         }
 
