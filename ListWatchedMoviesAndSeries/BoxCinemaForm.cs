@@ -159,8 +159,8 @@ namespace ListWatchedMoviesAndSeries
             var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={fileName}");
             var repository = new WatchItemRepository(new WatchCinemaDbContext(builder.Options));
 
-            _repository.Clear();
-            _repository.AddList(repository.GetAll());
+            _repository.RemoveRange();
+            _repository.Add(repository.GetAll());
 
             ClearAllGrid();
             LoadData(repository);

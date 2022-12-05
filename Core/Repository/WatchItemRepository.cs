@@ -20,15 +20,16 @@ namespace ListWatchedMoviesAndSeries.Repository
             _db.SaveChanges();
         }
 
-        public void AddList(List<WatchItem> item)
+        public void Add(List<WatchItem> item)
         {
+            _db.AddRange(item);
             foreach (var element in item)
                 _db.Add(element);
 
             _db.SaveChanges();
         }
 
-        public void Clear()
+        public void RemoveRange()
         {
             foreach (var item in _db.WatchItem)
             {
