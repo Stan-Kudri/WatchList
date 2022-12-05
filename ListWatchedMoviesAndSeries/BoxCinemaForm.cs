@@ -268,7 +268,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var countRowGridAllCinema = dgvCinema.RowCount;
             if (countRowGridAllCinema == 0)
-                throw new ArgumentException("Element not found");
+                throw new InvalidOperationException("Element not found");
             for (int i = 0; i < countRowGridAllCinema; i++)
             {
                 var titleItem = dgvCinema.Rows[i].Cells[IndexColumnId].Value;
