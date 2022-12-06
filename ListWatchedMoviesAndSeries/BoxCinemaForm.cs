@@ -21,9 +21,9 @@ namespace ListWatchedMoviesAndSeries
 
         private readonly Dictionary<TabPage, DataGridView> _gridByPageMap = new Dictionary<TabPage, DataGridView>();
 
-        private WatchCinemaDbContext _db;
+        private readonly WatchCinemaDbContext _db;
 
-        private WatchItemRepository _repository;
+        private readonly WatchItemRepository _repository;
 
         public BoxCinemaForm()
         {
