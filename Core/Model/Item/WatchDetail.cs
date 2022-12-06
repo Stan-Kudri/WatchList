@@ -20,9 +20,13 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         {
         }
 
-        public WatchDetail(DateTime? dateWatch, decimal? grade)
+        public WatchDetail(DateTime? dateWatch, decimal? grade) : this(dateWatch, dateWatch != null ? grade.ToString() : string.Empty)
         {
-            Grade = dateWatch != null ? grade.ToString() : string.Empty;
+        }
+
+        private WatchDetail(DateTime? dateWatch, string? grade)
+        {
+            Grade = grade;
             DateWatch = dateWatch;
         }
 
@@ -32,7 +36,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(DateWatch, Grade);
+            return HashCode.Combine(DateWatch, Grade, Watch);
         }
 
         public override bool Equals(object? obj)
@@ -42,7 +46,14 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 
         public bool Equals(WatchDetail? other)
         {
-            return other != null && DateWatch == other.DateWatch && Grade == other.Grade;
+            if (other == null)
+                return false;
+
+            return Watch == other.Watch
+                && DateWatch == other.DateWatch
+                && Grade == other.Grade;
         }
+
+        public WatchDetail Clone() => new WatchDetail(DateWatch, Grade);
     }
 }

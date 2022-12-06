@@ -35,7 +35,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormSeries = new System.Windows.Forms.Button();
             this.cinemaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnEditCinema = new System.Windows.Forms.Button();
-            this.btnPullingFile = new System.Windows.Forms.Button();
+            this.btnReplaceData = new System.Windows.Forms.Button();
             this.btnFormAnime = new System.Windows.Forms.Button();
             this.btnFormCartoon = new System.Windows.Forms.Button();
             this.tabAllCinemaPage = new System.Windows.Forms.TabPage();
@@ -84,6 +84,7 @@ namespace ListWatchedMoviesAndSeries
             this.GradeCartoon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdCartoon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cartoon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).BeginInit();
             this.tabAllCinemaPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).BeginInit();
@@ -150,17 +151,17 @@ namespace ListWatchedMoviesAndSeries
             this.btnEditCinema.UseVisualStyleBackColor = false;
             this.btnEditCinema.Click += new System.EventHandler(this.btnEditRow_Click);
             // 
-            // btnPullingFile
+            // btnReplaceData
             // 
-            this.btnPullingFile.BackColor = System.Drawing.Color.Azure;
-            this.btnPullingFile.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnPullingFile.Location = new System.Drawing.Point(385, 300);
-            this.btnPullingFile.Name = "btnPullingFile";
-            this.btnPullingFile.Size = new System.Drawing.Size(180, 70);
-            this.btnPullingFile.TabIndex = 13;
-            this.btnPullingFile.Text = "Load File";
-            this.btnPullingFile.UseVisualStyleBackColor = false;
-            this.btnPullingFile.Click += new System.EventHandler(this.btnPullingFile_Click);
+            this.btnReplaceData.BackColor = System.Drawing.Color.Azure;
+            this.btnReplaceData.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnReplaceData.Location = new System.Drawing.Point(385, 300);
+            this.btnReplaceData.Name = "btnReplaceData";
+            this.btnReplaceData.Size = new System.Drawing.Size(180, 70);
+            this.btnReplaceData.TabIndex = 13;
+            this.btnReplaceData.Text = "Replace data from file ";
+            this.btnReplaceData.UseVisualStyleBackColor = false;
+            this.btnReplaceData.Click += new System.EventHandler(this.btnReplaceFile_Click);
             // 
             // btnFormAnime
             // 
@@ -339,12 +340,12 @@ namespace ListWatchedMoviesAndSeries
             this.Series.ReadOnly = true;
             this.Series.Visible = false;
             // 
-            // tabMovePage
+            // tabMoviePage
             // 
             this.tabMoviePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.tabMoviePage.Controls.Add(this.dgvMove);
             this.tabMoviePage.Location = new System.Drawing.Point(4, 24);
-            this.tabMoviePage.Name = "tabMovePage";
+            this.tabMoviePage.Name = "tabMoviePage";
             this.tabMoviePage.Padding = new System.Windows.Forms.Padding(3);
             this.tabMoviePage.Size = new System.Drawing.Size(547, 252);
             this.tabMoviePage.TabIndex = 0;
@@ -583,6 +584,10 @@ namespace ListWatchedMoviesAndSeries
             this.Cartoon.ReadOnly = true;
             this.Cartoon.Visible = false;
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "ReplaceDataFromFile ";
+            // 
             // BoxCinemaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -592,7 +597,7 @@ namespace ListWatchedMoviesAndSeries
             this.Controls.Add(this.Box);
             this.Controls.Add(this.btnFormCartoon);
             this.Controls.Add(this.btnFormAnime);
-            this.Controls.Add(this.btnPullingFile);
+            this.Controls.Add(this.btnReplaceData);
             this.Controls.Add(this.btnEditCinema);
             this.Controls.Add(this.btnFormSeries);
             this.Controls.Add(this.btnDeliteMovie);
@@ -625,7 +630,7 @@ namespace ListWatchedMoviesAndSeries
         private Button btnFormSeries;
         private BindingSource cinemaBindingSource;
         private Button btnEditCinema;
-        private Button btnPullingFile;
+        private Button btnReplaceData;
         private Button btnFormAnime;
         private Button btnFormCartoon;
         private TabPage tabAllCinemaPage;
@@ -674,5 +679,6 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn GradeCinema;
         private DataGridViewTextBoxColumn IdCinema;
         private DataGridViewTextBoxColumn Cinema;
+        private OpenFileDialog openFileDialog;
     }
 }

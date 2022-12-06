@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Ardalis.SmartEnum;
 
 namespace ListWatchedMoviesAndSeries.Models.Item
@@ -12,6 +13,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
         public static readonly TypeCinema Anime = new TypeCinema("Anime", 3, "Season");
         public static readonly TypeCinema Cartoon = new TypeCinema("Cartoon", 4, "Part");
 
+        [JsonPropertyName("TypeSequel")]
         public string TypeSequel => _typeSequel;
 
         private TypeCinema(string category, int value, string typeSequel) : base(category, value)
