@@ -26,14 +26,6 @@ namespace ListWatchedMoviesAndSeries.Repository
             _db.SaveChanges();
         }
 
-        public void RemoveRange()
-        {
-            foreach (var item in _db.WatchItem)
-            {
-                _db.Remove(item);
-            }
-        }
-
         public void Remove(Guid id)
         {
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);

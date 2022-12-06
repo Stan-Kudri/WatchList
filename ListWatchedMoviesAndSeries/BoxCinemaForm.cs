@@ -21,9 +21,9 @@ namespace ListWatchedMoviesAndSeries
 
         private readonly Dictionary<TabPage, DataGridView> _gridByPageMap = new Dictionary<TabPage, DataGridView>();
 
-        private readonly WatchCinemaDbContext _db;
+        private WatchCinemaDbContext _db;
 
-        private readonly WatchItemRepository _repository;
+        private WatchItemRepository _repository;
 
         public BoxCinemaForm()
         {
@@ -159,11 +159,17 @@ namespace ListWatchedMoviesAndSeries
             var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={fileName}");
             var repository = new WatchItemRepository(new WatchCinemaDbContext(builder.Options));
 
-            _repository.RemoveRange();
+            ReaplaceDbFile();
             _repository.Add(repository.GetAll());
 
             ClearAllGrid();
             LoadData(repository);
+        }
+
+        private void ReaplaceDbFile()
+        {
+            _db.Database.EnsureDeleted();
+            _db.Database.EnsureCreated();
         }
 
         /// <summary>
