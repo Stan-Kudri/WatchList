@@ -57,7 +57,7 @@ namespace ListWatchedMoviesAndSeries
         {
             if (cinema?.Type != null)
             {
-                ReplacementEditItem(dgvCinema, cinema, numberRowGridCinema);
+                ReplacementEditItem(cinema, numberRowGridCinema);
                 _repository.Update(cinema.ToWatchItem());
             }
         }
@@ -147,7 +147,6 @@ namespace ListWatchedMoviesAndSeries
         /// Deleting a row of table data.
         /// Out ID in delete from another table.
         /// </summary>
-        /// <param name="dataGridCinema">Table</param>
         /// <param name="id">Object ID to delete</param>
         /// <returns></returns>
         private bool RemoveRowGrid(out string id)
@@ -167,7 +166,6 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Get ID on the selected line table.
         /// </summary>
-        /// <param name="gridCinema">Table with element</param>
         /// <returns></returns>
         private string SelectedRowCinemaId()
         {
@@ -177,9 +175,8 @@ namespace ListWatchedMoviesAndSeries
         }
 
         /// <summary>
-        /// Delete line by Id.
+        /// Delete line table by Id.
         /// </summary>
-        /// <param name="dataGridCinema">Table with element row.</param>
         /// <param name="id">Object ID to delete</param>
         private void RemoveItemRowGrid(string? id)
         {
@@ -198,7 +195,6 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Add element in table.
         /// </summary>
-        /// <param name="dataGridCinema">Table</param>
         /// <param name="cinema">Add element </param>
         private void AddCinemaGridRow(CinemaModel cinema)
         {
@@ -210,7 +206,6 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Filling the table with data.
         /// </summary>
-        /// <param name="dataGridCinema">Table to fill</param>
         /// <param name="itemGrid">List of elements</param>
         private void AddCinemaGrid(List<WatchItem> itemGrid)
         {
@@ -225,7 +220,6 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Edit the selected item.
         /// </summary>
-        /// <param name="grid">Table with element</param>
         /// <param name="rowIndex">Number row element</param>
         /// <param name="cinemaItem">Element to сhange</param>
         /// <returns>
@@ -242,14 +236,13 @@ namespace ListWatchedMoviesAndSeries
                 return false;
             }
             rowIndex = dgvCinema.CurrentCell.RowIndex;
-            cinemaItem = GetItem(dgvCinema, rowIndex);
+            cinemaItem = GetItem(rowIndex);
             return true;
         }
 
         /// <summary>
         /// Change the selected element in the EditorItemCinemaForm.
         /// </summary>
-        /// <param name="grid">Table with element</param>
         /// <param name="item">Element to сhange</param>
         /// <param name="indexRow">Number row element</param>
         private void ShowEditCinema(CinemaModel item, int indexRow)
@@ -270,9 +263,9 @@ namespace ListWatchedMoviesAndSeries
         /// The filling of all fields of the element depends on the data in the table.
         /// Type: CinemaModel.
         /// </returns>
-        private static CinemaModel GetItem(DataGridView grid, int indexRow)
+        private CinemaModel GetItem(int indexRow)
         {
-            var rowItems = grid.Rows[indexRow];
+            var rowItems = dgvCinema.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
             if (!decimal.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
                 throw new InvalidOperationException("Invalid cast.");
@@ -317,27 +310,26 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Changing a table element.
         /// </summary>
-        /// <param name="grid">Table with element</param>
         /// <param name="cinemaItem">Element to change</param>
         /// <param name="rowIndex">Number row element</param>
-        private void ReplacementEditItem(DataGridView grid, CinemaModel cinemaItem, int rowIndex)
+        private void ReplacementEditItem(CinemaModel cinemaItem, int rowIndex)
         {
-            grid.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Name;
-            grid.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
-            grid.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
-            grid.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Name;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
 
             if (cinemaItem.Detail.DateWatch != null)
             {
-                grid.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "+";
-                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();
-                grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail.Grade;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "+";
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail.Grade;
             }
             else
             {
-                grid.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "-";
-                grid.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
-                grid.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "-";
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
             }
         }
 
