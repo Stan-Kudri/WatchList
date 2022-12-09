@@ -93,7 +93,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnAddCinema.TabIndex = 8;
             this.btnAddCinema.Text = "Add";
             this.btnAddCinema.UseVisualStyleBackColor = false;
-            this.btnAddCinema.Click += new System.EventHandler(this.btnAddSCinema_Click);
+            this.btnAddCinema.Click += new System.EventHandler(this.btnAddCinema_Click);
             // 
             // btnClearTxtCinema
             // 

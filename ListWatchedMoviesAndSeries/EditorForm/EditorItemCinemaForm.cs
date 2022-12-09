@@ -12,18 +12,16 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private readonly CinemaModel _cinema;
 
         private readonly int _numberRowCinema;
-        private readonly int _numberRowAllCinema;
 
         private string Type => _cinema?.Type?.Name ?? string.Empty;
 
-        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel? cinema, int numberRowCinema, int numberRowAllCinema)
+        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel? cinema, int numberRowCinema)
         {
             if (cinema == null)
                 throw new ArgumentException("Item cinema not null", nameof(cinema));
             _cinema = cinema;
             _box = formBoxCinema;
             _numberRowCinema = numberRowCinema;
-            _numberRowAllCinema = numberRowAllCinema;
             InitializeComponent();
             SetupDefaultValues();
         }
@@ -77,12 +75,12 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             if (numericEditGradeCinema.Enabled)
             {
                 var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id);
-                _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
+                _box.EditItemGrid(itemWatch, _numberRowCinema);
             }
             else
             {
                 var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, type, id);
-                _box.EditItemGrid(itemWatch, _numberRowCinema, _numberRowAllCinema);
+                _box.EditItemGrid(itemWatch, _numberRowCinema);
             }
         }
 

@@ -17,7 +17,7 @@ namespace ListWatchedMoviesAndSeries
             dateTimePickerCinema.MaxDate = DateTime.Now;
         }
 
-        private void btnAddSCinema_Click(object sender, EventArgs e)
+        private void btnAddCinema_Click(object sender, EventArgs e)
         {
             if (!ValidateFields(out var errorMessage))
             {

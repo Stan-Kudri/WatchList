@@ -6,7 +6,7 @@ using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.Models
 {
-    public class WatchItem
+    public class WatchItem : IEquatable<WatchItem>
     {
         public Guid Id { get; set; }
 
