@@ -9,6 +9,10 @@ namespace ListWatchedMoviesAndSeries.Repository
     {
         private readonly WatchCinemaDbContext _db;
 
+        private Filter _pastFilter = new Filter();
+
+        public Filter PastFilter => _pastFilter;
+
         public WatchItemRepository(WatchCinemaDbContext db)
         {
             _db = db;
@@ -19,14 +23,16 @@ namespace ListWatchedMoviesAndSeries.Repository
         public List<WatchItem> GetItemByFilter(Filter filter)
         {
             var listByFilter = new List<WatchItem>();
-            foreach (var item in _db.WatchItem.ToList().Where(x => x.Type == filter.TypeFilter.Type || filter.TypeFilter.Type == TypeCinemaFilter.AllCinema))
-            {
-                if (filter.WatchFilter.Value == 0)
-                    listByFilter.Add(item);
-                else if (filter.WatchFilter.Status == item.Detail.Watch)
-                    listByFilter.Add(item);
-            }
-            return listByFilter;
+
+            IQueryable<WatchItem> itemIQuer = _db.WatchItem;
+
+            var item = itemIQuer.AsEnumerable()
+                .Where(x => x.Type == filter.TypeFilter.Type || filter.TypeFilter.Type == TypeCinemaFilter.AllCinema)
+                .Where(x => x.Detail.Watch == filter.WatchFilter.Status || filter.WatchFilter.Status == null)
+                .ToList();
+
+            _pastFilter = filter;
+            return item ?? new List<WatchItem>();
         }
 
         public void Add(WatchItem item)
