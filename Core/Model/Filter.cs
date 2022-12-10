@@ -13,7 +13,5 @@ namespace Core.Model
             TypeFilter = typeFilter;
             WatchFilter = watchFilter;
         }
-
-        public bool HasFilter() => TypeFilter != TypeCinemaFilter.AllCinema || WatchFilter != WatchCinemaFilter.AllCinema;
     }
 }

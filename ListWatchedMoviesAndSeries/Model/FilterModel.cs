@@ -29,5 +29,7 @@ namespace ListWatchedMoviesAndSeries.Model
         {
             return new Filter(Type, Watch);
         }
+
+        public bool HasFilter() => Type != TypeCinemaFilter.AllCinema || Watch != WatchCinemaFilter.AllCinema;
     }
 }

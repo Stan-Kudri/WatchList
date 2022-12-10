@@ -96,16 +96,22 @@ namespace ListWatchedMoviesAndSeries
 
         private void btnUseFilter_Click(object sender, EventArgs e)
         {
-            GridClear();
-            var filter = Filter.GetFilter();
-            var listByFilter = _repository.GetItemByFilter(filter);
-            AddCinemaGrid(listByFilter);
+            if (Filter.HasFilter())
+            {
+                GridClear();
+                var filter = Filter.GetFilter();
+                var listByFilter = _repository.GetItemByFilter(filter);
+                AddCinemaGrid(listByFilter);
+            }
         }
 
         private void btnCancleFilter_Click(object sender, EventArgs e)
         {
-            GridClear();
-            LoadData();
+            if (Filter.HasFilter())
+            {
+                GridClear();
+                LoadData();
+            }
         }
 
         private void btnEditRow_Click(object sender, EventArgs e)
