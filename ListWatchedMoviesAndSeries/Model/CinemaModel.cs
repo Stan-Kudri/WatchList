@@ -45,11 +45,13 @@ namespace ListWatchedMoviesAndSeries.Models
         {
         }
 
-        public CinemaModel(string name, decimal? numberSequel, TypeCinema type, Guid? id) : this(name, numberSequel, null, null, type, id)
+        public CinemaModel(string name, decimal? numberSequel, TypeCinema type, Guid? id)
+            : this(name, numberSequel, null, null, type, id)
         {
         }
 
-        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type) : this(name, numberSequel, date, grade, type, Guid.NewGuid())
+        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, TypeCinema type)
+            : this(name, numberSequel, date, grade, type, Guid.NewGuid())
         {
         }
 

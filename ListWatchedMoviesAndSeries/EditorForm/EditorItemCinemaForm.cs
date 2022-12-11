@@ -16,8 +16,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private readonly int _numberRowCinema;
 
-        private string Type => _cinema?.Type?.Name ?? string.Empty;
-
         public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel? cinema, int numberRowCinema)
         {
             if (cinema == null)
@@ -31,6 +29,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             InitializeComponent();
             SetupDefaultValues();
         }
+
+        private string Type => _cinema?.Type?.Name ?? string.Empty;
 
         private void BtnSaveEdit_Click(object sender, EventArgs e)
         {

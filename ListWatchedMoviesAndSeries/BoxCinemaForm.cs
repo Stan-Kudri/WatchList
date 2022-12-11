@@ -21,8 +21,6 @@ namespace ListWatchedMoviesAndSeries
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
-        private FilterModel Filter { get; set; } = new FilterModel();
-
         private readonly WatchCinemaDbContext _db;
 
         private readonly WatchItemRepository _repository;
@@ -39,13 +37,7 @@ namespace ListWatchedMoviesAndSeries
             LoadData();
         }
 
-        private void BoxCinemaForm_Load(object? sender, EventArgs e)
-        {
-            _db.Database.EnsureCreated();
-            cmbFilterType.DataSource = Filter.TypeFilter;
-            cmbFilterWatch.DataSource = Filter.WatchFilter;
-            filterModelBindingSource.DataSource = Filter;
-        }
+        private FilterModel Filter { get; set; } = new FilterModel();
 
         public void SetNameGrid(CinemaModel cinema)
         {
@@ -63,6 +55,14 @@ namespace ListWatchedMoviesAndSeries
                 ReplacementEditItem(cinema, numberRowGridCinema);
                 _repository.Update(cinema.ToWatchItem());
             }
+        }
+
+        private void BoxCinemaForm_Load(object? sender, EventArgs e)
+        {
+            _db.Database.EnsureCreated();
+            cmbFilterType.DataSource = Filter.TypeFilter;
+            cmbFilterWatch.DataSource = Filter.WatchFilter;
+            filterModelBindingSource.DataSource = Filter;
         }
 
         private void BtnFormMovie_Click(object sender, EventArgs e)
