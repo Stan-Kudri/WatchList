@@ -26,10 +26,10 @@ namespace ListWatchedMoviesAndSeries.Repository
 
             IQueryable<WatchItem> itemIQuer = _db.WatchItem;
 
-            var item = itemIQuer/*.AsEnumerable()*/
+            var item = itemIQuer.AsEnumerable()
                 .Where(x => x.Type == filter.TypeFilter.Type || filter.TypeFilter.Type == TypeCinemaFilter.AllCinema)
                 .Where(x => x.Detail.Watch == filter.WatchFilter.Status || filter.WatchFilter.Status == null)
-                .ToList<WatchItem>();
+                .ToList();
 
             _pastFilter = filter;
             return item;
