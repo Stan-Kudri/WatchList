@@ -40,7 +40,8 @@ namespace ListWatchedMoviesAndSeries.Models
             set => SetField(ref _numberSequel, value);
         }
 
-        public CinemaModel(string name, decimal? numberSequel, TypeCinema type) : this(name, numberSequel, null, null, type, Guid.NewGuid())
+        public CinemaModel(string name, decimal? numberSequel, TypeCinema type)
+            : this(name, numberSequel, null, null, type, Guid.NewGuid())
         {
         }
 

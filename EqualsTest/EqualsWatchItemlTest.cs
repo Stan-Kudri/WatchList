@@ -9,10 +9,10 @@ namespace EqualsTest
         [MemberData(nameof(WatchItemElement))]
         public void Equals_Two_Element_With_Same_Fields(WatchItem item)
         {
-            //Act
+            // Act
             var comparison = item.Equals(item);
 
-            //Assert
+            // Assert
             Assert.True(comparison);
         }
 
@@ -20,14 +20,14 @@ namespace EqualsTest
         [MemberData(nameof(TwoNotEqualItem))]
         public void Equals_Two_Element_Not_With_Same_Fields(List<WatchItem> items)
         {
-            //Arrange
+            // Arrange
             var firstWatch = items[0];
             var secondWatch = items[1];
 
-            //Act
+            // Act
             var comparison = firstWatch.Equals(secondWatch);
 
-            //Assert
+            // Assert
             Assert.False(comparison);
         }
 
@@ -35,7 +35,7 @@ namespace EqualsTest
         [MemberData(nameof(WatchItemElement))]
         public void Non_Equality_Of_Two_Elements_With_One_Non_Identical_Null_Field(WatchItem item)
         {
-            //Arrange
+            // Arrange
             var firstWatch = new WatchItem(
                                     item.Name,
                                     item.NumberSequel,
@@ -50,10 +50,10 @@ namespace EqualsTest
                                     null,
                                     item.Detail.Clone());
 
-            //Act
+            // Act
             var comparison = firstWatch.Equals(secondWatch);
 
-            //Assert
+            // Assert
             Assert.False(comparison);
         }
 
@@ -61,7 +61,7 @@ namespace EqualsTest
         [MemberData(nameof(WatchItemElement))]
         public void Equality_Two_Elements_With_Null_Detail(WatchItem item)
         {
-            //Arrange
+            // Arrange
             var itemWithNullDatail = new WatchItem(
                                     item.Name,
                                     item.NumberSequel,
@@ -69,10 +69,10 @@ namespace EqualsTest
                                     item.Id,
                                     new WatchDetail());
 
-            //Act
+            // Act
             var comparison = item.Equals(itemWithNullDatail);
 
-            //Assert
+            // Assert
             Assert.False(comparison);
         }
 
@@ -80,19 +80,17 @@ namespace EqualsTest
         [MemberData(nameof(WatchItemElement))]
         public void Compare_Elements_With_Null_Object(WatchItem item)
         {
-            //Arrange
+            // Arrange
             var nullItem = (WatchItem?)null;
 
-            //Act
+            // Act
             var comparison = item.Equals(nullItem);
 
-            //Assert
+            // Assert
             Assert.False(comparison);
         }
 
-        public static IEnumerable<object[]> TwoNotEqualItem()
-        {
-            return new List<object[]>
+        public static IEnumerable<object[]> TwoNotEqualItem() => new List<object[]>
             {
                 new object[]
                 {
@@ -103,7 +101,6 @@ namespace EqualsTest
                     }
                 },
             };
-        }
 
         public static IEnumerable<object[]> WatchItemElement()
         {

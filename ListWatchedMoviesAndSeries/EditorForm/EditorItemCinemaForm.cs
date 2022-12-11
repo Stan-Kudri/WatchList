@@ -3,6 +3,9 @@ using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries.EditorForm
 {
+    /// <summary>
+    /// This class Form performs an function Edit Cinema item.
+    /// </summary>
     public partial class EditorItemCinemaForm : Form
     {
         public const string WatchCinema = "+";
@@ -18,7 +21,10 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel? cinema, int numberRowCinema)
         {
             if (cinema == null)
+            {
                 throw new ArgumentException("Item cinema not null", nameof(cinema));
+            }
+
             _cinema = cinema;
             _box = formBoxCinema;
             _numberRowCinema = numberRowCinema;
@@ -26,7 +32,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             SetupDefaultValues();
         }
 
-        private void btnSaveEdit_Click(object sender, EventArgs e)
+        private void BtnSaveEdit_Click(object sender, EventArgs e)
         {
             if (!ValidateFields(out string errorMessage))
             {
@@ -42,9 +48,9 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private void btnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
+        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
 
-        private void btnCloseEdit_Click(object sender, EventArgs e) => Close();
+        private void BtnCloseEdit_Click(object sender, EventArgs e) => Close();
 
         private void SetupDefaultValues()
         {
@@ -56,10 +62,15 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                 numericEditGradeCinema.Enabled = true;
                 dateTPCinema.Value = _cinema.Detail.DateWatch.Value;
                 if (decimal.TryParse(_cinema.Detail.Grade, out decimal value))
+                {
                     numericEditGradeCinema.Value = value;
+                }
             }
+
             if (_cinema.NumberSequel != null)
+            {
                 numericEditSequel.Value = _cinema.NumberSequel.Value;
+            }
         }
 
         private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
@@ -104,6 +115,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                     return false;
                 }
             }
+
             errorMessage = string.Empty;
             return true;
         }
@@ -111,9 +123,15 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private bool HasChanges()
         {
             if (_cinema.Name != txtEditName.Text || _cinema.NumberSequel != numericEditSequel.Value)
+            {
                 return true;
+            }
+
             if (_cinema.Detail == null)
+            {
                 return false;
+            }
+
             return _cinema.Detail.DateWatch != dateTPCinema.Value ||
                     _cinema.Detail.Grade != numericEditGradeCinema.Value.ToString();
         }

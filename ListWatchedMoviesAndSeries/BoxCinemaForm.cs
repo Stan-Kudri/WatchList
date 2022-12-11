@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ListWatchedMoviesAndSeries
 {
+    /// <summary>
+    /// This is the main form class.
+    /// </summary>
     public partial class BoxCinemaForm : Form
     {
         private const int IndexColumnName = 0;
@@ -18,7 +21,7 @@ namespace ListWatchedMoviesAndSeries
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
-        private FilterModel Filter { get; set; } = new();
+        private FilterModel Filter { get; set; } = new FilterModel();
 
         private readonly WatchCinemaDbContext _db;
 
@@ -62,7 +65,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnFormMovie_Click(object sender, EventArgs e)
+        private void BtnFormMovie_Click(object sender, EventArgs e)
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Movie))
             {
@@ -70,7 +73,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnFormSeries_Click(object sender, EventArgs e)
+        private void BtnFormSeries_Click(object sender, EventArgs e)
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Series))
             {
@@ -78,7 +81,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnFormAnime_Click(object sender, EventArgs e)
+        private void BtnFormAnime_Click(object sender, EventArgs e)
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Anime))
             {
@@ -86,7 +89,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnFormCartoon_Click(object sender, EventArgs e)
+        private void BtnFormCartoon_Click(object sender, EventArgs e)
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Cartoon))
             {
@@ -94,7 +97,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnUseFilter_Click(object sender, EventArgs e)
+        private void BtnUseFilter_Click(object sender, EventArgs e)
         {
             if (Filter.HasFilter() || Filter.Equals(_repository.PastFilter))
             {
@@ -110,7 +113,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnCancleFilter_Click(object sender, EventArgs e)
+        private void BtnCancleFilter_Click(object sender, EventArgs e)
         {
             if (Filter.HasFilter())
             {
@@ -119,7 +122,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnEditRow_Click(object sender, EventArgs e)
+        private void BtnEditRow_Click(object sender, EventArgs e)
         {
             if (IsEditRowGrid(out int indexRowMove, out CinemaModel? item) && item != null)
             {
@@ -127,21 +130,27 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void btnDeliteMovie_Click(object sender, EventArgs e)
+        private void BtnDeliteMovie_Click(object sender, EventArgs e)
         {
             if (RemoveRowGrid(out string idItem))
             {
                 if (!Guid.TryParse(idItem, out var id))
+                {
                     return;
+                }
+
                 _repository.Remove(id);
             }
         }
 
-        private void btnReplaceFile_Click(object sender, EventArgs e)
+        private void BtnReplaceFile_Click(object sender, EventArgs e)
         {
             var openReplaceDataFromFile = new OpenFileDialog { Filter = "Data Base (*.db)|*.db" };
             if (openReplaceDataFromFile.ShowDialog() == DialogResult.Cancel)
+            {
                 return;
+            }
+
             string fileName = openReplaceDataFromFile.FileName;
 
             var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={fileName}");
@@ -158,8 +167,8 @@ namespace ListWatchedMoviesAndSeries
         /// Deleting a row of table data.
         /// Out ID in delete from another table.
         /// </summary>
-        /// <param name="id">Object ID to delete</param>
-        /// <returns></returns>
+        /// <param name="id">Object ID to delete.</param>
+        /// <returns>Is item remove.</returns>
         private bool RemoveRowGrid(out string id)
         {
             if (dgvCinema.SelectedRows.Count == 0)
@@ -168,6 +177,7 @@ namespace ListWatchedMoviesAndSeries
                 MessageBoxProvider.ShowWarning("Highlight the desired line");
                 return false;
             }
+
             id = SelectedRowCinemaId();
             RemoveItemRowGrid(id);
 
@@ -177,7 +187,7 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Get ID on the selected line table.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> ID. </returns>
         private string SelectedRowCinemaId()
         {
             var rowIndex = dgvCinema.CurrentCell.RowIndex;
@@ -188,11 +198,14 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Delete line table by Id.
         /// </summary>
-        /// <param name="id">Object ID to delete</param>
+        /// <param name="id">Object ID to delete.</param>
         private void RemoveItemRowGrid(string? id)
         {
             if (dgvCinema.RowCount == 0)
+            {
                 MessageBoxProvider.ShowError("The element is missing from the table.");
+            }
+
             foreach (DataGridViewRow row in dgvCinema.Rows)
             {
                 if (row.Cells[IndexColumnId].Value.ToString() == id)
@@ -206,7 +219,7 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Add element in table.
         /// </summary>
-        /// <param name="cinema">Add element </param>
+        /// <param name="cinema">Add element. </param>
         private void AddCinemaGridRow(CinemaModel cinema)
         {
             var intSequel = decimal.ToInt64(cinema.NumberSequel ?? 0);
@@ -217,7 +230,7 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Filling the table with data.
         /// </summary>
-        /// <param name="itemGrid">List of elements</param>
+        /// <param name="itemGrid">List of elements.</param>
         private void AddCinemaGrid(List<WatchItem> itemGrid)
         {
             foreach (var item in itemGrid)
@@ -231,8 +244,8 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Edit the selected item.
         /// </summary>
-        /// <param name="rowIndex">Number row element</param>
-        /// <param name="cinemaItem">Element to сhange</param>
+        /// <param name="rowIndex">Number row element.</param>
+        /// <param name="cinemaItem">Element to сhange.</param>
         /// <returns>
         /// True:Row selected.
         /// False:Row not selected.
@@ -246,6 +259,7 @@ namespace ListWatchedMoviesAndSeries
                 MessageBoxProvider.ShowWarning("Highlight the desired line");
                 return false;
             }
+
             rowIndex = dgvCinema.CurrentCell.RowIndex;
             cinemaItem = GetItem(rowIndex);
             return true;
@@ -254,8 +268,8 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Change the selected element in the EditorItemCinemaForm.
         /// </summary>
-        /// <param name="item">Element to сhange</param>
-        /// <param name="indexRow">Number row element</param>
+        /// <param name="item">Element to сhange.</param>
+        /// <param name="indexRow">Number row element.</param>
         private void ShowEditCinema(CinemaModel item, int indexRow)
         {
             var id = item.Id.ToString() ?? string.Empty;
@@ -268,8 +282,7 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Get item by ID from the table.
         /// </summary>
-        /// <param name="grid">Table with element</param>
-        /// <param name="indexRow">Number row element</param>
+        /// <param name="indexRow">Number row element.</param>
         /// <returns>
         /// The filling of all fields of the element depends on the data in the table.
         /// Type: CinemaModel.
@@ -279,10 +292,14 @@ namespace ListWatchedMoviesAndSeries
             var rowItems = dgvCinema.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
             if (!decimal.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
+            {
                 throw new InvalidOperationException("Invalid cast.");
+            }
 
             if (!Guid.TryParse(CellElement(rowItems, IndexColumnId), out var id))
+            {
                 throw new InvalidOperationException("Invalid cast.");
+            }
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
@@ -291,7 +308,9 @@ namespace ListWatchedMoviesAndSeries
             {
                 var dateWatch = DateTime.Parse(strDateWatch);
                 if (!decimal.TryParse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Grade cannot be null."), out var grade))
+                {
                     throw new InvalidOperationException("Invalid cast.");
+                }
 
                 var cinemaItem = new CinemaModel(
                                                    title,
@@ -313,16 +332,13 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private static string? CellElement(DataGridViewRow rowItem, int indexColumn)
-        {
-            return rowItem.Cells[indexColumn].Value.ToString();
-        }
+        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString();
 
         /// <summary>
         /// Changing a table element.
         /// </summary>
-        /// <param name="cinemaItem">Element to change</param>
-        /// <param name="rowIndex">Number row element</param>
+        /// <param name="cinemaItem">Element to change.</param>
+        /// <param name="rowIndex">Number row element.</param>
         private void ReplacementEditItem(CinemaModel cinemaItem, int rowIndex)
         {
             dgvCinema.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Name;
@@ -347,14 +363,17 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Filling in tabular data from a file.
         /// </summary>
-        /// <param name="grid">Table to fill</param>
+        /// <param name="grid">Table to fill.</param>
         private void LoadData()
         {
             try
             {
                 var itemGrid = _repository.GetAll();
                 if (itemGrid == null || itemGrid.Count <= 0)
+                {
                     return;
+                }
+
                 AddCinemaGrid(itemGrid);
             }
             catch (Exception error)
@@ -369,7 +388,10 @@ namespace ListWatchedMoviesAndSeries
             {
                 var itemGrid = repository.GetAll();
                 if (itemGrid == null || itemGrid.Count <= 0)
+                {
                     return;
+                }
+
                 AddCinemaGrid(itemGrid);
             }
             catch (Exception error)

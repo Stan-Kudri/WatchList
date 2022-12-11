@@ -68,7 +68,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormMovie.TabIndex = 1;
             this.btnFormMovie.Text = "Add Movie";
             this.btnFormMovie.UseVisualStyleBackColor = false;
-            this.btnFormMovie.Click += new System.EventHandler(this.btnFormMovie_Click);
+            this.btnFormMovie.Click += new System.EventHandler(this.BtnFormMovie_Click);
             // 
             // btnDeliteMovie
             // 
@@ -81,7 +81,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnDeliteMovie.TabIndex = 2;
             this.btnDeliteMovie.Text = "Delite";
             this.btnDeliteMovie.UseVisualStyleBackColor = false;
-            this.btnDeliteMovie.Click += new System.EventHandler(this.btnDeliteMovie_Click);
+            this.btnDeliteMovie.Click += new System.EventHandler(this.BtnDeliteMovie_Click);
             // 
             // btnFormSeries
             // 
@@ -94,7 +94,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormSeries.TabIndex = 9;
             this.btnFormSeries.Text = "Add Series";
             this.btnFormSeries.UseVisualStyleBackColor = false;
-            this.btnFormSeries.Click += new System.EventHandler(this.btnFormSeries_Click);
+            this.btnFormSeries.Click += new System.EventHandler(this.BtnFormSeries_Click);
             // 
             // btnEditCinema
             // 
@@ -107,7 +107,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnEditCinema.TabIndex = 11;
             this.btnEditCinema.Text = "Edit";
             this.btnEditCinema.UseVisualStyleBackColor = false;
-            this.btnEditCinema.Click += new System.EventHandler(this.btnEditRow_Click);
+            this.btnEditCinema.Click += new System.EventHandler(this.BtnEditRow_Click);
             // 
             // btnReplaceData
             // 
@@ -119,7 +119,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnReplaceData.TabIndex = 13;
             this.btnReplaceData.Text = "Replace data from file ";
             this.btnReplaceData.UseVisualStyleBackColor = false;
-            this.btnReplaceData.Click += new System.EventHandler(this.btnReplaceFile_Click);
+            this.btnReplaceData.Click += new System.EventHandler(this.BtnReplaceFile_Click);
             // 
             // btnFormAnime
             // 
@@ -132,7 +132,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormAnime.TabIndex = 14;
             this.btnFormAnime.Text = "Add Anime";
             this.btnFormAnime.UseVisualStyleBackColor = false;
-            this.btnFormAnime.Click += new System.EventHandler(this.btnFormAnime_Click);
+            this.btnFormAnime.Click += new System.EventHandler(this.BtnFormAnime_Click);
             // 
             // btnFormCartoon
             // 
@@ -145,7 +145,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormCartoon.TabIndex = 15;
             this.btnFormCartoon.Text = "Add Cartoon";
             this.btnFormCartoon.UseVisualStyleBackColor = false;
-            this.btnFormCartoon.Click += new System.EventHandler(this.btnFormCartoon_Click);
+            this.btnFormCartoon.Click += new System.EventHandler(this.BtnFormCartoon_Click);
             // 
             // openFileDialog
             // 
@@ -247,7 +247,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnUseFilter.TabIndex = 21;
             this.btnUseFilter.Text = "Use Filter";
             this.btnUseFilter.UseVisualStyleBackColor = false;
-            this.btnUseFilter.Click += new System.EventHandler(this.btnUseFilter_Click);
+            this.btnUseFilter.Click += new System.EventHandler(this.BtnUseFilter_Click);
             // 
             // btnCancleFilter
             // 
@@ -258,7 +258,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnCancleFilter.TabIndex = 22;
             this.btnCancleFilter.Text = "Cancle Filter";
             this.btnCancleFilter.UseVisualStyleBackColor = false;
-            this.btnCancleFilter.Click += new System.EventHandler(this.btnCancleFilter_Click);
+            this.btnCancleFilter.Click += new System.EventHandler(this.BtnCancleFilter_Click);
             // 
             // filterModelBindingSource
             // 

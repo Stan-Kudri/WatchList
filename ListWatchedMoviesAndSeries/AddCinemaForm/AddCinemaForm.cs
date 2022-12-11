@@ -3,6 +3,9 @@ using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace ListWatchedMoviesAndSeries
 {
+    /// <summary>
+    /// This class Form performs an function Add Cinema item.
+    /// </summary>
     public partial class AddCinemaForm : Form
     {
         private readonly BoxCinemaForm _box;
@@ -17,13 +20,14 @@ namespace ListWatchedMoviesAndSeries
             dateTimePickerCinema.MaxDate = DateTime.Now;
         }
 
-        private void btnAddCinema_Click(object sender, EventArgs e)
+        private void BtnAddCinema_Click(object sender, EventArgs e)
         {
             if (!ValidateFields(out var errorMessage))
             {
                 MessageBoxProvider.ShowWarning(errorMessage);
                 return;
             }
+
             if (numericGradeCinema.Enabled)
             {
                 _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
@@ -32,12 +36,13 @@ namespace ListWatchedMoviesAndSeries
             {
                 _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _type));
             }
+
             DefoultValue();
         }
 
-        private void btnClearTxtCinema_Click(object sender, EventArgs e) => DefoultValue();
+        private void BtnClearTxtCinema_Click(object sender, EventArgs e) => DefoultValue();
 
-        private void btnBackFormCinema_Click(object sender, EventArgs e) => Close();
+        private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
         private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
         {
@@ -71,6 +76,7 @@ namespace ListWatchedMoviesAndSeries
                 errorMessage = "Grade cinema above in zero";
                 return false;
             }
+
             errorMessage = string.Empty;
             return true;
         }
