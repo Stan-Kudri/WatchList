@@ -2,7 +2,7 @@ using Core.ItemFilter;
 
 namespace Core.Model
 {
-    public class Filter
+    public class Filter : IEquatable<Filter>
     {
         public TypeCinemaFilter TypeFilter { get; set; } = TypeCinemaFilter.AllCinema;
 

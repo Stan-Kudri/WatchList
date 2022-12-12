@@ -1,3 +1,4 @@
+using Core.Model.Item;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 
@@ -10,6 +11,7 @@ namespace ListWatchedMoviesAndSeries
     {
         private readonly BoxCinemaForm _box;
         private readonly TypeCinema _type;
+        private StatusCinema _status = StatusCinema.NotWatch;
 
         public AddCinemaForm(BoxCinemaForm formBoxCinema, TypeCinema type)
         {
@@ -30,11 +32,11 @@ namespace ListWatchedMoviesAndSeries
 
             if (numericGradeCinema.Enabled)
             {
-                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _type));
+                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, _type));
             }
             else
             {
-                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _type));
+                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
             }
 
             DefoultValue();
@@ -48,6 +50,7 @@ namespace ListWatchedMoviesAndSeries
         {
             numericGradeCinema.ReadOnly = false;
             numericGradeCinema.Enabled = true;
+            _status = StatusCinema.Watch;
         }
 
         private void DefoultValue()
@@ -57,6 +60,7 @@ namespace ListWatchedMoviesAndSeries
             numericGradeCinema.Value = 0;
             numericSeaquel.Value = 0;
             numericGradeCinema.ReadOnly = true;
+            _status = StatusCinema.NotWatch;
         }
 
         private bool ValidateFields(out string errorMessage)

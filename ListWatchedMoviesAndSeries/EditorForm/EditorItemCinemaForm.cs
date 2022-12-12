@@ -1,3 +1,4 @@
+using Core.Model.Item;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 
@@ -13,10 +14,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private readonly BoxCinemaForm _box;
         private readonly CinemaModel _cinema;
-
         private readonly int _numberRowCinema;
 
-        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel? cinema, int numberRowCinema)
+        private StatusCinema _status = StatusCinema.Unknown;
+
+        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel cinema, int numberRowCinema)
         {
             if (cinema == null)
             {
@@ -83,14 +85,15 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         {
             var type = _cinema.Type ?? TypeCinema.Unknown;
             var id = _cinema.Id;
+            _status = numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
             if (numericEditGradeCinema.Enabled)
             {
-                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, type, id);
+                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, _status, type, id);
                 _box.EditItemGrid(itemWatch, _numberRowCinema);
             }
             else
             {
-                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, type, id);
+                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, _status, type, id);
                 _box.EditItemGrid(itemWatch, _numberRowCinema);
             }
         }

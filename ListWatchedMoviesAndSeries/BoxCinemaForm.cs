@@ -1,3 +1,4 @@
+using Core.Model.Item;
 using Core.Repository.DbContex;
 using ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Model;
@@ -99,7 +100,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnUseFilter_Click(object sender, EventArgs e)
         {
-            if (Filter.HasFilter() || Filter.Equals(_repository.PastFilter))
+            if (Filter.HasFilter() || IsChangesFilter())
             {
                 GridClear();
                 var filter = Filter.GetFilter();
@@ -224,7 +225,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var intSequel = decimal.ToInt64(cinema.NumberSequel ?? 0);
             var formatDate = cinema.Detail.GetWatchData();
-            dgvCinema.Rows.Add(cinema.Name, intSequel.ToString(), cinema.Detail?.Watch, formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
+            dgvCinema.Rows.Add(cinema.Name, intSequel.ToString(), cinema.Status.Name, formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace ListWatchedMoviesAndSeries
             {
                 var intSequel = decimal.ToInt64(item.NumberSequel ?? 0);
                 var formatDate = item.Detail?.GetWatchData();
-                dgvCinema.Rows.Add(item.Name, intSequel.ToString(), item.Detail?.Watch, formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
+                dgvCinema.Rows.Add(item.Name, intSequel.ToString(), item.Status.Name, formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
             }
         }
 
@@ -317,6 +318,7 @@ namespace ListWatchedMoviesAndSeries
                                                    sequel,
                                                    dateWatch,
                                                    grade,
+                                                   StatusCinema.Watch,
                                                    type,
                                                    id);
                 return cinemaItem;
@@ -326,6 +328,7 @@ namespace ListWatchedMoviesAndSeries
                 var cinemaItem = new CinemaModel(
                                                   title,
                                                   sequel,
+                                                  StatusCinema.NotWatch,
                                                   type,
                                                   id);
                 return cinemaItem;
@@ -346,15 +349,15 @@ namespace ListWatchedMoviesAndSeries
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
 
-            if (cinemaItem.Detail.DateWatch != null)
+            if (cinemaItem.Detail.ValidDateField())
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "+";
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = StatusCinema.Watch;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail.Grade;
             }
             else
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = "-";
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = StatusCinema.NotWatch;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
             }
@@ -401,5 +404,7 @@ namespace ListWatchedMoviesAndSeries
         }
 
         private void GridClear() => dgvCinema.Rows.Clear();
+
+        private bool IsChangesFilter() => Filter.Equals(_repository.PastFilter);
     }
 }
