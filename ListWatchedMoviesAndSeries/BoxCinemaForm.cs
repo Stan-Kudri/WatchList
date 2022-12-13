@@ -16,7 +16,7 @@ namespace ListWatchedMoviesAndSeries
     {
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
-        private const int IndexColumnIsWatch = 2;
+        private const int IndexColumnIsStatus = 2;
         private const int IndexColumnDate = 3;
         private const int IndexColumnGrade = 4;
         private const int IndexColumnId = 5;
@@ -304,6 +304,7 @@ namespace ListWatchedMoviesAndSeries
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
+            var status = StatusCinema.FromName(CellElement(rowItems, IndexColumnIsStatus));
 
             if (strDateWatch != string.Empty && strDateWatch != null)
             {
@@ -318,7 +319,7 @@ namespace ListWatchedMoviesAndSeries
                                                    sequel,
                                                    dateWatch,
                                                    grade,
-                                                   StatusCinema.Watch,
+                                                   status,
                                                    type,
                                                    id);
                 return cinemaItem;
@@ -328,7 +329,7 @@ namespace ListWatchedMoviesAndSeries
                 var cinemaItem = new CinemaModel(
                                                   title,
                                                   sequel,
-                                                  StatusCinema.NotWatch,
+                                                  status,
                                                   type,
                                                   id);
                 return cinemaItem;
@@ -351,13 +352,13 @@ namespace ListWatchedMoviesAndSeries
 
             if (cinemaItem.Detail.ValidDateField())
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = StatusCinema.Watch;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsStatus].Value = StatusCinema.Watch;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail.Grade;
             }
             else
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsWatch].Value = StatusCinema.NotWatch;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsStatus].Value = StatusCinema.NotWatch;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
             }
