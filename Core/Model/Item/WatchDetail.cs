@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace ListWatchedMoviesAndSeries.Models.Item
 {
-    public class WatchDetail
+    public class WatchDetail : IEquatable<WatchDetail>
     {
         [JsonPropertyName("DateWatch")]
         public DateTime? DateWatch { get; set; }
@@ -26,7 +26,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 
         public string GetWatchData() => DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
 
-        public bool ValidDateField() => DateWatch != null;
+        public bool IsWatchDate() => DateWatch != null;
 
         public override int GetHashCode()
         {

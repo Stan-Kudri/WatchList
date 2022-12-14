@@ -16,7 +16,7 @@ namespace ListWatchedMoviesAndSeries
     {
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
-        private const int IndexColumnIsStatus = 2;
+        private const int IndexColumnStatus = 2;
         private const int IndexColumnDate = 3;
         private const int IndexColumnGrade = 4;
         private const int IndexColumnId = 5;
@@ -304,7 +304,7 @@ namespace ListWatchedMoviesAndSeries
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
-            var status = StatusCinema.FromName(CellElement(rowItems, IndexColumnIsStatus));
+            var status = StatusCinema.FromName(CellElement(rowItems, IndexColumnStatus));
 
             if (strDateWatch != string.Empty && strDateWatch != null)
             {
@@ -350,15 +350,15 @@ namespace ListWatchedMoviesAndSeries
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
 
-            if (cinemaItem.Detail.ValidDateField())
+            if (cinemaItem.Detail.IsWatchDate())
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsStatus].Value = StatusCinema.Watch;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Watch;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail.Grade;
             }
             else
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnIsStatus].Value = StatusCinema.NotWatch;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.NotWatch;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
             }
