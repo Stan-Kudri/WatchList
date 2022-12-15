@@ -34,6 +34,5 @@ namespace Core.Repository.DbContex
                     x => StatusCinema.FromName(x, false));
             });
         }
-
     }
 }
