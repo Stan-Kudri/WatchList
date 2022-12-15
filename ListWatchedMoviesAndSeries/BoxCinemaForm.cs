@@ -100,7 +100,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnUseFilter_Click(object sender, EventArgs e)
         {
-            if (Filter.HasFilter() || IsChangesFilter())
+            if (Filter.HasFilter() && !IsChangesFilter())
             {
                 GridClear();
                 var filter = Filter.GetFilter();
@@ -350,7 +350,7 @@ namespace ListWatchedMoviesAndSeries
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
 
-            if (cinemaItem.Detail.IsWatchDate())
+            if (cinemaItem.Detail.HasWatchDate())
             {
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Watch;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();

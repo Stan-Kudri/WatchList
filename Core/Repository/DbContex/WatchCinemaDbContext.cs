@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Core.Model.Item;
-using Core.Repository.JSONConverter;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using Microsoft.EntityFrameworkCore;
@@ -9,18 +8,6 @@ namespace Core.Repository.DbContex
 {
     public class WatchCinemaDbContext : DbContext
     {
-        private readonly JsonSerializerOptions _jsonOptionType = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            Converters = { new TypeCinemaJsonConverter() }
-        };
-
-        private readonly JsonSerializerOptions _jsonOptionStatus = new JsonSerializerOptions()
-        {
-            WriteIndented = true,
-            Converters = { new StatusCinemaJsonConverter() }
-        };
-
         public DbSet<WatchItem> WatchItem { get; set; } = null!;
 
         public WatchCinemaDbContext(DbContextOptions options) : base(options)
@@ -39,13 +26,14 @@ namespace Core.Repository.DbContex
                     json => JsonSerializer.Deserialize<WatchDetail>(json, (JsonSerializerOptions?)null) ?? new WatchDetail());
 
                 buildAction.Property(x => x.Type).HasConversion(
-                    x => JsonSerializer.Serialize(x, _jsonOptionType),
-                    json => JsonSerializer.Deserialize<TypeCinema>(json, _jsonOptionType) ?? TypeCinema.Unknown);
+                    x => x.Name,
+                    x => TypeCinema.FromName(x, false));
 
                 buildAction.Property(x => x.Status).HasConversion(
-                    x => JsonSerializer.Serialize(x, _jsonOptionStatus),
-                    json => JsonSerializer.Deserialize<StatusCinema>(json, _jsonOptionStatus) ?? StatusCinema.Unknown);
+                    x => x.Name,
+                    x => StatusCinema.FromName(x, false));
             });
         }
+
     }
 }

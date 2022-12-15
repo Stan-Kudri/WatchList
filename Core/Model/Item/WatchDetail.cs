@@ -26,7 +26,7 @@ namespace ListWatchedMoviesAndSeries.Models.Item
 
         public string GetWatchData() => DateWatch?.ToString("dd.MM.yyyy") ?? string.Empty;
 
-        public bool IsWatchDate() => DateWatch != null;
+        public bool HasWatchDate() => DateWatch != null;
 
         public override int GetHashCode()
         {

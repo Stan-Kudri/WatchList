@@ -9,9 +9,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
     /// </summary>
     public partial class EditorItemCinemaForm : Form
     {
-        public const string WatchCinema = "+";
-        public const string NotWatchCinema = "-";
-
         private readonly BoxCinemaForm _box;
         private readonly CinemaModel _cinema;
         private readonly int _numberRowCinema;
@@ -59,7 +56,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             txtEditName.Text = _cinema.Name;
             labelNumberSequel.Text = _cinema.Type.Name;
             dateTPCinema.MaxDate = DateTime.Now;
-            if (_cinema.Detail.IsWatchDate() && _cinema.Detail.DateWatch != null)
+            if (_cinema.Detail.HasWatchDate())
             {
                 numericEditGradeCinema.Enabled = true;
                 dateTPCinema.Value = _cinema.Detail.DateWatch.Value;
@@ -135,8 +132,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                 return false;
             }
 
-            return _cinema.Detail.DateWatch != dateTPCinema.Value ||
-                    _cinema.Detail.Grade != numericEditGradeCinema.Value.ToString();
+            return _cinema.Detail.DateWatch != dateTPCinema.Value
+                || _cinema.Detail.Grade != numericEditGradeCinema.Value.ToString();
         }
     }
 }
