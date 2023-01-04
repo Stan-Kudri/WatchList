@@ -1,8 +1,9 @@
 using System.Text.Json;
-using Core.Model.Item;
+using Ardalis.SmartEnum;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Repository.DbContex
 {
@@ -24,15 +25,19 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Detail).HasConversion(
                     x => JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
                     json => JsonSerializer.Deserialize<WatchDetail>(json, (JsonSerializerOptions?)null) ?? new WatchDetail());
-
-                buildAction.Property(x => x.Type).HasConversion(
-                    x => x.Name,
-                    x => TypeCinema.FromName(x, false));
-
-                buildAction.Property(x => x.Status).HasConversion(
-                    x => x.Name,
-                    x => StatusCinema.FromName(x, false));
+                buildAction.Property(x => x.Type).HasConversion();
+                buildAction.Property(x => x.Status).HasConversion();
             });
+        }
+    }
+
+    public static class Extension
+    {
+        public static void HasConversion<T>(this PropertyBuilder<T> type) where T : SmartEnum<T>
+        {
+            type.HasConversion(
+                x => x.Name,
+                x => SmartEnum<T>.FromName(x, false));
         }
     }
 }
