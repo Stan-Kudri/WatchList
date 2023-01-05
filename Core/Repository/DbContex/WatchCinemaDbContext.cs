@@ -23,8 +23,8 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Detail).HasConversion(
                     x => JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
                     json => JsonSerializer.Deserialize<WatchDetail>(json, (JsonSerializerOptions?)null) ?? new WatchDetail());
-                buildAction.Property(x => x.Type).HasConversion();
-                buildAction.Property(x => x.Status).HasConversion();
+                buildAction.Property(x => x.Type).SmartEnumConversion();
+                buildAction.Property(x => x.Status).SmartEnumConversion();
             });
         }
     }
