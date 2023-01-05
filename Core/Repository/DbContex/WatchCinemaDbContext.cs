@@ -1,9 +1,7 @@
 using System.Text.Json;
-using Ardalis.SmartEnum;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Repository.DbContex
 {
@@ -28,16 +26,6 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Type).HasConversion();
                 buildAction.Property(x => x.Status).HasConversion();
             });
-        }
-    }
-
-    public static class Extension
-    {
-        public static void HasConversion<T>(this PropertyBuilder<T> type) where T : SmartEnum<T>
-        {
-            type.HasConversion(
-                x => x.Name,
-                x => SmartEnum<T>.FromName(x, false));
         }
     }
 }
