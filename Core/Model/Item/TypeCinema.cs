@@ -3,7 +3,7 @@ using Ardalis.SmartEnum;
 
 namespace ListWatchedMoviesAndSeries.Models.Item
 {
-    public sealed class TypeCinema : SmartEnum<TypeCinema>
+    public class TypeCinema : SmartEnum<TypeCinema>
     {
         private readonly string _typeSequel = string.Empty;
 

@@ -1,5 +1,4 @@
 using System.Text.Json;
-using Core.Repository.JSONConverter;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using Microsoft.EntityFrameworkCore;
@@ -24,15 +23,8 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Detail).HasConversion(
                     x => JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
                     json => JsonSerializer.Deserialize<WatchDetail>(json, (JsonSerializerOptions?)null) ?? new WatchDetail());
-
-                var jsonOptionsType = new JsonSerializerOptions
-                {
-                    WriteIndented = true,
-                    Converters = { new TypeCinemaJsonConverter() }
-                };
-                buildAction.Property(x => x.Type).HasConversion(
-                    x => JsonSerializer.Serialize(x, jsonOptionsType),
-                    json => JsonSerializer.Deserialize<TypeCinema>(json, jsonOptionsType) ?? TypeCinema.Unknown);
+                buildAction.Property(x => x.Type).SmartEnumConversion();
+                buildAction.Property(x => x.Status).SmartEnumConversion();
             });
         }
     }

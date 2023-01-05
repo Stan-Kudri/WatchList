@@ -9,7 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.SmartEnum.SystemTextJson" Version="2.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
+    <PackageReference Include="CassandraCSharpDriver" Version="3.18.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.1" />
   </ItemGroup>
 
 </Project>
