@@ -5,6 +5,8 @@ using ListWatchedMoviesAndSeries.Model;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
+using MaterialSkin;
+using MaterialSkin.Controls;
 using Microsoft.EntityFrameworkCore;
 
 namespace ListWatchedMoviesAndSeries
@@ -12,7 +14,7 @@ namespace ListWatchedMoviesAndSeries
     /// <summary>
     /// This is the main form class.
     /// </summary>
-    public partial class BoxCinemaForm : Form
+    public partial class BoxCinemaForm : MaterialForm
     {
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
@@ -29,6 +31,11 @@ namespace ListWatchedMoviesAndSeries
         public BoxCinemaForm()
         {
             InitializeComponent();
+
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple900, Primary.Blue800, Primary.Yellow800, Accent.LightBlue100, TextShade.WHITE);
 
             var builder = new DbContextOptionsBuilder().UseSqlite("Data Source=app.db");
             _db = new WatchCinemaDbContext(builder.Options);
