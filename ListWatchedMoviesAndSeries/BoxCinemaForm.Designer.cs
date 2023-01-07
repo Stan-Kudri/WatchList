@@ -43,15 +43,15 @@ namespace ListWatchedMoviesAndSeries
             this.cmbFilterType = new System.Windows.Forms.ComboBox();
             this.filterModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cmbFilterWatch = new System.Windows.Forms.ComboBox();
-            this.mrbFormMovie = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnFormSeries = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnFormAnime = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnFormCartoon = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnEditCinema = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnDeliteMovie = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnReplaceData = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnUseFilter = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnCancleFilter = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnFormMovie = new MaterialSkin.Controls.MaterialButton();
+            this.btnFormSeries = new MaterialSkin.Controls.MaterialButton();
+            this.btnFormAnime = new MaterialSkin.Controls.MaterialButton();
+            this.btnFormCartoon = new MaterialSkin.Controls.MaterialButton();
+            this.btnEditCinema = new MaterialSkin.Controls.MaterialButton();
+            this.btnDeliteMovie = new MaterialSkin.Controls.MaterialButton();
+            this.btnReplaceData = new MaterialSkin.Controls.MaterialButton();
+            this.btnUseFilter = new MaterialSkin.Controls.MaterialButton();
+            this.btnCancleFilter = new MaterialSkin.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterModelBindingSource)).BeginInit();
@@ -73,22 +73,22 @@ namespace ListWatchedMoviesAndSeries
             this.IdCinema,
             this.Cinema});
             this.dgvCinema.Location = new System.Drawing.Point(5, 70);
-            this.dgvCinema.MaximumSize = new System.Drawing.Size(620, 270);
-            this.dgvCinema.MinimumSize = new System.Drawing.Size(620, 270);
+            this.dgvCinema.MaximumSize = new System.Drawing.Size(640, 270);
+            this.dgvCinema.MinimumSize = new System.Drawing.Size(640, 270);
             this.dgvCinema.Name = "dgvCinema";
             this.dgvCinema.ReadOnly = true;
             this.dgvCinema.RowTemplate.Height = 25;
-            this.dgvCinema.Size = new System.Drawing.Size(620, 270);
+            this.dgvCinema.Size = new System.Drawing.Size(640, 270);
             this.dgvCinema.TabIndex = 16;
             this.dgvCinema.Tag = "Cinema";
             // 
             // NameCinema
             // 
-            this.NameCinema.FillWeight = 150F;
+            this.NameCinema.FillWeight = 160F;
             this.NameCinema.HeaderText = "Title";
             this.NameCinema.Name = "NameCinema";
             this.NameCinema.ReadOnly = true;
-            this.NameCinema.Width = 150;
+            this.NameCinema.Width = 160;
             // 
             // NumberCinema
             // 
@@ -98,11 +98,11 @@ namespace ListWatchedMoviesAndSeries
             // 
             // WatchedCinema
             // 
-            this.WatchedCinema.FillWeight = 126F;
+            this.WatchedCinema.FillWeight = 136F;
             this.WatchedCinema.HeaderText = "The Watched Cinema";
             this.WatchedCinema.Name = "WatchedCinema";
             this.WatchedCinema.ReadOnly = true;
-            this.WatchedCinema.Width = 126;
+            this.WatchedCinema.Width = 136;
             // 
             // DataWatchedCinema
             // 
@@ -136,9 +136,9 @@ namespace ListWatchedMoviesAndSeries
             this.cmbFilterType.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.filterModelBindingSource, "Type", true));
             this.cmbFilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFilterType.FormattingEnabled = true;
-            this.cmbFilterType.Location = new System.Drawing.Point(8, 416);
+            this.cmbFilterType.Location = new System.Drawing.Point(5, 420);
             this.cmbFilterType.Name = "cmbFilterType";
-            this.cmbFilterType.Size = new System.Drawing.Size(206, 23);
+            this.cmbFilterType.Size = new System.Drawing.Size(210, 23);
             this.cmbFilterType.TabIndex = 17;
             // 
             // filterModelBindingSource
@@ -151,127 +151,207 @@ namespace ListWatchedMoviesAndSeries
             this.cmbFilterWatch.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.filterModelBindingSource, "Watch", true));
             this.cmbFilterWatch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFilterWatch.FormattingEnabled = true;
-            this.cmbFilterWatch.Location = new System.Drawing.Point(220, 416);
+            this.cmbFilterWatch.Location = new System.Drawing.Point(225, 420);
             this.cmbFilterWatch.Name = "cmbFilterWatch";
-            this.cmbFilterWatch.Size = new System.Drawing.Size(206, 23);
+            this.cmbFilterWatch.Size = new System.Drawing.Size(210, 23);
             this.cmbFilterWatch.TabIndex = 18;
             // 
-            // mrbFormMovie
+            // btnFormMovie
             // 
-            this.mrbFormMovie.Depth = 0;
-            this.mrbFormMovie.Font = new System.Drawing.Font("Segoe UI", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.mrbFormMovie.Location = new System.Drawing.Point(8, 352);
-            this.mrbFormMovie.MouseState = MaterialSkin.MouseState.HOVER;
-            this.mrbFormMovie.Name = "mrbFormMovie";
-            this.mrbFormMovie.Primary = true;
-            this.mrbFormMovie.Size = new System.Drawing.Size(100, 25);
-            this.mrbFormMovie.TabIndex = 23;
-            this.mrbFormMovie.Text = "Add Movie";
-            this.mrbFormMovie.UseVisualStyleBackColor = true;
-            this.mrbFormMovie.Click += new System.EventHandler(this.BtnFormMovie_Click);
+            this.btnFormMovie.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFormMovie.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnFormMovie.Depth = 0;
+            this.btnFormMovie.HighEmphasis = true;
+            this.btnFormMovie.Icon = null;
+            this.btnFormMovie.Location = new System.Drawing.Point(5, 345);
+            this.btnFormMovie.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnFormMovie.MaximumSize = new System.Drawing.Size(100, 30);
+            this.btnFormMovie.MinimumSize = new System.Drawing.Size(100, 30);
+            this.btnFormMovie.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnFormMovie.Name = "btnFormMovie";
+            this.btnFormMovie.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnFormMovie.Size = new System.Drawing.Size(100, 30);
+            this.btnFormMovie.TabIndex = 32;
+            this.btnFormMovie.Text = "Add Movie";
+            this.btnFormMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnFormMovie.UseAccentColor = false;
+            this.btnFormMovie.UseVisualStyleBackColor = true;
+            this.btnFormMovie.Click += new System.EventHandler(this.BtnFormMovie_Click);
             // 
             // btnFormSeries
             // 
+            this.btnFormSeries.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFormSeries.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnFormSeries.Depth = 0;
-            this.btnFormSeries.Location = new System.Drawing.Point(114, 352);
+            this.btnFormSeries.HighEmphasis = true;
+            this.btnFormSeries.Icon = null;
+            this.btnFormSeries.Location = new System.Drawing.Point(115, 345);
+            this.btnFormSeries.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnFormSeries.MaximumSize = new System.Drawing.Size(100, 30);
+            this.btnFormSeries.MinimumSize = new System.Drawing.Size(100, 30);
             this.btnFormSeries.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnFormSeries.Name = "btnFormSeries";
-            this.btnFormSeries.Primary = true;
-            this.btnFormSeries.Size = new System.Drawing.Size(100, 25);
-            this.btnFormSeries.TabIndex = 24;
+            this.btnFormSeries.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnFormSeries.Size = new System.Drawing.Size(100, 30);
+            this.btnFormSeries.TabIndex = 33;
             this.btnFormSeries.Text = "Add Series";
+            this.btnFormSeries.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnFormSeries.UseAccentColor = false;
             this.btnFormSeries.UseVisualStyleBackColor = true;
             this.btnFormSeries.Click += new System.EventHandler(this.BtnFormSeries_Click);
             // 
             // btnFormAnime
             // 
+            this.btnFormAnime.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFormAnime.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnFormAnime.Depth = 0;
-            this.btnFormAnime.Location = new System.Drawing.Point(220, 352);
+            this.btnFormAnime.HighEmphasis = true;
+            this.btnFormAnime.Icon = null;
+            this.btnFormAnime.Location = new System.Drawing.Point(225, 345);
+            this.btnFormAnime.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnFormAnime.MaximumSize = new System.Drawing.Size(100, 30);
+            this.btnFormAnime.MinimumSize = new System.Drawing.Size(100, 30);
             this.btnFormAnime.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnFormAnime.Name = "btnFormAnime";
-            this.btnFormAnime.Primary = true;
-            this.btnFormAnime.Size = new System.Drawing.Size(100, 25);
-            this.btnFormAnime.TabIndex = 25;
+            this.btnFormAnime.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnFormAnime.Size = new System.Drawing.Size(100, 30);
+            this.btnFormAnime.TabIndex = 34;
             this.btnFormAnime.Text = "Add Anime";
+            this.btnFormAnime.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnFormAnime.UseAccentColor = false;
             this.btnFormAnime.UseVisualStyleBackColor = true;
             this.btnFormAnime.Click += new System.EventHandler(this.BtnFormAnime_Click);
             // 
             // btnFormCartoon
             // 
+            this.btnFormCartoon.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFormCartoon.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnFormCartoon.Depth = 0;
-            this.btnFormCartoon.Font = new System.Drawing.Font("Segoe UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnFormCartoon.Location = new System.Drawing.Point(326, 352);
+            this.btnFormCartoon.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnFormCartoon.HighEmphasis = true;
+            this.btnFormCartoon.Icon = null;
+            this.btnFormCartoon.Location = new System.Drawing.Point(335, 345);
+            this.btnFormCartoon.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnFormCartoon.MaximumSize = new System.Drawing.Size(100, 30);
+            this.btnFormCartoon.MinimumSize = new System.Drawing.Size(100, 30);
             this.btnFormCartoon.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnFormCartoon.Name = "btnFormCartoon";
-            this.btnFormCartoon.Primary = true;
-            this.btnFormCartoon.Size = new System.Drawing.Size(100, 25);
-            this.btnFormCartoon.TabIndex = 26;
+            this.btnFormCartoon.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnFormCartoon.Size = new System.Drawing.Size(100, 30);
+            this.btnFormCartoon.TabIndex = 35;
             this.btnFormCartoon.Text = "Add Cartoon";
+            this.btnFormCartoon.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnFormCartoon.UseAccentColor = false;
             this.btnFormCartoon.UseVisualStyleBackColor = true;
             this.btnFormCartoon.Click += new System.EventHandler(this.BtnFormCartoon_Click);
             // 
             // btnEditCinema
             // 
+            this.btnEditCinema.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnEditCinema.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnEditCinema.Depth = 0;
-            this.btnEditCinema.Location = new System.Drawing.Point(8, 382);
+            this.btnEditCinema.HighEmphasis = true;
+            this.btnEditCinema.Icon = null;
+            this.btnEditCinema.Location = new System.Drawing.Point(5, 380);
+            this.btnEditCinema.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnEditCinema.MaximumSize = new System.Drawing.Size(210, 30);
+            this.btnEditCinema.MinimumSize = new System.Drawing.Size(210, 30);
             this.btnEditCinema.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnEditCinema.Name = "btnEditCinema";
-            this.btnEditCinema.Primary = true;
-            this.btnEditCinema.Size = new System.Drawing.Size(206, 25);
-            this.btnEditCinema.TabIndex = 27;
+            this.btnEditCinema.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnEditCinema.Size = new System.Drawing.Size(210, 30);
+            this.btnEditCinema.TabIndex = 36;
             this.btnEditCinema.Text = "Edit";
+            this.btnEditCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnEditCinema.UseAccentColor = false;
             this.btnEditCinema.UseVisualStyleBackColor = true;
             this.btnEditCinema.Click += new System.EventHandler(this.BtnEditRow_Click);
             // 
             // btnDeliteMovie
             // 
+            this.btnDeliteMovie.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnDeliteMovie.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnDeliteMovie.Depth = 0;
-            this.btnDeliteMovie.Location = new System.Drawing.Point(220, 383);
+            this.btnDeliteMovie.HighEmphasis = true;
+            this.btnDeliteMovie.Icon = null;
+            this.btnDeliteMovie.Location = new System.Drawing.Point(225, 380);
+            this.btnDeliteMovie.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnDeliteMovie.MaximumSize = new System.Drawing.Size(210, 30);
+            this.btnDeliteMovie.MinimumSize = new System.Drawing.Size(210, 30);
             this.btnDeliteMovie.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnDeliteMovie.Name = "btnDeliteMovie";
-            this.btnDeliteMovie.Primary = true;
-            this.btnDeliteMovie.Size = new System.Drawing.Size(206, 24);
-            this.btnDeliteMovie.TabIndex = 28;
+            this.btnDeliteMovie.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnDeliteMovie.Size = new System.Drawing.Size(210, 30);
+            this.btnDeliteMovie.TabIndex = 37;
             this.btnDeliteMovie.Text = "Delite";
+            this.btnDeliteMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnDeliteMovie.UseAccentColor = false;
             this.btnDeliteMovie.UseVisualStyleBackColor = true;
             this.btnDeliteMovie.Click += new System.EventHandler(this.BtnDeliteMovie_Click);
             // 
             // btnReplaceData
             // 
+            this.btnReplaceData.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnReplaceData.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnReplaceData.Depth = 0;
-            this.btnReplaceData.Location = new System.Drawing.Point(430, 352);
+            this.btnReplaceData.HighEmphasis = true;
+            this.btnReplaceData.Icon = null;
+            this.btnReplaceData.Location = new System.Drawing.Point(445, 345);
+            this.btnReplaceData.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnReplaceData.MaximumSize = new System.Drawing.Size(200, 60);
+            this.btnReplaceData.MinimumSize = new System.Drawing.Size(200, 60);
             this.btnReplaceData.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnReplaceData.Name = "btnReplaceData";
-            this.btnReplaceData.Primary = true;
-            this.btnReplaceData.Size = new System.Drawing.Size(195, 55);
-            this.btnReplaceData.TabIndex = 29;
+            this.btnReplaceData.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnReplaceData.Size = new System.Drawing.Size(200, 60);
+            this.btnReplaceData.TabIndex = 38;
             this.btnReplaceData.Text = "Replace data from file ";
+            this.btnReplaceData.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnReplaceData.UseAccentColor = false;
             this.btnReplaceData.UseVisualStyleBackColor = true;
             this.btnReplaceData.Click += new System.EventHandler(this.BtnReplaceFile_Click);
             // 
             // btnUseFilter
             // 
+            this.btnUseFilter.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnUseFilter.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnUseFilter.Depth = 0;
-            this.btnUseFilter.Location = new System.Drawing.Point(430, 414);
+            this.btnUseFilter.HighEmphasis = true;
+            this.btnUseFilter.Icon = null;
+            this.btnUseFilter.Location = new System.Drawing.Point(445, 410);
+            this.btnUseFilter.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnUseFilter.MaximumSize = new System.Drawing.Size(80, 30);
+            this.btnUseFilter.MinimumSize = new System.Drawing.Size(80, 30);
             this.btnUseFilter.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnUseFilter.Name = "btnUseFilter";
-            this.btnUseFilter.Primary = true;
-            this.btnUseFilter.Size = new System.Drawing.Size(80, 25);
-            this.btnUseFilter.TabIndex = 30;
+            this.btnUseFilter.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnUseFilter.Size = new System.Drawing.Size(80, 30);
+            this.btnUseFilter.TabIndex = 39;
             this.btnUseFilter.Text = "Use Filter";
+            this.btnUseFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnUseFilter.UseAccentColor = false;
             this.btnUseFilter.UseVisualStyleBackColor = true;
             this.btnUseFilter.Click += new System.EventHandler(this.BtnUseFilter_Click);
             // 
             // btnCancleFilter
             // 
+            this.btnCancleFilter.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCancleFilter.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnCancleFilter.Depth = 0;
-            this.btnCancleFilter.Location = new System.Drawing.Point(515, 414);
+            this.btnCancleFilter.HighEmphasis = true;
+            this.btnCancleFilter.Icon = null;
+            this.btnCancleFilter.Location = new System.Drawing.Point(528, 410);
+            this.btnCancleFilter.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCancleFilter.MaximumSize = new System.Drawing.Size(115, 30);
+            this.btnCancleFilter.MinimumSize = new System.Drawing.Size(115, 30);
             this.btnCancleFilter.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCancleFilter.Name = "btnCancleFilter";
-            this.btnCancleFilter.Primary = true;
-            this.btnCancleFilter.Size = new System.Drawing.Size(110, 25);
-            this.btnCancleFilter.TabIndex = 31;
+            this.btnCancleFilter.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCancleFilter.Size = new System.Drawing.Size(115, 30);
+            this.btnCancleFilter.TabIndex = 40;
             this.btnCancleFilter.Text = "Cancle Filter";
+            this.btnCancleFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCancleFilter.UseAccentColor = false;
             this.btnCancleFilter.UseVisualStyleBackColor = true;
             this.btnCancleFilter.Click += new System.EventHandler(this.BtnCancleFilter_Click);
             // 
@@ -280,7 +360,7 @@ namespace ListWatchedMoviesAndSeries
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(630, 450);
+            this.ClientSize = new System.Drawing.Size(650, 450);
             this.Controls.Add(this.btnCancleFilter);
             this.Controls.Add(this.btnUseFilter);
             this.Controls.Add(this.btnReplaceData);
@@ -289,19 +369,20 @@ namespace ListWatchedMoviesAndSeries
             this.Controls.Add(this.btnFormCartoon);
             this.Controls.Add(this.btnFormAnime);
             this.Controls.Add(this.btnFormSeries);
-            this.Controls.Add(this.mrbFormMovie);
+            this.Controls.Add(this.btnFormMovie);
             this.Controls.Add(this.cmbFilterWatch);
             this.Controls.Add(this.cmbFilterType);
             this.Controls.Add(this.dgvCinema);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(630, 450);
-            this.MinimumSize = new System.Drawing.Size(630, 450);
+            this.MaximumSize = new System.Drawing.Size(650, 450);
+            this.MinimumSize = new System.Drawing.Size(650, 450);
             this.Name = "BoxCinemaForm";
             this.Text = "BoxCinema";
             ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterModelBindingSource)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -312,10 +393,13 @@ namespace ListWatchedMoviesAndSeries
         private ComboBox cmbFilterType;
         private ComboBox cmbFilterWatch;
         private BindingSource filterModelBindingSource;
-        private MaterialSkin.Controls.MaterialRaisedButton mrbFormMovie;
-        private MaterialSkin.Controls.MaterialRaisedButton btnFormSeries;
-        private MaterialSkin.Controls.MaterialRaisedButton btnFormAnime;
-        private MaterialSkin.Controls.MaterialRaisedButton btnFormCartoon;
+        private MaterialSkin.Controls.MaterialButton materialButton1asddasdasdasdddddddddddddddd;
+        private MaterialSkin.Controls.MaterialButton btnFormMovie;
+        private MaterialSkin.Controls.MaterialButton btnFormSeries;
+        private MaterialSkin.Controls.MaterialButton btnFormAnime;
+        private MaterialSkin.Controls.MaterialButton btnFormCartoon;
+        private MaterialSkin.Controls.MaterialButton btnEditCinema;
+        private MaterialSkin.Controls.MaterialButton btnDeliteMovie;
         private DataGridViewTextBoxColumn NameCinema;
         private DataGridViewTextBoxColumn NumberCinema;
         private DataGridViewTextBoxColumn WatchedCinema;
@@ -323,10 +407,8 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn GradeCinema;
         private DataGridViewTextBoxColumn IdCinema;
         private DataGridViewTextBoxColumn Cinema;
-        private MaterialSkin.Controls.MaterialRaisedButton btnEditCinema;
-        private MaterialSkin.Controls.MaterialRaisedButton btnDeliteMovie;
-        private MaterialSkin.Controls.MaterialRaisedButton btnReplaceData;
-        private MaterialSkin.Controls.MaterialRaisedButton btnUseFilter;
-        private MaterialSkin.Controls.MaterialRaisedButton btnCancleFilter;
+        private MaterialSkin.Controls.MaterialButton btnReplaceData;
+        private MaterialSkin.Controls.MaterialButton btnUseFilter;
+        private MaterialSkin.Controls.MaterialButton btnCancleFilter;
     }
 }

@@ -38,9 +38,9 @@ namespace ListWatchedMoviesAndSeries
             this.labelGrade = new MaterialSkin.Controls.MaterialLabel();
             this.labelName = new MaterialSkin.Controls.MaterialLabel();
             this.labelNumberSeaquel = new MaterialSkin.Controls.MaterialLabel();
-            this.btnClearTxtCinema = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnAddCinema = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnBackFormCinema = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnClearTxtCinema = new MaterialSkin.Controls.MaterialButton();
+            this.btnAddCinema = new MaterialSkin.Controls.MaterialButton();
+            this.btnBackFormCinema = new MaterialSkin.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)(this.cinemaModelsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSeaquel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).BeginInit();
@@ -71,7 +71,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.dateTimePickerCinema.CustomFormat = "\"dd.MM.yyyy\"";
             this.dateTimePickerCinema.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "DateWatch", true));
-            this.dateTimePickerCinema.Location = new System.Drawing.Point(10, 135);
+            this.dateTimePickerCinema.Location = new System.Drawing.Point(10, 137);
             this.dateTimePickerCinema.MaxDate = new System.DateTime(2022, 9, 7, 0, 0, 0, 0);
             this.dateTimePickerCinema.MinDate = new System.DateTime(1949, 12, 31, 0, 0, 0, 0);
             this.dateTimePickerCinema.Name = "dateTimePickerCinema";
@@ -105,12 +105,12 @@ namespace ListWatchedMoviesAndSeries
             this.labelGrade.AutoSize = true;
             this.labelGrade.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelGrade.Depth = 0;
-            this.labelGrade.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelGrade.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.labelGrade.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelGrade.Location = new System.Drawing.Point(120, 100);
             this.labelGrade.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelGrade.Name = "labelGrade";
-            this.labelGrade.Size = new System.Drawing.Size(48, 19);
+            this.labelGrade.Size = new System.Drawing.Size(43, 19);
             this.labelGrade.TabIndex = 20;
             this.labelGrade.Text = "Grade";
             // 
@@ -119,12 +119,12 @@ namespace ListWatchedMoviesAndSeries
             this.labelName.AutoSize = true;
             this.labelName.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelName.Depth = 0;
-            this.labelName.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelName.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.labelName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelName.Location = new System.Drawing.Point(330, 70);
             this.labelName.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(49, 19);
+            this.labelName.Size = new System.Drawing.Size(43, 19);
             this.labelName.TabIndex = 21;
             this.labelName.Text = "Name";
             // 
@@ -133,52 +133,80 @@ namespace ListWatchedMoviesAndSeries
             this.labelNumberSeaquel.AutoSize = true;
             this.labelNumberSeaquel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelNumberSeaquel.Depth = 0;
-            this.labelNumberSeaquel.Font = new System.Drawing.Font("Roboto", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelNumberSeaquel.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.labelNumberSeaquel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelNumberSeaquel.Location = new System.Drawing.Point(330, 100);
             this.labelNumberSeaquel.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelNumberSeaquel.Name = "labelNumberSeaquel";
-            this.labelNumberSeaquel.Size = new System.Drawing.Size(63, 19);
+            this.labelNumberSeaquel.Size = new System.Drawing.Size(58, 19);
             this.labelNumberSeaquel.TabIndex = 22;
             this.labelNumberSeaquel.Text = "Seaquel";
             // 
             // btnClearTxtCinema
             // 
+            this.btnClearTxtCinema.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnClearTxtCinema.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnClearTxtCinema.Depth = 0;
-            this.btnClearTxtCinema.Location = new System.Drawing.Point(250, 135);
+            this.btnClearTxtCinema.HighEmphasis = true;
+            this.btnClearTxtCinema.Icon = null;
+            this.btnClearTxtCinema.Location = new System.Drawing.Point(251, 130);
+            this.btnClearTxtCinema.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClearTxtCinema.MaximumSize = new System.Drawing.Size(70, 30);
+            this.btnClearTxtCinema.MinimumSize = new System.Drawing.Size(70, 30);
             this.btnClearTxtCinema.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnClearTxtCinema.Name = "btnClearTxtCinema";
-            this.btnClearTxtCinema.Primary = true;
-            this.btnClearTxtCinema.Size = new System.Drawing.Size(70, 25);
+            this.btnClearTxtCinema.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnClearTxtCinema.Size = new System.Drawing.Size(70, 30);
             this.btnClearTxtCinema.TabIndex = 23;
             this.btnClearTxtCinema.Text = "Clear";
+            this.btnClearTxtCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnClearTxtCinema.UseAccentColor = false;
             this.btnClearTxtCinema.UseVisualStyleBackColor = true;
             this.btnClearTxtCinema.Click += new System.EventHandler(this.BtnClearTxtCinema_Click);
             // 
             // btnAddCinema
             // 
+            this.btnAddCinema.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAddCinema.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnAddCinema.Depth = 0;
-            this.btnAddCinema.Location = new System.Drawing.Point(175, 135);
+            this.btnAddCinema.HighEmphasis = true;
+            this.btnAddCinema.Icon = null;
+            this.btnAddCinema.Location = new System.Drawing.Point(175, 130);
+            this.btnAddCinema.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAddCinema.MaximumSize = new System.Drawing.Size(70, 30);
+            this.btnAddCinema.MinimumSize = new System.Drawing.Size(70, 30);
             this.btnAddCinema.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAddCinema.Name = "btnAddCinema";
-            this.btnAddCinema.Primary = true;
-            this.btnAddCinema.Size = new System.Drawing.Size(70, 25);
+            this.btnAddCinema.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnAddCinema.Size = new System.Drawing.Size(70, 30);
             this.btnAddCinema.TabIndex = 25;
             this.btnAddCinema.Text = "Add";
+            this.btnAddCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnAddCinema.UseAccentColor = false;
             this.btnAddCinema.UseVisualStyleBackColor = true;
             this.btnAddCinema.Click += new System.EventHandler(this.BtnAddCinema_Click);
             // 
             // btnBackFormCinema
             // 
+            this.btnBackFormCinema.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnBackFormCinema.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnBackFormCinema.Depth = 0;
-            this.btnBackFormCinema.Location = new System.Drawing.Point(330, 125);
+            this.btnBackFormCinema.HighEmphasis = true;
+            this.btnBackFormCinema.Icon = null;
+            this.btnBackFormCinema.Location = new System.Drawing.Point(330, 130);
+            this.btnBackFormCinema.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBackFormCinema.MaximumSize = new System.Drawing.Size(60, 30);
+            this.btnBackFormCinema.MinimumSize = new System.Drawing.Size(60, 30);
             this.btnBackFormCinema.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnBackFormCinema.Name = "btnBackFormCinema";
-            this.btnBackFormCinema.Primary = true;
-            this.btnBackFormCinema.Size = new System.Drawing.Size(60, 35);
+            this.btnBackFormCinema.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnBackFormCinema.Size = new System.Drawing.Size(60, 30);
             this.btnBackFormCinema.TabIndex = 26;
-            this.btnBackFormCinema.Text = "Clear";
+            this.btnBackFormCinema.Text = "Close";
+            this.btnBackFormCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnBackFormCinema.UseAccentColor = false;
             this.btnBackFormCinema.UseVisualStyleBackColor = true;
+            this.btnBackFormCinema.Click += new System.EventHandler(this.BtnBackFormCinema_Click);
             // 
             // AddCinemaForm
             // 
@@ -199,7 +227,7 @@ namespace ListWatchedMoviesAndSeries
             this.MaximumSize = new System.Drawing.Size(400, 170);
             this.MinimumSize = new System.Drawing.Size(400, 170);
             this.Name = "AddCinemaForm";
-            this.Text = "Series";
+            this.Text = "Add Cinema";
             ((System.ComponentModel.ISupportInitialize)(this.cinemaModelsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSeaquel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.watchDetailBindingSource)).EndInit();
@@ -219,8 +247,8 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialLabel labelGrade;
         private MaterialSkin.Controls.MaterialLabel labelName;
         private MaterialSkin.Controls.MaterialLabel labelNumberSeaquel;
-        private MaterialSkin.Controls.MaterialRaisedButton btnClearTxtCinema;
-        private MaterialSkin.Controls.MaterialRaisedButton btnAddCinema;
-        private MaterialSkin.Controls.MaterialRaisedButton btnBackFormCinema;
+        private MaterialSkin.Controls.MaterialButton btnClearTxtCinema;
+        private MaterialSkin.Controls.MaterialButton btnAddCinema;
+        private MaterialSkin.Controls.MaterialButton btnBackFormCinema;
     }
 }

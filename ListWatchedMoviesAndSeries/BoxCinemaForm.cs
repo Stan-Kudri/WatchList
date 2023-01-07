@@ -35,7 +35,7 @@ namespace ListWatchedMoviesAndSeries
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple900, Primary.Blue800, Primary.Yellow800, Accent.LightBlue100, TextShade.WHITE);
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple800, Primary.DeepPurple600, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
 
             var builder = new DbContextOptionsBuilder().UseSqlite("Data Source=app.db");
             _db = new WatchCinemaDbContext(builder.Options);
@@ -77,6 +77,7 @@ namespace ListWatchedMoviesAndSeries
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Movie))
             {
+                form.Text = "Add Movie";
                 form.ShowDialog();
             }
         }
@@ -85,6 +86,7 @@ namespace ListWatchedMoviesAndSeries
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Series))
             {
+                form.Text = "Add Series";
                 form.ShowDialog();
             }
         }
@@ -93,6 +95,7 @@ namespace ListWatchedMoviesAndSeries
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Anime))
             {
+                form.Text = "Add Anime";
                 form.ShowDialog();
             }
         }
@@ -101,6 +104,7 @@ namespace ListWatchedMoviesAndSeries
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Cartoon))
             {
+                form.Text = "Add Cartoon";
                 form.ShowDialog();
             }
         }
