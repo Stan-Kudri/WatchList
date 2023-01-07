@@ -1,13 +1,14 @@
 using Core.Model.Item;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
+using MaterialSkin.Controls;
 
 namespace ListWatchedMoviesAndSeries
 {
     /// <summary>
     /// This class Form performs an function Add Cinema item.
     /// </summary>
-    public partial class AddCinemaForm : Form
+    public partial class AddCinemaForm : MaterialForm
     {
         private readonly BoxCinemaForm _box;
         private readonly TypeCinema _type;
