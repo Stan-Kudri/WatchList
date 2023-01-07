@@ -40,9 +40,7 @@ namespace ListWatchedMoviesAndSeries
             this.GradeCinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdCinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmbFilterType = new System.Windows.Forms.ComboBox();
             this.filterModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cmbFilterWatch = new System.Windows.Forms.ComboBox();
             this.btnFormMovie = new MaterialSkin.Controls.MaterialButton();
             this.btnFormSeries = new MaterialSkin.Controls.MaterialButton();
             this.btnFormAnime = new MaterialSkin.Controls.MaterialButton();
@@ -52,6 +50,8 @@ namespace ListWatchedMoviesAndSeries
             this.btnReplaceData = new MaterialSkin.Controls.MaterialButton();
             this.btnUseFilter = new MaterialSkin.Controls.MaterialButton();
             this.btnCancleFilter = new MaterialSkin.Controls.MaterialButton();
+            this.cmbFilterType = new MaterialSkin.Controls.MaterialComboBox();
+            this.cmbFilterWatch = new MaterialSkin.Controls.MaterialComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterModelBindingSource)).BeginInit();
@@ -130,31 +130,9 @@ namespace ListWatchedMoviesAndSeries
             this.Cinema.ReadOnly = true;
             this.Cinema.Visible = false;
             // 
-            // cmbFilterType
-            // 
-            this.cmbFilterType.BackColor = System.Drawing.Color.PowderBlue;
-            this.cmbFilterType.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.filterModelBindingSource, "Type", true));
-            this.cmbFilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilterType.FormattingEnabled = true;
-            this.cmbFilterType.Location = new System.Drawing.Point(5, 420);
-            this.cmbFilterType.Name = "cmbFilterType";
-            this.cmbFilterType.Size = new System.Drawing.Size(210, 23);
-            this.cmbFilterType.TabIndex = 17;
-            // 
             // filterModelBindingSource
             // 
             this.filterModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Model.FilterModel);
-            // 
-            // cmbFilterWatch
-            // 
-            this.cmbFilterWatch.BackColor = System.Drawing.Color.PowderBlue;
-            this.cmbFilterWatch.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.filterModelBindingSource, "Watch", true));
-            this.cmbFilterWatch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilterWatch.FormattingEnabled = true;
-            this.cmbFilterWatch.Location = new System.Drawing.Point(225, 420);
-            this.cmbFilterWatch.Name = "cmbFilterWatch";
-            this.cmbFilterWatch.Size = new System.Drawing.Size(210, 23);
-            this.cmbFilterWatch.TabIndex = 18;
             // 
             // btnFormMovie
             // 
@@ -320,12 +298,12 @@ namespace ListWatchedMoviesAndSeries
             this.btnUseFilter.Icon = null;
             this.btnUseFilter.Location = new System.Drawing.Point(445, 410);
             this.btnUseFilter.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnUseFilter.MaximumSize = new System.Drawing.Size(80, 30);
-            this.btnUseFilter.MinimumSize = new System.Drawing.Size(80, 30);
+            this.btnUseFilter.MaximumSize = new System.Drawing.Size(80, 50);
+            this.btnUseFilter.MinimumSize = new System.Drawing.Size(80, 50);
             this.btnUseFilter.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnUseFilter.Name = "btnUseFilter";
             this.btnUseFilter.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnUseFilter.Size = new System.Drawing.Size(80, 30);
+            this.btnUseFilter.Size = new System.Drawing.Size(80, 50);
             this.btnUseFilter.TabIndex = 39;
             this.btnUseFilter.Text = "Use Filter";
             this.btnUseFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -342,12 +320,12 @@ namespace ListWatchedMoviesAndSeries
             this.btnCancleFilter.Icon = null;
             this.btnCancleFilter.Location = new System.Drawing.Point(528, 410);
             this.btnCancleFilter.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCancleFilter.MaximumSize = new System.Drawing.Size(115, 30);
-            this.btnCancleFilter.MinimumSize = new System.Drawing.Size(115, 30);
+            this.btnCancleFilter.MaximumSize = new System.Drawing.Size(115, 50);
+            this.btnCancleFilter.MinimumSize = new System.Drawing.Size(115, 50);
             this.btnCancleFilter.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCancleFilter.Name = "btnCancleFilter";
             this.btnCancleFilter.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCancleFilter.Size = new System.Drawing.Size(115, 30);
+            this.btnCancleFilter.Size = new System.Drawing.Size(115, 50);
             this.btnCancleFilter.TabIndex = 40;
             this.btnCancleFilter.Text = "Cancle Filter";
             this.btnCancleFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -355,12 +333,62 @@ namespace ListWatchedMoviesAndSeries
             this.btnCancleFilter.UseVisualStyleBackColor = true;
             this.btnCancleFilter.Click += new System.EventHandler(this.BtnCancleFilter_Click);
             // 
+            // cmbFilterType
+            // 
+            this.cmbFilterType.AutoResize = false;
+            this.cmbFilterType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmbFilterType.Depth = 0;
+            this.cmbFilterType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.cmbFilterType.DropDownHeight = 174;
+            this.cmbFilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFilterType.DropDownWidth = 121;
+            this.cmbFilterType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cmbFilterType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.cmbFilterType.FormattingEnabled = true;
+            this.cmbFilterType.IntegralHeight = false;
+            this.cmbFilterType.ItemHeight = 43;
+            this.cmbFilterType.Location = new System.Drawing.Point(5, 414);
+            this.cmbFilterType.MaxDropDownItems = 4;
+            this.cmbFilterType.MaximumSize = new System.Drawing.Size(210, 0);
+            this.cmbFilterType.MinimumSize = new System.Drawing.Size(210, 0);
+            this.cmbFilterType.MouseState = MaterialSkin.MouseState.OUT;
+            this.cmbFilterType.Name = "cmbFilterType";
+            this.cmbFilterType.Size = new System.Drawing.Size(210, 49);
+            this.cmbFilterType.StartIndex = 0;
+            this.cmbFilterType.TabIndex = 41;
+            // 
+            // cmbFilterWatch
+            // 
+            this.cmbFilterWatch.AutoResize = false;
+            this.cmbFilterWatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmbFilterWatch.Depth = 0;
+            this.cmbFilterWatch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.cmbFilterWatch.DropDownHeight = 174;
+            this.cmbFilterWatch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFilterWatch.DropDownWidth = 121;
+            this.cmbFilterWatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.cmbFilterWatch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.cmbFilterWatch.FormattingEnabled = true;
+            this.cmbFilterWatch.IntegralHeight = false;
+            this.cmbFilterWatch.ItemHeight = 43;
+            this.cmbFilterWatch.Location = new System.Drawing.Point(225, 414);
+            this.cmbFilterWatch.MaxDropDownItems = 4;
+            this.cmbFilterWatch.MaximumSize = new System.Drawing.Size(210, 0);
+            this.cmbFilterWatch.MinimumSize = new System.Drawing.Size(210, 0);
+            this.cmbFilterWatch.MouseState = MaterialSkin.MouseState.OUT;
+            this.cmbFilterWatch.Name = "cmbFilterWatch";
+            this.cmbFilterWatch.Size = new System.Drawing.Size(210, 49);
+            this.cmbFilterWatch.StartIndex = 0;
+            this.cmbFilterWatch.TabIndex = 42;
+            // 
             // BoxCinemaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(650, 450);
+            this.ClientSize = new System.Drawing.Size(650, 465);
+            this.Controls.Add(this.cmbFilterWatch);
+            this.Controls.Add(this.cmbFilterType);
             this.Controls.Add(this.btnCancleFilter);
             this.Controls.Add(this.btnUseFilter);
             this.Controls.Add(this.btnReplaceData);
@@ -370,12 +398,10 @@ namespace ListWatchedMoviesAndSeries
             this.Controls.Add(this.btnFormAnime);
             this.Controls.Add(this.btnFormSeries);
             this.Controls.Add(this.btnFormMovie);
-            this.Controls.Add(this.cmbFilterWatch);
-            this.Controls.Add(this.cmbFilterType);
             this.Controls.Add(this.dgvCinema);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(650, 450);
-            this.MinimumSize = new System.Drawing.Size(650, 450);
+            this.MaximumSize = new System.Drawing.Size(650, 465);
+            this.MinimumSize = new System.Drawing.Size(650, 465);
             this.Name = "BoxCinemaForm";
             this.Text = "BoxCinema";
             ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).EndInit();
@@ -390,8 +416,6 @@ namespace ListWatchedMoviesAndSeries
         private BindingSource cinemaBindingSource;
         private OpenFileDialog openFileDialog;
         private DataGridView dgvCinema;
-        private ComboBox cmbFilterType;
-        private ComboBox cmbFilterWatch;
         private BindingSource filterModelBindingSource;
         private MaterialSkin.Controls.MaterialButton materialButton1asddasdasdasdddddddddddddddd;
         private MaterialSkin.Controls.MaterialButton btnFormMovie;
@@ -410,5 +434,7 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialButton btnReplaceData;
         private MaterialSkin.Controls.MaterialButton btnUseFilter;
         private MaterialSkin.Controls.MaterialButton btnCancleFilter;
+        private MaterialSkin.Controls.MaterialComboBox cmbFilterType;
+        private MaterialSkin.Controls.MaterialComboBox cmbFilterWatch;
     }
 }
