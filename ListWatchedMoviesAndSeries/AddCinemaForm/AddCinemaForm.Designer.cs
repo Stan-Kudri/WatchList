@@ -78,7 +78,7 @@ namespace ListWatchedMoviesAndSeries
             this.dateTimePickerCinema.Size = new System.Drawing.Size(158, 23);
             this.dateTimePickerCinema.TabIndex = 13;
             this.dateTimePickerCinema.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
-            this.dateTimePickerCinema.ValueChanged += new System.EventHandler(this.DateTimePickerCinema_ValueChanged);
+            this.dateTimePickerCinema.ValueChanged += new System.EventHandler(this.DtpCinema_ValueChanged);
             // 
             // watchDetailBindingSource
             // 

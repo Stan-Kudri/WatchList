@@ -47,7 +47,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
-        private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
+        private void DtpCinema_ValueChanged(object sender, EventArgs e)
         {
             numericGradeCinema.ReadOnly = false;
             numericGradeCinema.Enabled = true;
