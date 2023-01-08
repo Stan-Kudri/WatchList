@@ -1,13 +1,14 @@
 using Core.Model.Item;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
+using MaterialSkin.Controls;
 
 namespace ListWatchedMoviesAndSeries
 {
     /// <summary>
     /// This class Form performs an function Add Cinema item.
     /// </summary>
-    public partial class AddCinemaForm : Form
+    public partial class AddCinemaForm : MaterialForm
     {
         private readonly BoxCinemaForm _box;
         private readonly TypeCinema _type;
@@ -46,7 +47,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
-        private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
+        private void DtpCinema_ValueChanged(object sender, EventArgs e)
         {
             numericGradeCinema.ReadOnly = false;
             numericGradeCinema.Enabled = true;

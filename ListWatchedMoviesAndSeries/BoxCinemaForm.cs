@@ -5,6 +5,7 @@ using ListWatchedMoviesAndSeries.Model;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
+using MaterialSkin.Controls;
 using Microsoft.EntityFrameworkCore;
 
 namespace ListWatchedMoviesAndSeries
@@ -12,7 +13,7 @@ namespace ListWatchedMoviesAndSeries
     /// <summary>
     /// This is the main form class.
     /// </summary>
-    public partial class BoxCinemaForm : Form
+    public partial class BoxCinemaForm : MaterialForm
     {
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
@@ -70,6 +71,7 @@ namespace ListWatchedMoviesAndSeries
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Movie))
             {
+                form.Text = "Add Movie";
                 form.ShowDialog();
             }
         }
@@ -78,6 +80,7 @@ namespace ListWatchedMoviesAndSeries
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Series))
             {
+                form.Text = "Add Series";
                 form.ShowDialog();
             }
         }
@@ -86,6 +89,7 @@ namespace ListWatchedMoviesAndSeries
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Anime))
             {
+                form.Text = "Add Anime";
                 form.ShowDialog();
             }
         }
@@ -94,6 +98,7 @@ namespace ListWatchedMoviesAndSeries
         {
             using (var form = new AddCinemaForm(this, TypeCinema.Cartoon))
             {
+                form.Text = "Add Cartoon";
                 form.ShowDialog();
             }
         }

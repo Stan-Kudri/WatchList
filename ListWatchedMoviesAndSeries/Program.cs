@@ -1,3 +1,5 @@
+using MaterialSkin;
+
 namespace ListWatchedMoviesAndSeries
 {
     internal static class Program
@@ -12,6 +14,11 @@ namespace ListWatchedMoviesAndSeries
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new BoxCinemaForm());
+
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(new BoxCinemaForm());
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple800, Primary.DeepPurple600, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
         }
     }
 }
