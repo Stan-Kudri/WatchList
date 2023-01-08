@@ -1,4 +1,5 @@
 using MaterialSkin;
+
 namespace ListWatchedMoviesAndSeries
 {
     internal static class Program
