@@ -5,7 +5,6 @@ using ListWatchedMoviesAndSeries.Model;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
-using MaterialSkin;
 using MaterialSkin.Controls;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,11 +30,6 @@ namespace ListWatchedMoviesAndSeries
         public BoxCinemaForm()
         {
             InitializeComponent();
-
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple800, Primary.DeepPurple600, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
 
             var builder = new DbContextOptionsBuilder().UseSqlite("Data Source=app.db");
             _db = new WatchCinemaDbContext(builder.Options);
