@@ -1,5 +1,4 @@
-using Core.ItemFilter;
-using Core.Model;
+using Core.PageItem;
 using Core.Repository.DbContex;
 using ListWatchedMoviesAndSeries.Models;
 
@@ -9,10 +8,6 @@ namespace ListWatchedMoviesAndSeries.Repository
     {
         private readonly WatchCinemaDbContext _db;
 
-        private Filter _pastFilter = new Filter();
-
-        public Filter PastFilter => _pastFilter;
-
         public WatchItemRepository(WatchCinemaDbContext db)
         {
             _db = db;
@@ -20,19 +15,10 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         public List<WatchItem> GetAll() => _db.WatchItem.ToList() ?? new List<WatchItem>();
 
-        public List<WatchItem> GetItemByFilter(Filter filter)
+        public PagedList<WatchItem> GetPagedList(WatchItemSearchRequest searchRequest)
         {
-            var listByFilter = new List<WatchItem>();
-
-            IQueryable<WatchItem> itemIQuer = _db.WatchItem;
-
-            var item = itemIQuer
-                .Where(x => x.Type == filter.TypeFilter.Type || filter.TypeFilter.Type == TypeCinemaFilter.AllCinema)
-                .Where(x => x.Status == filter.WatchFilter.Status || filter.WatchFilter.Status == WatchCinemaFilter.AllCinema)
-                .ToList();
-
-            _pastFilter = filter;
-            return item;
+            var query = searchRequest.Apply(_db.WatchItem).OrderBy(x => x.Name);
+            return new PagedList<WatchItem>(query, searchRequest.Page.Number, searchRequest.Page.Size);
         }
 
         public void Add(WatchItem item)

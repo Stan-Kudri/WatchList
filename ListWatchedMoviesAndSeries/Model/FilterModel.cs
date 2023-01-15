@@ -26,11 +26,9 @@ namespace ListWatchedMoviesAndSeries.Model
             set => SetField(ref _watch, value);
         }
 
-        public Filter GetFilter()
+        public WatchItemFilter GetFilter()
         {
-            return new Filter(Type, Watch);
+            return new WatchItemFilter(Type, Watch);
         }
-
-        public bool HasFilter() => Type != TypeCinemaFilter.AllCinema || Watch != WatchCinemaFilter.AllCinema;
     }
 }

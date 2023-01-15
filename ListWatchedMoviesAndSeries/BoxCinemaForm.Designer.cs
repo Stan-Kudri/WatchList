@@ -40,7 +40,6 @@ namespace ListWatchedMoviesAndSeries
             this.GradeCinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdCinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cinema = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.filterModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnFormMovie = new MaterialSkin.Controls.MaterialButton();
             this.btnFormSeries = new MaterialSkin.Controls.MaterialButton();
             this.btnFormAnime = new MaterialSkin.Controls.MaterialButton();
@@ -51,10 +50,20 @@ namespace ListWatchedMoviesAndSeries
             this.btnUseFilter = new MaterialSkin.Controls.MaterialButton();
             this.btnCancleFilter = new MaterialSkin.Controls.MaterialButton();
             this.cmbFilterType = new MaterialSkin.Controls.MaterialComboBox();
+            this.filterModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cmbFilterWatch = new MaterialSkin.Controls.MaterialComboBox();
+            this.cmbPageSize = new System.Windows.Forms.ComboBox();
+            this.pageModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnBackPage = new MaterialSkin.Controls.MaterialButton();
+            this.btnNextPage = new MaterialSkin.Controls.MaterialButton();
+            this.btnStartPage = new MaterialSkin.Controls.MaterialButton();
+            this.btnEndPage = new MaterialSkin.Controls.MaterialButton();
+            this.tbPage = new System.Windows.Forms.TextBox();
+            this.labelTotalPage = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterModelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pageModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -72,13 +81,13 @@ namespace ListWatchedMoviesAndSeries
             this.GradeCinema,
             this.IdCinema,
             this.Cinema});
-            this.dgvCinema.Location = new System.Drawing.Point(5, 70);
-            this.dgvCinema.MaximumSize = new System.Drawing.Size(640, 270);
-            this.dgvCinema.MinimumSize = new System.Drawing.Size(640, 270);
+            this.dgvCinema.Location = new System.Drawing.Point(5, 120);
+            this.dgvCinema.MaximumSize = new System.Drawing.Size(640, 240);
+            this.dgvCinema.MinimumSize = new System.Drawing.Size(640, 240);
             this.dgvCinema.Name = "dgvCinema";
             this.dgvCinema.ReadOnly = true;
             this.dgvCinema.RowTemplate.Height = 25;
-            this.dgvCinema.Size = new System.Drawing.Size(640, 270);
+            this.dgvCinema.Size = new System.Drawing.Size(640, 240);
             this.dgvCinema.TabIndex = 16;
             this.dgvCinema.Tag = "Cinema";
             // 
@@ -130,10 +139,6 @@ namespace ListWatchedMoviesAndSeries
             this.Cinema.ReadOnly = true;
             this.Cinema.Visible = false;
             // 
-            // filterModelBindingSource
-            // 
-            this.filterModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Model.FilterModel);
-            // 
             // btnFormMovie
             // 
             this.btnFormMovie.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -141,7 +146,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormMovie.Depth = 0;
             this.btnFormMovie.HighEmphasis = true;
             this.btnFormMovie.Icon = null;
-            this.btnFormMovie.Location = new System.Drawing.Point(5, 345);
+            this.btnFormMovie.Location = new System.Drawing.Point(5, 395);
             this.btnFormMovie.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnFormMovie.MaximumSize = new System.Drawing.Size(100, 30);
             this.btnFormMovie.MinimumSize = new System.Drawing.Size(100, 30);
@@ -163,7 +168,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormSeries.Depth = 0;
             this.btnFormSeries.HighEmphasis = true;
             this.btnFormSeries.Icon = null;
-            this.btnFormSeries.Location = new System.Drawing.Point(115, 345);
+            this.btnFormSeries.Location = new System.Drawing.Point(115, 395);
             this.btnFormSeries.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnFormSeries.MaximumSize = new System.Drawing.Size(100, 30);
             this.btnFormSeries.MinimumSize = new System.Drawing.Size(100, 30);
@@ -185,7 +190,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormAnime.Depth = 0;
             this.btnFormAnime.HighEmphasis = true;
             this.btnFormAnime.Icon = null;
-            this.btnFormAnime.Location = new System.Drawing.Point(225, 345);
+            this.btnFormAnime.Location = new System.Drawing.Point(225, 395);
             this.btnFormAnime.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnFormAnime.MaximumSize = new System.Drawing.Size(100, 30);
             this.btnFormAnime.MinimumSize = new System.Drawing.Size(100, 30);
@@ -208,7 +213,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormCartoon.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnFormCartoon.HighEmphasis = true;
             this.btnFormCartoon.Icon = null;
-            this.btnFormCartoon.Location = new System.Drawing.Point(335, 345);
+            this.btnFormCartoon.Location = new System.Drawing.Point(335, 395);
             this.btnFormCartoon.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnFormCartoon.MaximumSize = new System.Drawing.Size(100, 30);
             this.btnFormCartoon.MinimumSize = new System.Drawing.Size(100, 30);
@@ -230,7 +235,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnEditCinema.Depth = 0;
             this.btnEditCinema.HighEmphasis = true;
             this.btnEditCinema.Icon = null;
-            this.btnEditCinema.Location = new System.Drawing.Point(5, 380);
+            this.btnEditCinema.Location = new System.Drawing.Point(5, 430);
             this.btnEditCinema.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnEditCinema.MaximumSize = new System.Drawing.Size(210, 30);
             this.btnEditCinema.MinimumSize = new System.Drawing.Size(210, 30);
@@ -252,7 +257,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnDeliteMovie.Depth = 0;
             this.btnDeliteMovie.HighEmphasis = true;
             this.btnDeliteMovie.Icon = null;
-            this.btnDeliteMovie.Location = new System.Drawing.Point(225, 380);
+            this.btnDeliteMovie.Location = new System.Drawing.Point(225, 430);
             this.btnDeliteMovie.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnDeliteMovie.MaximumSize = new System.Drawing.Size(210, 30);
             this.btnDeliteMovie.MinimumSize = new System.Drawing.Size(210, 30);
@@ -274,14 +279,14 @@ namespace ListWatchedMoviesAndSeries
             this.btnReplaceData.Depth = 0;
             this.btnReplaceData.HighEmphasis = true;
             this.btnReplaceData.Icon = null;
-            this.btnReplaceData.Location = new System.Drawing.Point(445, 345);
+            this.btnReplaceData.Location = new System.Drawing.Point(445, 395);
             this.btnReplaceData.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnReplaceData.MaximumSize = new System.Drawing.Size(200, 60);
-            this.btnReplaceData.MinimumSize = new System.Drawing.Size(200, 60);
+            this.btnReplaceData.MaximumSize = new System.Drawing.Size(200, 65);
+            this.btnReplaceData.MinimumSize = new System.Drawing.Size(200, 65);
             this.btnReplaceData.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnReplaceData.Name = "btnReplaceData";
             this.btnReplaceData.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReplaceData.Size = new System.Drawing.Size(200, 60);
+            this.btnReplaceData.Size = new System.Drawing.Size(200, 65);
             this.btnReplaceData.TabIndex = 38;
             this.btnReplaceData.Text = "Replace data from file ";
             this.btnReplaceData.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -296,14 +301,14 @@ namespace ListWatchedMoviesAndSeries
             this.btnUseFilter.Depth = 0;
             this.btnUseFilter.HighEmphasis = true;
             this.btnUseFilter.Icon = null;
-            this.btnUseFilter.Location = new System.Drawing.Point(445, 410);
+            this.btnUseFilter.Location = new System.Drawing.Point(445, 70);
             this.btnUseFilter.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnUseFilter.MaximumSize = new System.Drawing.Size(80, 50);
-            this.btnUseFilter.MinimumSize = new System.Drawing.Size(80, 50);
+            this.btnUseFilter.MaximumSize = new System.Drawing.Size(80, 45);
+            this.btnUseFilter.MinimumSize = new System.Drawing.Size(80, 45);
             this.btnUseFilter.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnUseFilter.Name = "btnUseFilter";
             this.btnUseFilter.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnUseFilter.Size = new System.Drawing.Size(80, 50);
+            this.btnUseFilter.Size = new System.Drawing.Size(80, 45);
             this.btnUseFilter.TabIndex = 39;
             this.btnUseFilter.Text = "Use Filter";
             this.btnUseFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -318,14 +323,14 @@ namespace ListWatchedMoviesAndSeries
             this.btnCancleFilter.Depth = 0;
             this.btnCancleFilter.HighEmphasis = true;
             this.btnCancleFilter.Icon = null;
-            this.btnCancleFilter.Location = new System.Drawing.Point(528, 410);
+            this.btnCancleFilter.Location = new System.Drawing.Point(530, 70);
             this.btnCancleFilter.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCancleFilter.MaximumSize = new System.Drawing.Size(115, 50);
-            this.btnCancleFilter.MinimumSize = new System.Drawing.Size(115, 50);
+            this.btnCancleFilter.MaximumSize = new System.Drawing.Size(115, 45);
+            this.btnCancleFilter.MinimumSize = new System.Drawing.Size(115, 45);
             this.btnCancleFilter.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCancleFilter.Name = "btnCancleFilter";
             this.btnCancleFilter.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCancleFilter.Size = new System.Drawing.Size(115, 50);
+            this.btnCancleFilter.Size = new System.Drawing.Size(115, 45);
             this.btnCancleFilter.TabIndex = 40;
             this.btnCancleFilter.Text = "Cancle Filter";
             this.btnCancleFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -337,6 +342,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.cmbFilterType.AutoResize = false;
             this.cmbFilterType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmbFilterType.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.filterModelBindingSource, "Type", true));
             this.cmbFilterType.Depth = 0;
             this.cmbFilterType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.cmbFilterType.DropDownHeight = 174;
@@ -347,7 +353,7 @@ namespace ListWatchedMoviesAndSeries
             this.cmbFilterType.FormattingEnabled = true;
             this.cmbFilterType.IntegralHeight = false;
             this.cmbFilterType.ItemHeight = 43;
-            this.cmbFilterType.Location = new System.Drawing.Point(5, 414);
+            this.cmbFilterType.Location = new System.Drawing.Point(5, 70);
             this.cmbFilterType.MaxDropDownItems = 4;
             this.cmbFilterType.MaximumSize = new System.Drawing.Size(210, 0);
             this.cmbFilterType.MinimumSize = new System.Drawing.Size(210, 0);
@@ -357,10 +363,15 @@ namespace ListWatchedMoviesAndSeries
             this.cmbFilterType.StartIndex = 0;
             this.cmbFilterType.TabIndex = 41;
             // 
+            // filterModelBindingSource
+            // 
+            this.filterModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Model.FilterModel);
+            // 
             // cmbFilterWatch
             // 
             this.cmbFilterWatch.AutoResize = false;
             this.cmbFilterWatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmbFilterWatch.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.filterModelBindingSource, "Watch", true));
             this.cmbFilterWatch.Depth = 0;
             this.cmbFilterWatch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.cmbFilterWatch.DropDownHeight = 174;
@@ -371,7 +382,7 @@ namespace ListWatchedMoviesAndSeries
             this.cmbFilterWatch.FormattingEnabled = true;
             this.cmbFilterWatch.IntegralHeight = false;
             this.cmbFilterWatch.ItemHeight = 43;
-            this.cmbFilterWatch.Location = new System.Drawing.Point(225, 414);
+            this.cmbFilterWatch.Location = new System.Drawing.Point(225, 70);
             this.cmbFilterWatch.MaxDropDownItems = 4;
             this.cmbFilterWatch.MaximumSize = new System.Drawing.Size(210, 0);
             this.cmbFilterWatch.MinimumSize = new System.Drawing.Size(210, 0);
@@ -381,12 +392,143 @@ namespace ListWatchedMoviesAndSeries
             this.cmbFilterWatch.StartIndex = 0;
             this.cmbFilterWatch.TabIndex = 42;
             // 
+            // cmbPageSize
+            // 
+            this.cmbPageSize.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.pageModelBindingSource, "Size", true));
+            this.cmbPageSize.FormattingEnabled = true;
+            this.cmbPageSize.Location = new System.Drawing.Point(5, 365);
+            this.cmbPageSize.Name = "cmbPageSize";
+            this.cmbPageSize.Size = new System.Drawing.Size(120, 23);
+            this.cmbPageSize.TabIndex = 43;
+            this.cmbPageSize.SelectedIndexChanged += new System.EventHandler(this.СmbPageSize_SelectedIndexChanged);
+            // 
+            // pageModelBindingSource
+            // 
+            this.pageModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Model.PageModel);
+            // 
+            // btnBackPage
+            // 
+            this.btnBackPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnBackPage.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnBackPage.Depth = 0;
+            this.btnBackPage.HighEmphasis = true;
+            this.btnBackPage.Icon = null;
+            this.btnBackPage.Location = new System.Drawing.Point(270, 365);
+            this.btnBackPage.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnBackPage.MaximumSize = new System.Drawing.Size(20, 20);
+            this.btnBackPage.MinimumSize = new System.Drawing.Size(20, 20);
+            this.btnBackPage.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnBackPage.Name = "btnBackPage";
+            this.btnBackPage.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnBackPage.Size = new System.Drawing.Size(20, 20);
+            this.btnBackPage.TabIndex = 44;
+            this.btnBackPage.Text = "<";
+            this.btnBackPage.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnBackPage.UseAccentColor = false;
+            this.btnBackPage.UseVisualStyleBackColor = true;
+            this.btnBackPage.Click += new System.EventHandler(this.BtnBackPage_Click);
+            // 
+            // btnNextPage
+            // 
+            this.btnNextPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnNextPage.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnNextPage.Depth = 0;
+            this.btnNextPage.HighEmphasis = true;
+            this.btnNextPage.Icon = null;
+            this.btnNextPage.Location = new System.Drawing.Point(370, 365);
+            this.btnNextPage.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnNextPage.MaximumSize = new System.Drawing.Size(20, 20);
+            this.btnNextPage.MinimumSize = new System.Drawing.Size(20, 20);
+            this.btnNextPage.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnNextPage.Name = "btnNextPage";
+            this.btnNextPage.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnNextPage.Size = new System.Drawing.Size(20, 20);
+            this.btnNextPage.TabIndex = 45;
+            this.btnNextPage.Text = ">";
+            this.btnNextPage.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnNextPage.UseAccentColor = false;
+            this.btnNextPage.UseVisualStyleBackColor = true;
+            this.btnNextPage.Click += new System.EventHandler(this.BtnNextPage_Click);
+            // 
+            // btnStartPage
+            // 
+            this.btnStartPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnStartPage.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnStartPage.Depth = 0;
+            this.btnStartPage.HighEmphasis = true;
+            this.btnStartPage.Icon = null;
+            this.btnStartPage.Location = new System.Drawing.Point(245, 365);
+            this.btnStartPage.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnStartPage.MaximumSize = new System.Drawing.Size(20, 20);
+            this.btnStartPage.MinimumSize = new System.Drawing.Size(20, 20);
+            this.btnStartPage.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnStartPage.Name = "btnStartPage";
+            this.btnStartPage.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnStartPage.Size = new System.Drawing.Size(20, 20);
+            this.btnStartPage.TabIndex = 49;
+            this.btnStartPage.Text = "<<";
+            this.btnStartPage.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnStartPage.UseAccentColor = false;
+            this.btnStartPage.UseVisualStyleBackColor = true;
+            this.btnStartPage.Click += new System.EventHandler(this.BtnStartPage_Click);
+            // 
+            // btnEndPage
+            // 
+            this.btnEndPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnEndPage.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnEndPage.Depth = 0;
+            this.btnEndPage.HighEmphasis = true;
+            this.btnEndPage.Icon = null;
+            this.btnEndPage.Location = new System.Drawing.Point(395, 365);
+            this.btnEndPage.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnEndPage.MaximumSize = new System.Drawing.Size(20, 20);
+            this.btnEndPage.MinimumSize = new System.Drawing.Size(20, 20);
+            this.btnEndPage.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnEndPage.Name = "btnEndPage";
+            this.btnEndPage.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnEndPage.Size = new System.Drawing.Size(20, 20);
+            this.btnEndPage.TabIndex = 50;
+            this.btnEndPage.Text = ">>";
+            this.btnEndPage.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnEndPage.UseAccentColor = false;
+            this.btnEndPage.UseVisualStyleBackColor = true;
+            this.btnEndPage.Click += new System.EventHandler(this.BtnEndPage_Click);
+            // 
+            // tbPage
+            // 
+            this.tbPage.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.pageModelBindingSource, "Number", true));
+            this.tbPage.Location = new System.Drawing.Point(295, 365);
+            this.tbPage.MaximumSize = new System.Drawing.Size(40, 20);
+            this.tbPage.MinimumSize = new System.Drawing.Size(40, 20);
+            this.tbPage.Name = "tbPage";
+            this.tbPage.Size = new System.Drawing.Size(40, 20);
+            this.tbPage.TabIndex = 51;
+            // 
+            // labelTotalPage
+            // 
+            this.labelTotalPage.AutoSize = true;
+            this.labelTotalPage.Depth = 0;
+            this.labelTotalPage.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.labelTotalPage.Location = new System.Drawing.Point(341, 366);
+            this.labelTotalPage.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelTotalPage.Name = "labelTotalPage";
+            this.labelTotalPage.Size = new System.Drawing.Size(17, 19);
+            this.labelTotalPage.TabIndex = 52;
+            this.labelTotalPage.Text = "/1";
+            // 
             // BoxCinemaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(650, 465);
+            this.Controls.Add(this.labelTotalPage);
+            this.Controls.Add(this.tbPage);
+            this.Controls.Add(this.btnEndPage);
+            this.Controls.Add(this.btnStartPage);
+            this.Controls.Add(this.btnNextPage);
+            this.Controls.Add(this.btnBackPage);
+            this.Controls.Add(this.cmbPageSize);
             this.Controls.Add(this.cmbFilterWatch);
             this.Controls.Add(this.cmbFilterType);
             this.Controls.Add(this.btnCancleFilter);
@@ -407,6 +549,7 @@ namespace ListWatchedMoviesAndSeries
             ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pageModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -416,8 +559,6 @@ namespace ListWatchedMoviesAndSeries
         private BindingSource cinemaBindingSource;
         private OpenFileDialog openFileDialog;
         private DataGridView dgvCinema;
-        private BindingSource filterModelBindingSource;
-        private MaterialSkin.Controls.MaterialButton materialButton1asddasdasdasdddddddddddddddd;
         private MaterialSkin.Controls.MaterialButton btnFormMovie;
         private MaterialSkin.Controls.MaterialButton btnFormSeries;
         private MaterialSkin.Controls.MaterialButton btnFormAnime;
@@ -436,5 +577,14 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialButton btnCancleFilter;
         private MaterialSkin.Controls.MaterialComboBox cmbFilterType;
         private MaterialSkin.Controls.MaterialComboBox cmbFilterWatch;
+        private ComboBox cmbPageSize;
+        private MaterialSkin.Controls.MaterialButton btnBackPage;
+        private MaterialSkin.Controls.MaterialButton btnNextPage;
+        private MaterialSkin.Controls.MaterialButton btnStartPage;
+        private MaterialSkin.Controls.MaterialButton btnEndPage;
+        private TextBox tbPage;
+        private BindingSource filterModelBindingSource;
+        private MaterialSkin.Controls.MaterialLabel labelTotalPage;
+        private BindingSource pageModelBindingSource;
     }
 }
