@@ -10,8 +10,6 @@ namespace ListWatchedMoviesAndSeries.Model
 
         private int _number;
 
-        public ObservableCollection<int> PageSize { get; set; } = new ObservableCollection<int> { 5, 10, 20 };
-
         public PageModel()
             : this(1, 5)
         {
@@ -22,6 +20,8 @@ namespace ListWatchedMoviesAndSeries.Model
             Number = pageNumber;
             Size = pageSize;
         }
+
+        public ObservableCollection<int> PageSize { get; set; } = new ObservableCollection<int> { 5, 10, 20 };
 
         public int Number
         {
