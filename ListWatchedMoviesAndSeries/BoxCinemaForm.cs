@@ -2,6 +2,7 @@ using Core.ItemFilter;
 using Core.Model.Item;
 using Core.PageItem;
 using Core.Repository.DbContex;
+using Core.Repository.Extension;
 using ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Model;
 using ListWatchedMoviesAndSeries.Models;
@@ -434,8 +435,7 @@ namespace ListWatchedMoviesAndSeries
         private void Search()
         {
             _searchRequest.Page = Page.GetPage();
-            _pagedList = _repository.GetPagedList(_searchRequest);
-
+            _pagedList = _db.GetPagedList(_searchRequest);
             var item = _pagedList.Items.ToList();
 
             GridClear();
@@ -450,7 +450,7 @@ namespace ListWatchedMoviesAndSeries
         {
             Page.Number = 1;
             _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Page.GetPage());
-            _pagedList = _repository.GetPagedList(_searchRequest);
+            _pagedList = _db.GetPagedList(_searchRequest);
             LoadData();
         }
 

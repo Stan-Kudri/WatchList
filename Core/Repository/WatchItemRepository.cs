@@ -1,4 +1,3 @@
-using Core.PageItem;
 using Core.Repository.DbContex;
 using ListWatchedMoviesAndSeries.Models;
 
@@ -14,12 +13,6 @@ namespace ListWatchedMoviesAndSeries.Repository
         }
 
         public List<WatchItem> GetAll() => _db.WatchItem.ToList() ?? new List<WatchItem>();
-
-        public PagedList<WatchItem> GetPagedList(WatchItemSearchRequest searchRequest)
-        {
-            var query = searchRequest.Apply(_db.WatchItem).OrderBy(x => x.Name);
-            return new PagedList<WatchItem>(query, searchRequest.Page.Number, searchRequest.Page.Size);
-        }
 
         public void Add(WatchItem item)
         {

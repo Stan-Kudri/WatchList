@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Core.Repository.Extension;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using Microsoft.EntityFrameworkCore;
