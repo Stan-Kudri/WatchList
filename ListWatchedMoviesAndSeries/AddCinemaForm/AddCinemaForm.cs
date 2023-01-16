@@ -33,11 +33,11 @@ namespace ListWatchedMoviesAndSeries
 
             if (numericGradeCinema.Enabled)
             {
-                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, _type));
+                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, _type));
             }
             else
             {
-                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
+                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
             }
 
             DefoultValue();

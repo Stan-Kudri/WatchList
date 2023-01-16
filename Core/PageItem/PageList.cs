@@ -8,9 +8,9 @@ namespace Core.PageItem
 
         public int PageSize { get; set; } = 5;
 
-        public IList<T> Items { get; set; }
+        public List<T> Items { get; set; }
 
-        public int PageCount => PageSize != 0 ? (int)Math.Ceiling((double)TotalItems / PageSize) : 0;
+        public int PageCount => PageSize != 0 && TotalItems != 0 ? (int)Math.Ceiling((double)TotalItems / PageSize) : 0;
 
         public bool HasPreviousPage => PageNumber > 1;
 
@@ -39,7 +39,7 @@ namespace Core.PageItem
             {
                 throw new ArgumentException("Total items can not be less than zero.", nameof(totalItems));
             }
-            Items = items;
+            Items = items.ToList();
             PageNumber = pageNumber;
             PageSize = pageSize;
             TotalItems = totalItems;

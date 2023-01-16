@@ -21,7 +21,7 @@ namespace ListWatchedMoviesAndSeries.Model
             Size = pageSize;
         }
 
-        public ObservableCollection<int> PageSize { get; set; } = new ObservableCollection<int> { 5, 10, 20 };
+        public ObservableCollection<int> AvailablePageSizes { get; set; } = new ObservableCollection<int> { 5, 10, 20 };
 
         public int Number
         {
