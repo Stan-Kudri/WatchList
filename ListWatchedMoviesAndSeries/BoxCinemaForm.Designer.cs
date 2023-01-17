@@ -366,7 +366,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // filterModelBindingSource
             // 
-            this.filterModelBindingSource.DataSource = typeof(FilterModel);
+            this.filterModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.BindingItem.Model.FilterModel);
             // 
             // cmbFilterWatch
             // 
@@ -404,7 +404,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // pageModelBindingSource
             // 
-            this.pageModelBindingSource.DataSource = typeof(PageModel);
+            this.pageModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.BindingItem.Model.PageModel);
             // 
             // btnBackPage
             // 
