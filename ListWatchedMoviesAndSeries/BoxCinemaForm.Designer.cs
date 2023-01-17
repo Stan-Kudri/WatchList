@@ -503,6 +503,7 @@ namespace ListWatchedMoviesAndSeries
             this.tbPage.Name = "tbPage";
             this.tbPage.Size = new System.Drawing.Size(40, 20);
             this.tbPage.TabIndex = 51;
+            this.tbPage.TextChanged += new System.EventHandler(this.TbPage_TextChanged);
             // 
             // labelTotalPage
             // 

@@ -420,6 +420,7 @@ namespace ListWatchedMoviesAndSeries
                 }
 
                 AddCinemaGrid(itemGrid);
+
                 tbPage.Text = Page.Number.ToString();
                 labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1).ToString());
             }
@@ -462,6 +463,21 @@ namespace ListWatchedMoviesAndSeries
             var hasPageControl = _pagedList.PageCount > 0 ? true : false;
 
             btnBackPage.Visible = btnEndPage.Visible = btnNextPage.Visible = btnStartPage.Visible = labelTotalPage.Visible = tbPage.Visible = hasPageControl;
+        }
+
+        private void TbPage_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(tbPage.Text, out int pageNumber))
+            {
+                if (pageNumber <= _pagedList.PageCount)
+                {
+                    Page.Number = pageNumber;
+                    Search();
+                    return;
+                }
+            }
+
+            tbPage.Text = _pagedList.PageNumber.ToString();
         }
     }
 }
