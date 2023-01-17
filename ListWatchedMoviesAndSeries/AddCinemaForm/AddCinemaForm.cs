@@ -1,5 +1,5 @@
 using Core.Model.Item;
-using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.Models.Item;
 using MaterialSkin.Controls;
 

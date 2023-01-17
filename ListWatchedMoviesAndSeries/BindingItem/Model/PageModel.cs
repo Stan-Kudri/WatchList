@@ -1,8 +1,7 @@
 using System.Collections.ObjectModel;
 using Core.Repository;
-using ListWatchedMoviesAndSeries.Models;
 
-namespace ListWatchedMoviesAndSeries.Model
+namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
     public class PageModel : ModelBase
     {

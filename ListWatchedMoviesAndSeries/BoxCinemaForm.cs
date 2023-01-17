@@ -3,8 +3,8 @@ using Core.Model.Item;
 using Core.PageItem;
 using Core.Repository.DbContex;
 using Core.Repository.Extension;
+using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.EditorForm;
-using ListWatchedMoviesAndSeries.Model;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
@@ -412,7 +412,7 @@ namespace ListWatchedMoviesAndSeries
         {
             try
             {
-                VisibilityOfPageControls();
+                CustomUpdateFormState();
 
                 var itemGrid = _pagedList.Items;
                 if (itemGrid == null || itemGrid.Count <= 0)
@@ -458,16 +458,11 @@ namespace ListWatchedMoviesAndSeries
 
         private bool IsChangesSizePage() => _searchRequest.Page.Size != Page.Size;
 
-        private void VisibilityOfPageControls()
+        private void CustomUpdateFormState()
         {
             var hasPageControl = _pagedList.PageCount > 0 ? true : false;
 
-            btnBackPage.Visible = hasPageControl;
-            btnEndPage.Visible = hasPageControl;
-            btnNextPage.Visible = hasPageControl;
-            btnStartPage.Visible = hasPageControl;
-            labelTotalPage.Visible = hasPageControl;
-            tbPage.Visible = hasPageControl;
+            btnBackPage.Visible = btnEndPage.Visible = btnNextPage.Visible = btnStartPage.Visible = labelTotalPage.Visible = tbPage.Visible = hasPageControl;
         }
     }
 }

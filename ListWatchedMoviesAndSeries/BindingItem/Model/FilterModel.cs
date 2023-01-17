@@ -1,9 +1,8 @@
 using System.Collections.ObjectModel;
 using Core.ItemFilter;
 using Core.Model;
-using ListWatchedMoviesAndSeries.Models;
 
-namespace ListWatchedMoviesAndSeries.Model
+namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
     public class FilterModel : ModelBase
     {

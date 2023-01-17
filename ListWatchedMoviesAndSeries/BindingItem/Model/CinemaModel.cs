@@ -1,7 +1,8 @@
 using Core.Model.Item;
+using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 
-namespace ListWatchedMoviesAndSeries.Models
+namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
     public class CinemaModel : ModelBase
     {

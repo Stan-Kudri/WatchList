@@ -1,3 +1,5 @@
+using ListWatchedMoviesAndSeries.BindingItem.Model;
+
 namespace ListWatchedMoviesAndSeries.EditorForm
 {
     partial class EditorItemCinemaForm
@@ -90,7 +92,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             // cinemaModelBindingSource
             // 
-            this.cinemaModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.CinemaModel);
+            this.cinemaModelBindingSource.DataSource = typeof(CinemaModel);
             // 
             // txtEditName
             // 

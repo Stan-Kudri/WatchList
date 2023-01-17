@@ -1,3 +1,5 @@
+using ListWatchedMoviesAndSeries.BindingItem.Model;
+
 namespace ListWatchedMoviesAndSeries
 {
     partial class AddCinemaForm
@@ -57,7 +59,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // cinemaModelsBindingSource
             // 
-            this.cinemaModelsBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.CinemaModel);
+            this.cinemaModelsBindingSource.DataSource = typeof(CinemaModel);
             // 
             // numericSeaquel
             // 
