@@ -40,10 +40,10 @@ namespace ListWatchedMoviesAndSeries
                 _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
             }
 
-            DefoultValue();
+            DefaultValue();
         }
 
-        private void BtnClearTxtCinema_Click(object sender, EventArgs e) => DefoultValue();
+        private void BtnClearTxtCinema_Click(object sender, EventArgs e) => DefaultValue();
 
         private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
@@ -54,7 +54,7 @@ namespace ListWatchedMoviesAndSeries
             _status = StatusCinema.Watch;
         }
 
-        private void DefoultValue()
+        private void DefaultValue()
         {
             txtAddCinema.Text = string.Empty;
             numericGradeCinema.Enabled = false;
@@ -73,7 +73,7 @@ namespace ListWatchedMoviesAndSeries
             }
             else if (numericSeaquel.Value == 0)
             {
-                errorMessage = $"Enter namber {_type.Name}";
+                errorMessage = $"Enter number {_type.Name}";
                 return false;
             }
             else if (numericGradeCinema.Enabled && numericGradeCinema.Value == 0)

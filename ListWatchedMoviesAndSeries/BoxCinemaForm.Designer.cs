@@ -59,7 +59,7 @@ namespace ListWatchedMoviesAndSeries
             this.btnNextPage = new MaterialSkin.Controls.MaterialButton();
             this.btnStartPage = new MaterialSkin.Controls.MaterialButton();
             this.btnEndPage = new MaterialSkin.Controls.MaterialButton();
-            this.tbPage = new System.Windows.Forms.TextBox();
+            this.textBoxPage = new System.Windows.Forms.TextBox();
             this.labelTotalPage = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.cinemaBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCinema)).BeginInit();
@@ -494,16 +494,16 @@ namespace ListWatchedMoviesAndSeries
             this.btnEndPage.UseVisualStyleBackColor = true;
             this.btnEndPage.Click += new System.EventHandler(this.BtnEndPage_Click);
             // 
-            // tbPage
+            // textBoxPage
             // 
-            this.tbPage.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.pageModelBindingSource, "Number", true));
-            this.tbPage.Location = new System.Drawing.Point(295, 365);
-            this.tbPage.MaximumSize = new System.Drawing.Size(40, 20);
-            this.tbPage.MinimumSize = new System.Drawing.Size(40, 20);
-            this.tbPage.Name = "tbPage";
-            this.tbPage.Size = new System.Drawing.Size(40, 20);
-            this.tbPage.TabIndex = 51;
-            this.tbPage.TextChanged += new System.EventHandler(this.TbPage_TextChanged);
+            this.textBoxPage.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.pageModelBindingSource, "Number", true));
+            this.textBoxPage.Location = new System.Drawing.Point(295, 365);
+            this.textBoxPage.MaximumSize = new System.Drawing.Size(40, 20);
+            this.textBoxPage.MinimumSize = new System.Drawing.Size(40, 20);
+            this.textBoxPage.Name = "textBoxPage";
+            this.textBoxPage.Size = new System.Drawing.Size(40, 20);
+            this.textBoxPage.TabIndex = 51;
+            this.textBoxPage.TextChanged += new System.EventHandler(this.TextBoxPage_TextChanged);
             // 
             // labelTotalPage
             // 
@@ -524,7 +524,7 @@ namespace ListWatchedMoviesAndSeries
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(650, 445);
             this.Controls.Add(this.labelTotalPage);
-            this.Controls.Add(this.tbPage);
+            this.Controls.Add(this.textBoxPage);
             this.Controls.Add(this.btnEndPage);
             this.Controls.Add(this.btnStartPage);
             this.Controls.Add(this.btnNextPage);
@@ -583,7 +583,7 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialButton btnNextPage;
         private MaterialSkin.Controls.MaterialButton btnStartPage;
         private MaterialSkin.Controls.MaterialButton btnEndPage;
-        private TextBox tbPage;
+        private TextBox textBoxPage;
         private BindingSource filterModelBindingSource;
         private MaterialSkin.Controls.MaterialLabel labelTotalPage;
         private BindingSource pageModelBindingSource;

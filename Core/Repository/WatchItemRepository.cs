@@ -16,7 +16,7 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         public List<WatchItem> GetAll() => _db.WatchItem.ToList() ?? new List<WatchItem>();
 
-        public PagedList<WatchItem> GetPagedList(WatchItemSearchRequest searchRequest)
+        public PagedList<WatchItem> GetPageCinema(WatchItemSearchRequest searchRequest)
         {
             var query = searchRequest.Apply(_db.WatchItem).OrderBy(x => x.Name);
             return query.GetPagedList(searchRequest.Page);
@@ -36,9 +36,9 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         public void RemoveRange()
         {
-            foreach (var iteb in _db.WatchItem)
+            foreach (var item in _db.WatchItem)
             {
-                _db.Remove(iteb);
+                _db.Remove(item);
             }
         }
 

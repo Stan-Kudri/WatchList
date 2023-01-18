@@ -8,13 +8,5 @@ namespace Core.Repository.Extension
         {
             return new PagedList<T>(self, page.Number, page.Size);
         }
-
-        /*
-        public static PagedList<WatchItem> GetPagedList(this WatchCinemaDbContext db, WatchItemSearchRequest searchRequest)
-        {
-            var query = searchRequest.Apply(db.WatchItem).OrderBy(x => x.Name);
-            return new PagedList<WatchItem>(query, searchRequest.Page.Number, searchRequest.Page.Size);
-        }
-        */
     }
 }
