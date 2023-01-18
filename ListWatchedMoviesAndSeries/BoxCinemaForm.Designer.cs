@@ -46,10 +46,10 @@ namespace ListWatchedMoviesAndSeries
             this.btnFormAnime = new MaterialSkin.Controls.MaterialButton();
             this.btnFormCartoon = new MaterialSkin.Controls.MaterialButton();
             this.btnEditCinema = new MaterialSkin.Controls.MaterialButton();
-            this.btnDeliteMovie = new MaterialSkin.Controls.MaterialButton();
+            this.btnDeleteMovie = new MaterialSkin.Controls.MaterialButton();
             this.btnReplaceData = new MaterialSkin.Controls.MaterialButton();
             this.btnUseFilter = new MaterialSkin.Controls.MaterialButton();
-            this.btnCancleFilter = new MaterialSkin.Controls.MaterialButton();
+            this.btnCancelFilter = new MaterialSkin.Controls.MaterialButton();
             this.cmbFilterType = new MaterialSkin.Controls.MaterialComboBox();
             this.filterModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cmbFilterWatch = new MaterialSkin.Controls.MaterialComboBox();
@@ -251,27 +251,27 @@ namespace ListWatchedMoviesAndSeries
             this.btnEditCinema.UseVisualStyleBackColor = true;
             this.btnEditCinema.Click += new System.EventHandler(this.BtnEditRow_Click);
             // 
-            // btnDeliteMovie
+            // btnDeleteMovie
             // 
-            this.btnDeliteMovie.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnDeliteMovie.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnDeliteMovie.Depth = 0;
-            this.btnDeliteMovie.HighEmphasis = true;
-            this.btnDeliteMovie.Icon = null;
-            this.btnDeliteMovie.Location = new System.Drawing.Point(220, 420);
-            this.btnDeliteMovie.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnDeliteMovie.MaximumSize = new System.Drawing.Size(210, 20);
-            this.btnDeliteMovie.MinimumSize = new System.Drawing.Size(210, 20);
-            this.btnDeliteMovie.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnDeliteMovie.Name = "btnDeliteMovie";
-            this.btnDeliteMovie.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnDeliteMovie.Size = new System.Drawing.Size(210, 20);
-            this.btnDeliteMovie.TabIndex = 37;
-            this.btnDeliteMovie.Text = "Delite";
-            this.btnDeliteMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnDeliteMovie.UseAccentColor = false;
-            this.btnDeliteMovie.UseVisualStyleBackColor = true;
-            this.btnDeliteMovie.Click += new System.EventHandler(this.BtnDeliteMovie_Click);
+            this.btnDeleteMovie.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnDeleteMovie.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnDeleteMovie.Depth = 0;
+            this.btnDeleteMovie.HighEmphasis = true;
+            this.btnDeleteMovie.Icon = null;
+            this.btnDeleteMovie.Location = new System.Drawing.Point(220, 420);
+            this.btnDeleteMovie.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnDeleteMovie.MaximumSize = new System.Drawing.Size(210, 20);
+            this.btnDeleteMovie.MinimumSize = new System.Drawing.Size(210, 20);
+            this.btnDeleteMovie.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnDeleteMovie.Name = "btnDeleteMovie";
+            this.btnDeleteMovie.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnDeleteMovie.Size = new System.Drawing.Size(210, 20);
+            this.btnDeleteMovie.TabIndex = 37;
+            this.btnDeleteMovie.Text = "Delete";
+            this.btnDeleteMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnDeleteMovie.UseAccentColor = false;
+            this.btnDeleteMovie.UseVisualStyleBackColor = true;
+            this.btnDeleteMovie.Click += new System.EventHandler(this.BtnDeleteMovie_Click);
             // 
             // btnReplaceData
             // 
@@ -317,27 +317,27 @@ namespace ListWatchedMoviesAndSeries
             this.btnUseFilter.UseVisualStyleBackColor = true;
             this.btnUseFilter.Click += new System.EventHandler(this.BtnUseFilter_Click);
             // 
-            // btnCancleFilter
+            // btnCancelFilter
             // 
-            this.btnCancleFilter.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnCancleFilter.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnCancleFilter.Depth = 0;
-            this.btnCancleFilter.HighEmphasis = true;
-            this.btnCancleFilter.Icon = null;
-            this.btnCancleFilter.Location = new System.Drawing.Point(495, 70);
-            this.btnCancleFilter.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCancleFilter.MaximumSize = new System.Drawing.Size(150, 20);
-            this.btnCancleFilter.MinimumSize = new System.Drawing.Size(150, 20);
-            this.btnCancleFilter.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnCancleFilter.Name = "btnCancleFilter";
-            this.btnCancleFilter.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCancleFilter.Size = new System.Drawing.Size(150, 20);
-            this.btnCancleFilter.TabIndex = 40;
-            this.btnCancleFilter.Text = "Cancle Filter";
-            this.btnCancleFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnCancleFilter.UseAccentColor = false;
-            this.btnCancleFilter.UseVisualStyleBackColor = true;
-            this.btnCancleFilter.Click += new System.EventHandler(this.BtnCancleFilter_Click);
+            this.btnCancelFilter.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCancelFilter.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCancelFilter.Depth = 0;
+            this.btnCancelFilter.HighEmphasis = true;
+            this.btnCancelFilter.Icon = null;
+            this.btnCancelFilter.Location = new System.Drawing.Point(495, 70);
+            this.btnCancelFilter.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCancelFilter.MaximumSize = new System.Drawing.Size(150, 20);
+            this.btnCancelFilter.MinimumSize = new System.Drawing.Size(150, 20);
+            this.btnCancelFilter.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCancelFilter.Name = "btnCancelFilter";
+            this.btnCancelFilter.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCancelFilter.Size = new System.Drawing.Size(150, 20);
+            this.btnCancelFilter.TabIndex = 40;
+            this.btnCancelFilter.Text = "Cancel Filter";
+            this.btnCancelFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCancelFilter.UseAccentColor = false;
+            this.btnCancelFilter.UseVisualStyleBackColor = true;
+            this.btnCancelFilter.Click += new System.EventHandler(this.BtnCancelFilter_Click);
             // 
             // cmbFilterType
             // 
@@ -532,10 +532,10 @@ namespace ListWatchedMoviesAndSeries
             this.Controls.Add(this.cmbPageSize);
             this.Controls.Add(this.cmbFilterWatch);
             this.Controls.Add(this.cmbFilterType);
-            this.Controls.Add(this.btnCancleFilter);
+            this.Controls.Add(this.btnCancelFilter);
             this.Controls.Add(this.btnUseFilter);
             this.Controls.Add(this.btnReplaceData);
-            this.Controls.Add(this.btnDeliteMovie);
+            this.Controls.Add(this.btnDeleteMovie);
             this.Controls.Add(this.btnEditCinema);
             this.Controls.Add(this.btnFormCartoon);
             this.Controls.Add(this.btnFormAnime);
@@ -565,7 +565,7 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialButton btnFormAnime;
         private MaterialSkin.Controls.MaterialButton btnFormCartoon;
         private MaterialSkin.Controls.MaterialButton btnEditCinema;
-        private MaterialSkin.Controls.MaterialButton btnDeliteMovie;
+        private MaterialSkin.Controls.MaterialButton btnDeleteMovie;
         private DataGridViewTextBoxColumn NameCinema;
         private DataGridViewTextBoxColumn NumberCinema;
         private DataGridViewTextBoxColumn WatchedCinema;
@@ -575,7 +575,7 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn Cinema;
         private MaterialSkin.Controls.MaterialButton btnReplaceData;
         private MaterialSkin.Controls.MaterialButton btnUseFilter;
-        private MaterialSkin.Controls.MaterialButton btnCancleFilter;
+        private MaterialSkin.Controls.MaterialButton btnCancelFilter;
         private MaterialSkin.Controls.MaterialComboBox cmbFilterType;
         private MaterialSkin.Controls.MaterialComboBox cmbFilterWatch;
         private ComboBox cmbPageSize;

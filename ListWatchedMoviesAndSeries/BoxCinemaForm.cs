@@ -125,7 +125,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void BtnCancleFilter_Click(object sender, EventArgs e)
+        private void BtnCancelFilter_Click(object sender, EventArgs e)
         {
             Filter.Type = TypeCinemaFilter.AllCinema;
             Filter.Watch = WatchCinemaFilter.AllCinema;
@@ -143,7 +143,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void BtnDeliteMovie_Click(object sender, EventArgs e)
+        private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
             if (RemoveRowGrid(out string idItem))
             {
@@ -285,7 +285,7 @@ namespace ListWatchedMoviesAndSeries
         /// Edit the selected item.
         /// </summary>
         /// <param name="rowIndex">Number row element.</param>
-        /// <param name="cinemaItem">Element to сhange.</param>
+        /// <param name="cinemaItem">Element to change.</param>
         /// <returns>
         /// True:Row selected.
         /// False:Row not selected.
@@ -308,7 +308,7 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Change the selected element in the EditorItemCinemaForm.
         /// </summary>
-        /// <param name="item">Element to сhange.</param>
+        /// <param name="item">Element to change.</param>
         /// <param name="indexRow">Number row element.</param>
         private void ShowEditCinema(CinemaModel item, int indexRow)
         {
@@ -462,7 +462,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var hasPageControl = _pagedList.PageCount > 0 ? true : false;
 
-            btnBackPage.Visible = btnEndPage.Visible = btnNextPage.Visible = btnStartPage.Visible = labelTotalPage.Visible = tbPage.Visible = hasPageControl;
+            btnBackPage.Enabled = btnEndPage.Enabled = btnNextPage.Enabled = btnStartPage.Enabled = labelTotalPage.Enabled = tbPage.Enabled = hasPageControl;
         }
 
         private void TbPage_TextChanged(object sender, EventArgs e)
