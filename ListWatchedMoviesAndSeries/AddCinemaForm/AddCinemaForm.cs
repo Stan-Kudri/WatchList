@@ -40,10 +40,10 @@ namespace ListWatchedMoviesAndSeries
                 _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
             }
 
-            DefaultValue();
+            SetDefaultValues();
         }
 
-        private void BtnClearTxtCinema_Click(object sender, EventArgs e) => DefaultValue();
+        private void BtnClearTxtCinema_Click(object sender, EventArgs e) => SetDefaultValues();
 
         private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
@@ -54,7 +54,7 @@ namespace ListWatchedMoviesAndSeries
             _status = StatusCinema.Watch;
         }
 
-        private void DefaultValue()
+        private void SetDefaultValues()
         {
             txtAddCinema.Text = string.Empty;
             numericGradeCinema.Enabled = false;

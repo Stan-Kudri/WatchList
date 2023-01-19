@@ -34,7 +34,7 @@ namespace ListWatchedMoviesAndSeries.Repository
             _db.SaveChanges();
         }
 
-        public void RemoveRange()
+        public void RemoveAllItems()
         {
             foreach (var item in _db.WatchItem)
             {
@@ -48,7 +48,7 @@ namespace ListWatchedMoviesAndSeries.Repository
             if (item == null)
                 return;
 
-            _db.WatchItem.Remove(item);
+            _db.RemoveRange(item);
             _db.SaveChanges();
         }
 

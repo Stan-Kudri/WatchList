@@ -73,7 +73,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private void DateTimePickerCinema_ValueChanged(object sender, EventArgs e)
+        private void DateTimePick_ValueChanged(object sender, EventArgs e)
         {
             numericEditGradeCinema.ReadOnly = false;
             numericEditGradeCinema.Enabled = true;

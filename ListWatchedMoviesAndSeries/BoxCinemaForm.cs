@@ -169,7 +169,7 @@ namespace ListWatchedMoviesAndSeries
             var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={fileName}");
             var repository = new WatchItemRepository(new WatchCinemaDbContext(builder.Options));
 
-            _repository.RemoveRange();
+            _repository.RemoveAllItems();
             _repository.Add(repository.GetAll());
 
             GridClear();
@@ -466,17 +466,15 @@ namespace ListWatchedMoviesAndSeries
 
         private void TextBoxPage_TextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(textBoxPage.Text, out int pageNumber))
+            if (!int.TryParse(textBoxPage.Text, out int pageNumber)
+                || pageNumber > _pagedList.PageCount)
             {
-                if (pageNumber <= _pagedList.PageCount)
-                {
-                    Page.Number = pageNumber;
-                    Search();
-                    return;
-                }
+                textBoxPage.Text = _pagedList.PageNumber.ToString();
+                return;
             }
 
-            textBoxPage.Text = _pagedList.PageNumber.ToString();
+            Page.Number = pageNumber;
+            Search();
         }
     }
 }

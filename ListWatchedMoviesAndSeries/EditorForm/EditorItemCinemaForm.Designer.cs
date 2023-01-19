@@ -80,7 +80,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             this.dateTPCinema.Size = new System.Drawing.Size(150, 23);
             this.dateTPCinema.TabIndex = 26;
             this.dateTPCinema.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
-            this.dateTPCinema.ValueChanged += new System.EventHandler(this.DateTimePickerCinema_ValueChanged);
+            this.dateTPCinema.ValueChanged += new System.EventHandler(this.DateTimePick_ValueChanged);
             // 
             // numericEditSequel
             // 
