@@ -41,7 +41,7 @@ namespace ListWatchedMoviesAndSeries
             _db = new WatchCinemaDbContext(builder.Options);
             _repository = new WatchItemRepository(_db);
 
-            Search();
+            LoadData();
 
             Load += BoxCinemaForm_Load;
         }
@@ -55,7 +55,6 @@ namespace ListWatchedMoviesAndSeries
             if (cinema?.Type != null)
             {
                 _repository.Add(cinema.ToWatchItem());
-                GridClear();
                 WriteDataToTable();
             }
         }
@@ -174,7 +173,6 @@ namespace ListWatchedMoviesAndSeries
             _repository.RemoveAllItems();
             _repository.Add(repository.GetAll());
 
-            GridClear();
             WriteDataToTable();
         }
 
@@ -183,7 +181,7 @@ namespace ListWatchedMoviesAndSeries
             if (_pagedList.HasPreviousPage)
             {
                 Page.Number--;
-                Search();
+                SearchData();
             }
         }
 
@@ -192,7 +190,7 @@ namespace ListWatchedMoviesAndSeries
             if (_pagedList.HasPreviousPage)
             {
                 Page.Number = 1;
-                Search();
+                SearchData();
             }
         }
 
@@ -201,7 +199,7 @@ namespace ListWatchedMoviesAndSeries
             if (_pagedList.HasNextPage)
             {
                 Page.Number++;
-                Search();
+                SearchData();
             }
         }
 
@@ -210,11 +208,16 @@ namespace ListWatchedMoviesAndSeries
             if (_pagedList.HasNextPage)
             {
                 Page.Number = _pagedList.PageCount;
-                Search();
+                SearchData();
             }
         }
 
-        private void СmbPageSize_SelectedIndexChanged(object sender, EventArgs e) => Page.Size = Page.AvailablePageSizes[cmbPageSize.SelectedIndex];
+        private void СmbPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Page.Size = Page.AvailablePageSizes[cmbPageSize.SelectedIndex];
+            Page.Number = 1;
+            LoadData();
+        }
 
         /// <summary>
         /// Deleting a row of table data.
@@ -413,18 +416,7 @@ namespace ListWatchedMoviesAndSeries
         {
             try
             {
-                CustomUpdateFormState();
-
-                var itemGrid = _pagedList.Items;
-                if (itemGrid == null || itemGrid.Count <= 0)
-                {
-                    return;
-                }
-
-                AddCinemaGrid(itemGrid);
-
-                textBoxPage.Text = Page.Number.ToString();
-                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1).ToString());
+                SearchData();
             }
             catch (Exception error)
             {
@@ -434,14 +426,15 @@ namespace ListWatchedMoviesAndSeries
 
         private void GridClear() => dgvCinema.Rows.Clear();
 
-        private void Search()
+        private void SearchData()
         {
             _searchRequest.Page = Page.GetPage();
             _pagedList = _repository.GetPageCinema(_searchRequest);
-            var item = _pagedList.Items.ToList();
+            var item = _pagedList.Items;
 
             GridClear();
             AddCinemaGrid(item);
+            CustomUpdateFormState();
 
             labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1).ToString());
             textBoxPage.Text = _pagedList.PageNumber.ToString();
@@ -451,7 +444,6 @@ namespace ListWatchedMoviesAndSeries
         {
             Page.Number = 1;
             _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Page.GetPage());
-            _pagedList = _repository.GetPageCinema(_searchRequest);
             LoadData();
         }
 
@@ -476,7 +468,7 @@ namespace ListWatchedMoviesAndSeries
             }
 
             Page.Number = pageNumber;
-            Search();
+            SearchData();
         }
     }
 }
