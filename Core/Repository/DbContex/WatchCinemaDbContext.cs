@@ -12,6 +12,7 @@ namespace Core.Repository.DbContex
 
         public WatchCinemaDbContext(DbContextOptions options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

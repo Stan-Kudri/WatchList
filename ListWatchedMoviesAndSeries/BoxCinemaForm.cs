@@ -40,8 +40,11 @@ namespace ListWatchedMoviesAndSeries
             var builder = new DbContextOptionsBuilder().UseSqlite("Data Source=app.db");
             _db = new WatchCinemaDbContext(builder.Options);
             _repository = new WatchItemRepository(_db);
+
             Search();
+
             Load += BoxCinemaForm_Load;
+
         }
 
         private FilterModel Filter { get; set; } = new FilterModel();
