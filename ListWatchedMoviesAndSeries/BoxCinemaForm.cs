@@ -115,14 +115,10 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnUseFilter_Click(object sender, EventArgs e)
         {
-            GridClear();
             if (!IsNotChangesFilter() || IsChangesSizePage())
             {
+                Page.Number = 1;
                 WriteDataToTable();
-            }
-            else
-            {
-                AddCinemaGrid(_pagedList.Items);
             }
         }
 
@@ -154,6 +150,7 @@ namespace ListWatchedMoviesAndSeries
                 }
 
                 _repository.Remove(id);
+                LoadData();
             }
         }
 
@@ -181,7 +178,7 @@ namespace ListWatchedMoviesAndSeries
             if (_pagedList.HasPreviousPage)
             {
                 Page.Number--;
-                SearchData();
+                LoadData();
             }
         }
 
@@ -190,7 +187,7 @@ namespace ListWatchedMoviesAndSeries
             if (_pagedList.HasPreviousPage)
             {
                 Page.Number = 1;
-                SearchData();
+                LoadData();
             }
         }
 
@@ -199,7 +196,7 @@ namespace ListWatchedMoviesAndSeries
             if (_pagedList.HasNextPage)
             {
                 Page.Number++;
-                SearchData();
+                LoadData();
             }
         }
 
@@ -208,14 +205,27 @@ namespace ListWatchedMoviesAndSeries
             if (_pagedList.HasNextPage)
             {
                 Page.Number = _pagedList.PageCount;
-                SearchData();
+                LoadData();
             }
         }
 
-        private void СmbPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        private void СmbPageSize_Changed(object sender, EventArgs e)
         {
             Page.Size = Page.AvailablePageSizes[cmbPageSize.SelectedIndex];
             Page.Number = 1;
+            LoadData();
+        }
+
+        private void TextBoxPage_TextChanged(object sender, EventArgs e)
+        {
+            if (!int.TryParse(textBoxPage.Text, out int pageNumber)
+                || pageNumber > _pagedList.PageCount)
+            {
+                textBoxPage.Text = _pagedList.PageNumber.ToString();
+                return;
+            }
+
+            Page.Number = pageNumber;
             LoadData();
         }
 
@@ -416,7 +426,16 @@ namespace ListWatchedMoviesAndSeries
         {
             try
             {
-                SearchData();
+                _searchRequest.Page = Page.GetPage();
+                _pagedList = _repository.GetPageCinema(_searchRequest);
+                var item = _pagedList.Items;
+
+                GridClear();
+                AddCinemaGrid(item);
+                CustomUpdateFormState();
+
+                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1).ToString());
+                textBoxPage.Text = _pagedList.PageNumber.ToString();
             }
             catch (Exception error)
             {
@@ -426,23 +445,8 @@ namespace ListWatchedMoviesAndSeries
 
         private void GridClear() => dgvCinema.Rows.Clear();
 
-        private void SearchData()
-        {
-            _searchRequest.Page = Page.GetPage();
-            _pagedList = _repository.GetPageCinema(_searchRequest);
-            var item = _pagedList.Items;
-
-            GridClear();
-            AddCinemaGrid(item);
-            CustomUpdateFormState();
-
-            labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1).ToString());
-            textBoxPage.Text = _pagedList.PageNumber.ToString();
-        }
-
         private void WriteDataToTable()
         {
-            Page.Number = 1;
             _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Page.GetPage());
             LoadData();
         }
@@ -456,19 +460,6 @@ namespace ListWatchedMoviesAndSeries
             var hasPageControl = _pagedList.PageCount > 0 ? true : false;
 
             btnBackPage.Enabled = btnEndPage.Enabled = btnNextPage.Enabled = btnStartPage.Enabled = labelTotalPage.Enabled = textBoxPage.Enabled = hasPageControl;
-        }
-
-        private void TextBoxPage_TextChanged(object sender, EventArgs e)
-        {
-            if (!int.TryParse(textBoxPage.Text, out int pageNumber)
-                || pageNumber > _pagedList.PageCount)
-            {
-                textBoxPage.Text = _pagedList.PageNumber.ToString();
-                return;
-            }
-
-            Page.Number = pageNumber;
-            SearchData();
         }
     }
 }

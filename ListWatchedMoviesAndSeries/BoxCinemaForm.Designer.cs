@@ -393,7 +393,7 @@ namespace ListWatchedMoviesAndSeries
             cmbPageSize.Name = "cmbPageSize";
             cmbPageSize.Size = new Size(120, 23);
             cmbPageSize.TabIndex = 43;
-            cmbPageSize.SelectedIndexChanged += СmbPageSize_SelectedIndexChanged;
+            cmbPageSize.SelectedIndexChanged += СmbPageSize_Changed;
             // 
             // pageModelBindingSource
             // 
