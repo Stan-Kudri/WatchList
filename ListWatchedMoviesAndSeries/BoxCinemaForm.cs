@@ -44,7 +44,6 @@ namespace ListWatchedMoviesAndSeries
             Search();
 
             Load += BoxCinemaForm_Load;
-
         }
 
         private FilterModel Filter { get; set; } = new FilterModel();
