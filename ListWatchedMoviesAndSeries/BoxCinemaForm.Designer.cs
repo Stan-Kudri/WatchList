@@ -73,6 +73,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // dgvCinema
             // 
+            dgvCinema.AllowUserToAddRows = false;
             dgvCinema.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCinema.Columns.AddRange(new DataGridViewColumn[] { NameCinema, NumberCinema, WatchedCinema, DataWatchedCinema, GradeCinema, IdCinema, Cinema });
             dgvCinema.Location = new Point(5, 120);

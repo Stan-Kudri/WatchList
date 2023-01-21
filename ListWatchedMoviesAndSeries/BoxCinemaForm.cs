@@ -38,10 +38,9 @@ namespace ListWatchedMoviesAndSeries
             InitializeComponent();
 
             var builder = new DbContextOptionsBuilder().UseSqlite("Data Source=app.db");
+
             _db = new WatchCinemaDbContext(builder.Options);
             _repository = new WatchItemRepository(_db);
-
-            LoadData();
 
             Load += BoxCinemaForm_Load;
         }
@@ -70,7 +69,6 @@ namespace ListWatchedMoviesAndSeries
 
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
-            _db.Database.EnsureCreated();
             cmbFilterType.DataSource = Filter.TypeFilter;
             cmbFilterWatch.DataSource = Filter.WatchFilter;
             cmbPageSize.DataSource = Page.AvailablePageSizes;
