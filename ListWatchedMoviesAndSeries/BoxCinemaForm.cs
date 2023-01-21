@@ -217,7 +217,8 @@ namespace ListWatchedMoviesAndSeries
         private void TextBoxPage_TextChanged(object sender, EventArgs e)
         {
             if (!int.TryParse(textBoxPage.Text, out int pageNumber)
-                || pageNumber > _pagedList.PageCount)
+                || pageNumber > _pagedList.PageCount
+                || _pagedList.PageNumber == Page.Number)
             {
                 textBoxPage.Text = _pagedList.PageNumber.ToString();
                 return;
