@@ -1,7 +1,9 @@
+using Core.ItemFilter;
 using Core.Model.Item;
+using Core.PageItem;
 using Core.Repository.DbContex;
+using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.EditorForm;
-using ListWatchedMoviesAndSeries.Model;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
@@ -27,26 +29,32 @@ namespace ListWatchedMoviesAndSeries
 
         private readonly WatchItemRepository _repository;
 
+        private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
+
+        private PagedList<WatchItem> _pagedList;
+
         public BoxCinemaForm()
         {
             InitializeComponent();
 
             var builder = new DbContextOptionsBuilder().UseSqlite("Data Source=app.db");
+
             _db = new WatchCinemaDbContext(builder.Options);
             _repository = new WatchItemRepository(_db);
 
             Load += BoxCinemaForm_Load;
-            LoadData();
         }
 
         private FilterModel Filter { get; set; } = new FilterModel();
 
-        public void SetNameGrid(CinemaModel cinema)
+        private PageModel Page { get; set; } = new PageModel();
+
+        public void AddItemToGrid(CinemaModel cinema)
         {
             if (cinema?.Type != null)
             {
-                AddCinemaGridRow(cinema);
                 _repository.Add(cinema.ToWatchItem());
+                WriteDataToTable();
             }
         }
 
@@ -61,9 +69,9 @@ namespace ListWatchedMoviesAndSeries
 
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
-            _db.Database.EnsureCreated();
             cmbFilterType.DataSource = Filter.TypeFilter;
             cmbFilterWatch.DataSource = Filter.WatchFilter;
+            cmbPageSize.DataSource = Page.AvailablePageSizes;
             filterModelBindingSource.DataSource = Filter;
         }
 
@@ -105,27 +113,21 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnUseFilter_Click(object sender, EventArgs e)
         {
-            if (Filter.HasFilter() && !IsChangesFilter())
+            if (!IsNotChangesFilter() || IsChangesSizePage())
             {
-                GridClear();
-                var filter = Filter.GetFilter();
-                var listByFilter = _repository.GetItemByFilter(filter);
-                AddCinemaGrid(listByFilter);
-            }
-            else
-            {
-                GridClear();
-                AddCinemaGrid(_repository.GetAll());
+                Page.Number = 1;
+                WriteDataToTable();
             }
         }
 
-        private void BtnCancleFilter_Click(object sender, EventArgs e)
+        private void BtnCancelFilter_Click(object sender, EventArgs e)
         {
-            if (Filter.HasFilter())
-            {
-                GridClear();
-                LoadData();
-            }
+            Filter.Type = TypeCinemaFilter.AllCinema;
+            Filter.Watch = WatchCinemaFilter.AllCinema;
+            cmbFilterType.SelectedItem = Filter.Type;
+            cmbFilterWatch.SelectedItem = Filter.Watch;
+            cmbFilterType.Refresh();
+            cmbFilterWatch.Refresh();
         }
 
         private void BtnEditRow_Click(object sender, EventArgs e)
@@ -136,7 +138,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void BtnDeliteMovie_Click(object sender, EventArgs e)
+        private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
             if (RemoveRowGrid(out string idItem))
             {
@@ -146,6 +148,7 @@ namespace ListWatchedMoviesAndSeries
                 }
 
                 _repository.Remove(id);
+                LoadData();
             }
         }
 
@@ -162,11 +165,66 @@ namespace ListWatchedMoviesAndSeries
             var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={fileName}");
             var repository = new WatchItemRepository(new WatchCinemaDbContext(builder.Options));
 
-            _repository.RemoveRange();
+            _repository.RemoveAllItems();
             _repository.Add(repository.GetAll());
 
-            GridClear();
-            LoadData(repository);
+            WriteDataToTable();
+        }
+
+        private void BtnBackPage_Click(object sender, EventArgs e)
+        {
+            if (_pagedList.HasPreviousPage)
+            {
+                Page.Number--;
+                LoadData();
+            }
+        }
+
+        private void BtnStartPage_Click(object sender, EventArgs e)
+        {
+            if (_pagedList.HasPreviousPage)
+            {
+                Page.Number = 1;
+                LoadData();
+            }
+        }
+
+        private void BtnNextPage_Click(object sender, EventArgs e)
+        {
+            if (_pagedList.HasNextPage)
+            {
+                Page.Number++;
+                LoadData();
+            }
+        }
+
+        private void BtnEndPage_Click(object sender, EventArgs e)
+        {
+            if (_pagedList.HasNextPage)
+            {
+                Page.Number = _pagedList.PageCount;
+                LoadData();
+            }
+        }
+
+        private void СmbPageSize_Changed(object sender, EventArgs e)
+        {
+            Page.Size = Page.AvailablePageSizes[cmbPageSize.SelectedIndex];
+            Page.Number = 1;
+            LoadData();
+        }
+
+        private void TextBoxPage_TextChanged(object sender, EventArgs e)
+        {
+            if (!int.TryParse(textBoxPage.Text, out int pageNumber)
+                || pageNumber > _pagedList.PageCount)
+            {
+                textBoxPage.Text = _pagedList.PageNumber.ToString();
+                return;
+            }
+
+            Page.Number = pageNumber;
+            LoadData();
         }
 
         /// <summary>
@@ -223,17 +281,6 @@ namespace ListWatchedMoviesAndSeries
         }
 
         /// <summary>
-        /// Add element in table.
-        /// </summary>
-        /// <param name="cinema">Add element. </param>
-        private void AddCinemaGridRow(CinemaModel cinema)
-        {
-            var intSequel = decimal.ToInt64(cinema.NumberSequel ?? 0);
-            var formatDate = cinema.Detail.GetWatchData();
-            dgvCinema.Rows.Add(cinema.Name, intSequel.ToString(), cinema.Status.Name, formatDate, cinema.Detail?.Grade, cinema.Id.ToString(), cinema.Type);
-        }
-
-        /// <summary>
         /// Filling the table with data.
         /// </summary>
         /// <param name="itemGrid">List of elements.</param>
@@ -251,7 +298,7 @@ namespace ListWatchedMoviesAndSeries
         /// Edit the selected item.
         /// </summary>
         /// <param name="rowIndex">Number row element.</param>
-        /// <param name="cinemaItem">Element to сhange.</param>
+        /// <param name="cinemaItem">Element to change.</param>
         /// <returns>
         /// True:Row selected.
         /// False:Row not selected.
@@ -274,7 +321,7 @@ namespace ListWatchedMoviesAndSeries
         /// <summary>
         /// Change the selected element in the EditorItemCinemaForm.
         /// </summary>
-        /// <param name="item">Element to сhange.</param>
+        /// <param name="item">Element to change.</param>
         /// <param name="indexRow">Number row element.</param>
         private void ShowEditCinema(CinemaModel item, int indexRow)
         {
@@ -377,31 +424,16 @@ namespace ListWatchedMoviesAndSeries
         {
             try
             {
-                var itemGrid = _repository.GetAll();
-                if (itemGrid == null || itemGrid.Count <= 0)
-                {
-                    return;
-                }
+                _searchRequest.Page = Page.GetPage();
+                _pagedList = _repository.GetPageCinema(_searchRequest);
+                var item = _pagedList.Items;
 
-                AddCinemaGrid(itemGrid);
-            }
-            catch (Exception error)
-            {
-                MessageBoxProvider.ShowError(error.Message);
-            }
-        }
+                GridClear();
+                AddCinemaGrid(item);
+                CustomUpdateFormState();
 
-        private void LoadData(WatchItemRepository repository)
-        {
-            try
-            {
-                var itemGrid = repository.GetAll();
-                if (itemGrid == null || itemGrid.Count <= 0)
-                {
-                    return;
-                }
-
-                AddCinemaGrid(itemGrid);
+                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1).ToString());
+                textBoxPage.Text = _pagedList.PageNumber.ToString();
             }
             catch (Exception error)
             {
@@ -411,6 +443,21 @@ namespace ListWatchedMoviesAndSeries
 
         private void GridClear() => dgvCinema.Rows.Clear();
 
-        private bool IsChangesFilter() => Filter.Equals(_repository.PastFilter);
+        private void WriteDataToTable()
+        {
+            _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Page.GetPage());
+            LoadData();
+        }
+
+        private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
+
+        private bool IsChangesSizePage() => _searchRequest.Page.Size != Page.Size;
+
+        private void CustomUpdateFormState()
+        {
+            var hasPageControl = _pagedList.PageCount > 0 ? true : false;
+
+            btnBackPage.Enabled = btnEndPage.Enabled = btnNextPage.Enabled = btnStartPage.Enabled = labelTotalPage.Enabled = textBoxPage.Enabled = hasPageControl;
+        }
     }
 }

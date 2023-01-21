@@ -1,7 +1,7 @@
 using Ardalis.SmartEnum;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Core.Repository.DbContex
+namespace Core.Repository.Extension
 {
     public static class PropertyBuilderExtension
     {

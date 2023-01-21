@@ -1,5 +1,5 @@
 using Core.Model.Item;
-using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.Models.Item;
 using MaterialSkin.Controls;
 
@@ -33,17 +33,17 @@ namespace ListWatchedMoviesAndSeries
 
             if (numericGradeCinema.Enabled)
             {
-                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, _type));
+                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, _type));
             }
             else
             {
-                _box.SetNameGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
+                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
             }
 
-            DefoultValue();
+            SetDefaultValues();
         }
 
-        private void BtnClearTxtCinema_Click(object sender, EventArgs e) => DefoultValue();
+        private void BtnClearTxtCinema_Click(object sender, EventArgs e) => SetDefaultValues();
 
         private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
@@ -54,7 +54,7 @@ namespace ListWatchedMoviesAndSeries
             _status = StatusCinema.Watch;
         }
 
-        private void DefoultValue()
+        private void SetDefaultValues()
         {
             txtAddCinema.Text = string.Empty;
             numericGradeCinema.Enabled = false;
@@ -73,7 +73,7 @@ namespace ListWatchedMoviesAndSeries
             }
             else if (numericSeaquel.Value == 0)
             {
-                errorMessage = $"Enter namber {_type.Name}";
+                errorMessage = $"Enter number {_type.Name}";
                 return false;
             }
             else if (numericGradeCinema.Enabled && numericGradeCinema.Value == 0)

@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ListWatchedMoviesAndSeries.Models
+namespace ListWatchedMoviesAndSeries.BindingItem
 {
     public class ModelBase : INotifyPropertyChanged
     {

@@ -1,3 +1,5 @@
+using ListWatchedMoviesAndSeries.BindingItem.Model;
+
 namespace ListWatchedMoviesAndSeries
 {
     partial class AddCinemaForm
@@ -57,7 +59,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // cinemaModelsBindingSource
             // 
-            this.cinemaModelsBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.CinemaModel);
+            this.cinemaModelsBindingSource.DataSource = typeof(CinemaModel);
             // 
             // numericSeaquel
             // 
@@ -71,11 +73,11 @@ namespace ListWatchedMoviesAndSeries
             // 
             this.dateTimePickerCinema.CustomFormat = "\"dd.MM.yyyy\"";
             this.dateTimePickerCinema.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "DateWatch", true));
-            this.dateTimePickerCinema.Location = new System.Drawing.Point(10, 137);
+            this.dateTimePickerCinema.Location = new System.Drawing.Point(10, 130);
             this.dateTimePickerCinema.MaxDate = new System.DateTime(2022, 9, 7, 0, 0, 0, 0);
             this.dateTimePickerCinema.MinDate = new System.DateTime(1949, 12, 31, 0, 0, 0, 0);
             this.dateTimePickerCinema.Name = "dateTimePickerCinema";
-            this.dateTimePickerCinema.Size = new System.Drawing.Size(158, 23);
+            this.dateTimePickerCinema.Size = new System.Drawing.Size(150, 23);
             this.dateTimePickerCinema.TabIndex = 13;
             this.dateTimePickerCinema.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
             this.dateTimePickerCinema.ValueChanged += new System.EventHandler(this.DtpCinema_ValueChanged);
@@ -149,14 +151,14 @@ namespace ListWatchedMoviesAndSeries
             this.btnClearTxtCinema.Depth = 0;
             this.btnClearTxtCinema.HighEmphasis = true;
             this.btnClearTxtCinema.Icon = null;
-            this.btnClearTxtCinema.Location = new System.Drawing.Point(251, 130);
+            this.btnClearTxtCinema.Location = new System.Drawing.Point(250, 133);
             this.btnClearTxtCinema.Margin = new System.Windows.Forms.Padding(0);
-            this.btnClearTxtCinema.MaximumSize = new System.Drawing.Size(70, 30);
-            this.btnClearTxtCinema.MinimumSize = new System.Drawing.Size(70, 30);
+            this.btnClearTxtCinema.MaximumSize = new System.Drawing.Size(70, 20);
+            this.btnClearTxtCinema.MinimumSize = new System.Drawing.Size(70, 20);
             this.btnClearTxtCinema.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnClearTxtCinema.Name = "btnClearTxtCinema";
             this.btnClearTxtCinema.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnClearTxtCinema.Size = new System.Drawing.Size(70, 30);
+            this.btnClearTxtCinema.Size = new System.Drawing.Size(70, 20);
             this.btnClearTxtCinema.TabIndex = 23;
             this.btnClearTxtCinema.Text = "Clear";
             this.btnClearTxtCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -171,14 +173,14 @@ namespace ListWatchedMoviesAndSeries
             this.btnAddCinema.Depth = 0;
             this.btnAddCinema.HighEmphasis = true;
             this.btnAddCinema.Icon = null;
-            this.btnAddCinema.Location = new System.Drawing.Point(175, 130);
+            this.btnAddCinema.Location = new System.Drawing.Point(170, 133);
             this.btnAddCinema.Margin = new System.Windows.Forms.Padding(0);
-            this.btnAddCinema.MaximumSize = new System.Drawing.Size(70, 30);
-            this.btnAddCinema.MinimumSize = new System.Drawing.Size(70, 30);
+            this.btnAddCinema.MaximumSize = new System.Drawing.Size(70, 20);
+            this.btnAddCinema.MinimumSize = new System.Drawing.Size(70, 20);
             this.btnAddCinema.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAddCinema.Name = "btnAddCinema";
             this.btnAddCinema.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnAddCinema.Size = new System.Drawing.Size(70, 30);
+            this.btnAddCinema.Size = new System.Drawing.Size(70, 20);
             this.btnAddCinema.TabIndex = 25;
             this.btnAddCinema.Text = "Add";
             this.btnAddCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -193,14 +195,14 @@ namespace ListWatchedMoviesAndSeries
             this.btnBackFormCinema.Depth = 0;
             this.btnBackFormCinema.HighEmphasis = true;
             this.btnBackFormCinema.Icon = null;
-            this.btnBackFormCinema.Location = new System.Drawing.Point(330, 130);
+            this.btnBackFormCinema.Location = new System.Drawing.Point(330, 133);
             this.btnBackFormCinema.Margin = new System.Windows.Forms.Padding(0);
-            this.btnBackFormCinema.MaximumSize = new System.Drawing.Size(60, 30);
-            this.btnBackFormCinema.MinimumSize = new System.Drawing.Size(60, 30);
+            this.btnBackFormCinema.MaximumSize = new System.Drawing.Size(60, 20);
+            this.btnBackFormCinema.MinimumSize = new System.Drawing.Size(60, 20);
             this.btnBackFormCinema.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnBackFormCinema.Name = "btnBackFormCinema";
             this.btnBackFormCinema.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnBackFormCinema.Size = new System.Drawing.Size(60, 30);
+            this.btnBackFormCinema.Size = new System.Drawing.Size(60, 20);
             this.btnBackFormCinema.TabIndex = 26;
             this.btnBackFormCinema.Text = "Close";
             this.btnBackFormCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -213,7 +215,7 @@ namespace ListWatchedMoviesAndSeries
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(400, 170);
+            this.ClientSize = new System.Drawing.Size(400, 160);
             this.Controls.Add(this.btnBackFormCinema);
             this.Controls.Add(this.btnAddCinema);
             this.Controls.Add(this.btnClearTxtCinema);
@@ -224,8 +226,8 @@ namespace ListWatchedMoviesAndSeries
             this.Controls.Add(this.dateTimePickerCinema);
             this.Controls.Add(this.numericSeaquel);
             this.Controls.Add(this.txtAddCinema);
-            this.MaximumSize = new System.Drawing.Size(400, 170);
-            this.MinimumSize = new System.Drawing.Size(400, 170);
+            this.MaximumSize = new System.Drawing.Size(400, 160);
+            this.MinimumSize = new System.Drawing.Size(400, 160);
             this.Name = "AddCinemaForm";
             this.Text = "Add Cinema";
             ((System.ComponentModel.ISupportInitialize)(this.cinemaModelsBindingSource)).EndInit();

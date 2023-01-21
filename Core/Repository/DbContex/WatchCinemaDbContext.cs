@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Core.Repository.Extension;
 using ListWatchedMoviesAndSeries.Models;
 using ListWatchedMoviesAndSeries.Models.Item;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace Core.Repository.DbContex
 
         public WatchCinemaDbContext(DbContextOptions options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

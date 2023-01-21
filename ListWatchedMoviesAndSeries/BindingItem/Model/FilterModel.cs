@@ -1,9 +1,8 @@
 using System.Collections.ObjectModel;
 using Core.ItemFilter;
 using Core.Model;
-using ListWatchedMoviesAndSeries.Models;
 
-namespace ListWatchedMoviesAndSeries.Model
+namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
     public class FilterModel : ModelBase
     {
@@ -26,11 +25,9 @@ namespace ListWatchedMoviesAndSeries.Model
             set => SetField(ref _watch, value);
         }
 
-        public Filter GetFilter()
+        public WatchItemFilter GetFilter()
         {
-            return new Filter(Type, Watch);
+            return new WatchItemFilter(Type, Watch);
         }
-
-        public bool HasFilter() => Type != TypeCinemaFilter.AllCinema || Watch != WatchCinemaFilter.AllCinema;
     }
 }

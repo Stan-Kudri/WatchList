@@ -1,3 +1,5 @@
+using ListWatchedMoviesAndSeries.BindingItem.Model;
+
 namespace ListWatchedMoviesAndSeries.EditorForm
 {
     partial class EditorItemCinemaForm
@@ -71,14 +73,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             this.dateTPCinema.CustomFormat = "\"dd.MM.yyyy\"";
             this.dateTPCinema.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.watchDetailBindingSource, "DateWatch", true));
-            this.dateTPCinema.Location = new System.Drawing.Point(10, 137);
+            this.dateTPCinema.Location = new System.Drawing.Point(10, 130);
             this.dateTPCinema.MaxDate = new System.DateTime(2022, 8, 29, 0, 0, 0, 0);
             this.dateTPCinema.MinDate = new System.DateTime(1949, 12, 31, 0, 0, 0, 0);
             this.dateTPCinema.Name = "dateTPCinema";
-            this.dateTPCinema.Size = new System.Drawing.Size(158, 23);
+            this.dateTPCinema.Size = new System.Drawing.Size(150, 23);
             this.dateTPCinema.TabIndex = 26;
             this.dateTPCinema.Value = new System.DateTime(2022, 8, 7, 0, 0, 0, 0);
-            this.dateTPCinema.ValueChanged += new System.EventHandler(this.DateTimePickerCinema_ValueChanged);
+            this.dateTPCinema.ValueChanged += new System.EventHandler(this.DateTimePick_ValueChanged);
             // 
             // numericEditSequel
             // 
@@ -90,7 +92,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             // cinemaModelBindingSource
             // 
-            this.cinemaModelBindingSource.DataSource = typeof(ListWatchedMoviesAndSeries.Models.CinemaModel);
+            this.cinemaModelBindingSource.DataSource = typeof(CinemaModel);
             // 
             // txtEditName
             // 
@@ -150,14 +152,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             this.btnSaveEdit.Depth = 0;
             this.btnSaveEdit.HighEmphasis = true;
             this.btnSaveEdit.Icon = null;
-            this.btnSaveEdit.Location = new System.Drawing.Point(175, 130);
+            this.btnSaveEdit.Location = new System.Drawing.Point(170, 133);
             this.btnSaveEdit.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnSaveEdit.MaximumSize = new System.Drawing.Size(70, 30);
-            this.btnSaveEdit.MinimumSize = new System.Drawing.Size(70, 30);
+            this.btnSaveEdit.MaximumSize = new System.Drawing.Size(70, 20);
+            this.btnSaveEdit.MinimumSize = new System.Drawing.Size(70, 20);
             this.btnSaveEdit.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSaveEdit.Name = "btnSaveEdit";
             this.btnSaveEdit.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnSaveEdit.Size = new System.Drawing.Size(70, 30);
+            this.btnSaveEdit.Size = new System.Drawing.Size(70, 20);
             this.btnSaveEdit.TabIndex = 32;
             this.btnSaveEdit.Text = "Save";
             this.btnSaveEdit.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -172,14 +174,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             this.btnReturnDataCinema.Depth = 0;
             this.btnReturnDataCinema.HighEmphasis = true;
             this.btnReturnDataCinema.Icon = null;
-            this.btnReturnDataCinema.Location = new System.Drawing.Point(251, 130);
+            this.btnReturnDataCinema.Location = new System.Drawing.Point(250, 133);
             this.btnReturnDataCinema.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnReturnDataCinema.MaximumSize = new System.Drawing.Size(70, 30);
-            this.btnReturnDataCinema.MinimumSize = new System.Drawing.Size(70, 30);
+            this.btnReturnDataCinema.MaximumSize = new System.Drawing.Size(70, 20);
+            this.btnReturnDataCinema.MinimumSize = new System.Drawing.Size(70, 20);
             this.btnReturnDataCinema.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnReturnDataCinema.Name = "btnReturnDataCinema";
             this.btnReturnDataCinema.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReturnDataCinema.Size = new System.Drawing.Size(70, 30);
+            this.btnReturnDataCinema.Size = new System.Drawing.Size(70, 20);
             this.btnReturnDataCinema.TabIndex = 33;
             this.btnReturnDataCinema.Text = "Return";
             this.btnReturnDataCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -194,14 +196,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             this.btnCloseEdit.Depth = 0;
             this.btnCloseEdit.HighEmphasis = true;
             this.btnCloseEdit.Icon = null;
-            this.btnCloseEdit.Location = new System.Drawing.Point(330, 130);
+            this.btnCloseEdit.Location = new System.Drawing.Point(330, 133);
             this.btnCloseEdit.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCloseEdit.MaximumSize = new System.Drawing.Size(60, 30);
-            this.btnCloseEdit.MinimumSize = new System.Drawing.Size(60, 30);
+            this.btnCloseEdit.MaximumSize = new System.Drawing.Size(60, 20);
+            this.btnCloseEdit.MinimumSize = new System.Drawing.Size(60, 20);
             this.btnCloseEdit.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCloseEdit.Name = "btnCloseEdit";
             this.btnCloseEdit.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCloseEdit.Size = new System.Drawing.Size(60, 30);
+            this.btnCloseEdit.Size = new System.Drawing.Size(60, 20);
             this.btnCloseEdit.TabIndex = 34;
             this.btnCloseEdit.Text = "Close";
             this.btnCloseEdit.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -214,7 +216,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(400, 170);
+            this.ClientSize = new System.Drawing.Size(400, 160);
             this.Controls.Add(this.btnCloseEdit);
             this.Controls.Add(this.btnReturnDataCinema);
             this.Controls.Add(this.btnSaveEdit);
@@ -225,8 +227,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             this.Controls.Add(this.dateTPCinema);
             this.Controls.Add(this.numericEditSequel);
             this.Controls.Add(this.txtEditName);
-            this.Location = new System.Drawing.Point(400, 170);
-            this.MaximumSize = new System.Drawing.Size(400, 170);
+            this.Location = new System.Drawing.Point(400, 160);
+            this.MaximumSize = new System.Drawing.Size(400, 160);
             this.Name = "EditorItemCinemaForm";
             this.Text = "Edit Cinema";
             ((System.ComponentModel.ISupportInitialize)(this.numericEditGradeCinema)).EndInit();
