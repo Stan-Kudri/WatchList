@@ -96,17 +96,19 @@ namespace ListWatchedMoviesAndSeries
             // 
             // NumberCinema
             // 
+            NumberCinema.FillWeight = 80F;
             NumberCinema.HeaderText = "Season/Part";
             NumberCinema.Name = "NumberCinema";
             NumberCinema.ReadOnly = true;
+            NumberCinema.Width = 80;
             // 
             // WatchedCinema
             // 
-            WatchedCinema.FillWeight = 136F;
+            WatchedCinema.FillWeight = 106F;
             WatchedCinema.HeaderText = "The Watched Cinema";
             WatchedCinema.Name = "WatchedCinema";
             WatchedCinema.ReadOnly = true;
-            WatchedCinema.Width = 136;
+            WatchedCinema.Width = 106;
             // 
             // DataWatchedCinema
             // 
@@ -116,9 +118,11 @@ namespace ListWatchedMoviesAndSeries
             // 
             // GradeCinema
             // 
+            GradeCinema.FillWeight = 50F;
             GradeCinema.HeaderText = "Grade";
             GradeCinema.Name = "GradeCinema";
             GradeCinema.ReadOnly = true;
+            GradeCinema.Width = 50;
             // 
             // IdCinema
             // 
@@ -132,7 +136,6 @@ namespace ListWatchedMoviesAndSeries
             Cinema.HeaderText = "Type";
             Cinema.Name = "Cinema";
             Cinema.ReadOnly = true;
-            Cinema.Visible = false;
             // 
             // btnFormMovie
             // 
@@ -560,13 +563,6 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialButton btnFormCartoon;
         private MaterialSkin.Controls.MaterialButton btnEditCinema;
         private MaterialSkin.Controls.MaterialButton btnDeleteMovie;
-        private DataGridViewTextBoxColumn NameCinema;
-        private DataGridViewTextBoxColumn NumberCinema;
-        private DataGridViewTextBoxColumn WatchedCinema;
-        private DataGridViewTextBoxColumn DataWatchedCinema;
-        private DataGridViewTextBoxColumn GradeCinema;
-        private DataGridViewTextBoxColumn IdCinema;
-        private DataGridViewTextBoxColumn Cinema;
         private MaterialSkin.Controls.MaterialButton btnReplaceData;
         private MaterialSkin.Controls.MaterialButton btnUseFilter;
         private MaterialSkin.Controls.MaterialButton btnCancelFilter;
@@ -581,5 +577,12 @@ namespace ListWatchedMoviesAndSeries
         private BindingSource filterModelBindingSource;
         private MaterialSkin.Controls.MaterialLabel labelTotalPage;
         private BindingSource pageModelBindingSource;
+        private DataGridViewTextBoxColumn NameCinema;
+        private DataGridViewTextBoxColumn NumberCinema;
+        private DataGridViewTextBoxColumn WatchedCinema;
+        private DataGridViewTextBoxColumn DataWatchedCinema;
+        private DataGridViewTextBoxColumn GradeCinema;
+        private DataGridViewTextBoxColumn IdCinema;
+        private DataGridViewTextBoxColumn Cinema;
     }
 }
