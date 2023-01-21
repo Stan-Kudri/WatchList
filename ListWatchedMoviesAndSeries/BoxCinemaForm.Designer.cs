@@ -389,6 +389,7 @@ namespace ListWatchedMoviesAndSeries
             // cmbPageSize
             // 
             cmbPageSize.DataBindings.Add(new Binding("SelectedValue", pageModelBindingSource, "Size", true));
+            cmbPageSize.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPageSize.FormattingEnabled = true;
             cmbPageSize.Location = new Point(5, 365);
             cmbPageSize.Name = "cmbPageSize";
