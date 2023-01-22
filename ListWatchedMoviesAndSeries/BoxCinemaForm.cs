@@ -67,6 +67,14 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
+        private void ShowAddForm(TypeCinema typeCinema)
+        {
+            using (var form = new AddCinemaForm(this, typeCinema))
+            {
+                form.ShowDialog();
+            }
+        }
+
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
             cmbFilterType.DataSource = Filter.TypeFilter;
@@ -75,41 +83,13 @@ namespace ListWatchedMoviesAndSeries
             filterModelBindingSource.DataSource = Filter;
         }
 
-        private void BtnFormMovie_Click(object sender, EventArgs e)
-        {
-            using (var form = new AddCinemaForm(this, TypeCinema.Movie))
-            {
-                form.Text = "Add Movie";
-                form.ShowDialog();
-            }
-        }
+        private void BtnFormMovie_Click(object sender, EventArgs e) => ShowAddForm(TypeCinema.Movie);
 
-        private void BtnFormSeries_Click(object sender, EventArgs e)
-        {
-            using (var form = new AddCinemaForm(this, TypeCinema.Series))
-            {
-                form.Text = "Add Series";
-                form.ShowDialog();
-            }
-        }
+        private void BtnFormSeries_Click(object sender, EventArgs e) => ShowAddForm(TypeCinema.Series);
 
-        private void BtnFormAnime_Click(object sender, EventArgs e)
-        {
-            using (var form = new AddCinemaForm(this, TypeCinema.Anime))
-            {
-                form.Text = "Add Anime";
-                form.ShowDialog();
-            }
-        }
+        private void BtnFormAnime_Click(object sender, EventArgs e) => ShowAddForm(TypeCinema.Anime);
 
-        private void BtnFormCartoon_Click(object sender, EventArgs e)
-        {
-            using (var form = new AddCinemaForm(this, TypeCinema.Cartoon))
-            {
-                form.Text = "Add Cartoon";
-                form.ShowDialog();
-            }
-        }
+        private void BtnFormCartoon_Click(object sender, EventArgs e) => ShowAddForm(TypeCinema.Cartoon);
 
         private void BtnUseFilter_Click(object sender, EventArgs e)
         {

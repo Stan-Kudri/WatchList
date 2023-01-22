@@ -16,11 +16,13 @@ namespace ListWatchedMoviesAndSeries
 
         public AddCinemaForm(BoxCinemaForm formBoxCinema, TypeCinema type)
         {
+            InitializeComponent();
             _box = formBoxCinema;
             _type = type;
-            InitializeComponent();
             labelNumberSeaquel.Text = type.TypeSequel;
             dateTimePickerCinema.MaxDate = DateTime.Now;
+
+            Text = "Add " + type.Name;
         }
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
