@@ -63,9 +63,11 @@ namespace ListWatchedMoviesAndSeries
             // 
             numericSeaquel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "NumberSequel", true));
             numericSeaquel.Location = new Point(150, 100);
+            numericSeaquel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericSeaquel.Name = "numericSeaquel";
             numericSeaquel.Size = new Size(45, 23);
             numericSeaquel.TabIndex = 11;
+            numericSeaquel.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // dateTimePickerCinema
             // 

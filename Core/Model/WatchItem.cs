@@ -19,7 +19,7 @@ namespace ListWatchedMoviesAndSeries.Models
         [JsonPropertyName("StatusCinema")]
         public StatusCinema Status { get; set; }
 
-        public decimal? NumberSequel { get; set; }
+        public int NumberSequel { get; set; }
 
         [JsonPropertyName("Date")]
         public DateTime? Date { get; set; }
@@ -28,11 +28,11 @@ namespace ListWatchedMoviesAndSeries.Models
         public string? Grade { get; set; }
 
         // EF core
-        private WatchItem() : this(string.Empty, null, StatusCinema.AllStatus, TypeCinema.AllType, null, null, null)
+        private WatchItem() : this(string.Empty, 0, StatusCinema.AllStatus, TypeCinema.AllType, null, null, null)
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, decimal? grade)
+        public WatchItem(string name, int numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, decimal? grade)
         {
             Id = id ?? Guid.NewGuid();
             Name = name ?? throw new ArgumentNullException(nameof(name));

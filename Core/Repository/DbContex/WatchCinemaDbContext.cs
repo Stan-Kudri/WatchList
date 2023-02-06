@@ -20,6 +20,7 @@ namespace Core.Repository.DbContex
                 buildAction.HasKey(x => x.Id);
                 buildAction.Property(x => x.Name).HasMaxLength(50).IsRequired();
                 buildAction.Property(x => x.Id).ValueGeneratedOnAdd();
+                buildAction.Property(x => x.NumberSequel).IsRequired();
                 buildAction.Property(x => x.Date);
                 buildAction.Property(x => x.Grade).HasMaxLength(2);
                 buildAction.Property(x => x.Type).SmartEnumConversion();

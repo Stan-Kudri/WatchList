@@ -69,7 +69,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
             if (_cinema.NumberSequel != null)
             {
-                numericEditSequel.Value = _cinema.NumberSequel.Value;
+                numericEditSequel.Value = Convert.ToDecimal(_cinema.NumberSequel);
             }
         }
 

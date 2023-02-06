@@ -37,7 +37,7 @@ namespace Core.Model
             }
             else if (typeSort == SortCinema.Sequel)
             {
-                items = items.OrderBy(x => x.NumberSequel.ToString());
+                items = items.OrderBy(x => x.NumberSequel);
             }
             else if (typeSort == SortCinema.Grade)
             {

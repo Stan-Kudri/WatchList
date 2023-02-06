@@ -80,9 +80,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             numericEditSequel.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "NumberSequel", true));
             numericEditSequel.Location = new Point(150, 100);
+            numericEditSequel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericEditSequel.Name = "numericEditSequel";
             numericEditSequel.Size = new Size(45, 23);
             numericEditSequel.TabIndex = 25;
+            numericEditSequel.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // txtEditName
             // 

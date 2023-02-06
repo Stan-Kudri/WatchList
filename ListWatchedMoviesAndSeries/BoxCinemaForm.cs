@@ -279,7 +279,7 @@ namespace ListWatchedMoviesAndSeries
         {
             foreach (var item in itemGrid)
             {
-                var intSequel = decimal.ToInt64(item.NumberSequel ?? 0);
+                var intSequel = item.NumberSequel;
                 var formatDate = item.GetWatchData();
                 dgvCinema.Rows.Add(item.Name, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
             }
@@ -335,7 +335,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var rowItems = dgvCinema.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
-            if (!decimal.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
+            if (!int.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
             {
                 throw new InvalidOperationException("Invalid cast.");
             }

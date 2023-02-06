@@ -9,7 +9,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
         private Guid _id;
         private string _name;
         private TypeCinema _type;
-        private decimal? _numberSequel;
+        private int _numberSequel;
         private StatusCinema _status;
         private DateTime? _date;
         private string? _grade;
@@ -33,7 +33,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
         {
             _id = id ?? Guid.NewGuid();
             _name = name ?? throw new ArgumentNullException(nameof(name));
-            _numberSequel = numberSequel;
+            _numberSequel = numberSequel == null ? 0 : Convert.ToInt32((decimal)numberSequel);
             _type = type;
             _status = status;
             _date = date;
@@ -64,7 +64,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
             set => SetField(ref _status, value);
         }
 
-        public decimal? NumberSequel
+        public int NumberSequel
         {
             get => _numberSequel;
             set => SetField(ref _numberSequel, value);
