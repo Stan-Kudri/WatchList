@@ -25,14 +25,14 @@ namespace ListWatchedMoviesAndSeries.Models
         public DateTime? Date { get; set; }
 
         [JsonPropertyName("Grade")]
-        public string? Grade { get; set; }
+        public int? Grade { get; set; }
 
         // EF core
-        private WatchItem() : this(string.Empty, 0, StatusCinema.AllStatus, TypeCinema.AllType, null, null, null)
+        private WatchItem() : this(string.Empty, 0, StatusCinema.AllStatus, TypeCinema.AllType, null, null, 0)
         {
         }
 
-        public WatchItem(string name, int numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, decimal? grade)
+        public WatchItem(string name, int numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
         {
             Id = id ?? Guid.NewGuid();
             Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -40,7 +40,7 @@ namespace ListWatchedMoviesAndSeries.Models
             Type = type;
             Status = status;
             Date = dateWatch;
-            Grade = grade != null ? grade.ToString() : string.Empty;
+            Grade = grade == null ? null : grade;
         }
 
         public override int GetHashCode()

@@ -12,7 +12,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
         private int _numberSequel;
         private StatusCinema _status;
         private DateTime? _date;
-        private string? _grade;
+        private int? _grade;
 
         public CinemaModel(string name, decimal? numberSequel, StatusCinema status, TypeCinema type)
             : this(name, numberSequel, null, null, status, type, Guid.NewGuid())
@@ -37,7 +37,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
             _type = type;
             _status = status;
             _date = date;
-            _grade = grade.ToString();
+            _grade = grade == null ? null : Convert.ToInt32((decimal)grade);
         }
 
         public Guid Id
@@ -76,7 +76,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
             set => SetField(ref _date, value);
         }
 
-        public string? Grade
+        public int? Grade
         {
             get => _grade;
             set => SetField(ref _grade, value);
@@ -84,7 +84,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
 
         public WatchItem ToWatchItem()
         {
-            return new WatchItem(Name, NumberSequel, Status, Type, Id, Date ?? null, Grade != string.Empty ? decimal.Parse(Grade) : null);
+            return new WatchItem(Name, NumberSequel, Status, Type, Id, Date ?? null, Grade);
         }
 
         public string GetWatchData() => Date?.ToString("dd.MM.yyyy") ?? string.Empty;

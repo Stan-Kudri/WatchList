@@ -22,7 +22,7 @@ namespace Core.Repository.DbContex
                 buildAction.Property(x => x.Id).ValueGeneratedOnAdd();
                 buildAction.Property(x => x.NumberSequel).IsRequired();
                 buildAction.Property(x => x.Date);
-                buildAction.Property(x => x.Grade).HasMaxLength(2);
+                buildAction.Property(x => x.Grade);
                 buildAction.Property(x => x.Type).SmartEnumConversion();
                 buildAction.Property(x => x.Status).SmartEnumConversion();
             });

@@ -60,8 +60,8 @@ namespace ListWatchedMoviesAndSeries
         {
             txtAddCinema.Text = string.Empty;
             numericGradeCinema.Enabled = false;
-            numericGradeCinema.Value = 0;
-            numericSeaquel.Value = 0;
+            numericGradeCinema.Value = 1;
+            numericSeaquel.Value = 1;
             numericGradeCinema.ReadOnly = true;
             _status = StatusCinema.NotWatch;
         }

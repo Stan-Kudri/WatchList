@@ -61,15 +61,19 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             {
                 numericEditGradeCinema.Enabled = true;
                 dateTPCinema.Value = _cinema.Date.Value;
-                if (decimal.TryParse(_cinema.Grade, out decimal value))
+                if (decimal.TryParse(_cinema.Grade.ToString(), out decimal value))
                 {
                     numericEditGradeCinema.Value = value;
                 }
             }
 
-            if (_cinema.NumberSequel != null)
+            if (_cinema.NumberSequel != 0)
             {
                 numericEditSequel.Value = Convert.ToDecimal(_cinema.NumberSequel);
+            }
+            else
+            {
+                throw new Exception("Number sequel number greater than zero");
             }
         }
 
@@ -134,7 +138,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
 
             return _cinema.Date != dateTPCinema.Value
-                || _cinema.Grade != numericEditGradeCinema.Value.ToString();
+                || _cinema.Grade != Convert.ToDecimal(numericEditGradeCinema.Value);
         }
     }
 }

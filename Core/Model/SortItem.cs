@@ -33,7 +33,7 @@ namespace Core.Model
             }
             else if (typeSort == SortCinema.Data)
             {
-                items = items.OrderByDescending(x => x.Date.ToString());
+                items = items.OrderByDescending(x => x.Date);
             }
             else if (typeSort == SortCinema.Sequel)
             {
