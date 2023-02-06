@@ -13,8 +13,6 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public string Name { get; set; }
 
-        public WatchDetail Detail { get; set; }
-
         [JsonPropertyName("TypeCinema")]
         public TypeCinema Type { get; set; }
 
@@ -23,24 +21,31 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public decimal? NumberSequel { get; set; }
 
+        [JsonPropertyName("Date")]
+        public DateTime? Date { get; set; }
+
+        [JsonPropertyName("Grade")]
+        public string? Grade { get; set; }
+
         // EF core
-        private WatchItem() : this(string.Empty, null, StatusCinema.Unknown, TypeCinema.Unknown, null, new WatchDetail())
+        private WatchItem() : this(string.Empty, null, StatusCinema.AllStatus, TypeCinema.AllType, null, null, null)
         {
         }
 
-        public WatchItem(string name, decimal? numberSequel, StatusCinema status, TypeCinema type, Guid? id, WatchDetail detail)
+        public WatchItem(string name, decimal? numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, decimal? grade)
         {
             Id = id ?? Guid.NewGuid();
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            Detail = detail;
             NumberSequel = numberSequel;
             Type = type;
             Status = status;
+            Date = dateWatch;
+            Grade = grade != null ? grade.ToString() : string.Empty;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name, Detail, Status, Type, NumberSequel);
+            return HashCode.Combine(Id, Name, Grade, Date, Status, Type, NumberSequel);
         }
 
         public override bool Equals(object? obj)
@@ -55,10 +60,11 @@ namespace ListWatchedMoviesAndSeries.Models
 
             return Id == other.Id
                 && Name == other.Name
-                && Detail.Equals(other.Detail)
                 && Status == other.Status
                 && Type == other.Type
-                && NumberSequel == other.NumberSequel;
+                && NumberSequel == other.NumberSequel
+                && Grade == other.Grade
+                && Date == other.Date;
         }
 
         public override string ToString()
@@ -69,5 +75,9 @@ namespace ListWatchedMoviesAndSeries.Models
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
             });
         }
+
+        public string GetWatchData() => Date?.ToString("dd.MM.yyyy") ?? string.Empty;
+
+        public bool HasWatchDate() => Date != null;
     }
 }

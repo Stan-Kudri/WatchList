@@ -8,10 +8,11 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
     {
         private Guid _id;
         private string _name;
-        private WatchDetail _detail;
         private TypeCinema _type;
         private decimal? _numberSequel;
         private StatusCinema _status;
+        private DateTime? _date;
+        private string? _grade;
 
         public CinemaModel(string name, decimal? numberSequel, StatusCinema status, TypeCinema type)
             : this(name, numberSequel, null, null, status, type, Guid.NewGuid())
@@ -32,10 +33,11 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
         {
             _id = id ?? Guid.NewGuid();
             _name = name ?? throw new ArgumentNullException(nameof(name));
-            _detail = new WatchDetail(date, grade);
             _numberSequel = numberSequel;
             _type = type;
             _status = status;
+            _date = date;
+            _grade = grade.ToString();
         }
 
         public Guid Id
@@ -48,12 +50,6 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
         {
             get => _name;
             set => SetField(ref _name, value);
-        }
-
-        public WatchDetail Detail
-        {
-            get => _detail;
-            set => SetField(ref _detail, value);
         }
 
         public TypeCinema Type
@@ -74,9 +70,25 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
             set => SetField(ref _numberSequel, value);
         }
 
+        public DateTime? Date
+        {
+            get => _date;
+            set => SetField(ref _date, value);
+        }
+
+        public string? Grade
+        {
+            get => _grade;
+            set => SetField(ref _grade, value);
+        }
+
         public WatchItem ToWatchItem()
         {
-            return new WatchItem(Name, NumberSequel, Status, Type, Id, Detail.Clone());
+            return new WatchItem(Name, NumberSequel, Status, Type, Id, Date ?? null, Grade != string.Empty ? decimal.Parse(Grade) : null);
         }
+
+        public string GetWatchData() => Date?.ToString("dd.MM.yyyy") ?? string.Empty;
+
+        public bool HasWatchDate() => Date != null;
     }
 }

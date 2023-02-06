@@ -5,11 +5,11 @@ namespace Core.ItemFilter
 {
     public sealed class TypeCinemaFilter : SmartEnum<TypeCinemaFilter>
     {
-        private readonly TypeCinema _typeCinema = TypeCinema.Unknown;
+        private readonly TypeCinema _typeCinema = TypeCinema.AllType;
 
         public TypeCinema Type => _typeCinema;
 
-        public static readonly TypeCinemaFilter AllCinema = new TypeCinemaFilter("All Cinema", 0, TypeCinema.Unknown);
+        public static readonly TypeCinemaFilter AllCinema = new TypeCinemaFilter("All Cinema", 0, TypeCinema.AllType);
         public static readonly TypeCinemaFilter Movie = new TypeCinemaFilter("Movie", 1, TypeCinema.Movie);
         public static readonly TypeCinemaFilter Series = new TypeCinemaFilter("Series", 2, TypeCinema.Series);
         public static readonly TypeCinemaFilter Anime = new TypeCinemaFilter("Anime", 3, TypeCinema.Anime);

@@ -1,7 +1,5 @@
-using System.Text.Json;
 using Core.Repository.Extension;
 using ListWatchedMoviesAndSeries.Models;
-using ListWatchedMoviesAndSeries.Models.Item;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Repository.DbContex
@@ -22,9 +20,8 @@ namespace Core.Repository.DbContex
                 buildAction.HasKey(x => x.Id);
                 buildAction.Property(x => x.Name).HasMaxLength(50).IsRequired();
                 buildAction.Property(x => x.Id).ValueGeneratedOnAdd();
-                buildAction.Property(x => x.Detail).HasConversion(
-                    x => JsonSerializer.Serialize(x, (JsonSerializerOptions?)null),
-                    json => JsonSerializer.Deserialize<WatchDetail>(json, (JsonSerializerOptions?)null) ?? new WatchDetail());
+                buildAction.Property(x => x.Date);
+                buildAction.Property(x => x.Grade).HasMaxLength(2);
                 buildAction.Property(x => x.Type).SmartEnumConversion();
                 buildAction.Property(x => x.Status).SmartEnumConversion();
             });
