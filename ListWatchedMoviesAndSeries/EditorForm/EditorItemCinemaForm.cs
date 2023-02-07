@@ -61,6 +61,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             {
                 numericEditGradeCinema.Enabled = true;
                 dateTPCinema.Value = _cinema.Date.Value;
+
                 if (decimal.TryParse(_cinema.Grade.ToString(), out decimal value))
                 {
                     numericEditGradeCinema.Value = value;
