@@ -12,8 +12,8 @@ namespace EqualsTest
                 {
                     new List<WatchItem>()
                     {
-                        new WatchItem("Тор", 1, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new WatchDetail(new DateTime(2022, 08, 10, 00, 00, 00), 8)),
-                        new WatchItem("Тор", 2, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a999-ca7a-4b24-a78a-65733ba419a7"), new WatchDetail(new DateTime(2022, 09, 10, 00, 00, 00), 8)),
+                        new WatchItem("Тор", 1, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 08, 10, 00, 00, 00), 8),
+                        new WatchItem("Тор", 2, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 8),
                     },
                 },
             };
@@ -22,7 +22,7 @@ namespace EqualsTest
         {
             yield return new object[]
             {
-                new WatchItem("Тор", 1, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new WatchDetail(new DateTime(2022, 08, 10, 00, 00, 00), 8)),
+                new WatchItem("Тор", 1, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 08, 10, 00, 00, 00), 8),
             };
         }
 
@@ -63,7 +63,8 @@ namespace EqualsTest
                                     item.Status,
                                     item.Type,
                                     item.Id,
-                                    item.Detail.Clone());
+                                    item.Date,
+                                    item.Grade);
 
             var secondWatch = new WatchItem(
                                     item.Name,
@@ -71,7 +72,8 @@ namespace EqualsTest
                                     item.Status,
                                     item.Type,
                                     null,
-                                    item.Detail.Clone());
+                                    item.Date,
+                                    item.Grade);
 
             // Act
             var comparison = firstWatch.Equals(secondWatch);
@@ -82,19 +84,20 @@ namespace EqualsTest
 
         [Theory]
         [MemberData(nameof(WatchItemElement))]
-        public void Equality_Two_Elements_With_Null_Detail(WatchItem item)
+        public void Equality_Two_Elements_With_Null_Grade(WatchItem item)
         {
             // Arrange
-            var itemWithNullDatail = new WatchItem(
+            var itemNotWatch = new WatchItem(
                                     item.Name,
                                     item.NumberSequel,
                                     item.Status,
                                     item.Type,
                                     item.Id,
-                                    new WatchDetail());
+                                    item.Date,
+                                    null);
 
             // Act
-            var comparison = item.Equals(itemWithNullDatail);
+            var comparison = item.Equals(itemNotWatch);
 
             // Assert
             Assert.False(comparison);
