@@ -1,6 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using Core.Model.Item;
 using ListWatchedMoviesAndSeries.Models.Item;
@@ -13,18 +14,18 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public string Name { get; set; }
 
-        [JsonPropertyName("TypeCinema")]
         public TypeCinema Type { get; set; }
 
-        [JsonPropertyName("StatusCinema")]
         public StatusCinema Status { get; set; }
 
+        [Required]
+        [Column(TypeName = "INTEGER")]
         public int NumberSequel { get; set; }
 
-        [JsonPropertyName("Date")]
+        [Column(TypeName = "DATETIME")]
         public DateTime? Date { get; set; }
 
-        [JsonPropertyName("Grade")]
+        [Column(TypeName = "INTEGER")]
         public int? Grade { get; set; }
 
         // EF core
