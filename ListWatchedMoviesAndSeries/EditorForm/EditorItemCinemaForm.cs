@@ -1,5 +1,6 @@
 using Core.Model.Item;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
 using ListWatchedMoviesAndSeries.Models.Item;
 using MaterialSkin.Controls;
 
@@ -16,6 +17,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private StatusCinema _status = StatusCinema.AllStatus;
 
+        private TypeModel SelectedType { get; set; } = new TypeModel();
+
         public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel cinema, int numberRowCinema)
         {
             if (cinema == null)
@@ -26,7 +29,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             _cinema = cinema;
             _box = formBoxCinema;
             _numberRowCinema = numberRowCinema;
+
             InitializeComponent();
+
+            cmbTypeCinema.DataSource = SelectedType.TypesCinema;
+
             SetupDefaultValues();
         }
 
@@ -57,6 +64,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             txtEditName.Text = _cinema.Name;
             labelNumberSequel.Text = _cinema.Type.Name;
             dateTPCinema.MaxDate = DateTime.Now;
+
+            SelectedType.Type = _cinema.Type;
+
+            typeModelBindingSource.DataSource = SelectedType;
+
             if (_cinema.HasWatchDate())
             {
                 numericEditGradeCinema.Enabled = true;
@@ -140,6 +152,20 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
             return _cinema.Date != dateTPCinema.Value
                 || _cinema.Grade != Convert.ToInt32(numericEditGradeCinema.Value);
+        }
+
+        private void CmbTypeCinemaChanged(object sender, EventArgs e)
+        {
+            SelectedType.Type = SelectedType.TypesCinema[cmbTypeCinema.SelectedIndex];
+            EditFormByTypeCinema();
+        }
+
+        private void EditFormByTypeCinema()
+        {
+            var type = SelectedType.Type;
+            _cinema.Type = type;
+            labelNumberSequel.Text = type.TypeSequel;
+            Text = "Add " + type.Name;
         }
     }
 }

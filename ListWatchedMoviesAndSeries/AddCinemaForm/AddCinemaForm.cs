@@ -1,5 +1,6 @@
 using Core.Model.Item;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
 using ListWatchedMoviesAndSeries.Models.Item;
 using MaterialSkin.Controls;
 
@@ -11,18 +12,18 @@ namespace ListWatchedMoviesAndSeries
     public partial class AddCinemaForm : MaterialForm
     {
         private readonly BoxCinemaForm _box;
-        private readonly TypeCinema _type;
         private StatusCinema _status = StatusCinema.NotWatch;
+        private TypeCinema _type;
 
-        public AddCinemaForm(BoxCinemaForm formBoxCinema, TypeCinema type)
+        private TypeModel SelectedType { get; set; } = new TypeModel();
+
+        public AddCinemaForm(BoxCinemaForm formBoxCinema)
         {
             InitializeComponent();
-            _box = formBoxCinema;
-            _type = type;
-            labelNumberSequel.Text = type.TypeSequel;
-            dateTimePickerCinema.MaxDate = DateTime.Now;
+            cmbTypeCinema.DataSource = SelectedType.TypesCinema;
 
-            Text = "Add " + type.Name;
+            _box = formBoxCinema;
+            dateTimePickerCinema.MaxDate = DateTime.Now;
         }
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
@@ -86,6 +87,19 @@ namespace ListWatchedMoviesAndSeries
 
             errorMessage = string.Empty;
             return true;
+        }
+
+        private void CmbTypeCinemaChanged(object sender, EventArgs e)
+        {
+            SelectedType.Type = SelectedType.TypesCinema[cmbTypeCinema.SelectedIndex];
+            EditFormByTypeCinema();
+        }
+
+        private void EditFormByTypeCinema()
+        {
+            _type = SelectedType.Type;
+            labelNumberSequel.Text = _type.TypeSequel;
+            Text = "Add " + _type.Name;
         }
     }
 }

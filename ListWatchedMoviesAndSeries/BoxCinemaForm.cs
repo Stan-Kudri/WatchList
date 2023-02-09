@@ -69,14 +69,6 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void ShowAddForm(TypeCinema typeCinema)
-        {
-            using (var form = new AddCinemaForm(this, typeCinema))
-            {
-                form.ShowDialog();
-            }
-        }
-
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
             cmbFilterType.DataSource = Filter.TypeFilter;
@@ -86,14 +78,6 @@ namespace ListWatchedMoviesAndSeries
             cmbSortType.SelectedItem = Sort.Type;
             filterModelBindingSource.DataSource = Filter;
         }
-
-        private void BtnFormMovie_Click(object sender, EventArgs e) => ShowAddForm(TypeCinema.Movie);
-
-        private void BtnFormSeries_Click(object sender, EventArgs e) => ShowAddForm(TypeCinema.Series);
-
-        private void BtnFormAnime_Click(object sender, EventArgs e) => ShowAddForm(TypeCinema.Anime);
-
-        private void BtnFormCartoon_Click(object sender, EventArgs e) => ShowAddForm(TypeCinema.Cartoon);
 
         private void BtnUseFilter_Click(object sender, EventArgs e)
         {
@@ -112,6 +96,14 @@ namespace ListWatchedMoviesAndSeries
             cmbFilterWatch.SelectedItem = Filter.Watch;
             cmbFilterType.Refresh();
             cmbFilterWatch.Refresh();
+        }
+
+        private void BtnAddCinema_Click(object sender, EventArgs e)
+        {
+            using (var form = new AddCinemaForm(this))
+            {
+                form.ShowDialog();
+            }
         }
 
         private void BtnEditRow_Click(object sender, EventArgs e)

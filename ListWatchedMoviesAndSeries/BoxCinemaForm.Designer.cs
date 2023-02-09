@@ -41,10 +41,7 @@ namespace ListWatchedMoviesAndSeries
             GradeCinema = new DataGridViewTextBoxColumn();
             IdCinema = new DataGridViewTextBoxColumn();
             Cinema = new DataGridViewTextBoxColumn();
-            btnFormMovie = new MaterialSkin.Controls.MaterialButton();
-            btnFormSeries = new MaterialSkin.Controls.MaterialButton();
-            btnFormAnime = new MaterialSkin.Controls.MaterialButton();
-            btnFormCartoon = new MaterialSkin.Controls.MaterialButton();
+            btnAddCinema = new MaterialSkin.Controls.MaterialButton();
             btnEditCinema = new MaterialSkin.Controls.MaterialButton();
             btnDeleteMovie = new MaterialSkin.Controls.MaterialButton();
             btnReplaceData = new MaterialSkin.Controls.MaterialButton();
@@ -82,12 +79,12 @@ namespace ListWatchedMoviesAndSeries
             dgvCinema.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCinema.Columns.AddRange(new DataGridViewColumn[] { NameCinema, NumberCinema, WatchedCinema, DataWatchedCinema, GradeCinema, IdCinema, Cinema });
             dgvCinema.Location = new Point(5, 120);
-            dgvCinema.MaximumSize = new Size(640, 240);
-            dgvCinema.MinimumSize = new Size(640, 240);
+            dgvCinema.MaximumSize = new Size(630, 240);
+            dgvCinema.MinimumSize = new Size(630, 240);
             dgvCinema.Name = "dgvCinema";
             dgvCinema.ReadOnly = true;
             dgvCinema.RowTemplate.Height = 25;
-            dgvCinema.Size = new Size(640, 240);
+            dgvCinema.Size = new Size(630, 240);
             dgvCinema.TabIndex = 16;
             dgvCinema.Tag = "Cinema";
             // 
@@ -148,94 +145,27 @@ namespace ListWatchedMoviesAndSeries
             Cinema.ReadOnly = true;
             Cinema.SortMode = DataGridViewColumnSortMode.Programmatic;
             // 
-            // btnFormMovie
+            // btnAddCinema
             // 
-            btnFormMovie.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnFormMovie.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnFormMovie.Depth = 0;
-            btnFormMovie.HighEmphasis = true;
-            btnFormMovie.Icon = null;
-            btnFormMovie.Location = new Point(5, 395);
-            btnFormMovie.Margin = new Padding(4, 6, 4, 6);
-            btnFormMovie.MaximumSize = new Size(155, 20);
-            btnFormMovie.MinimumSize = new Size(155, 20);
-            btnFormMovie.MouseState = MaterialSkin.MouseState.HOVER;
-            btnFormMovie.Name = "btnFormMovie";
-            btnFormMovie.NoAccentTextColor = Color.Empty;
-            btnFormMovie.Size = new Size(155, 20);
-            btnFormMovie.TabIndex = 32;
-            btnFormMovie.Text = "Add Movie";
-            btnFormMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnFormMovie.UseAccentColor = false;
-            btnFormMovie.UseVisualStyleBackColor = true;
-            btnFormMovie.Click += BtnFormMovie_Click;
-            // 
-            // btnFormSeries
-            // 
-            btnFormSeries.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnFormSeries.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnFormSeries.Depth = 0;
-            btnFormSeries.HighEmphasis = true;
-            btnFormSeries.Icon = null;
-            btnFormSeries.Location = new Point(166, 395);
-            btnFormSeries.Margin = new Padding(4, 6, 4, 6);
-            btnFormSeries.MaximumSize = new Size(155, 20);
-            btnFormSeries.MinimumSize = new Size(155, 20);
-            btnFormSeries.MouseState = MaterialSkin.MouseState.HOVER;
-            btnFormSeries.Name = "btnFormSeries";
-            btnFormSeries.NoAccentTextColor = Color.Empty;
-            btnFormSeries.Size = new Size(155, 20);
-            btnFormSeries.TabIndex = 33;
-            btnFormSeries.Text = "Add Series";
-            btnFormSeries.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnFormSeries.UseAccentColor = false;
-            btnFormSeries.UseVisualStyleBackColor = true;
-            btnFormSeries.Click += BtnFormSeries_Click;
-            // 
-            // btnFormAnime
-            // 
-            btnFormAnime.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnFormAnime.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnFormAnime.Depth = 0;
-            btnFormAnime.HighEmphasis = true;
-            btnFormAnime.Icon = null;
-            btnFormAnime.Location = new Point(328, 395);
-            btnFormAnime.Margin = new Padding(4, 6, 4, 6);
-            btnFormAnime.MaximumSize = new Size(155, 20);
-            btnFormAnime.MinimumSize = new Size(155, 20);
-            btnFormAnime.MouseState = MaterialSkin.MouseState.HOVER;
-            btnFormAnime.Name = "btnFormAnime";
-            btnFormAnime.NoAccentTextColor = Color.Empty;
-            btnFormAnime.Size = new Size(155, 20);
-            btnFormAnime.TabIndex = 34;
-            btnFormAnime.Text = "Add Anime";
-            btnFormAnime.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnFormAnime.UseAccentColor = false;
-            btnFormAnime.UseVisualStyleBackColor = true;
-            btnFormAnime.Click += BtnFormAnime_Click;
-            // 
-            // btnFormCartoon
-            // 
-            btnFormCartoon.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnFormCartoon.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnFormCartoon.Depth = 0;
-            btnFormCartoon.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnFormCartoon.HighEmphasis = true;
-            btnFormCartoon.Icon = null;
-            btnFormCartoon.Location = new Point(490, 395);
-            btnFormCartoon.Margin = new Padding(4, 6, 4, 6);
-            btnFormCartoon.MaximumSize = new Size(125, 20);
-            btnFormCartoon.MinimumSize = new Size(155, 20);
-            btnFormCartoon.MouseState = MaterialSkin.MouseState.HOVER;
-            btnFormCartoon.Name = "btnFormCartoon";
-            btnFormCartoon.NoAccentTextColor = Color.Empty;
-            btnFormCartoon.Size = new Size(155, 20);
-            btnFormCartoon.TabIndex = 35;
-            btnFormCartoon.Text = "Add Cartoon";
-            btnFormCartoon.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnFormCartoon.UseAccentColor = false;
-            btnFormCartoon.UseVisualStyleBackColor = true;
-            btnFormCartoon.Click += BtnFormCartoon_Click;
+            btnAddCinema.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnAddCinema.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnAddCinema.Depth = 0;
+            btnAddCinema.HighEmphasis = true;
+            btnAddCinema.Icon = null;
+            btnAddCinema.Location = new Point(5, 395);
+            btnAddCinema.Margin = new Padding(4, 6, 4, 6);
+            btnAddCinema.MaximumSize = new Size(150, 20);
+            btnAddCinema.MinimumSize = new Size(150, 20);
+            btnAddCinema.MouseState = MaterialSkin.MouseState.HOVER;
+            btnAddCinema.Name = "btnAddCinema";
+            btnAddCinema.NoAccentTextColor = Color.Empty;
+            btnAddCinema.Size = new Size(150, 20);
+            btnAddCinema.TabIndex = 32;
+            btnAddCinema.Text = "Add Cinema";
+            btnAddCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnAddCinema.UseAccentColor = false;
+            btnAddCinema.UseVisualStyleBackColor = true;
+            btnAddCinema.Click += BtnAddCinema_Click;
             // 
             // btnEditCinema
             // 
@@ -244,14 +174,14 @@ namespace ListWatchedMoviesAndSeries
             btnEditCinema.Depth = 0;
             btnEditCinema.HighEmphasis = true;
             btnEditCinema.Icon = null;
-            btnEditCinema.Location = new Point(5, 420);
+            btnEditCinema.Location = new Point(165, 395);
             btnEditCinema.Margin = new Padding(4, 6, 4, 6);
-            btnEditCinema.MaximumSize = new Size(210, 20);
-            btnEditCinema.MinimumSize = new Size(210, 20);
+            btnEditCinema.MaximumSize = new Size(150, 20);
+            btnEditCinema.MinimumSize = new Size(150, 20);
             btnEditCinema.MouseState = MaterialSkin.MouseState.HOVER;
             btnEditCinema.Name = "btnEditCinema";
             btnEditCinema.NoAccentTextColor = Color.Empty;
-            btnEditCinema.Size = new Size(210, 20);
+            btnEditCinema.Size = new Size(150, 20);
             btnEditCinema.TabIndex = 36;
             btnEditCinema.Text = "Edit";
             btnEditCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -266,14 +196,14 @@ namespace ListWatchedMoviesAndSeries
             btnDeleteMovie.Depth = 0;
             btnDeleteMovie.HighEmphasis = true;
             btnDeleteMovie.Icon = null;
-            btnDeleteMovie.Location = new Point(220, 420);
+            btnDeleteMovie.Location = new Point(325, 395);
             btnDeleteMovie.Margin = new Padding(4, 6, 4, 6);
-            btnDeleteMovie.MaximumSize = new Size(210, 20);
-            btnDeleteMovie.MinimumSize = new Size(210, 20);
+            btnDeleteMovie.MaximumSize = new Size(150, 20);
+            btnDeleteMovie.MinimumSize = new Size(150, 20);
             btnDeleteMovie.MouseState = MaterialSkin.MouseState.HOVER;
             btnDeleteMovie.Name = "btnDeleteMovie";
             btnDeleteMovie.NoAccentTextColor = Color.Empty;
-            btnDeleteMovie.Size = new Size(210, 20);
+            btnDeleteMovie.Size = new Size(150, 20);
             btnDeleteMovie.TabIndex = 37;
             btnDeleteMovie.Text = "Delete";
             btnDeleteMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -288,16 +218,16 @@ namespace ListWatchedMoviesAndSeries
             btnReplaceData.Depth = 0;
             btnReplaceData.HighEmphasis = true;
             btnReplaceData.Icon = null;
-            btnReplaceData.Location = new Point(435, 420);
+            btnReplaceData.Location = new Point(485, 395);
             btnReplaceData.Margin = new Padding(4, 6, 4, 6);
-            btnReplaceData.MaximumSize = new Size(210, 20);
-            btnReplaceData.MinimumSize = new Size(210, 20);
+            btnReplaceData.MaximumSize = new Size(150, 20);
+            btnReplaceData.MinimumSize = new Size(150, 20);
             btnReplaceData.MouseState = MaterialSkin.MouseState.HOVER;
             btnReplaceData.Name = "btnReplaceData";
             btnReplaceData.NoAccentTextColor = Color.Empty;
-            btnReplaceData.Size = new Size(210, 20);
+            btnReplaceData.Size = new Size(150, 20);
             btnReplaceData.TabIndex = 38;
-            btnReplaceData.Text = "Replace data from file ";
+            btnReplaceData.Text = "Replace data";
             btnReplaceData.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnReplaceData.UseAccentColor = false;
             btnReplaceData.UseVisualStyleBackColor = true;
@@ -312,12 +242,12 @@ namespace ListWatchedMoviesAndSeries
             btnUseFilter.Icon = null;
             btnUseFilter.Location = new Point(495, 95);
             btnUseFilter.Margin = new Padding(4, 6, 4, 6);
-            btnUseFilter.MaximumSize = new Size(150, 20);
-            btnUseFilter.MinimumSize = new Size(150, 20);
+            btnUseFilter.MaximumSize = new Size(140, 20);
+            btnUseFilter.MinimumSize = new Size(140, 20);
             btnUseFilter.MouseState = MaterialSkin.MouseState.HOVER;
             btnUseFilter.Name = "btnUseFilter";
             btnUseFilter.NoAccentTextColor = Color.Empty;
-            btnUseFilter.Size = new Size(150, 20);
+            btnUseFilter.Size = new Size(140, 20);
             btnUseFilter.TabIndex = 39;
             btnUseFilter.Text = "Use Filter";
             btnUseFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -334,12 +264,12 @@ namespace ListWatchedMoviesAndSeries
             btnClearFilter.Icon = null;
             btnClearFilter.Location = new Point(495, 70);
             btnClearFilter.Margin = new Padding(4, 6, 4, 6);
-            btnClearFilter.MaximumSize = new Size(150, 20);
-            btnClearFilter.MinimumSize = new Size(150, 20);
+            btnClearFilter.MaximumSize = new Size(140, 20);
+            btnClearFilter.MinimumSize = new Size(140, 20);
             btnClearFilter.MouseState = MaterialSkin.MouseState.HOVER;
             btnClearFilter.Name = "btnClearFilter";
             btnClearFilter.NoAccentTextColor = Color.Empty;
-            btnClearFilter.Size = new Size(150, 20);
+            btnClearFilter.Size = new Size(140, 20);
             btnClearFilter.TabIndex = 40;
             btnClearFilter.Text = "Clear Filter";
             btnClearFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -559,7 +489,7 @@ namespace ListWatchedMoviesAndSeries
             cmbSortType.FormattingEnabled = true;
             cmbSortType.Location = new Point(480, 365);
             cmbSortType.Name = "cmbSortType";
-            cmbSortType.Size = new Size(165, 23);
+            cmbSortType.Size = new Size(155, 23);
             cmbSortType.TabIndex = 55;
             cmbSortType.SelectedIndexChanged += CmbSort_ChangedItem;
             // 
@@ -572,7 +502,7 @@ namespace ListWatchedMoviesAndSeries
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(650, 445);
+            ClientSize = new Size(650, 425);
             Controls.Add(cmbSortType);
             Controls.Add(labelSotrType);
             Controls.Add(labelTextSizePage);
@@ -590,14 +520,11 @@ namespace ListWatchedMoviesAndSeries
             Controls.Add(btnReplaceData);
             Controls.Add(btnDeleteMovie);
             Controls.Add(btnEditCinema);
-            Controls.Add(btnFormCartoon);
-            Controls.Add(btnFormAnime);
-            Controls.Add(btnFormSeries);
-            Controls.Add(btnFormMovie);
+            Controls.Add(btnAddCinema);
             Controls.Add(dgvCinema);
             Margin = new Padding(3, 2, 3, 2);
-            MaximumSize = new Size(650, 445);
-            MinimumSize = new Size(650, 445);
+            MaximumSize = new Size(650, 425);
+            MinimumSize = new Size(650, 425);
             Name = "BoxCinemaForm";
             Text = "BoxCinema";
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).EndInit();
@@ -613,10 +540,7 @@ namespace ListWatchedMoviesAndSeries
         private BindingSource cinemaBindingSource;
         private OpenFileDialog openFileDialog;
         private DataGridView dgvCinema;
-        private MaterialSkin.Controls.MaterialButton btnFormMovie;
-        private MaterialSkin.Controls.MaterialButton btnFormSeries;
-        private MaterialSkin.Controls.MaterialButton btnFormAnime;
-        private MaterialSkin.Controls.MaterialButton btnFormCartoon;
+        private MaterialSkin.Controls.MaterialButton btnAddCinema;
         private MaterialSkin.Controls.MaterialButton btnEditCinema;
         private MaterialSkin.Controls.MaterialButton btnDeleteMovie;
         private MaterialSkin.Controls.MaterialButton btnReplaceData;
