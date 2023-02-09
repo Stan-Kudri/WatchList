@@ -89,10 +89,12 @@ namespace ListWatchedMoviesAndSeries
             numericGradeCinema.InterceptArrowKeys = false;
             numericGradeCinema.Location = new Point(260, 100);
             numericGradeCinema.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            numericGradeCinema.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericGradeCinema.Name = "numericGradeCinema";
             numericGradeCinema.ReadOnly = true;
             numericGradeCinema.Size = new Size(65, 23);
             numericGradeCinema.TabIndex = 17;
+            numericGradeCinema.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // labelGrade
             // 

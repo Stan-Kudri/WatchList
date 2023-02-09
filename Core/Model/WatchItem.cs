@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -18,14 +16,10 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public StatusCinema Status { get; set; }
 
-        [Required]
-        [Column(TypeName = "INTEGER")]
         public int NumberSequel { get; set; }
 
-        [Column(TypeName = "DATETIME")]
         public DateTime? Date { get; set; }
 
-        [Column(TypeName = "INTEGER")]
         public int? Grade { get; set; }
 
         // EF core

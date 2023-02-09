@@ -139,7 +139,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
 
             return _cinema.Date != dateTPCinema.Value
-                || _cinema.Grade != Convert.ToDecimal(numericEditGradeCinema.Value);
+                || _cinema.Grade != Convert.ToInt32(numericEditGradeCinema.Value);
         }
     }
 }
