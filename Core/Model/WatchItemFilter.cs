@@ -1,5 +1,7 @@
 using Core.ItemFilter;
+using Core.Model.Item;
 using ListWatchedMoviesAndSeries.Models;
+using ListWatchedMoviesAndSeries.Models.Item;
 
 namespace Core.Model
 {
@@ -21,11 +23,11 @@ namespace Core.Model
 
         public IQueryable<WatchItem> Apply(IQueryable<WatchItem> items)
         {
-            if (TypeFilter.Type != TypeCinemaFilter.AllCinema)
+            if (TypeFilter.Type != TypeCinema.AllType)
             {
                 items = items.Where(x => x.Type == TypeFilter.Type);
             }
-            if (WatchFilter.Status != WatchCinemaFilter.AllCinema)
+            if (WatchFilter.Status != StatusCinema.AllStatus)
             {
                 items = items.Where(x => x.Status == WatchFilter.Status);
             }

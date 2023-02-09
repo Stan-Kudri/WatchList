@@ -14,7 +14,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private readonly CinemaModel _cinema;
         private readonly int _numberRowCinema;
 
-        private StatusCinema _status = StatusCinema.Unknown;
+        private StatusCinema _status = StatusCinema.AllStatus;
 
         public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel cinema, int numberRowCinema)
         {
@@ -57,19 +57,24 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             txtEditName.Text = _cinema.Name;
             labelNumberSequel.Text = _cinema.Type.Name;
             dateTPCinema.MaxDate = DateTime.Now;
-            if (_cinema.Detail.HasWatchDate())
+            if (_cinema.HasWatchDate())
             {
                 numericEditGradeCinema.Enabled = true;
-                dateTPCinema.Value = _cinema.Detail.DateWatch.Value;
-                if (decimal.TryParse(_cinema.Detail.Grade, out decimal value))
+                dateTPCinema.Value = _cinema.Date.Value;
+
+                if (decimal.TryParse(_cinema.Grade.ToString(), out decimal value))
                 {
                     numericEditGradeCinema.Value = value;
                 }
             }
 
-            if (_cinema.NumberSequel != null)
+            if (_cinema.NumberSequel != 0)
             {
-                numericEditSequel.Value = _cinema.NumberSequel.Value;
+                numericEditSequel.Value = Convert.ToDecimal(_cinema.NumberSequel);
+            }
+            else
+            {
+                throw new Exception("Number sequel number greater than zero");
             }
         }
 
@@ -81,7 +86,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private void SaveEditionElement()
         {
-            var type = _cinema.Type ?? TypeCinema.Unknown;
+            var type = _cinema.Type ?? TypeCinema.AllType;
             var id = _cinema.Id;
             _status = numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
             if (numericEditGradeCinema.Enabled)
@@ -105,10 +110,10 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
             else if (numericEditSequel.Value == 0)
             {
-                errorMessage = $"Enter namber {Type}";
+                errorMessage = $"Enter number {Type}";
                 return false;
             }
-            else if (numericEditGradeCinema.Enabled && _cinema?.Detail?.DateWatch == null)
+            else if (numericEditGradeCinema.Enabled && _cinema?.Date == null)
             {
                 if (numericEditGradeCinema.Value == 0)
                 {
@@ -128,13 +133,13 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                 return true;
             }
 
-            if (_cinema.Detail == null)
+            if (_cinema.Status == StatusCinema.AllStatus)
             {
                 return false;
             }
 
-            return _cinema.Detail.DateWatch != dateTPCinema.Value
-                || _cinema.Detail.Grade != numericEditGradeCinema.Value.ToString();
+            return _cinema.Date != dateTPCinema.Value
+                || _cinema.Grade != Convert.ToInt32(numericEditGradeCinema.Value);
         }
     }
 }

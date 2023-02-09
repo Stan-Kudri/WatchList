@@ -49,7 +49,7 @@ namespace ListWatchedMoviesAndSeries
             btnDeleteMovie = new MaterialSkin.Controls.MaterialButton();
             btnReplaceData = new MaterialSkin.Controls.MaterialButton();
             btnUseFilter = new MaterialSkin.Controls.MaterialButton();
-            btnCancelFilter = new MaterialSkin.Controls.MaterialButton();
+            btnClearFilter = new MaterialSkin.Controls.MaterialButton();
             cmbFilterType = new MaterialSkin.Controls.MaterialComboBox();
             filterModelBindingSource = new BindingSource(components);
             cmbFilterWatch = new MaterialSkin.Controls.MaterialComboBox();
@@ -61,10 +61,15 @@ namespace ListWatchedMoviesAndSeries
             btnEndPage = new MaterialSkin.Controls.MaterialButton();
             textBoxPage = new TextBox();
             labelTotalPage = new MaterialSkin.Controls.MaterialLabel();
+            labelTextSizePage = new MaterialSkin.Controls.MaterialLabel();
+            labelSotrType = new MaterialSkin.Controls.MaterialLabel();
+            cmbSortType = new ComboBox();
+            sortModelBindingSource = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).BeginInit();
             ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pageModelBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)sortModelBindingSource).BeginInit();
             SuspendLayout();
             // 
             // openFileDialog
@@ -92,6 +97,7 @@ namespace ListWatchedMoviesAndSeries
             NameCinema.HeaderText = "Title";
             NameCinema.Name = "NameCinema";
             NameCinema.ReadOnly = true;
+            NameCinema.SortMode = DataGridViewColumnSortMode.Programmatic;
             NameCinema.Width = 160;
             // 
             // NumberCinema
@@ -100,14 +106,16 @@ namespace ListWatchedMoviesAndSeries
             NumberCinema.HeaderText = "Season/Part";
             NumberCinema.Name = "NumberCinema";
             NumberCinema.ReadOnly = true;
+            NumberCinema.SortMode = DataGridViewColumnSortMode.Programmatic;
             NumberCinema.Width = 80;
             // 
             // WatchedCinema
             // 
             WatchedCinema.FillWeight = 106F;
-            WatchedCinema.HeaderText = "The Watched Cinema";
+            WatchedCinema.HeaderText = "Status";
             WatchedCinema.Name = "WatchedCinema";
             WatchedCinema.ReadOnly = true;
+            WatchedCinema.SortMode = DataGridViewColumnSortMode.Programmatic;
             WatchedCinema.Width = 106;
             // 
             // DataWatchedCinema
@@ -115,6 +123,7 @@ namespace ListWatchedMoviesAndSeries
             DataWatchedCinema.HeaderText = "Data";
             DataWatchedCinema.Name = "DataWatchedCinema";
             DataWatchedCinema.ReadOnly = true;
+            DataWatchedCinema.SortMode = DataGridViewColumnSortMode.Programmatic;
             // 
             // GradeCinema
             // 
@@ -122,6 +131,7 @@ namespace ListWatchedMoviesAndSeries
             GradeCinema.HeaderText = "Grade";
             GradeCinema.Name = "GradeCinema";
             GradeCinema.ReadOnly = true;
+            GradeCinema.SortMode = DataGridViewColumnSortMode.Programmatic;
             GradeCinema.Width = 50;
             // 
             // IdCinema
@@ -136,6 +146,7 @@ namespace ListWatchedMoviesAndSeries
             Cinema.HeaderText = "Type";
             Cinema.Name = "Cinema";
             Cinema.ReadOnly = true;
+            Cinema.SortMode = DataGridViewColumnSortMode.Programmatic;
             // 
             // btnFormMovie
             // 
@@ -213,7 +224,7 @@ namespace ListWatchedMoviesAndSeries
             btnFormCartoon.Icon = null;
             btnFormCartoon.Location = new Point(490, 395);
             btnFormCartoon.Margin = new Padding(4, 6, 4, 6);
-            btnFormCartoon.MaximumSize = new Size(155, 20);
+            btnFormCartoon.MaximumSize = new Size(125, 20);
             btnFormCartoon.MinimumSize = new Size(155, 20);
             btnFormCartoon.MouseState = MaterialSkin.MouseState.HOVER;
             btnFormCartoon.Name = "btnFormCartoon";
@@ -314,27 +325,27 @@ namespace ListWatchedMoviesAndSeries
             btnUseFilter.UseVisualStyleBackColor = true;
             btnUseFilter.Click += BtnUseFilter_Click;
             // 
-            // btnCancelFilter
+            // btnClearFilter
             // 
-            btnCancelFilter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnCancelFilter.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnCancelFilter.Depth = 0;
-            btnCancelFilter.HighEmphasis = true;
-            btnCancelFilter.Icon = null;
-            btnCancelFilter.Location = new Point(495, 70);
-            btnCancelFilter.Margin = new Padding(4, 6, 4, 6);
-            btnCancelFilter.MaximumSize = new Size(150, 20);
-            btnCancelFilter.MinimumSize = new Size(150, 20);
-            btnCancelFilter.MouseState = MaterialSkin.MouseState.HOVER;
-            btnCancelFilter.Name = "btnCancelFilter";
-            btnCancelFilter.NoAccentTextColor = Color.Empty;
-            btnCancelFilter.Size = new Size(150, 20);
-            btnCancelFilter.TabIndex = 40;
-            btnCancelFilter.Text = "Cancel Filter";
-            btnCancelFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnCancelFilter.UseAccentColor = false;
-            btnCancelFilter.UseVisualStyleBackColor = true;
-            btnCancelFilter.Click += BtnCancelFilter_Click;
+            btnClearFilter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnClearFilter.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnClearFilter.Depth = 0;
+            btnClearFilter.HighEmphasis = true;
+            btnClearFilter.Icon = null;
+            btnClearFilter.Location = new Point(495, 70);
+            btnClearFilter.Margin = new Padding(4, 6, 4, 6);
+            btnClearFilter.MaximumSize = new Size(150, 20);
+            btnClearFilter.MinimumSize = new Size(150, 20);
+            btnClearFilter.MouseState = MaterialSkin.MouseState.HOVER;
+            btnClearFilter.Name = "btnClearFilter";
+            btnClearFilter.NoAccentTextColor = Color.Empty;
+            btnClearFilter.Size = new Size(150, 20);
+            btnClearFilter.TabIndex = 40;
+            btnClearFilter.Text = "Clear Filter";
+            btnClearFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnClearFilter.UseAccentColor = false;
+            btnClearFilter.UseVisualStyleBackColor = true;
+            btnClearFilter.Click += BtnCancelFilter_Click;
             // 
             // cmbFilterType
             // 
@@ -394,7 +405,7 @@ namespace ListWatchedMoviesAndSeries
             cmbPageSize.DataBindings.Add(new Binding("SelectedValue", pageModelBindingSource, "Size", true));
             cmbPageSize.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPageSize.FormattingEnabled = true;
-            cmbPageSize.Location = new Point(5, 365);
+            cmbPageSize.Location = new Point(115, 365);
             cmbPageSize.Name = "cmbPageSize";
             cmbPageSize.Size = new Size(120, 23);
             cmbPageSize.TabIndex = 43;
@@ -411,7 +422,7 @@ namespace ListWatchedMoviesAndSeries
             btnBackPage.Depth = 0;
             btnBackPage.HighEmphasis = true;
             btnBackPage.Icon = null;
-            btnBackPage.Location = new Point(270, 365);
+            btnBackPage.Location = new Point(270, 366);
             btnBackPage.Margin = new Padding(4, 6, 4, 6);
             btnBackPage.MaximumSize = new Size(20, 20);
             btnBackPage.MinimumSize = new Size(20, 20);
@@ -433,7 +444,7 @@ namespace ListWatchedMoviesAndSeries
             btnNextPage.Depth = 0;
             btnNextPage.HighEmphasis = true;
             btnNextPage.Icon = null;
-            btnNextPage.Location = new Point(370, 365);
+            btnNextPage.Location = new Point(370, 366);
             btnNextPage.Margin = new Padding(4, 6, 4, 6);
             btnNextPage.MaximumSize = new Size(20, 20);
             btnNextPage.MinimumSize = new Size(20, 20);
@@ -455,7 +466,7 @@ namespace ListWatchedMoviesAndSeries
             btnStartPage.Depth = 0;
             btnStartPage.HighEmphasis = true;
             btnStartPage.Icon = null;
-            btnStartPage.Location = new Point(245, 365);
+            btnStartPage.Location = new Point(245, 366);
             btnStartPage.Margin = new Padding(4, 6, 4, 6);
             btnStartPage.MaximumSize = new Size(20, 20);
             btnStartPage.MinimumSize = new Size(20, 20);
@@ -477,7 +488,7 @@ namespace ListWatchedMoviesAndSeries
             btnEndPage.Depth = 0;
             btnEndPage.HighEmphasis = true;
             btnEndPage.Icon = null;
-            btnEndPage.Location = new Point(395, 365);
+            btnEndPage.Location = new Point(395, 366);
             btnEndPage.Margin = new Padding(4, 6, 4, 6);
             btnEndPage.MaximumSize = new Size(20, 20);
             btnEndPage.MinimumSize = new Size(20, 20);
@@ -495,7 +506,7 @@ namespace ListWatchedMoviesAndSeries
             // textBoxPage
             // 
             textBoxPage.DataBindings.Add(new Binding("Text", pageModelBindingSource, "Number", true));
-            textBoxPage.Location = new Point(295, 365);
+            textBoxPage.Location = new Point(295, 366);
             textBoxPage.MaximumSize = new Size(40, 20);
             textBoxPage.MinimumSize = new Size(40, 20);
             textBoxPage.Name = "textBoxPage";
@@ -515,12 +526,56 @@ namespace ListWatchedMoviesAndSeries
             labelTotalPage.TabIndex = 52;
             labelTotalPage.Text = "/1";
             // 
+            // labelTextSizePage
+            // 
+            labelTextSizePage.AutoSize = true;
+            labelTextSizePage.BackColor = SystemColors.Control;
+            labelTextSizePage.Depth = 0;
+            labelTextSizePage.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            labelTextSizePage.Location = new Point(6, 367);
+            labelTextSizePage.MouseState = MaterialSkin.MouseState.HOVER;
+            labelTextSizePage.Name = "labelTextSizePage";
+            labelTextSizePage.Size = new Size(102, 19);
+            labelTextSizePage.TabIndex = 53;
+            labelTextSizePage.Text = "Show on page";
+            // 
+            // labelSotrType
+            // 
+            labelSotrType.AutoSize = true;
+            labelSotrType.BackColor = SystemColors.Control;
+            labelSotrType.Depth = 0;
+            labelSotrType.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            labelSotrType.Location = new Point(422, 367);
+            labelSotrType.MouseState = MaterialSkin.MouseState.HOVER;
+            labelSotrType.Name = "labelSotrType";
+            labelSotrType.Size = new Size(51, 19);
+            labelSotrType.TabIndex = 54;
+            labelSotrType.Text = "Sort by";
+            // 
+            // cmbSortType
+            // 
+            cmbSortType.DataBindings.Add(new Binding("SelectedValue", sortModelBindingSource, "Type", true));
+            cmbSortType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSortType.FormattingEnabled = true;
+            cmbSortType.Location = new Point(480, 365);
+            cmbSortType.Name = "cmbSortType";
+            cmbSortType.Size = new Size(165, 23);
+            cmbSortType.TabIndex = 55;
+            cmbSortType.SelectedIndexChanged += CmbSort_ChangedItem;
+            // 
+            // sortModelBindingSource
+            // 
+            sortModelBindingSource.DataSource = typeof(SortModel);
+            // 
             // BoxCinemaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(224, 224, 224);
+            BackColor = SystemColors.Control;
             ClientSize = new Size(650, 445);
+            Controls.Add(cmbSortType);
+            Controls.Add(labelSotrType);
+            Controls.Add(labelTextSizePage);
             Controls.Add(labelTotalPage);
             Controls.Add(textBoxPage);
             Controls.Add(btnEndPage);
@@ -530,7 +585,7 @@ namespace ListWatchedMoviesAndSeries
             Controls.Add(cmbPageSize);
             Controls.Add(cmbFilterWatch);
             Controls.Add(cmbFilterType);
-            Controls.Add(btnCancelFilter);
+            Controls.Add(btnClearFilter);
             Controls.Add(btnUseFilter);
             Controls.Add(btnReplaceData);
             Controls.Add(btnDeleteMovie);
@@ -549,6 +604,7 @@ namespace ListWatchedMoviesAndSeries
             ((System.ComponentModel.ISupportInitialize)dgvCinema).EndInit();
             ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)pageModelBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)sortModelBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -565,7 +621,7 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialButton btnDeleteMovie;
         private MaterialSkin.Controls.MaterialButton btnReplaceData;
         private MaterialSkin.Controls.MaterialButton btnUseFilter;
-        private MaterialSkin.Controls.MaterialButton btnCancelFilter;
+        private MaterialSkin.Controls.MaterialButton btnClearFilter;
         private MaterialSkin.Controls.MaterialComboBox cmbFilterType;
         private MaterialSkin.Controls.MaterialComboBox cmbFilterWatch;
         private ComboBox cmbPageSize;
@@ -577,6 +633,10 @@ namespace ListWatchedMoviesAndSeries
         private BindingSource filterModelBindingSource;
         private MaterialSkin.Controls.MaterialLabel labelTotalPage;
         private BindingSource pageModelBindingSource;
+        private MaterialSkin.Controls.MaterialLabel labelTextSizePage;
+        private MaterialSkin.Controls.MaterialLabel labelSotrType;
+        private ComboBox cmbSortType;
+        private BindingSource sortModelBindingSource;
         private DataGridViewTextBoxColumn NameCinema;
         private DataGridViewTextBoxColumn NumberCinema;
         private DataGridViewTextBoxColumn WatchedCinema;

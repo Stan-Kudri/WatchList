@@ -49,6 +49,8 @@ namespace ListWatchedMoviesAndSeries
 
         private PageModel Page { get; set; } = new PageModel();
 
+        private SortModel Sort { get; set; } = new SortModel();
+
         public void AddItemToGrid(CinemaModel cinema)
         {
             if (cinema?.Type != null)
@@ -80,6 +82,8 @@ namespace ListWatchedMoviesAndSeries
             cmbFilterType.DataSource = Filter.TypeFilter;
             cmbFilterWatch.DataSource = Filter.WatchFilter;
             cmbPageSize.DataSource = Page.AvailablePageSizes;
+            cmbSortType.DataSource = Sort.SortingObjects;
+            cmbSortType.SelectedItem = Sort.Type;
             filterModelBindingSource.DataSource = Filter;
         }
 
@@ -194,6 +198,12 @@ namespace ListWatchedMoviesAndSeries
             LoadData();
         }
 
+        private void CmbSort_ChangedItem(object sender, EventArgs e)
+        {
+            Sort.Type = Sort.SortingObjects[cmbSortType.SelectedIndex];
+            LoadData();
+        }
+
         private void TextBoxPage_TextChanged(object sender, EventArgs e)
         {
             if (!int.TryParse(textBoxPage.Text, out int pageNumber)
@@ -269,9 +279,9 @@ namespace ListWatchedMoviesAndSeries
         {
             foreach (var item in itemGrid)
             {
-                var intSequel = decimal.ToInt64(item.NumberSequel ?? 0);
-                var formatDate = item.Detail?.GetWatchData();
-                dgvCinema.Rows.Add(item.Name, intSequel.ToString(), item.Status.Name, formatDate, item.Detail?.Grade, item.Id.ToString(), item.Type);
+                var intSequel = item.NumberSequel;
+                var formatDate = item.GetWatchData();
+                dgvCinema.Rows.Add(item.Name, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
             }
         }
 
@@ -325,7 +335,7 @@ namespace ListWatchedMoviesAndSeries
         {
             var rowItems = dgvCinema.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
-            if (!decimal.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
+            if (!int.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
             {
                 throw new InvalidOperationException("Invalid cast.");
             }
@@ -383,11 +393,11 @@ namespace ListWatchedMoviesAndSeries
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
 
-            if (cinemaItem.Detail.HasWatchDate())
+            if (cinemaItem.HasWatchDate())
             {
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Watch;
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.Detail.GetWatchData();
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Detail.Grade;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Grade;
             }
             else
             {
@@ -406,6 +416,7 @@ namespace ListWatchedMoviesAndSeries
             try
             {
                 _searchRequest.Page = Page.GetPage();
+                _searchRequest.Sort = Sort.GetSortItem();
                 _pagedList = _repository.GetPageCinema(_searchRequest);
                 var item = _pagedList.Items;
 
@@ -426,7 +437,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void WriteDataToTable()
         {
-            _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Page.GetPage());
+            _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Sort.GetSortItem(), Page.GetPage());
             LoadData();
         }
 

@@ -2,13 +2,13 @@ namespace Core.PageItem
 {
     public class PagedList<T>
     {
-        public int PageNumber { get; set; } = 1;
+        public int PageNumber { get; private set; } = 1;
 
-        public int TotalItems { get; set; } = 0;
+        public int TotalItems { get; private set; } = 0;
 
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; private set; } = 5;
 
-        public List<T> Items { get; set; }
+        public List<T> Items { get; private set; }
 
         public int PageCount => PageSize != 0 ? (int)Math.Ceiling((double)TotalItems / PageSize) : 0;
 

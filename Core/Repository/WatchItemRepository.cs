@@ -18,7 +18,8 @@ namespace ListWatchedMoviesAndSeries.Repository
 
         public PagedList<WatchItem> GetPageCinema(WatchItemSearchRequest searchRequest)
         {
-            var query = searchRequest.Apply(_db.WatchItem).OrderBy(x => x.Name);
+            var query = searchRequest.ApplyFilter(_db.WatchItem);
+            query = searchRequest.ApplyOrderBy(query);
             return query.GetPagedList(searchRequest.Page);
         }
 
@@ -61,8 +62,9 @@ namespace ListWatchedMoviesAndSeries.Repository
             if (item == null)
                 return;
 
-            item.NumberSequel = editItem.NumberSequel ?? 0;
-            item.Detail = editItem.Detail;
+            item.NumberSequel = editItem.NumberSequel;
+            item.Date = editItem.Date;
+            item.Grade = editItem.Grade;
             item.Name = editItem.Name;
             _db.SaveChanges();
         }

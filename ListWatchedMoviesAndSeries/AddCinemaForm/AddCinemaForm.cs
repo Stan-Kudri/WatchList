@@ -19,7 +19,7 @@ namespace ListWatchedMoviesAndSeries
             InitializeComponent();
             _box = formBoxCinema;
             _type = type;
-            labelNumberSeaquel.Text = type.TypeSequel;
+            labelNumberSequel.Text = type.TypeSequel;
             dateTimePickerCinema.MaxDate = DateTime.Now;
 
             Text = "Add " + type.Name;
@@ -60,8 +60,8 @@ namespace ListWatchedMoviesAndSeries
         {
             txtAddCinema.Text = string.Empty;
             numericGradeCinema.Enabled = false;
-            numericGradeCinema.Value = 0;
-            numericSeaquel.Value = 0;
+            numericGradeCinema.Value = 1;
+            numericSeaquel.Value = 1;
             numericGradeCinema.ReadOnly = true;
             _status = StatusCinema.NotWatch;
         }
