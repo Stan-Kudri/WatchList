@@ -216,7 +216,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             cmbTypeCinema.Name = "cmbTypeCinema";
             cmbTypeCinema.Size = new Size(150, 23);
             cmbTypeCinema.TabIndex = 35;
-            cmbTypeCinema.SelectedIndexChanged += CmbTypeCinemaChanged;
+            cmbTypeCinema.SelectedValueChanged += CmbTypeCinemaChanged;
             // 
             // typeModelBindingSource
             // 

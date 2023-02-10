@@ -14,13 +14,12 @@ namespace ListWatchedMoviesAndSeries
         private readonly BoxCinemaForm _box;
         private StatusCinema _status = StatusCinema.NotWatch;
         private TypeCinema _type;
-
-        private TypeModel SelectedType { get; set; } = new TypeModel();
+        private readonly TypeModel _selectedType = new TypeModel();
 
         public AddCinemaForm(BoxCinemaForm formBoxCinema)
         {
             InitializeComponent();
-            cmbTypeCinema.DataSource = SelectedType.TypesCinema;
+            cmbTypeCinema.DataSource = _selectedType.TypesCinema;
 
             _box = formBoxCinema;
             dateTimePickerCinema.MaxDate = DateTime.Now;
@@ -91,13 +90,13 @@ namespace ListWatchedMoviesAndSeries
 
         private void CmbTypeCinemaChanged(object sender, EventArgs e)
         {
-            SelectedType.Type = SelectedType.TypesCinema[cmbTypeCinema.SelectedIndex];
+            _selectedType.Type = _selectedType.TypesCinema[cmbTypeCinema.SelectedIndex];
             EditFormByTypeCinema();
         }
 
         private void EditFormByTypeCinema()
         {
-            _type = SelectedType.Type;
+            _type = _selectedType.Type;
             labelNumberSequel.Text = _type.TypeSequel;
             Text = "Add " + _type.Name;
         }

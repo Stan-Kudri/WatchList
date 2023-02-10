@@ -1,7 +1,6 @@
 using Core.Model.Item;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
-using ListWatchedMoviesAndSeries.Models.Item;
 using MaterialSkin.Controls;
 
 namespace ListWatchedMoviesAndSeries.EditorForm
@@ -11,13 +10,15 @@ namespace ListWatchedMoviesAndSeries.EditorForm
     /// </summary>
     public partial class EditorItemCinemaForm : MaterialForm
     {
+        private const bool TypeChanged = true;
+
         private readonly BoxCinemaForm _box;
         private readonly CinemaModel _cinema;
         private readonly int _numberRowCinema;
+        private bool _hasDefaultValue;
+        private readonly TypeModel _selectedType;
 
         private StatusCinema _status = StatusCinema.AllStatus;
-
-        private TypeModel SelectedType { get; set; } = new TypeModel();
 
         public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel cinema, int numberRowCinema)
         {
@@ -32,7 +33,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
             InitializeComponent();
 
-            cmbTypeCinema.DataSource = SelectedType.TypesCinema;
+            _selectedType = new TypeModel(_cinema.Type);
+            cmbTypeCinema.DataSource = _selectedType.TypesCinema;
 
             SetupDefaultValues();
         }
@@ -55,19 +57,20 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
+        private void BtnReturnDataCinema_Click(object sender, EventArgs e)
+        {
+            _hasDefaultValue = false;
+            SetupDefaultValues();
+        }
 
         private void BtnCloseEdit_Click(object sender, EventArgs e) => Close();
 
         private void SetupDefaultValues()
         {
             txtEditName.Text = _cinema.Name;
-            labelNumberSequel.Text = _cinema.Type.Name;
             dateTPCinema.MaxDate = DateTime.Now;
 
-            SelectedType.Type = _cinema.Type;
-
-            typeModelBindingSource.DataSource = SelectedType;
+            cmbTypeCinema.SelectedItem = _cinema.Type;
 
             if (_cinema.HasWatchDate())
             {
@@ -88,6 +91,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             {
                 throw new Exception("Number sequel number greater than zero");
             }
+
+            _hasDefaultValue = true;
         }
 
         private void DateTimePick_ValueChanged(object sender, EventArgs e)
@@ -98,7 +103,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private void SaveEditionElement()
         {
-            var type = _cinema.Type ?? TypeCinema.AllType;
+            var type = _selectedType.Type;
             var id = _cinema.Id;
             _status = numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
             if (numericEditGradeCinema.Enabled)
@@ -150,22 +155,30 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                 return false;
             }
 
+            if (_hasDefaultValue)
+            {
+                return true;
+            }
+
             return _cinema.Date != dateTPCinema.Value
                 || _cinema.Grade != Convert.ToInt32(numericEditGradeCinema.Value);
         }
 
-        private void CmbTypeCinemaChanged(object sender, EventArgs e)
-        {
-            SelectedType.Type = SelectedType.TypesCinema[cmbTypeCinema.SelectedIndex];
-            EditFormByTypeCinema();
-        }
-
         private void EditFormByTypeCinema()
         {
-            var type = SelectedType.Type;
-            _cinema.Type = type;
+            var type = _selectedType.Type;
             labelNumberSequel.Text = type.TypeSequel;
             Text = "Add " + type.Name;
+        }
+
+        private void CmbTypeCinemaChanged(object sender, EventArgs e)
+        {
+            if (_hasDefaultValue == TypeChanged)
+            {
+                _selectedType.Type = _selectedType.TypesCinema[cmbTypeCinema.SelectedIndex];
+            }
+
+            EditFormByTypeCinema();
         }
     }
 }
