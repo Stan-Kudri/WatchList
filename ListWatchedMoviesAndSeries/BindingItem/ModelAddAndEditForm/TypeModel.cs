@@ -7,6 +7,13 @@ namespace ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm
     {
         private TypeCinema _type;
 
+        public TypeModel()
+            : this(TypeCinema.Movie)
+        {
+        }
+
+        public TypeModel(TypeCinema type) => _type = type;
+
         public ObservableCollection<TypeCinema> TypesCinema { get; set; } = new ObservableCollection<TypeCinema>()
         {
             TypeCinema.Movie,
@@ -14,13 +21,6 @@ namespace ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm
             TypeCinema.Anime,
             TypeCinema.Cartoon,
         };
-
-        public TypeModel()
-            : this(TypeCinema.Movie)
-        {
-        }
-
-        public TypeModel(TypeCinema type) => _type = type;
 
         public TypeCinema Type
         {
