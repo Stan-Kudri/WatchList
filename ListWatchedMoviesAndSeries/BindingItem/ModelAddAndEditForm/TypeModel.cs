@@ -15,17 +15,17 @@ namespace ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm
             TypeCinema.Cartoon,
         };
 
-        public TypeCinema Type
-        {
-            get => _type;
-            set => SetField(ref _type, value);
-        }
-
         public TypeModel()
             : this(TypeCinema.Movie)
         {
         }
 
         public TypeModel(TypeCinema type) => _type = type;
+
+        public TypeCinema Type
+        {
+            get => _type;
+            set => SetField(ref _type, value);
+        }
     }
 }

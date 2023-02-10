@@ -11,10 +11,10 @@ namespace ListWatchedMoviesAndSeries
     /// </summary>
     public partial class AddCinemaForm : MaterialForm
     {
+        private readonly TypeModel _selectedType = new TypeModel();
         private readonly BoxCinemaForm _box;
         private StatusCinema _status = StatusCinema.NotWatch;
-        private TypeCinema _type;
-        private readonly TypeModel _selectedType = new TypeModel();
+        private TypeCinema _type = TypeCinema.Movie;
 
         public AddCinemaForm(BoxCinemaForm formBoxCinema)
         {

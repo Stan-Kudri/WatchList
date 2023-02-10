@@ -12,11 +12,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
     {
         private const bool TypeChanged = true;
 
+        private readonly TypeModel _selectedType;
         private readonly BoxCinemaForm _box;
         private readonly CinemaModel _cinema;
         private readonly int _numberRowCinema;
         private bool _hasDefaultValue;
-        private readonly TypeModel _selectedType;
 
         private StatusCinema _status = StatusCinema.AllStatus;
 
