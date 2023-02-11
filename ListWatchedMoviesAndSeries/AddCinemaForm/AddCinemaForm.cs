@@ -11,35 +11,31 @@ namespace ListWatchedMoviesAndSeries
     /// </summary>
     public partial class AddCinemaForm : MaterialForm
     {
-        private readonly BoxCinemaForm _box;
         private StatusCinema _status = StatusCinema.NotWatch;
 
-        public AddCinemaForm(BoxCinemaForm formBoxCinema)
+        public AddCinemaForm()
         {
-            _box = formBoxCinema;
             InitializeComponent();
         }
 
         private TypeCinema SelectedTypeCinema => (TypeCinema)cmbTypeCinema.SelectedValue;
 
-        private void BtnAddCinema_Click(object sender, EventArgs e)
+        public CinemaModel? GetCinema()
         {
             if (!ValidateFields(out var errorMessage))
             {
                 MessageBoxProvider.ShowWarning(errorMessage);
-                return;
+                return null;
             }
 
             if (numericGradeCinema.Enabled)
             {
-                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, SelectedTypeCinema));
+                return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, SelectedTypeCinema);
             }
             else
             {
-                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, SelectedTypeCinema));
+                return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, SelectedTypeCinema);
             }
-
-            SetDefaultValues();
         }
 
         private void BtnClearTxtCinema_Click(object sender, EventArgs e) => SetDefaultValues();
@@ -83,7 +79,7 @@ namespace ListWatchedMoviesAndSeries
             return true;
         }
 
-        private void CmbTypeCinemaChanged(object sender, EventArgs e)
+        private void CmbTypeCinema_Changed(object sender, EventArgs e)
         {
             var type = SelectedTypeCinema;
             labelNumberSequel.Text = type.TypeSequel;

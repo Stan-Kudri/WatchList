@@ -11,22 +11,30 @@ namespace ListWatchedMoviesAndSeries.EditorForm
     /// </summary>
     public partial class EditorItemCinemaForm : MaterialForm
     {
-        private readonly BoxCinemaForm _box;
         private readonly CinemaModel _cinema;
-        private readonly int _numberRowCinema;
 
-        public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel cinema, int numberRowCinema)
+        public EditorItemCinemaForm(CinemaModel cinema)
         {
             _cinema = cinema ?? throw new ArgumentException("Item cinema not null", nameof(cinema));
-            _box = formBoxCinema;
-            _numberRowCinema = numberRowCinema;
 
             InitializeComponent();
         }
 
-        private TypeCinema SelectedTypeCinema
+        private TypeCinema SelectedTypeCinema => (TypeCinema)cmbTypeCinema.SelectedValue;
+
+        public CinemaModel? GetEditItemCinema()
         {
-            get => (TypeCinema)cmbTypeCinema.SelectedValue;
+            if (!ValidateFields(out string errorMessage))
+            {
+                MessageBoxProvider.ShowWarning(errorMessage);
+            }
+
+            if (HasChanges() && MessageBoxProvider.ShowQuestion("Save edit item Cinema?"))
+            {
+                return GetCurrentCinemaModel();
+            }
+
+            return null;
         }
 
         private void SetupDefaultValues(CinemaModel cinema)
@@ -57,12 +65,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private StatusCinema GetCurrentStatus()
         {
             return numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
-        }
-
-        private void SaveEditionElement()
-        {
-            var cinemaModel = GetCurrentCinemaModel();
-            _box.EditItemGrid(cinemaModel, _numberRowCinema);
         }
 
         private CinemaModel GetCurrentCinemaModel()
@@ -117,22 +119,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             SetupDefaultValues(_cinema);
         }
 
-        private void BtnSaveEdit_Click(object sender, EventArgs e)
-        {
-            if (!ValidateFields(out string errorMessage))
-            {
-                MessageBoxProvider.ShowWarning(errorMessage);
-                return;
-            }
-
-            if (HasChanges() && MessageBoxProvider.ShowQuestion("Save edit item Cinema?"))
-            {
-                SaveEditionElement();
-            }
-
-            Close();
-        }
-
         private void BtnReturnDataCinema_Click(object sender, EventArgs e)
         {
             SetupDefaultValues(_cinema);
@@ -144,10 +130,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             numericEditGradeCinema.Enabled = true;
         }
 
-        private void CmbTypeCinemaChanged(object sender, EventArgs e)
-        {
-            var type = SelectedTypeCinema;
-            labelNumberSequel.Text = type.TypeSequel;
-        }
+        private void CmbTypeCinema_Changed(object sender, EventArgs e) => labelNumberSequel.Text = SelectedTypeCinema.TypeSequel;
     }
 }

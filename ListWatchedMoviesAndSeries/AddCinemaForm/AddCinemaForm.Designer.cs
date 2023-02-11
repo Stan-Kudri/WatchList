@@ -168,6 +168,7 @@ namespace ListWatchedMoviesAndSeries
             btnAddCinema.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnAddCinema.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnAddCinema.Depth = 0;
+            btnAddCinema.DialogResult = DialogResult.OK;
             btnAddCinema.HighEmphasis = true;
             btnAddCinema.Icon = null;
             btnAddCinema.Location = new Point(170, 133);
@@ -183,7 +184,6 @@ namespace ListWatchedMoviesAndSeries
             btnAddCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnAddCinema.UseAccentColor = false;
             btnAddCinema.UseVisualStyleBackColor = true;
-            btnAddCinema.Click += BtnAddCinema_Click;
             // 
             // btnBackFormCinema
             // 
@@ -215,7 +215,7 @@ namespace ListWatchedMoviesAndSeries
             cmbTypeCinema.Name = "cmbTypeCinema";
             cmbTypeCinema.Size = new Size(150, 23);
             cmbTypeCinema.TabIndex = 27;
-            cmbTypeCinema.SelectedIndexChanged += CmbTypeCinemaChanged;
+            cmbTypeCinema.SelectedIndexChanged += CmbTypeCinema_Changed;
             // 
             // typeModelBindingSource
             // 

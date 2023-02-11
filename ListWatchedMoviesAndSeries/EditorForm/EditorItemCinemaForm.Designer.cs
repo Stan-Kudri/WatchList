@@ -147,6 +147,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnSaveEdit.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnSaveEdit.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnSaveEdit.Depth = 0;
+            btnSaveEdit.DialogResult = DialogResult.OK;
             btnSaveEdit.HighEmphasis = true;
             btnSaveEdit.Icon = null;
             btnSaveEdit.Location = new Point(170, 133);
@@ -162,7 +163,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnSaveEdit.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnSaveEdit.UseAccentColor = false;
             btnSaveEdit.UseVisualStyleBackColor = true;
-            btnSaveEdit.Click += BtnSaveEdit_Click;
             // 
             // btnReturnDataCinema
             // 
@@ -216,7 +216,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             cmbTypeCinema.Name = "cmbTypeCinema";
             cmbTypeCinema.Size = new Size(150, 23);
             cmbTypeCinema.TabIndex = 35;
-            cmbTypeCinema.SelectedValueChanged += CmbTypeCinemaChanged;
+            cmbTypeCinema.SelectedValueChanged += CmbTypeCinema_Changed;
             // 
             // typeModelBindingSource
             // 

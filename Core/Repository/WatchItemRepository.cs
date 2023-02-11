@@ -66,6 +66,7 @@ namespace ListWatchedMoviesAndSeries.Repository
             item.Date = editItem.Date;
             item.Grade = editItem.Grade;
             item.Name = editItem.Name;
+            item.Type = editItem.Type;
             _db.SaveChanges();
         }
     }
