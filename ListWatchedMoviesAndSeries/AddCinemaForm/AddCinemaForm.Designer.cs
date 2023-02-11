@@ -205,11 +205,11 @@ namespace ListWatchedMoviesAndSeries
             btnBackFormCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnBackFormCinema.UseAccentColor = false;
             btnBackFormCinema.UseVisualStyleBackColor = true;
-            btnBackFormCinema.Click += BtnBackFormCinema_Click;
             // 
             // cmbTypeCinema
             // 
-            cmbTypeCinema.DataBindings.Add(new Binding("SelectedValue", typeModelBindingSource, "Type", true));
+            cmbTypeCinema.DataBindings.Add(new Binding("SelectedValue", typeModelBindingSource, "SelectedValue", true, DataSourceUpdateMode.OnPropertyChanged));
+            cmbTypeCinema.DataBindings.Add(new Binding("DataSource", typeModelBindingSource, "Items", true, DataSourceUpdateMode.OnPropertyChanged));
             cmbTypeCinema.FormattingEnabled = true;
             cmbTypeCinema.Location = new Point(10, 100);
             cmbTypeCinema.Name = "cmbTypeCinema";
@@ -219,13 +219,14 @@ namespace ListWatchedMoviesAndSeries
             // 
             // typeModelBindingSource
             // 
-            typeModelBindingSource.DataSource = typeof(BindingItem.ModelAddAndEditForm.TypeModel);
+            typeModelBindingSource.DataSource = typeof(BindingItem.ModelAddAndEditForm.SelectableTypeCinemaModel);
             // 
             // AddCinemaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
+            CancelButton = btnBackFormCinema;
             ClientSize = new Size(400, 160);
             Controls.Add(cmbTypeCinema);
             Controls.Add(btnBackFormCinema);
@@ -242,6 +243,7 @@ namespace ListWatchedMoviesAndSeries
             MinimumSize = new Size(400, 160);
             Name = "AddCinemaForm";
             Text = "Add Cinema";
+            Load += AddCinemaForm_Load;
             ((System.ComponentModel.ISupportInitialize)cinemaModelsBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericSeaquel).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericGradeCinema).EndInit();

@@ -11,19 +11,16 @@ namespace ListWatchedMoviesAndSeries
     /// </summary>
     public partial class AddCinemaForm : MaterialForm
     {
-        private readonly TypeModel _selectedType = new TypeModel();
         private readonly BoxCinemaForm _box;
         private StatusCinema _status = StatusCinema.NotWatch;
-        private TypeCinema _type = TypeCinema.Movie;
 
         public AddCinemaForm(BoxCinemaForm formBoxCinema)
         {
-            InitializeComponent();
-            cmbTypeCinema.DataSource = _selectedType.TypesCinema;
-
             _box = formBoxCinema;
-            dateTimePickerCinema.MaxDate = DateTime.Now;
+            InitializeComponent();
         }
+
+        private TypeCinema SelectedTypeCinema => (TypeCinema)cmbTypeCinema.SelectedValue;
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
         {
@@ -35,19 +32,17 @@ namespace ListWatchedMoviesAndSeries
 
             if (numericGradeCinema.Enabled)
             {
-                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, _type));
+                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, SelectedTypeCinema));
             }
             else
             {
-                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
+                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, SelectedTypeCinema));
             }
 
             SetDefaultValues();
         }
 
         private void BtnClearTxtCinema_Click(object sender, EventArgs e) => SetDefaultValues();
-
-        private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
         private void DtpCinema_ValueChanged(object sender, EventArgs e)
         {
@@ -70,12 +65,12 @@ namespace ListWatchedMoviesAndSeries
         {
             if (txtAddCinema.Text.Length <= 0)
             {
-                errorMessage = $"Enter {_type.Name} name";
+                errorMessage = $"Enter {SelectedTypeCinema.Name} name";
                 return false;
             }
             else if (numericSeaquel.Value == 0)
             {
-                errorMessage = $"Enter number {_type.Name}";
+                errorMessage = $"Enter number {SelectedTypeCinema.Name}";
                 return false;
             }
             else if (numericGradeCinema.Enabled && numericGradeCinema.Value == 0)
@@ -90,15 +85,15 @@ namespace ListWatchedMoviesAndSeries
 
         private void CmbTypeCinemaChanged(object sender, EventArgs e)
         {
-            _selectedType.Type = _selectedType.TypesCinema[cmbTypeCinema.SelectedIndex];
-            EditFormByTypeCinema();
+            var type = SelectedTypeCinema;
+            labelNumberSequel.Text = type.TypeSequel;
+            Text = "Add " + type.Name;
         }
 
-        private void EditFormByTypeCinema()
+        private void AddCinemaForm_Load(object sender, EventArgs e)
         {
-            _type = _selectedType.Type;
-            labelNumberSequel.Text = _type.TypeSequel;
-            Text = "Add " + _type.Name;
+            typeModelBindingSource.DataSource = new SelectableTypeCinemaModel();
+            dateTimePickerCinema.MaxDate = DateTime.Now;
         }
     }
 }

@@ -206,11 +206,11 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnCloseEdit.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnCloseEdit.UseAccentColor = false;
             btnCloseEdit.UseVisualStyleBackColor = true;
-            btnCloseEdit.Click += BtnCloseEdit_Click;
             // 
             // cmbTypeCinema
             // 
-            cmbTypeCinema.DataBindings.Add(new Binding("SelectedValue", typeModelBindingSource, "Type", true));
+            cmbTypeCinema.DataBindings.Add(new Binding("SelectedValue", typeModelBindingSource, "SelectedValue", true, DataSourceUpdateMode.OnPropertyChanged));
+            cmbTypeCinema.DataBindings.Add(new Binding("DataSource", typeModelBindingSource, "Items", true, DataSourceUpdateMode.OnPropertyChanged));
             cmbTypeCinema.FormattingEnabled = true;
             cmbTypeCinema.Location = new Point(10, 100);
             cmbTypeCinema.Name = "cmbTypeCinema";
@@ -220,13 +220,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             // typeModelBindingSource
             // 
-            typeModelBindingSource.DataSource = typeof(BindingItem.ModelAddAndEditForm.TypeModel);
+            typeModelBindingSource.DataSource = typeof(BindingItem.ModelAddAndEditForm.SelectableTypeCinemaModel);
             // 
             // EditorItemCinemaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
+            CancelButton = btnCloseEdit;
             ClientSize = new Size(400, 160);
             Controls.Add(cmbTypeCinema);
             Controls.Add(btnCloseEdit);
@@ -242,7 +243,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             Location = new Point(400, 160);
             MaximumSize = new Size(400, 160);
             Name = "EditorItemCinemaForm";
-            Text = "Edit Cinema";
+            Text = "Edit Item";
+            Load += EditorItemCinemaForm_Load;
             ((System.ComponentModel.ISupportInitialize)numericEditGradeCinema).EndInit();
             ((System.ComponentModel.ISupportInitialize)cinemaModelBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericEditSequel).EndInit();
