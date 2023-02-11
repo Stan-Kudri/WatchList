@@ -1,5 +1,6 @@
 using Core.Model.Item;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
 using ListWatchedMoviesAndSeries.Models.Item;
 using MaterialSkin.Controls;
 
@@ -14,110 +15,86 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private readonly CinemaModel _cinema;
         private readonly int _numberRowCinema;
 
-        private StatusCinema _status = StatusCinema.AllStatus;
-
         public EditorItemCinemaForm(BoxCinemaForm formBoxCinema, CinemaModel cinema, int numberRowCinema)
         {
-            if (cinema == null)
-            {
-                throw new ArgumentException("Item cinema not null", nameof(cinema));
-            }
-
-            _cinema = cinema;
+            _cinema = cinema ?? throw new ArgumentException("Item cinema not null", nameof(cinema));
             _box = formBoxCinema;
             _numberRowCinema = numberRowCinema;
+
             InitializeComponent();
-            SetupDefaultValues();
         }
 
-        private string Type => _cinema?.Type?.Name ?? string.Empty;
-
-        private void BtnSaveEdit_Click(object sender, EventArgs e)
+        private TypeCinema SelectedTypeCinema
         {
-            if (!ValidateFields(out string errorMessage))
-            {
-                MessageBoxProvider.ShowWarning(errorMessage);
-            }
-            else if (HasChanges())
-            {
-                if (MessageBoxProvider.ShowQuestion("Save edit item Cinema?"))
-                {
-                    SaveEditionElement();
-                    Close();
-                }
-            }
+            get => (TypeCinema)cmbTypeCinema.SelectedValue;
         }
 
-        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues();
-
-        private void BtnCloseEdit_Click(object sender, EventArgs e) => Close();
-
-        private void SetupDefaultValues()
+        private void SetupDefaultValues(CinemaModel cinema)
         {
-            txtEditName.Text = _cinema.Name;
-            labelNumberSequel.Text = _cinema.Type.Name;
-            dateTPCinema.MaxDate = DateTime.Now;
-            if (_cinema.HasWatchDate())
-            {
-                numericEditGradeCinema.Enabled = true;
-                dateTPCinema.Value = _cinema.Date.Value;
-
-                if (decimal.TryParse(_cinema.Grade.ToString(), out decimal value))
-                {
-                    numericEditGradeCinema.Value = value;
-                }
-            }
-
-            if (_cinema.NumberSequel != 0)
-            {
-                numericEditSequel.Value = Convert.ToDecimal(_cinema.NumberSequel);
-            }
-            else
+            if (cinema.NumberSequel == 0)
             {
                 throw new Exception("Number sequel number greater than zero");
             }
+
+            txtEditName.Text = cinema.Name;
+            numericEditSequel.Value = Convert.ToDecimal(cinema.NumberSequel);
+            cmbTypeCinema.SelectedItem = cinema.Type;
+
+            if (!cinema.HasWatchDate())
+            {
+                return;
+            }
+
+            numericEditGradeCinema.Enabled = true;
+            dateTPCinema.Value = cinema.Date.Value;
+
+            if (decimal.TryParse(cinema.Grade.ToString(), out decimal value))
+            {
+                numericEditGradeCinema.Value = value;
+            }
         }
 
-        private void DateTimePick_ValueChanged(object sender, EventArgs e)
+        private StatusCinema GetCurrentStatus()
         {
-            numericEditGradeCinema.ReadOnly = false;
-            numericEditGradeCinema.Enabled = true;
+            return numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
         }
 
         private void SaveEditionElement()
         {
-            var type = _cinema.Type ?? TypeCinema.AllType;
+            var cinemaModel = GetCurrentCinemaModel();
+            _box.EditItemGrid(cinemaModel, _numberRowCinema);
+        }
+
+        private CinemaModel GetCurrentCinemaModel()
+        {
+            var type = SelectedTypeCinema;
             var id = _cinema.Id;
-            _status = numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
-            if (numericEditGradeCinema.Enabled)
+            var status = GetCurrentStatus();
+            if (status == StatusCinema.Watch)
             {
-                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, _status, type, id);
-                _box.EditItemGrid(itemWatch, _numberRowCinema);
+                return new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, status, type, id);
             }
-            else
-            {
-                var itemWatch = new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, _status, type, id);
-                _box.EditItemGrid(itemWatch, _numberRowCinema);
-            }
+
+            return new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, status, type, id);
         }
 
         private bool ValidateFields(out string errorMessage)
         {
             if (txtEditName.Text.Length <= 0)
             {
-                errorMessage = $"Enter {Type} name";
+                errorMessage = $"Enter {SelectedTypeCinema.Name} name";
                 return false;
             }
             else if (numericEditSequel.Value == 0)
             {
-                errorMessage = $"Enter number {Type}";
+                errorMessage = $"Enter number {SelectedTypeCinema.Name}";
                 return false;
             }
             else if (numericEditGradeCinema.Enabled && _cinema?.Date == null)
             {
                 if (numericEditGradeCinema.Value == 0)
                 {
-                    errorMessage = $"Grade {Type} above in zero";
+                    errorMessage = $"Grade {SelectedTypeCinema.Name} above in zero";
                     return false;
                 }
             }
@@ -128,18 +105,49 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private bool HasChanges()
         {
-            if (_cinema.Name != txtEditName.Text || _cinema.NumberSequel != numericEditSequel.Value)
+            var currentWatchItem = GetCurrentCinemaModel().ToWatchItem();
+            var oldWatchItem = _cinema.ToWatchItem();
+            return !oldWatchItem.Equals(currentWatchItem);
+        }
+
+        private void EditorItemCinemaForm_Load(object sender, EventArgs e)
+        {
+            typeModelBindingSource.DataSource = new SelectableTypeCinemaModel();
+            dateTPCinema.MaxDate = DateTime.Now;
+            SetupDefaultValues(_cinema);
+        }
+
+        private void BtnSaveEdit_Click(object sender, EventArgs e)
+        {
+            if (!ValidateFields(out string errorMessage))
             {
-                return true;
+                MessageBoxProvider.ShowWarning(errorMessage);
+                return;
             }
 
-            if (_cinema.Status == StatusCinema.AllStatus)
+            if (HasChanges() && MessageBoxProvider.ShowQuestion("Save edit item Cinema?"))
             {
-                return false;
+                SaveEditionElement();
             }
 
-            return _cinema.Date != dateTPCinema.Value
-                || _cinema.Grade != Convert.ToInt32(numericEditGradeCinema.Value);
+            Close();
+        }
+
+        private void BtnReturnDataCinema_Click(object sender, EventArgs e)
+        {
+            SetupDefaultValues(_cinema);
+        }
+
+        private void DateTimePick_ValueChanged(object sender, EventArgs e)
+        {
+            numericEditGradeCinema.ReadOnly = false;
+            numericEditGradeCinema.Enabled = true;
+        }
+
+        private void CmbTypeCinemaChanged(object sender, EventArgs e)
+        {
+            var type = SelectedTypeCinema;
+            labelNumberSequel.Text = type.TypeSequel;
         }
     }
 }

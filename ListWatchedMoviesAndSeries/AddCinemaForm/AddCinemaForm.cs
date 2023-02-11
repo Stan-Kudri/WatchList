@@ -1,5 +1,6 @@
 using Core.Model.Item;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
 using ListWatchedMoviesAndSeries.Models.Item;
 using MaterialSkin.Controls;
 
@@ -11,19 +12,15 @@ namespace ListWatchedMoviesAndSeries
     public partial class AddCinemaForm : MaterialForm
     {
         private readonly BoxCinemaForm _box;
-        private readonly TypeCinema _type;
         private StatusCinema _status = StatusCinema.NotWatch;
 
-        public AddCinemaForm(BoxCinemaForm formBoxCinema, TypeCinema type)
+        public AddCinemaForm(BoxCinemaForm formBoxCinema)
         {
-            InitializeComponent();
             _box = formBoxCinema;
-            _type = type;
-            labelNumberSequel.Text = type.TypeSequel;
-            dateTimePickerCinema.MaxDate = DateTime.Now;
-
-            Text = "Add " + type.Name;
+            InitializeComponent();
         }
+
+        private TypeCinema SelectedTypeCinema => (TypeCinema)cmbTypeCinema.SelectedValue;
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
         {
@@ -35,19 +32,17 @@ namespace ListWatchedMoviesAndSeries
 
             if (numericGradeCinema.Enabled)
             {
-                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, _type));
+                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, SelectedTypeCinema));
             }
             else
             {
-                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, _type));
+                _box.AddItemToGrid(new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, SelectedTypeCinema));
             }
 
             SetDefaultValues();
         }
 
         private void BtnClearTxtCinema_Click(object sender, EventArgs e) => SetDefaultValues();
-
-        private void BtnBackFormCinema_Click(object sender, EventArgs e) => Close();
 
         private void DtpCinema_ValueChanged(object sender, EventArgs e)
         {
@@ -70,12 +65,12 @@ namespace ListWatchedMoviesAndSeries
         {
             if (txtAddCinema.Text.Length <= 0)
             {
-                errorMessage = $"Enter {_type.Name} name";
+                errorMessage = $"Enter {SelectedTypeCinema.Name} name";
                 return false;
             }
             else if (numericSeaquel.Value == 0)
             {
-                errorMessage = $"Enter number {_type.Name}";
+                errorMessage = $"Enter number {SelectedTypeCinema.Name}";
                 return false;
             }
             else if (numericGradeCinema.Enabled && numericGradeCinema.Value == 0)
@@ -86,6 +81,19 @@ namespace ListWatchedMoviesAndSeries
 
             errorMessage = string.Empty;
             return true;
+        }
+
+        private void CmbTypeCinemaChanged(object sender, EventArgs e)
+        {
+            var type = SelectedTypeCinema;
+            labelNumberSequel.Text = type.TypeSequel;
+            Text = "Add " + type.Name;
+        }
+
+        private void AddCinemaForm_Load(object sender, EventArgs e)
+        {
+            typeModelBindingSource.DataSource = new SelectableTypeCinemaModel();
+            dateTimePickerCinema.MaxDate = DateTime.Now;
         }
     }
 }

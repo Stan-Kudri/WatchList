@@ -42,9 +42,12 @@ namespace ListWatchedMoviesAndSeries
             btnClearTxtCinema = new MaterialSkin.Controls.MaterialButton();
             btnAddCinema = new MaterialSkin.Controls.MaterialButton();
             btnBackFormCinema = new MaterialSkin.Controls.MaterialButton();
+            cmbTypeCinema = new ComboBox();
+            typeModelBindingSource = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)cinemaModelsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericSeaquel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericGradeCinema).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)typeModelBindingSource).BeginInit();
             SuspendLayout();
             // 
             // txtAddCinema
@@ -52,7 +55,7 @@ namespace ListWatchedMoviesAndSeries
             txtAddCinema.DataBindings.Add(new Binding("Text", cinemaModelsBindingSource, "Name", true));
             txtAddCinema.Location = new Point(10, 70);
             txtAddCinema.Name = "txtAddCinema";
-            txtAddCinema.Size = new Size(311, 23);
+            txtAddCinema.Size = new Size(330, 23);
             txtAddCinema.TabIndex = 1;
             // 
             // cinemaModelsBindingSource
@@ -62,7 +65,7 @@ namespace ListWatchedMoviesAndSeries
             // numericSeaquel
             // 
             numericSeaquel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "NumberSequel", true));
-            numericSeaquel.Location = new Point(150, 100);
+            numericSeaquel.Location = new Point(165, 100);
             numericSeaquel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericSeaquel.Name = "numericSeaquel";
             numericSeaquel.Size = new Size(45, 23);
@@ -87,7 +90,7 @@ namespace ListWatchedMoviesAndSeries
             numericGradeCinema.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "Grade", true));
             numericGradeCinema.Enabled = false;
             numericGradeCinema.InterceptArrowKeys = false;
-            numericGradeCinema.Location = new Point(260, 100);
+            numericGradeCinema.Location = new Point(275, 100);
             numericGradeCinema.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             numericGradeCinema.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericGradeCinema.Name = "numericGradeCinema";
@@ -103,7 +106,7 @@ namespace ListWatchedMoviesAndSeries
             labelGrade.Depth = 0;
             labelGrade.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelGrade.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelGrade.Location = new Point(330, 102);
+            labelGrade.Location = new Point(345, 102);
             labelGrade.MouseState = MaterialSkin.MouseState.HOVER;
             labelGrade.Name = "labelGrade";
             labelGrade.Size = new Size(43, 19);
@@ -117,7 +120,7 @@ namespace ListWatchedMoviesAndSeries
             labelName.Depth = 0;
             labelName.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelName.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelName.Location = new Point(330, 70);
+            labelName.Location = new Point(345, 70);
             labelName.MouseState = MaterialSkin.MouseState.HOVER;
             labelName.Name = "labelName";
             labelName.Size = new Size(43, 19);
@@ -131,7 +134,7 @@ namespace ListWatchedMoviesAndSeries
             labelNumberSequel.Depth = 0;
             labelNumberSequel.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelNumberSequel.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelNumberSequel.Location = new Point(200, 101);
+            labelNumberSequel.Location = new Point(215, 102);
             labelNumberSequel.MouseState = MaterialSkin.MouseState.HOVER;
             labelNumberSequel.Name = "labelNumberSequel";
             labelNumberSequel.Size = new Size(49, 19);
@@ -202,14 +205,30 @@ namespace ListWatchedMoviesAndSeries
             btnBackFormCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnBackFormCinema.UseAccentColor = false;
             btnBackFormCinema.UseVisualStyleBackColor = true;
-            btnBackFormCinema.Click += BtnBackFormCinema_Click;
+            // 
+            // cmbTypeCinema
+            // 
+            cmbTypeCinema.DataBindings.Add(new Binding("SelectedValue", typeModelBindingSource, "SelectedValue", true, DataSourceUpdateMode.OnPropertyChanged));
+            cmbTypeCinema.DataBindings.Add(new Binding("DataSource", typeModelBindingSource, "Items", true, DataSourceUpdateMode.OnPropertyChanged));
+            cmbTypeCinema.FormattingEnabled = true;
+            cmbTypeCinema.Location = new Point(10, 100);
+            cmbTypeCinema.Name = "cmbTypeCinema";
+            cmbTypeCinema.Size = new Size(150, 23);
+            cmbTypeCinema.TabIndex = 27;
+            cmbTypeCinema.SelectedIndexChanged += CmbTypeCinemaChanged;
+            // 
+            // typeModelBindingSource
+            // 
+            typeModelBindingSource.DataSource = typeof(BindingItem.ModelAddAndEditForm.SelectableTypeCinemaModel);
             // 
             // AddCinemaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
+            CancelButton = btnBackFormCinema;
             ClientSize = new Size(400, 160);
+            Controls.Add(cmbTypeCinema);
             Controls.Add(btnBackFormCinema);
             Controls.Add(btnAddCinema);
             Controls.Add(btnClearTxtCinema);
@@ -224,9 +243,11 @@ namespace ListWatchedMoviesAndSeries
             MinimumSize = new Size(400, 160);
             Name = "AddCinemaForm";
             Text = "Add Cinema";
+            Load += AddCinemaForm_Load;
             ((System.ComponentModel.ISupportInitialize)cinemaModelsBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericSeaquel).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericGradeCinema).EndInit();
+            ((System.ComponentModel.ISupportInitialize)typeModelBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -243,5 +264,7 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialButton btnClearTxtCinema;
         private MaterialSkin.Controls.MaterialButton btnAddCinema;
         private MaterialSkin.Controls.MaterialButton btnBackFormCinema;
+        private ComboBox cmbTypeCinema;
+        private BindingSource typeModelBindingSource;
     }
 }
