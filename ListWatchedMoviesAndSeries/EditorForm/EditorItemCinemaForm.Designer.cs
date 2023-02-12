@@ -147,7 +147,6 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnSaveEdit.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnSaveEdit.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnSaveEdit.Depth = 0;
-            btnSaveEdit.DialogResult = DialogResult.OK;
             btnSaveEdit.HighEmphasis = true;
             btnSaveEdit.Icon = null;
             btnSaveEdit.Location = new Point(170, 133);
@@ -163,6 +162,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnSaveEdit.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnSaveEdit.UseAccentColor = false;
             btnSaveEdit.UseVisualStyleBackColor = true;
+            btnSaveEdit.Click += BtnSaveEdit_Click;
             // 
             // btnReturnDataCinema
             // 

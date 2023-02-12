@@ -20,14 +20,8 @@ namespace ListWatchedMoviesAndSeries
 
         private TypeCinema SelectedTypeCinema => (TypeCinema)cmbTypeCinema.SelectedValue;
 
-        public CinemaModel? GetCinema()
+        public CinemaModel GetCinema()
         {
-            if (!ValidateFields(out var errorMessage))
-            {
-                MessageBoxProvider.ShowWarning(errorMessage);
-                return null;
-            }
-
             if (numericGradeCinema.Enabled)
             {
                 return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, SelectedTypeCinema);
@@ -35,6 +29,19 @@ namespace ListWatchedMoviesAndSeries
             else
             {
                 return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, SelectedTypeCinema);
+            }
+        }
+
+        private void BtnAddCinema_Click(object sender, EventArgs e)
+        {
+            if (!ValidateFields(out var errorMessage))
+            {
+                MessageBoxProvider.ShowWarning(errorMessage);
+                DialogResult = DialogResult.TryAgain;
+            }
+            else
+            {
+                DialogResult = DialogResult.OK;
             }
         }
 

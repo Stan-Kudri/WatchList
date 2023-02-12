@@ -102,14 +102,9 @@ namespace ListWatchedMoviesAndSeries
         {
             var addForm = new AddCinemaForm();
 
-            if (addForm.ShowDialog() != DialogResult.OK)
+            if (addForm.ShowDialog() == DialogResult.OK)
             {
-                return;
-            }
-
-            var itemCinema = addForm.GetCinema();
-            if (itemCinema != null)
-            {
+                var itemCinema = addForm.GetCinema();
                 AddItemToGrid(itemCinema);
             }
         }
@@ -126,11 +121,6 @@ namespace ListWatchedMoviesAndSeries
                 }
 
                 var changedItemCinema = editItemForm.GetEditItemCinema();
-                if (changedItemCinema == null)
-                {
-                    return;
-                }
-
                 EditItemGrid(changedItemCinema, indexRowCinema);
             }
         }
