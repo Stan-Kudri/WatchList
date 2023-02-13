@@ -27,7 +27,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             var type = SelectedTypeCinema;
             var id = _cinema.Id;
             var status = GetCurrentStatus();
-            if (status == StatusCinema.Watch)
+            if (status == StatusCinema.Viewed)
             {
                 return new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, status, type, id);
             }
@@ -60,7 +60,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private StatusCinema GetCurrentStatus() => numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
+        private StatusCinema GetCurrentStatus() => numericEditGradeCinema.Enabled ? StatusCinema.Viewed : StatusCinema.Planned;
 
         private void BtnSaveEdit_Click(object sender, EventArgs e)
         {

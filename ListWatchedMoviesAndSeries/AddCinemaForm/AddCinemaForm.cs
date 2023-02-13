@@ -11,7 +11,7 @@ namespace ListWatchedMoviesAndSeries
     /// </summary>
     public partial class AddCinemaForm : MaterialForm
     {
-        private StatusCinema _status = StatusCinema.NotWatch;
+        private StatusCinema _status = StatusCinema.Planned;
 
         public AddCinemaForm()
         {
@@ -51,7 +51,7 @@ namespace ListWatchedMoviesAndSeries
         {
             numericGradeCinema.ReadOnly = false;
             numericGradeCinema.Enabled = true;
-            _status = StatusCinema.Watch;
+            _status = StatusCinema.Viewed;
         }
 
         private void SetDefaultValues()
@@ -61,7 +61,7 @@ namespace ListWatchedMoviesAndSeries
             numericGradeCinema.Value = 1;
             numericSeaquel.Value = 1;
             numericGradeCinema.ReadOnly = true;
-            _status = StatusCinema.NotWatch;
+            _status = StatusCinema.Planned;
         }
 
         private bool ValidateFields(out string errorMessage)

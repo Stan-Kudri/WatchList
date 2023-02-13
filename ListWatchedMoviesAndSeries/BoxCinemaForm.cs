@@ -384,13 +384,13 @@ namespace ListWatchedMoviesAndSeries
 
             if (cinemaItem.HasWatchDate())
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Watch;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Viewed;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Grade;
             }
             else
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.NotWatch;
+                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Planned;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
             }

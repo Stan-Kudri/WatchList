@@ -12,8 +12,8 @@ namespace EqualsTest
                 {
                     new List<WatchItem>()
                     {
-                        new WatchItem("Тор", 1, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 08, 10, 00, 00, 00), 8),
-                        new WatchItem("Тор", 2, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 8),
+                        new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 08, 10, 00, 00, 00), 8),
+                        new WatchItem("Тор", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("18d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 8),
                     },
                 },
             };
@@ -22,7 +22,7 @@ namespace EqualsTest
         {
             yield return new object[]
             {
-                new WatchItem("Тор", 1, StatusCinema.Watch, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 08, 10, 00, 00, 00), 8),
+                new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 08, 10, 00, 00, 00), 8),
             };
         }
 
