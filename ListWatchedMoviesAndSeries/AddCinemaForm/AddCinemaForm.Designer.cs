@@ -190,6 +190,7 @@ namespace ListWatchedMoviesAndSeries
             btnBackFormCinema.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnBackFormCinema.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnBackFormCinema.Depth = 0;
+            btnBackFormCinema.DialogResult = DialogResult.Cancel;
             btnBackFormCinema.HighEmphasis = true;
             btnBackFormCinema.Icon = null;
             btnBackFormCinema.Location = new Point(330, 133);
@@ -215,7 +216,7 @@ namespace ListWatchedMoviesAndSeries
             cmbTypeCinema.Name = "cmbTypeCinema";
             cmbTypeCinema.Size = new Size(150, 23);
             cmbTypeCinema.TabIndex = 27;
-            cmbTypeCinema.SelectedIndexChanged += CmbTypeCinemaChanged;
+            cmbTypeCinema.SelectedIndexChanged += CmbTypeCinema_Changed;
             // 
             // typeModelBindingSource
             // 

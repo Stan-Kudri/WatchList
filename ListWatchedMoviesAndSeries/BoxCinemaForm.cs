@@ -100,17 +100,28 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
         {
-            using (var form = new AddCinemaForm(this))
+            var addForm = new AddCinemaForm();
+
+            if (addForm.ShowDialog() == DialogResult.OK)
             {
-                form.ShowDialog();
+                var itemCinema = addForm.GetCinema();
+                AddItemToGrid(itemCinema);
             }
         }
 
         private void BtnEditRow_Click(object sender, EventArgs e)
         {
-            if (IsEditRowGrid(out int indexRowMove, out CinemaModel? item) && item != null)
+            if (IsEditRowGrid(out int indexRowCinema, out CinemaModel? item) && item != null)
             {
-                ShowEditCinema(item, indexRowMove);
+                var editItemForm = new EditorItemCinemaForm(item);
+
+                if (editItemForm.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                var changedItemCinema = editItemForm.GetEditItemCinema();
+                EditItemGrid(changedItemCinema, indexRowCinema);
             }
         }
 
@@ -299,20 +310,6 @@ namespace ListWatchedMoviesAndSeries
             rowIndex = dgvCinema.CurrentCell.RowIndex;
             cinemaItem = GetItem(rowIndex);
             return true;
-        }
-
-        /// <summary>
-        /// Change the selected element in the EditorItemCinemaForm.
-        /// </summary>
-        /// <param name="item">Element to change.</param>
-        /// <param name="indexRow">Number row element.</param>
-        private void ShowEditCinema(CinemaModel item, int indexRow)
-        {
-            var id = item.Id.ToString() ?? string.Empty;
-            using (var form = new EditorItemCinemaForm(this, item, indexRow))
-            {
-                form.ShowDialog();
-            }
         }
 
         /// <summary>
