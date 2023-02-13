@@ -22,7 +22,18 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private TypeCinema SelectedTypeCinema => (TypeCinema)cmbTypeCinema.SelectedValue;
 
-        public CinemaModel GetEditItemCinema() => GetCurrentCinemaModel();
+        public CinemaModel GetEditItemCinema()
+        {
+            var type = SelectedTypeCinema;
+            var id = _cinema.Id;
+            var status = GetCurrentStatus();
+            if (status == StatusCinema.Watch)
+            {
+                return new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, status, type, id);
+            }
+
+            return new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, status, type, id);
+        }
 
         private void SetupDefaultValues(CinemaModel cinema)
         {
@@ -49,23 +60,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             }
         }
 
-        private StatusCinema GetCurrentStatus()
-        {
-            return numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
-        }
-
-        private CinemaModel GetCurrentCinemaModel()
-        {
-            var type = SelectedTypeCinema;
-            var id = _cinema.Id;
-            var status = GetCurrentStatus();
-            if (status == StatusCinema.Watch)
-            {
-                return new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTPCinema.Value, numericEditGradeCinema.Value, status, type, id);
-            }
-
-            return new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, null, status, type, id);
-        }
+        private StatusCinema GetCurrentStatus() => numericEditGradeCinema.Enabled ? StatusCinema.Watch : StatusCinema.NotWatch;
 
         private void BtnSaveEdit_Click(object sender, EventArgs e)
         {
@@ -135,7 +130,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private bool HasChanges()
         {
-            var currentWatchItem = GetCurrentCinemaModel().ToWatchItem();
+            var currentWatchItem = GetEditItemCinema().ToWatchItem();
             var oldWatchItem = _cinema.ToWatchItem();
             return !oldWatchItem.Equals(currentWatchItem);
         }
