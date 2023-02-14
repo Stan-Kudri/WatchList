@@ -8,7 +8,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
     {
         private SortCinema _type = SortCinema.Title;
 
-        public ObservableCollection<SortCinema> SortingObjects { get; set; } = new ObservableCollection<SortCinema>(SortCinema.List);
+        public ObservableCollection<SortCinema> Items { get; set; } = new ObservableCollection<SortCinema>(SortCinema.List);
 
         public SortCinema Type
         {

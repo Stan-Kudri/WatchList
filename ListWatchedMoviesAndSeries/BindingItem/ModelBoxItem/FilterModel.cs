@@ -6,28 +6,28 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
     public class FilterModel : ModelBase
     {
-        private TypeCinemaFilter _type = TypeCinemaFilter.AllCinema;
-        private WatchCinemaFilter _watch = WatchCinemaFilter.AllCinema;
+        private TypeFilter _type = Core.ItemFilter.TypeFilter.AllCinema;
+        private StatusFilter _status = Core.ItemFilter.StatusFilter.AllCinema;
 
-        public ObservableCollection<TypeCinemaFilter> TypeFilter { get; set; } = new ObservableCollection<TypeCinemaFilter>(TypeCinemaFilter.List);
+        public ObservableCollection<TypeFilter> TypeFilter { get; set; } = new ObservableCollection<TypeFilter>(Core.ItemFilter.TypeFilter.List);
 
-        public ObservableCollection<WatchCinemaFilter> WatchFilter { get; set; } = new ObservableCollection<WatchCinemaFilter>(WatchCinemaFilter.List);
+        public ObservableCollection<StatusFilter> StatusFilter { get; set; } = new ObservableCollection<StatusFilter>(Core.ItemFilter.StatusFilter.List);
 
-        public TypeCinemaFilter Type
+        public TypeFilter Type
         {
             get => _type;
             set => SetField(ref _type, value);
         }
 
-        public WatchCinemaFilter Watch
+        public StatusFilter Status
         {
-            get => _watch;
-            set => SetField(ref _watch, value);
+            get => _status;
+            set => SetField(ref _status, value);
         }
 
-        public WatchItemFilter GetFilter()
+        public FilterItem GetFilter()
         {
-            return new WatchItemFilter(Type, Watch);
+            return new FilterItem(Type, Status);
         }
     }
 }

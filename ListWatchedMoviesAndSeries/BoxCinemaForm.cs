@@ -72,9 +72,9 @@ namespace ListWatchedMoviesAndSeries
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
             cmbFilterType.DataSource = Filter.TypeFilter;
-            cmbFilterWatch.DataSource = Filter.WatchFilter;
-            cmbPageSize.DataSource = Page.AvailablePageSizes;
-            cmbSortType.DataSource = Sort.SortingObjects;
+            cmbFilterWatch.DataSource = Filter.StatusFilter;
+            cmbPageSize.DataSource = Page.Items;
+            cmbSortType.DataSource = Sort.Items;
             cmbSortType.SelectedItem = Sort.Type;
             filterModelBindingSource.DataSource = Filter;
         }
@@ -90,10 +90,10 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnCancelFilter_Click(object sender, EventArgs e)
         {
-            Filter.Type = TypeCinemaFilter.AllCinema;
-            Filter.Watch = WatchCinemaFilter.AllCinema;
+            Filter.Type = TypeFilter.AllCinema;
+            Filter.Status = StatusFilter.AllCinema;
             cmbFilterType.SelectedItem = Filter.Type;
-            cmbFilterWatch.SelectedItem = Filter.Watch;
+            cmbFilterWatch.SelectedItem = Filter.Status;
             cmbFilterType.Refresh();
             cmbFilterWatch.Refresh();
         }
@@ -196,14 +196,14 @@ namespace ListWatchedMoviesAndSeries
 
         private void СmbPageSize_Changed(object sender, EventArgs e)
         {
-            Page.Size = Page.AvailablePageSizes[cmbPageSize.SelectedIndex];
+            Page.Size = Page.Items[cmbPageSize.SelectedIndex];
             Page.Number = 1;
             LoadData();
         }
 
         private void CmbSort_ChangedItem(object sender, EventArgs e)
         {
-            Sort.Type = Sort.SortingObjects[cmbSortType.SelectedIndex];
+            Sort.Type = Sort.Items[cmbSortType.SelectedIndex];
             LoadData();
         }
 
