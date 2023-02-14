@@ -20,11 +20,14 @@ namespace ListWatchedMoviesAndSeries
 
         private TypeCinema SelectedTypeCinema => (TypeCinema)cmbTypeCinema.SelectedValue;
 
+        private StatusCinema SelectedStatusCinema => (StatusCinema)cmbStatusCinema.SelectedValue;
+
         public CinemaModel GetCinema()
         {
             if (numericGradeCinema.Enabled)
             {
-                return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, SelectedTypeCinema);
+                DateTime? dateViewed = dateTimePickerCinema.Enabled == true ? dateTimePickerCinema.Value : null;
+                return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateViewed, numericGradeCinema.Value, _status, SelectedTypeCinema);
             }
             else
             {
@@ -47,13 +50,6 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnClearTxtCinema_Click(object sender, EventArgs e) => SetDefaultValues();
 
-        private void DtpCinema_ValueChanged(object sender, EventArgs e)
-        {
-            numericGradeCinema.ReadOnly = false;
-            numericGradeCinema.Enabled = true;
-            _status = StatusCinema.Viewed;
-        }
-
         private void SetDefaultValues()
         {
             txtAddCinema.Text = string.Empty;
@@ -61,7 +57,8 @@ namespace ListWatchedMoviesAndSeries
             numericGradeCinema.Value = 1;
             numericSeaquel.Value = 1;
             numericGradeCinema.ReadOnly = true;
-            _status = StatusCinema.Planned;
+            cmbTypeCinema.SelectedItem = TypeCinema.Movie;
+            cmbStatusCinema.SelectedItem = StatusCinema.Planned;
         }
 
         private bool ValidateFields(out string errorMessage)
@@ -96,7 +93,32 @@ namespace ListWatchedMoviesAndSeries
         private void AddCinemaForm_Load(object sender, EventArgs e)
         {
             typeModelBindingSource.DataSource = new SelectableTypeCinemaModel();
+            statusModelBindingSource.DataSource = new SelectableStatusCinemaModel();
             dateTimePickerCinema.MaxDate = DateTime.Now;
+            cmbTypeCinema.SelectedItem = TypeCinema.Movie;
+            cmbStatusCinema.SelectedItem = StatusCinema.Planned;
+        }
+
+        private void CmbStatusCinema_Changed(object sender, EventArgs e)
+        {
+            _status = SelectedStatusCinema;
+
+            if (_status == StatusCinema.Viewed)
+            {
+                dateTimePickerCinema.Enabled = true;
+            }
+            else
+            {
+                dateTimePickerCinema.Enabled = false;
+
+                if (_status == StatusCinema.Planned)
+                {
+                    numericGradeCinema.Enabled = false;
+                    return;
+                }
+            }
+
+            numericGradeCinema.Enabled = true;
         }
     }
 }

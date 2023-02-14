@@ -338,13 +338,14 @@ namespace ListWatchedMoviesAndSeries
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
             var status = StatusCinema.FromName(CellElement(rowItems, IndexColumnStatus));
 
-            if (strDateWatch != string.Empty && strDateWatch != null)
+            if (status != StatusCinema.Planned)
             {
-                var dateWatch = DateTime.Parse(strDateWatch);
                 if (!decimal.TryParse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Grade cannot be null."), out var grade))
                 {
                     throw new InvalidOperationException("Invalid cast.");
                 }
+
+                DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
 
                 var cinemaItem = new CinemaModel(
                                                    title,
@@ -381,17 +382,23 @@ namespace ListWatchedMoviesAndSeries
             dgvCinema.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = cinemaItem.Status;
 
-            if (cinemaItem.HasWatchDate())
+            if (cinemaItem.HasGrade())
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Viewed;
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Grade;
+
+                if (cinemaItem.HasGrade())
+                {
+                    dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
+                }
+                else
+                {
+                    dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
+                }
             }
             else
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Planned;
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
             }
         }
