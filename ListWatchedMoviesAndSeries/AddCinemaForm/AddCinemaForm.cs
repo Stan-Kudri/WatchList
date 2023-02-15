@@ -83,13 +83,6 @@ namespace ListWatchedMoviesAndSeries
             return true;
         }
 
-        private void CmbTypeCinema_Changed(object sender, EventArgs e)
-        {
-            var type = SelectedTypeCinema;
-            labelNumberSequel.Text = type.TypeSequel;
-            Text = "Add " + type.Name;
-        }
-
         private void AddCinemaForm_Load(object sender, EventArgs e)
         {
             typeModelBindingSource.DataSource = new SelectableTypeCinemaModel();
@@ -99,26 +92,18 @@ namespace ListWatchedMoviesAndSeries
             cmbStatusCinema.SelectedItem = StatusCinema.Planned;
         }
 
+        private void CmbTypeCinema_Changed(object sender, EventArgs e)
+        {
+            var type = SelectedTypeCinema;
+            labelNumberSequel.Text = type.TypeSequel;
+            Text = "Add " + type.Name;
+        }
+
         private void CmbStatusCinema_Changed(object sender, EventArgs e)
         {
             _status = SelectedStatusCinema;
-
-            if (_status == StatusCinema.Viewed)
-            {
-                dateTimePickerCinema.Enabled = true;
-            }
-            else
-            {
-                dateTimePickerCinema.Enabled = false;
-
-                if (_status == StatusCinema.Planned)
-                {
-                    numericGradeCinema.Enabled = false;
-                    return;
-                }
-            }
-
-            numericGradeCinema.Enabled = true;
+            dateTimePickerCinema.Enabled = _status == StatusCinema.Viewed;
+            numericGradeCinema.Enabled = _status != StatusCinema.Planned;
         }
     }
 }
