@@ -1,9 +1,8 @@
-using Core.ItemFilter;
-using Core.Model.Item;
-using ListWatchedMoviesAndSeries.Models;
-using ListWatchedMoviesAndSeries.Models.Item;
+using Core.Model.Filter.Components;
+using Core.Model.ItemCinema;
+using Core.Model.ItemCinema.Components;
 
-namespace Core.Model
+namespace Core.Model.Filter
 {
     public class FilterItem : IEquatable<FilterItem>
     {

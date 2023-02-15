@@ -1,6 +1,7 @@
-using Core.Model;
+using Core.Model.Filter;
+using Core.Model.ItemCinema;
+using Core.Model.Sorting;
 using Core.Repository;
-using ListWatchedMoviesAndSeries.Models;
 
 namespace Core.PageItem
 {
@@ -12,18 +13,18 @@ namespace Core.PageItem
 
         public Page Page { get; set; }
 
-        public WatchItemSearchRequest() : this(new Model.FilterItem(), new SortItem(), new Page())
+        public WatchItemSearchRequest() : this(new FilterItem(), new SortItem(), new Page())
         {
         }
 
-        public WatchItemSearchRequest(Model.FilterItem filter, SortItem sort, Page page)
+        public WatchItemSearchRequest(FilterItem filter, SortItem sort, Page page)
         {
             Filter = filter;
             Sort = sort;
             Page = page;
         }
 
-        public bool CompareFilter(Model.FilterItem filter) => Filter.Equals(filter);
+        public bool CompareFilter(FilterItem filter) => Filter.Equals(filter);
 
         public IQueryable<WatchItem> ApplyFilter(IQueryable<WatchItem> items) => Filter.Apply(items);
 

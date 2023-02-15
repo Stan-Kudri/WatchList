@@ -1,11 +1,10 @@
-using Core.ItemFilter;
-using Core.Model.Item;
+using Core.Model.Filter.Components;
+using Core.Model.ItemCinema;
+using Core.Model.ItemCinema.Components;
 using Core.PageItem;
 using Core.Repository.DbContex;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.EditorForm;
-using ListWatchedMoviesAndSeries.Models;
-using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
 using MaterialSkin.Controls;
 using Microsoft.EntityFrameworkCore;

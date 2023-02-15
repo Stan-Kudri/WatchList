@@ -1,5 +1,5 @@
+using Core.Model.ItemCinema;
 using Core.Repository.Extension;
-using ListWatchedMoviesAndSeries.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Repository.DbContex

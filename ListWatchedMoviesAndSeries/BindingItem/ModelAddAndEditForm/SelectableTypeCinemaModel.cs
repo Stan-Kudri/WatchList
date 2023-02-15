@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using ListWatchedMoviesAndSeries.Models.Item;
+using Core.Model.ItemCinema.Components;
 
 namespace ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm
 {

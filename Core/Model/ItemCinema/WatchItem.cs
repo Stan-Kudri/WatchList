@@ -1,10 +1,9 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-using Core.Model.Item;
-using ListWatchedMoviesAndSeries.Models.Item;
+using Core.Model.ItemCinema.Components;
 
-namespace ListWatchedMoviesAndSeries.Models
+namespace Core.Model.ItemCinema
 {
     public class WatchItem : IEquatable<WatchItem>
     {

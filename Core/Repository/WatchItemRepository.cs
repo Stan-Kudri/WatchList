@@ -1,7 +1,7 @@
+using Core.Model.ItemCinema;
 using Core.PageItem;
 using Core.Repository.DbContex;
 using Core.Repository.Extension;
-using ListWatchedMoviesAndSeries.Models;
 
 namespace ListWatchedMoviesAndSeries.Repository
 {
@@ -67,6 +67,7 @@ namespace ListWatchedMoviesAndSeries.Repository
             item.Grade = editItem.Grade;
             item.Name = editItem.Name;
             item.Type = editItem.Type;
+
             _db.SaveChanges();
         }
     }

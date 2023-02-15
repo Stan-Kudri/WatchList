@@ -1,7 +1,6 @@
-using Core.Model.Item;
+using Core.Model.ItemCinema.Components;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
-using ListWatchedMoviesAndSeries.Models.Item;
 using MaterialSkin.Controls;
 
 namespace ListWatchedMoviesAndSeries

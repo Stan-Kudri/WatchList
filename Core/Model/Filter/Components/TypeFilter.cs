@@ -1,7 +1,7 @@
 using Ardalis.SmartEnum;
-using ListWatchedMoviesAndSeries.Models.Item;
+using Core.Model.ItemCinema.Components;
 
-namespace Core.ItemFilter
+namespace Core.Model.Filter.Components
 {
     public sealed class TypeFilter : SmartEnum<TypeFilter>
     {

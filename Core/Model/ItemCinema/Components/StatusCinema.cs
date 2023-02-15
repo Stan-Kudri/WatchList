@@ -1,6 +1,6 @@
 using Ardalis.SmartEnum;
 
-namespace Core.Model.Item
+namespace Core.Model.ItemCinema.Components
 {
     public class StatusCinema : SmartEnum<StatusCinema>
     {

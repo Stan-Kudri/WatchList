@@ -1,16 +1,16 @@
 using System.Collections.ObjectModel;
-using Core.Model;
 using Core.Model.Item;
+using Core.Model.Sorting;
 
 namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
     public class SortModel : ModelBase
     {
-        private SortCinema _type = SortCinema.Title;
+        private TypesSort _type = TypesSort.Title;
 
-        public ObservableCollection<SortCinema> Items { get; set; } = new ObservableCollection<SortCinema>(SortCinema.List);
+        public ObservableCollection<TypesSort> Items { get; set; } = new ObservableCollection<TypesSort>(TypesSort.List);
 
-        public SortCinema Type
+        public TypesSort Type
         {
             get => _type;
             set => SetField(ref _type, value);

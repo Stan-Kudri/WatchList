@@ -1,6 +1,5 @@
-using Core.Model.Item;
-using ListWatchedMoviesAndSeries.Models;
-using ListWatchedMoviesAndSeries.Models.Item;
+using Core.Model.ItemCinema;
+using Core.Model.ItemCinema.Components;
 
 namespace EqualsTest
 {
