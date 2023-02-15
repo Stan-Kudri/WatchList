@@ -92,7 +92,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             cmbTypeCinema.SelectedItem = cinema.Type;
             cmbStatusCinema.SelectedItem = cinema.Status;
 
-            if (cinema.HasWatchDate())
+            if (cinema.HasWatchDate() && cinema.Date != null)
             {
                 dateTimePickerCinema.Enabled = true;
                 dateTimePickerCinema.Value = cinema.Date.Value;

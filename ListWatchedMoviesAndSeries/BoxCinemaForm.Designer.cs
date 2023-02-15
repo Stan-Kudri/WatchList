@@ -59,7 +59,7 @@ namespace ListWatchedMoviesAndSeries
             textBoxPage = new TextBox();
             labelTotalPage = new MaterialSkin.Controls.MaterialLabel();
             labelTextSizePage = new MaterialSkin.Controls.MaterialLabel();
-            labelSotrType = new MaterialSkin.Controls.MaterialLabel();
+            labelSortType = new MaterialSkin.Controls.MaterialLabel();
             cmbSortType = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).BeginInit();
@@ -469,16 +469,16 @@ namespace ListWatchedMoviesAndSeries
             // 
             // labelSotrType
             // 
-            labelSotrType.AutoSize = true;
-            labelSotrType.BackColor = SystemColors.Control;
-            labelSotrType.Depth = 0;
-            labelSotrType.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelSotrType.Location = new Point(422, 367);
-            labelSotrType.MouseState = MaterialSkin.MouseState.HOVER;
-            labelSotrType.Name = "labelSotrType";
-            labelSotrType.Size = new Size(51, 19);
-            labelSotrType.TabIndex = 54;
-            labelSotrType.Text = "Sort by";
+            labelSortType.AutoSize = true;
+            labelSortType.BackColor = SystemColors.Control;
+            labelSortType.Depth = 0;
+            labelSortType.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            labelSortType.Location = new Point(422, 367);
+            labelSortType.MouseState = MaterialSkin.MouseState.HOVER;
+            labelSortType.Name = "labelSotrType";
+            labelSortType.Size = new Size(51, 19);
+            labelSortType.TabIndex = 54;
+            labelSortType.Text = "Sort by";
             // 
             // cmbSortType
             // 
@@ -497,7 +497,7 @@ namespace ListWatchedMoviesAndSeries
             BackColor = SystemColors.Control;
             ClientSize = new Size(650, 425);
             Controls.Add(cmbSortType);
-            Controls.Add(labelSotrType);
+            Controls.Add(labelSortType);
             Controls.Add(labelTextSizePage);
             Controls.Add(labelTotalPage);
             Controls.Add(textBoxPage);
@@ -549,9 +549,8 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialLabel labelTotalPage;
         private BindingSource pageModelBindingSource;
         private MaterialSkin.Controls.MaterialLabel labelTextSizePage;
-        private MaterialSkin.Controls.MaterialLabel labelSotrType;
+        private MaterialSkin.Controls.MaterialLabel labelSortType;
         private ComboBox cmbSortType;
-        private BindingSource sortModelBindingSource;
         private DataGridViewTextBoxColumn NameCinema;
         private DataGridViewTextBoxColumn NumberCinema;
         private DataGridViewTextBoxColumn WatchedCinema;
@@ -559,8 +558,6 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn GradeCinema;
         private DataGridViewTextBoxColumn IdCinema;
         private DataGridViewTextBoxColumn Cinema;
-        private BindingSource typeFilterBindingSource;
-        private BindingSource statusFilterBindingSource;
         private BindingSource filterModelBindingSource;
     }
 }

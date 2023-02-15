@@ -3,7 +3,7 @@ using Core.Model.ItemCinema;
 
 namespace Core.Model.Sorting
 {
-    public class SortItem
+    public class SortItem : IEquatable<TypesSort>
     {
         public TypesSort SortCinema { get; set; }
 
@@ -19,6 +19,7 @@ namespace Core.Model.Sorting
         public IQueryable<WatchItem> Apply(IQueryable<WatchItem> items)
         {
             var typeSort = SortCinema.Value;
+
             if (typeSort == TypesSort.Title)
             {
                 items = items.OrderBy(x => x.Name);

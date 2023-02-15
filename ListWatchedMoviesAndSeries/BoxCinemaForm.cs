@@ -40,6 +40,7 @@ namespace ListWatchedMoviesAndSeries
 
             _db = new WatchCinemaDbContext(builder.Options);
             _repository = new WatchItemRepository(_db);
+            _pagedList = _repository.GetPageCinema(_searchRequest);
 
             Load += BoxCinemaForm_Load;
         }
