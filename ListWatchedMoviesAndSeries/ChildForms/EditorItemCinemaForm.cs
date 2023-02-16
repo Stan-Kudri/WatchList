@@ -93,10 +93,10 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             cmbTypeCinema.SelectedItem = cinema.Type;
             cmbStatusCinema.SelectedItem = cinema.Status;
 
-            if (cinema.HasWatchDate())
+            if (cinema.HasWatchDate(out var dateWatch))
             {
                 dateTimePickerCinema.Enabled = true;
-                dateTimePickerCinema.Value = cinema.Date.Value;
+                dateTimePickerCinema.Value = dateWatch;
             }
 
             if (cinema.HasGrade())
