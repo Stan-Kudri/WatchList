@@ -1,6 +1,7 @@
 using Core.Model.ItemCinema.Components;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
+using ListWatchedMoviesAndSeries.ChildForms.Extension;
 using MaterialSkin.Controls;
 
 namespace ListWatchedMoviesAndSeries.EditorForm
@@ -76,8 +77,8 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private void CmbStatusCinema_Changed(object sender, EventArgs e)
         {
-            dateTimePickerCinema.Enabled = SelectedStatusCinema == StatusCinema.Viewed;
-            numericGradeCinema.Enabled = SelectedStatusCinema != StatusCinema.Planned;
+            dateTimePickerCinema.Enabled = SelectedStatusCinema.HasDateWatch();
+            numericGradeCinema.Enabled = SelectedStatusCinema.HasGradeCinema();
         }
 
         private void SetupDefaultValues(CinemaModel cinema)
@@ -92,7 +93,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             cmbTypeCinema.SelectedItem = cinema.Type;
             cmbStatusCinema.SelectedItem = cinema.Status;
 
-            if (cinema.HasWatchDate() && cinema.Date != null)
+            if (cinema.HasWatchDate())
             {
                 dateTimePickerCinema.Enabled = true;
                 dateTimePickerCinema.Value = cinema.Date.Value;

@@ -88,7 +88,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
 
         public string GetWatchData() => Date?.ToString("dd.MM.yyyy") ?? string.Empty;
 
-        public bool HasWatchDate() => _status == StatusCinema.Viewed;
+        public bool HasWatchDate() => _status == StatusCinema.Viewed && Date != null;
 
         public bool HasGrade() => _status != StatusCinema.Planned && _status != StatusCinema.AllStatus;
     }

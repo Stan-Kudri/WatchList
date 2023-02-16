@@ -1,6 +1,7 @@
 using Core.Model.ItemCinema.Components;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
+using ListWatchedMoviesAndSeries.ChildForms.Extension;
 using MaterialSkin.Controls;
 
 namespace ListWatchedMoviesAndSeries
@@ -101,8 +102,8 @@ namespace ListWatchedMoviesAndSeries
         private void CmbStatusCinema_Changed(object sender, EventArgs e)
         {
             _status = SelectedStatusCinema;
-            dateTimePickerCinema.Enabled = _status == StatusCinema.Viewed;
-            numericGradeCinema.Enabled = _status != StatusCinema.Planned;
+            dateTimePickerCinema.Enabled = _status.HasDateWatch();
+            numericGradeCinema.Enabled = _status.HasGradeCinema();
         }
     }
 }

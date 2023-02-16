@@ -3,15 +3,15 @@ using Core.Model.ItemCinema;
 
 namespace Core.Model.Sorting
 {
-    public class SortItem : IEquatable<TypesSort>
+    public class SortItem : IEquatable<SortField>
     {
-        public TypesSort SortCinema { get; set; }
+        public SortField SortCinema { get; set; }
 
-        public SortItem() : this(TypesSort.Title)
+        public SortItem() : this(SortField.Title)
         {
         }
 
-        public SortItem(TypesSort sortCinema)
+        public SortItem(SortField sortCinema)
         {
             SortCinema = sortCinema;
         }
@@ -20,27 +20,27 @@ namespace Core.Model.Sorting
         {
             var typeSort = SortCinema.Value;
 
-            if (typeSort == TypesSort.Title)
+            if (typeSort == SortField.Title)
             {
                 items = items.OrderBy(x => x.Name);
             }
-            else if (typeSort == TypesSort.Type)
+            else if (typeSort == SortField.Type)
             {
                 items = items.OrderBy(x => x.Type);
             }
-            else if (typeSort == TypesSort.Status)
+            else if (typeSort == SortField.Status)
             {
                 items = items.OrderBy(x => x.Status);
             }
-            else if (typeSort == TypesSort.Data)
+            else if (typeSort == SortField.Data)
             {
                 items = items.OrderByDescending(x => x.Date);
             }
-            else if (typeSort == TypesSort.Sequel)
+            else if (typeSort == SortField.Sequel)
             {
                 items = items.OrderBy(x => x.NumberSequel);
             }
-            else if (typeSort == TypesSort.Grade)
+            else if (typeSort == SortField.Grade)
             {
                 items = items.OrderByDescending(x => x.Grade);
             }
@@ -54,10 +54,10 @@ namespace Core.Model.Sorting
         }
         public override bool Equals(object? obj)
         {
-            return Equals(obj as TypesSort);
+            return Equals(obj as SortField);
         }
 
-        public bool Equals(TypesSort? other)
+        public bool Equals(SortField? other)
         {
             if (other == null)
                 return false;

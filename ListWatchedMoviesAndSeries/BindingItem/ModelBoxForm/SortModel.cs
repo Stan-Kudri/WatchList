@@ -6,11 +6,11 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
     public class SortModel : ModelBase
     {
-        private TypesSort _type = TypesSort.Title;
+        private SortField _type = SortField.Title;
 
-        public ObservableCollection<TypesSort> Items { get; set; } = new ObservableCollection<TypesSort>(TypesSort.List);
+        public ObservableCollection<SortField> Items { get; set; } = new ObservableCollection<SortField>(SortField.List);
 
-        public TypesSort Type
+        public SortField Type
         {
             get => _type;
             set => SetField(ref _type, value);
