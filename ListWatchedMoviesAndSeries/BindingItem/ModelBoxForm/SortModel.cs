@@ -6,7 +6,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
     public class SortModel : ModelBase
     {
-        private SortField _type = SortField.Title;
+        private SortField _type = SortField.Name;
 
         public ObservableCollection<SortField> Items { get; set; } = new ObservableCollection<SortField>(SortField.List);
 

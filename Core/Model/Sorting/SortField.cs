@@ -4,7 +4,7 @@ namespace Core.Model.Item
 {
     public class SortField : SmartEnum<SortField>
     {
-        public static readonly SortField Title = new SortField("Title", 0);
+        public static readonly SortField Name = new SortField("Title", 0);
         public static readonly SortField Sequel = new SortField("Sequel", 1);
         public static readonly SortField Status = new SortField("Status", 2);
         public static readonly SortField Data = new SortField("Data", 3);

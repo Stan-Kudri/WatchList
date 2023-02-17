@@ -7,7 +7,7 @@ namespace Core.Model.Sorting
     {
         public SortField SortCinema { get; set; }
 
-        public SortItem() : this(SortField.Title)
+        public SortItem() : this(SortField.Name)
         {
         }
 
@@ -20,7 +20,7 @@ namespace Core.Model.Sorting
         {
             var typeSort = SortCinema.Value;
 
-            if (typeSort == SortField.Title)
+            if (typeSort == SortField.Name)
             {
                 items = items.OrderBy(x => x.Name);
             }
@@ -38,7 +38,7 @@ namespace Core.Model.Sorting
             }
             else if (typeSort == SortField.Sequel)
             {
-                items = items.OrderBy(x => x.NumberSequel);
+                items = items.OrderBy(x => x.Sequel);
             }
             else if (typeSort == SortField.Grade)
             {

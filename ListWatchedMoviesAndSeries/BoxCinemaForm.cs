@@ -282,7 +282,7 @@ namespace ListWatchedMoviesAndSeries
         {
             foreach (var item in itemGrid)
             {
-                var intSequel = item.NumberSequel;
+                var intSequel = item.Sequel;
                 var formatDate = item.GetWatchData();
                 dgvCinema.Rows.Add(item.Name, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
             }

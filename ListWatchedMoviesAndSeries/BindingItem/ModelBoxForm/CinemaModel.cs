@@ -88,16 +88,15 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
 
         public string GetWatchData() => Date?.ToString("dd.MM.yyyy") ?? string.Empty;
 
-        public bool HasWatchDate(out DateTime date)
+        public bool TryGetWatchDate(out DateTime date)
         {
-            date = new DateTime(0000, 00, 00);
-
             if (_status == StatusCinema.Viewed && Date != null)
             {
                 date = Date.Value;
                 return true;
             }
 
+            date = default;
             return false;
         }
 

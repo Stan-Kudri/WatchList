@@ -62,7 +62,7 @@ namespace ListWatchedMoviesAndSeries.Repository
             if (item == null)
                 return;
 
-            item.NumberSequel = editItem.NumberSequel;
+            item.Sequel = editItem.Sequel;
             item.Date = editItem.Date;
             item.Grade = editItem.Grade;
             item.Name = editItem.Name;

@@ -15,7 +15,7 @@ namespace Core.Model.ItemCinema
 
         public StatusCinema Status { get; set; }
 
-        public int NumberSequel { get; set; }
+        public int Sequel { get; set; }
 
         public DateTime? Date { get; set; }
 
@@ -30,7 +30,7 @@ namespace Core.Model.ItemCinema
         {
             Id = id ?? Guid.NewGuid();
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            NumberSequel = numberSequel;
+            Sequel = numberSequel;
             Type = type;
             Status = status;
             Date = dateWatch;
@@ -39,7 +39,7 @@ namespace Core.Model.ItemCinema
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name, Grade, Date, Status, Type, NumberSequel);
+            return HashCode.Combine(Id, Name, Grade, Date, Status, Type, Sequel);
         }
 
         public override bool Equals(object? obj)
@@ -56,7 +56,7 @@ namespace Core.Model.ItemCinema
                 && Name == other.Name
                 && Status == other.Status
                 && Type == other.Type
-                && NumberSequel == other.NumberSequel
+                && Sequel == other.Sequel
                 && Grade == other.Grade
                 && Date == other.Date;
         }

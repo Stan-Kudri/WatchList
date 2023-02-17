@@ -1,8 +1,8 @@
-using Core.Model.ItemCinema.Components;
+﻿using Core.Model.ItemCinema.Components;
 
 namespace ListWatchedMoviesAndSeries.ChildForms.Extension
 {
-    public static class StatusExtension
+    public static class StatusCinemaExtension
     {
         public static bool HasDateWatch(this StatusCinema status) => status == StatusCinema.Viewed;
 
