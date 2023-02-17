@@ -87,7 +87,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             // numericEditSequel
             // 
-            numericEditSequel.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "NumberSequel", true));
+            numericEditSequel.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "Sequel", true));
             numericEditSequel.Location = new Point(240, 100);
             numericEditSequel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericEditSequel.Name = "numericEditSequel";
@@ -97,7 +97,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             // txtEditName
             // 
-            txtEditName.DataBindings.Add(new Binding("Text", cinemaModelBindingSource, "Name", true));
+            txtEditName.DataBindings.Add(new Binding("Text", cinemaModelBindingSource, "Title", true));
             txtEditName.Location = new Point(10, 70);
             txtEditName.Multiline = true;
             txtEditName.Name = "txtEditName";

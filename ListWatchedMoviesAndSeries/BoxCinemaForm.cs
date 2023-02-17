@@ -379,7 +379,7 @@ namespace ListWatchedMoviesAndSeries
         private void ReplacementEditItem(CinemaModel cinemaItem, int rowIndex)
         {
             dgvCinema.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Title;
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.Sequel;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = cinemaItem.Status;

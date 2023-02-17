@@ -61,10 +61,12 @@ namespace ListWatchedMoviesAndSeries
             labelTextSizePage = new MaterialSkin.Controls.MaterialLabel();
             labelSortType = new MaterialSkin.Controls.MaterialLabel();
             cmbSortType = new ComboBox();
+            sortModelBindingSource = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).BeginInit();
             ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pageModelBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)sortModelBindingSource).BeginInit();
             SuspendLayout();
             // 
             // openFileDialog
@@ -467,7 +469,7 @@ namespace ListWatchedMoviesAndSeries
             labelTextSizePage.TabIndex = 53;
             labelTextSizePage.Text = "Show on page";
             // 
-            // labelSotrType
+            // labelSortType
             // 
             labelSortType.AutoSize = true;
             labelSortType.BackColor = SystemColors.Control;
@@ -475,13 +477,14 @@ namespace ListWatchedMoviesAndSeries
             labelSortType.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelSortType.Location = new Point(422, 367);
             labelSortType.MouseState = MaterialSkin.MouseState.HOVER;
-            labelSortType.Name = "labelSotrType";
+            labelSortType.Name = "labelSortType";
             labelSortType.Size = new Size(51, 19);
             labelSortType.TabIndex = 54;
             labelSortType.Text = "Sort by";
             // 
             // cmbSortType
             // 
+            cmbSortType.DataBindings.Add(new Binding("SelectedValue", sortModelBindingSource, "Type", true));
             cmbSortType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSortType.FormattingEnabled = true;
             cmbSortType.Location = new Point(480, 365);
@@ -489,6 +492,10 @@ namespace ListWatchedMoviesAndSeries
             cmbSortType.Size = new Size(155, 23);
             cmbSortType.TabIndex = 55;
             cmbSortType.SelectedIndexChanged += CmbSort_ChangedItem;
+            // 
+            // sortModelBindingSource
+            // 
+            sortModelBindingSource.DataSource = typeof(SortModel);
             // 
             // BoxCinemaForm
             // 
@@ -524,6 +531,7 @@ namespace ListWatchedMoviesAndSeries
             ((System.ComponentModel.ISupportInitialize)dgvCinema).EndInit();
             ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)pageModelBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)sortModelBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -559,5 +567,6 @@ namespace ListWatchedMoviesAndSeries
         private DataGridViewTextBoxColumn IdCinema;
         private DataGridViewTextBoxColumn Cinema;
         private BindingSource filterModelBindingSource;
+        private BindingSource sortModelBindingSource;
     }
 }

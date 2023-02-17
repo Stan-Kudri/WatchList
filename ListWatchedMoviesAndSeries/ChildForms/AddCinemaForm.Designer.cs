@@ -57,7 +57,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // txtAddCinema
             // 
-            txtAddCinema.DataBindings.Add(new Binding("Text", cinemaModelsBindingSource, "Name", true));
+            txtAddCinema.DataBindings.Add(new Binding("Text", cinemaModelsBindingSource, "Title", true));
             txtAddCinema.Location = new Point(10, 70);
             txtAddCinema.Name = "txtAddCinema";
             txtAddCinema.Size = new Size(290, 23);
@@ -69,7 +69,7 @@ namespace ListWatchedMoviesAndSeries
             // 
             // numericSeaquel
             // 
-            numericSeaquel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "NumberSequel", true));
+            numericSeaquel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "Sequel", true));
             numericSeaquel.Location = new Point(240, 100);
             numericSeaquel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericSeaquel.Name = "numericSeaquel";

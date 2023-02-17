@@ -26,11 +26,11 @@ namespace Core.Model.ItemCinema
         {
         }
 
-        public WatchItem(string title, int numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
+        public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
         {
             Id = id ?? Guid.NewGuid();
             Title = title ?? throw new ArgumentNullException(nameof(title));
-            Sequel = numberSequel;
+            Sequel = sequel;
             Type = type;
             Status = status;
             Date = dateWatch;

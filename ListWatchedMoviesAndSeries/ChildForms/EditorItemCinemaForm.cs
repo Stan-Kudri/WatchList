@@ -83,13 +83,13 @@ namespace ListWatchedMoviesAndSeries.EditorForm
 
         private void SetupDefaultValues(CinemaModel cinema)
         {
-            if (cinema.NumberSequel == 0)
+            if (cinema.Sequel == 0)
             {
                 throw new Exception("Number sequel number greater than zero");
             }
 
             txtEditName.Text = cinema.Title;
-            numericEditSequel.Value = Convert.ToDecimal(cinema.NumberSequel);
+            numericEditSequel.Value = Convert.ToDecimal(cinema.Sequel);
             cmbTypeCinema.SelectedItem = cinema.Type;
             cmbStatusCinema.SelectedItem = cinema.Status;
 
