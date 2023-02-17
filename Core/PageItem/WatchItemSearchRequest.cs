@@ -1,6 +1,6 @@
 using Core.Model.Filter;
+using Core.Model.Item;
 using Core.Model.ItemCinema;
-using Core.Model.Sorting;
 using Core.Repository;
 
 namespace Core.PageItem
@@ -9,15 +9,15 @@ namespace Core.PageItem
     {
         public FilterItem Filter { get; set; }
 
-        public SortItem Sort { get; set; }
+        public SortField Sort { get; set; }
 
         public Page Page { get; set; }
 
-        public WatchItemSearchRequest() : this(new FilterItem(), new SortItem(), new Page())
+        public WatchItemSearchRequest() : this(new FilterItem(), new SortField(), new Page())
         {
         }
 
-        public WatchItemSearchRequest(FilterItem filter, SortItem sort, Page page)
+        public WatchItemSearchRequest(FilterItem filter, SortField sort, Page page)
         {
             Filter = filter;
             Sort = sort;

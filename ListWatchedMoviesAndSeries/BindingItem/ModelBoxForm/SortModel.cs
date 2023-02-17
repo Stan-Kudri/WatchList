@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using Core.Model.Item;
-using Core.Model.Sorting;
 
 namespace ListWatchedMoviesAndSeries.BindingItem.Model
 {
@@ -16,6 +15,6 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
             set => SetField(ref _type, value);
         }
 
-        public SortItem GetSortItem() => new SortItem(Type);
+        public SortField GetSortItem() => Type;
     }
 }
