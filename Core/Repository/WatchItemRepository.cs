@@ -65,7 +65,7 @@ namespace ListWatchedMoviesAndSeries.Repository
             item.Sequel = editItem.Sequel;
             item.Date = editItem.Date;
             item.Grade = editItem.Grade;
-            item.Name = editItem.Name;
+            item.Title = editItem.Title;
             item.Type = editItem.Type;
 
             _db.SaveChanges();

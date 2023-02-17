@@ -65,7 +65,7 @@ namespace ListWatchedMoviesAndSeries
         {
             if (txtAddCinema.Text.Length <= 0)
             {
-                errorMessage = $"Enter {SelectedTypeCinema.Name} name";
+                errorMessage = $"Enter {SelectedTypeCinema.Name} title";
                 return false;
             }
             else if (numericSeaquel.Value == 0)

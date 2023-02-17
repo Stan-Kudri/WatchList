@@ -88,7 +88,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
                 throw new Exception("Number sequel number greater than zero");
             }
 
-            txtEditName.Text = cinema.Name;
+            txtEditName.Text = cinema.Title;
             numericEditSequel.Value = Convert.ToDecimal(cinema.NumberSequel);
             cmbTypeCinema.SelectedItem = cinema.Type;
             cmbStatusCinema.SelectedItem = cinema.Status;
@@ -114,7 +114,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         {
             if (txtEditName.Text.Length <= 0)
             {
-                errorMessage = $"Enter {SelectedTypeCinema.Name} name";
+                errorMessage = $"Enter {SelectedTypeCinema.Name} title";
                 return false;
             }
             else if (numericEditSequel.Value == 0)

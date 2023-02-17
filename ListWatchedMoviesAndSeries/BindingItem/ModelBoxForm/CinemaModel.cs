@@ -6,32 +6,32 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
     public class CinemaModel : ModelBase
     {
         private Guid _id;
-        private string _name;
+        private string _title;
         private TypeCinema _type;
         private int _numberSequel;
         private StatusCinema _status;
         private DateTime? _date;
         private int? _grade;
 
-        public CinemaModel(string name, decimal? numberSequel, StatusCinema status, TypeCinema type)
-            : this(name, numberSequel, null, null, status, type, Guid.NewGuid())
+        public CinemaModel(string title, decimal? numberSequel, StatusCinema status, TypeCinema type)
+            : this(title, numberSequel, null, null, status, type, Guid.NewGuid())
         {
         }
 
-        public CinemaModel(string name, decimal? numberSequel, StatusCinema status, TypeCinema type, Guid? id)
-            : this(name, numberSequel, null, null, status, type, id)
+        public CinemaModel(string title, decimal? numberSequel, StatusCinema status, TypeCinema type, Guid? id)
+            : this(title, numberSequel, null, null, status, type, id)
         {
         }
 
-        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, StatusCinema status, TypeCinema type)
-            : this(name, numberSequel, date, grade, status, type, Guid.NewGuid())
+        public CinemaModel(string title, decimal? numberSequel, DateTime? date, decimal? grade, StatusCinema status, TypeCinema type)
+            : this(title, numberSequel, date, grade, status, type, Guid.NewGuid())
         {
         }
 
-        public CinemaModel(string name, decimal? numberSequel, DateTime? date, decimal? grade, StatusCinema status, TypeCinema type, Guid? id)
+        public CinemaModel(string title, decimal? numberSequel, DateTime? date, decimal? grade, StatusCinema status, TypeCinema type, Guid? id)
         {
             _id = id ?? Guid.NewGuid();
-            _name = name ?? throw new ArgumentNullException(nameof(name));
+            _title = title ?? throw new ArgumentNullException(nameof(title));
             _numberSequel = numberSequel == null ? 0 : Convert.ToInt32((decimal)numberSequel);
             _type = type;
             _status = status;
@@ -45,10 +45,10 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
             set => SetField(ref _id, value);
         }
 
-        public string Name
+        public string Title
         {
-            get => _name;
-            set => SetField(ref _name, value);
+            get => _title;
+            set => SetField(ref _title, value);
         }
 
         public TypeCinema Type
@@ -83,7 +83,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
 
         public WatchItem ToWatchItem()
         {
-            return new WatchItem(Name, NumberSequel, Status, Type, Id, Date ?? null, Grade);
+            return new WatchItem(Title, NumberSequel, Status, Type, Id, Date ?? null, Grade);
         }
 
         public string GetWatchData() => Date?.ToString("dd.MM.yyyy") ?? string.Empty;

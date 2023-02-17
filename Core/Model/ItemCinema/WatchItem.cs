@@ -9,7 +9,7 @@ namespace Core.Model.ItemCinema
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public TypeCinema Type { get; set; }
 
@@ -26,10 +26,10 @@ namespace Core.Model.ItemCinema
         {
         }
 
-        public WatchItem(string name, int numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
+        public WatchItem(string title, int numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
         {
             Id = id ?? Guid.NewGuid();
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Title = title ?? throw new ArgumentNullException(nameof(title));
             Sequel = numberSequel;
             Type = type;
             Status = status;
@@ -39,7 +39,7 @@ namespace Core.Model.ItemCinema
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name, Grade, Date, Status, Type, Sequel);
+            return HashCode.Combine(Id, Title, Grade, Date, Status, Type, Sequel);
         }
 
         public override bool Equals(object? obj)
@@ -53,7 +53,7 @@ namespace Core.Model.ItemCinema
                 return false;
 
             return Id == other.Id
-                && Name == other.Name
+                && Title == other.Title
                 && Status == other.Status
                 && Type == other.Type
                 && Sequel == other.Sequel

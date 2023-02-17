@@ -57,7 +57,7 @@ namespace EqualsTest
         {
             // Arrange
             var firstWatch = new WatchItem(
-                                    item.Name,
+                                    item.Title,
                                     item.Sequel,
                                     item.Status,
                                     item.Type,
@@ -66,7 +66,7 @@ namespace EqualsTest
                                     item.Grade);
 
             var secondWatch = new WatchItem(
-                                    item.Name,
+                                    item.Title,
                                     item.Sequel,
                                     item.Status,
                                     item.Type,
@@ -87,7 +87,7 @@ namespace EqualsTest
         {
             // Arrange
             var itemNotWatch = new WatchItem(
-                                    item.Name,
+                                    item.Title,
                                     item.Sequel,
                                     item.Status,
                                     item.Type,

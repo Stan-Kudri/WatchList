@@ -284,7 +284,7 @@ namespace ListWatchedMoviesAndSeries
             {
                 var intSequel = item.Sequel;
                 var formatDate = item.GetWatchData();
-                dgvCinema.Rows.Add(item.Name, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
+                dgvCinema.Rows.Add(item.Title, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
             }
         }
 
@@ -378,7 +378,7 @@ namespace ListWatchedMoviesAndSeries
         /// <param name="rowIndex">Number row element.</param>
         private void ReplacementEditItem(CinemaModel cinemaItem, int rowIndex)
         {
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Name;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Title;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
