@@ -14,10 +14,6 @@ namespace Core.Model.Item
 
         private readonly Func<IQueryable<WatchItem>, IOrderedQueryable<WatchItem>> _orderByField;
 
-        public SortField() : this(Title.Name, Title.Value, Title._orderByField)
-        {
-        }
-
         private SortField(string name, int value, Func<IQueryable<WatchItem>, IOrderedQueryable<WatchItem>> orderByField) : base(name, value)
         {
             _orderByField = orderByField;

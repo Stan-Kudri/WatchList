@@ -13,7 +13,7 @@ namespace Core.PageItem
 
         public Page Page { get; set; }
 
-        public WatchItemSearchRequest() : this(new FilterItem(), new SortField(), new Page())
+        public WatchItemSearchRequest() : this(new FilterItem(), SortField.Title, new Page())
         {
         }
 

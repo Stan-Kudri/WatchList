@@ -1,4 +1,4 @@
-﻿using Core.Model.ItemCinema.Components;
+using Core.Model.ItemCinema.Components;
 
 namespace ListWatchedMoviesAndSeries.ChildForms.Extension
 {
