@@ -1,7 +1,7 @@
-using Core.Model.Item;
+using Core.Model.ItemCinema.Components;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
-using ListWatchedMoviesAndSeries.Models.Item;
+using ListWatchedMoviesAndSeries.ChildForms.Extension;
 using MaterialSkin.Controls;
 
 namespace ListWatchedMoviesAndSeries
@@ -11,7 +11,7 @@ namespace ListWatchedMoviesAndSeries
     /// </summary>
     public partial class AddCinemaForm : MaterialForm
     {
-        private StatusCinema _status = StatusCinema.NotWatch;
+        private StatusCinema _status = StatusCinema.Planned;
 
         public AddCinemaForm()
         {
@@ -20,11 +20,14 @@ namespace ListWatchedMoviesAndSeries
 
         private TypeCinema SelectedTypeCinema => (TypeCinema)cmbTypeCinema.SelectedValue;
 
+        private StatusCinema SelectedStatusCinema => (StatusCinema)cmbStatusCinema.SelectedValue;
+
         public CinemaModel GetCinema()
         {
             if (numericGradeCinema.Enabled)
             {
-                return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateTimePickerCinema.Value, numericGradeCinema.Value, _status, SelectedTypeCinema);
+                DateTime? dateViewed = dateTimePickerCinema.Enabled == true ? dateTimePickerCinema.Value : null;
+                return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateViewed, numericGradeCinema.Value, _status, SelectedTypeCinema);
             }
             else
             {
@@ -47,13 +50,6 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnClearTxtCinema_Click(object sender, EventArgs e) => SetDefaultValues();
 
-        private void DtpCinema_ValueChanged(object sender, EventArgs e)
-        {
-            numericGradeCinema.ReadOnly = false;
-            numericGradeCinema.Enabled = true;
-            _status = StatusCinema.Watch;
-        }
-
         private void SetDefaultValues()
         {
             txtAddCinema.Text = string.Empty;
@@ -61,14 +57,15 @@ namespace ListWatchedMoviesAndSeries
             numericGradeCinema.Value = 1;
             numericSeaquel.Value = 1;
             numericGradeCinema.ReadOnly = true;
-            _status = StatusCinema.NotWatch;
+            cmbTypeCinema.SelectedItem = TypeCinema.Movie;
+            cmbStatusCinema.SelectedItem = StatusCinema.Planned;
         }
 
         private bool ValidateFields(out string errorMessage)
         {
             if (txtAddCinema.Text.Length <= 0)
             {
-                errorMessage = $"Enter {SelectedTypeCinema.Name} name";
+                errorMessage = $"Enter {SelectedTypeCinema.Name} title";
                 return false;
             }
             else if (numericSeaquel.Value == 0)
@@ -86,6 +83,15 @@ namespace ListWatchedMoviesAndSeries
             return true;
         }
 
+        private void AddCinemaForm_Load(object sender, EventArgs e)
+        {
+            typeModelBindingSource.DataSource = new SelectableTypeCinemaModel();
+            statusModelBindingSource.DataSource = new SelectableStatusCinemaModel();
+            dateTimePickerCinema.MaxDate = DateTime.Now;
+            cmbTypeCinema.SelectedItem = TypeCinema.Movie;
+            cmbStatusCinema.SelectedItem = StatusCinema.Planned;
+        }
+
         private void CmbTypeCinema_Changed(object sender, EventArgs e)
         {
             var type = SelectedTypeCinema;
@@ -93,10 +99,11 @@ namespace ListWatchedMoviesAndSeries
             Text = "Add " + type.Name;
         }
 
-        private void AddCinemaForm_Load(object sender, EventArgs e)
+        private void CmbStatusCinema_Changed(object sender, EventArgs e)
         {
-            typeModelBindingSource.DataSource = new SelectableTypeCinemaModel();
-            dateTimePickerCinema.MaxDate = DateTime.Now;
+            _status = SelectedStatusCinema;
+            dateTimePickerCinema.Enabled = _status.HasDateWatch();
+            numericGradeCinema.Enabled = _status.HasGradeCinema();
         }
     }
 }

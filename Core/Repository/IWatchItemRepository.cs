@@ -1,4 +1,4 @@
-using ListWatchedMoviesAndSeries.Models;
+using Core.Model.ItemCinema;
 
 namespace ListWatchedMoviesAndSeries.Repository
 {

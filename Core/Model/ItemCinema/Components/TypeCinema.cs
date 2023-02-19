@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Ardalis.SmartEnum;
 
-namespace ListWatchedMoviesAndSeries.Models.Item
+namespace Core.Model.ItemCinema.Components
 {
     public class TypeCinema : SmartEnum<TypeCinema>
     {

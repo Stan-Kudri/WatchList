@@ -1,22 +1,21 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-using Core.Model.Item;
-using ListWatchedMoviesAndSeries.Models.Item;
+using Core.Model.ItemCinema.Components;
 
-namespace ListWatchedMoviesAndSeries.Models
+namespace Core.Model.ItemCinema
 {
     public class WatchItem : IEquatable<WatchItem>
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public TypeCinema Type { get; set; }
 
         public StatusCinema Status { get; set; }
 
-        public int NumberSequel { get; set; }
+        public int Sequel { get; set; }
 
         public DateTime? Date { get; set; }
 
@@ -27,11 +26,11 @@ namespace ListWatchedMoviesAndSeries.Models
         {
         }
 
-        public WatchItem(string name, int numberSequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
+        public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
         {
             Id = id ?? Guid.NewGuid();
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            NumberSequel = numberSequel;
+            Title = title ?? throw new ArgumentNullException(nameof(title));
+            Sequel = sequel;
             Type = type;
             Status = status;
             Date = dateWatch;
@@ -40,7 +39,7 @@ namespace ListWatchedMoviesAndSeries.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name, Grade, Date, Status, Type, NumberSequel);
+            return HashCode.Combine(Id, Title, Grade, Date, Status, Type, Sequel);
         }
 
         public override bool Equals(object? obj)
@@ -54,10 +53,10 @@ namespace ListWatchedMoviesAndSeries.Models
                 return false;
 
             return Id == other.Id
-                && Name == other.Name
+                && Title == other.Title
                 && Status == other.Status
                 && Type == other.Type
-                && NumberSequel == other.NumberSequel
+                && Sequel == other.Sequel
                 && Grade == other.Grade
                 && Date == other.Date;
         }

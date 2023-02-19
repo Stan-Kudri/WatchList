@@ -1,7 +1,7 @@
+using Core.Model.ItemCinema;
 using Core.PageItem;
 using Core.Repository.DbContex;
 using Core.Repository.Extension;
-using ListWatchedMoviesAndSeries.Models;
 
 namespace ListWatchedMoviesAndSeries.Repository
 {
@@ -62,11 +62,12 @@ namespace ListWatchedMoviesAndSeries.Repository
             if (item == null)
                 return;
 
-            item.NumberSequel = editItem.NumberSequel;
+            item.Sequel = editItem.Sequel;
             item.Date = editItem.Date;
             item.Grade = editItem.Grade;
-            item.Name = editItem.Name;
+            item.Title = editItem.Title;
             item.Type = editItem.Type;
+
             _db.SaveChanges();
         }
     }

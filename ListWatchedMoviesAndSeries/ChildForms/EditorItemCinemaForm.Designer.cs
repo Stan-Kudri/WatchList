@@ -31,9 +31,9 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            numericEditGradeCinema = new NumericUpDown();
+            numericGradeCinema = new NumericUpDown();
             cinemaModelBindingSource = new BindingSource(components);
-            dateTPCinema = new DateTimePicker();
+            dateTimePickerCinema = new DateTimePicker();
             numericEditSequel = new NumericUpDown();
             txtEditName = new TextBox();
             labelNameCinema = new MaterialSkin.Controls.MaterialLabel();
@@ -44,60 +44,64 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnCloseEdit = new MaterialSkin.Controls.MaterialButton();
             cmbTypeCinema = new ComboBox();
             typeModelBindingSource = new BindingSource(components);
-            ((System.ComponentModel.ISupportInitialize)numericEditGradeCinema).BeginInit();
+            labelType = new MaterialSkin.Controls.MaterialLabel();
+            labelStatus = new MaterialSkin.Controls.MaterialLabel();
+            cmbStatusCinema = new ComboBox();
+            statusModelBindingSource = new BindingSource(components);
+            ((System.ComponentModel.ISupportInitialize)numericGradeCinema).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cinemaModelBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericEditSequel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)typeModelBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)statusModelBindingSource).BeginInit();
             SuspendLayout();
             // 
-            // numericEditGradeCinema
+            // numericGradeCinema
             // 
-            numericEditGradeCinema.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "Grade", true));
-            numericEditGradeCinema.Enabled = false;
-            numericEditGradeCinema.InterceptArrowKeys = false;
-            numericEditGradeCinema.Location = new Point(275, 100);
-            numericEditGradeCinema.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-            numericEditGradeCinema.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericEditGradeCinema.Name = "numericEditGradeCinema";
-            numericEditGradeCinema.ReadOnly = true;
-            numericEditGradeCinema.Size = new Size(65, 23);
-            numericEditGradeCinema.TabIndex = 27;
-            numericEditGradeCinema.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            numericGradeCinema.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "Grade", true));
+            numericGradeCinema.Enabled = false;
+            numericGradeCinema.InterceptArrowKeys = false;
+            numericGradeCinema.Location = new Point(240, 128);
+            numericGradeCinema.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            numericGradeCinema.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericGradeCinema.Name = "numericGradeCinema";
+            numericGradeCinema.ReadOnly = true;
+            numericGradeCinema.Size = new Size(60, 23);
+            numericGradeCinema.TabIndex = 27;
+            numericGradeCinema.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // cinemaModelBindingSource
             // 
             cinemaModelBindingSource.DataSource = typeof(CinemaModel);
             // 
-            // dateTPCinema
+            // dateTimePickerCinema
             // 
-            dateTPCinema.CustomFormat = "\"dd.MM.yyyy\"";
-            dateTPCinema.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "Date", true));
-            dateTPCinema.Location = new Point(10, 130);
-            dateTPCinema.MaxDate = new DateTime(2022, 8, 29, 0, 0, 0, 0);
-            dateTPCinema.MinDate = new DateTime(1949, 12, 31, 0, 0, 0, 0);
-            dateTPCinema.Name = "dateTPCinema";
-            dateTPCinema.Size = new Size(150, 23);
-            dateTPCinema.TabIndex = 26;
-            dateTPCinema.Value = new DateTime(2022, 8, 7, 0, 0, 0, 0);
-            dateTPCinema.ValueChanged += DateTimePick_ValueChanged;
+            dateTimePickerCinema.CustomFormat = "\"dd.MM.yyyy\"";
+            dateTimePickerCinema.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "Date", true));
+            dateTimePickerCinema.Location = new Point(10, 155);
+            dateTimePickerCinema.MaxDate = new DateTime(2022, 8, 29, 0, 0, 0, 0);
+            dateTimePickerCinema.MinDate = new DateTime(1949, 12, 31, 0, 0, 0, 0);
+            dateTimePickerCinema.Name = "dateTimePickerCinema";
+            dateTimePickerCinema.Size = new Size(155, 23);
+            dateTimePickerCinema.TabIndex = 26;
+            dateTimePickerCinema.Value = new DateTime(2022, 8, 7, 0, 0, 0, 0);
             // 
             // numericEditSequel
             // 
-            numericEditSequel.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "NumberSequel", true));
-            numericEditSequel.Location = new Point(165, 100);
+            numericEditSequel.DataBindings.Add(new Binding("Value", cinemaModelBindingSource, "Sequel", true));
+            numericEditSequel.Location = new Point(240, 100);
             numericEditSequel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericEditSequel.Name = "numericEditSequel";
-            numericEditSequel.Size = new Size(45, 23);
+            numericEditSequel.Size = new Size(55, 23);
             numericEditSequel.TabIndex = 25;
             numericEditSequel.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // txtEditName
             // 
-            txtEditName.DataBindings.Add(new Binding("Text", cinemaModelBindingSource, "Name", true));
+            txtEditName.DataBindings.Add(new Binding("Text", cinemaModelBindingSource, "Title", true));
             txtEditName.Location = new Point(10, 70);
             txtEditName.Multiline = true;
             txtEditName.Name = "txtEditName";
-            txtEditName.Size = new Size(330, 23);
+            txtEditName.Size = new Size(290, 23);
             txtEditName.TabIndex = 19;
             // 
             // labelNameCinema
@@ -107,7 +111,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             labelNameCinema.Depth = 0;
             labelNameCinema.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelNameCinema.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelNameCinema.Location = new Point(345, 70);
+            labelNameCinema.Location = new Point(310, 72);
             labelNameCinema.MouseState = MaterialSkin.MouseState.HOVER;
             labelNameCinema.Name = "labelNameCinema";
             labelNameCinema.Size = new Size(43, 19);
@@ -121,7 +125,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             labelNumberSequel.Depth = 0;
             labelNumberSequel.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelNumberSequel.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelNumberSequel.Location = new Point(215, 102);
+            labelNumberSequel.Location = new Point(305, 102);
             labelNumberSequel.MouseState = MaterialSkin.MouseState.HOVER;
             labelNumberSequel.Name = "labelNumberSequel";
             labelNumberSequel.Size = new Size(49, 19);
@@ -135,7 +139,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             labelGradeCinema.Depth = 0;
             labelGradeCinema.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelGradeCinema.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelGradeCinema.Location = new Point(345, 102);
+            labelGradeCinema.Location = new Point(310, 130);
             labelGradeCinema.MouseState = MaterialSkin.MouseState.HOVER;
             labelGradeCinema.Name = "labelGradeCinema";
             labelGradeCinema.Size = new Size(43, 19);
@@ -149,14 +153,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnSaveEdit.Depth = 0;
             btnSaveEdit.HighEmphasis = true;
             btnSaveEdit.Icon = null;
-            btnSaveEdit.Location = new Point(170, 133);
+            btnSaveEdit.Location = new Point(170, 156);
             btnSaveEdit.Margin = new Padding(4, 6, 4, 6);
-            btnSaveEdit.MaximumSize = new Size(70, 20);
-            btnSaveEdit.MinimumSize = new Size(70, 20);
+            btnSaveEdit.MaximumSize = new Size(60, 20);
+            btnSaveEdit.MinimumSize = new Size(60, 20);
             btnSaveEdit.MouseState = MaterialSkin.MouseState.HOVER;
             btnSaveEdit.Name = "btnSaveEdit";
             btnSaveEdit.NoAccentTextColor = Color.Empty;
-            btnSaveEdit.Size = new Size(70, 20);
+            btnSaveEdit.Size = new Size(60, 20);
             btnSaveEdit.TabIndex = 32;
             btnSaveEdit.Text = "Save";
             btnSaveEdit.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -171,14 +175,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnReturnDataCinema.Depth = 0;
             btnReturnDataCinema.HighEmphasis = true;
             btnReturnDataCinema.Icon = null;
-            btnReturnDataCinema.Location = new Point(250, 133);
+            btnReturnDataCinema.Location = new Point(235, 156);
             btnReturnDataCinema.Margin = new Padding(4, 6, 4, 6);
-            btnReturnDataCinema.MaximumSize = new Size(70, 20);
-            btnReturnDataCinema.MinimumSize = new Size(70, 20);
+            btnReturnDataCinema.MaximumSize = new Size(60, 20);
+            btnReturnDataCinema.MinimumSize = new Size(60, 20);
             btnReturnDataCinema.MouseState = MaterialSkin.MouseState.HOVER;
             btnReturnDataCinema.Name = "btnReturnDataCinema";
             btnReturnDataCinema.NoAccentTextColor = Color.Empty;
-            btnReturnDataCinema.Size = new Size(70, 20);
+            btnReturnDataCinema.Size = new Size(60, 20);
             btnReturnDataCinema.TabIndex = 33;
             btnReturnDataCinema.Text = "Return";
             btnReturnDataCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -193,7 +197,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             btnCloseEdit.Depth = 0;
             btnCloseEdit.HighEmphasis = true;
             btnCloseEdit.Icon = null;
-            btnCloseEdit.Location = new Point(330, 133);
+            btnCloseEdit.Location = new Point(300, 156);
             btnCloseEdit.Margin = new Padding(4, 6, 4, 6);
             btnCloseEdit.MaximumSize = new Size(60, 20);
             btnCloseEdit.MinimumSize = new Size(60, 20);
@@ -209,12 +213,14 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             // cmbTypeCinema
             // 
-            cmbTypeCinema.DataBindings.Add(new Binding("SelectedValue", typeModelBindingSource, "SelectedValue", true, DataSourceUpdateMode.OnPropertyChanged));
-            cmbTypeCinema.DataBindings.Add(new Binding("DataSource", typeModelBindingSource, "Items", true, DataSourceUpdateMode.OnPropertyChanged));
+            cmbTypeCinema.BackColor = SystemColors.ButtonHighlight;
+            cmbTypeCinema.DataBindings.Add(new Binding("SelectedValue", typeModelBindingSource, "SelectedValue", true));
+            cmbTypeCinema.DataBindings.Add(new Binding("DataSource", typeModelBindingSource, "Items", true));
+            cmbTypeCinema.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTypeCinema.FormattingEnabled = true;
             cmbTypeCinema.Location = new Point(10, 100);
             cmbTypeCinema.Name = "cmbTypeCinema";
-            cmbTypeCinema.Size = new Size(150, 23);
+            cmbTypeCinema.Size = new Size(155, 23);
             cmbTypeCinema.TabIndex = 35;
             cmbTypeCinema.SelectedValueChanged += CmbTypeCinema_Changed;
             // 
@@ -222,13 +228,61 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // 
             typeModelBindingSource.DataSource = typeof(BindingItem.ModelAddAndEditForm.SelectableTypeCinemaModel);
             // 
+            // labelType
+            // 
+            labelType.AutoSize = true;
+            labelType.BackColor = SystemColors.ControlLightLight;
+            labelType.Depth = 0;
+            labelType.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            labelType.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            labelType.Location = new Point(175, 102);
+            labelType.MouseState = MaterialSkin.MouseState.HOVER;
+            labelType.Name = "labelType";
+            labelType.Size = new Size(36, 19);
+            labelType.TabIndex = 36;
+            labelType.Text = "Type";
+            // 
+            // labelStatus
+            // 
+            labelStatus.AutoSize = true;
+            labelStatus.BackColor = SystemColors.ControlLightLight;
+            labelStatus.Depth = 0;
+            labelStatus.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            labelStatus.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            labelStatus.Location = new Point(175, 130);
+            labelStatus.MouseState = MaterialSkin.MouseState.HOVER;
+            labelStatus.Name = "labelStatus";
+            labelStatus.Size = new Size(47, 19);
+            labelStatus.TabIndex = 38;
+            labelStatus.Text = "Status";
+            // 
+            // cmbStatusCinema
+            // 
+            cmbStatusCinema.BackColor = SystemColors.ButtonHighlight;
+            cmbStatusCinema.DataBindings.Add(new Binding("DataSource", statusModelBindingSource, "Items", true));
+            cmbStatusCinema.DataBindings.Add(new Binding("SelectedValue", statusModelBindingSource, "ValueStatus", true));
+            cmbStatusCinema.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatusCinema.FormattingEnabled = true;
+            cmbStatusCinema.Location = new Point(10, 128);
+            cmbStatusCinema.Name = "cmbStatusCinema";
+            cmbStatusCinema.Size = new Size(155, 23);
+            cmbStatusCinema.TabIndex = 37;
+            cmbStatusCinema.SelectedValueChanged += CmbStatusCinema_Changed;
+            // 
+            // statusModelBindingSource
+            // 
+            statusModelBindingSource.DataSource = typeof(BindingItem.ModelAddAndEditForm.SelectableStatusCinemaModel);
+            // 
             // EditorItemCinemaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             CancelButton = btnCloseEdit;
-            ClientSize = new Size(400, 160);
+            ClientSize = new Size(370, 185);
+            Controls.Add(labelStatus);
+            Controls.Add(cmbStatusCinema);
+            Controls.Add(labelType);
             Controls.Add(cmbTypeCinema);
             Controls.Add(btnCloseEdit);
             Controls.Add(btnReturnDataCinema);
@@ -236,27 +290,28 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             Controls.Add(labelGradeCinema);
             Controls.Add(labelNumberSequel);
             Controls.Add(labelNameCinema);
-            Controls.Add(numericEditGradeCinema);
-            Controls.Add(dateTPCinema);
+            Controls.Add(numericGradeCinema);
+            Controls.Add(dateTimePickerCinema);
             Controls.Add(numericEditSequel);
             Controls.Add(txtEditName);
-            Location = new Point(400, 160);
-            MaximumSize = new Size(400, 160);
+            Location = new Point(370, 185);
+            MaximumSize = new Size(370, 185);
             Name = "EditorItemCinemaForm";
             Text = "Edit Item";
             Load += EditorItemCinemaForm_Load;
-            ((System.ComponentModel.ISupportInitialize)numericEditGradeCinema).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericGradeCinema).EndInit();
             ((System.ComponentModel.ISupportInitialize)cinemaModelBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericEditSequel).EndInit();
             ((System.ComponentModel.ISupportInitialize)typeModelBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)statusModelBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private TextBox txtEditName;
-        protected NumericUpDown numericEditGradeCinema;
-        protected DateTimePicker dateTPCinema;
+        protected NumericUpDown numericGradeCinema;
+        protected DateTimePicker dateTimePickerCinema;
         protected NumericUpDown numericEditSequel;
         private BindingSource cinemaModelBindingSource;
         private MaterialSkin.Controls.MaterialLabel labelNameCinema;
@@ -267,5 +322,9 @@ namespace ListWatchedMoviesAndSeries.EditorForm
         private MaterialSkin.Controls.MaterialButton btnCloseEdit;
         private ComboBox cmbTypeCinema;
         private BindingSource typeModelBindingSource;
+        private MaterialSkin.Controls.MaterialLabel labelType;
+        private MaterialSkin.Controls.MaterialLabel labelStatus;
+        private ComboBox cmbStatusCinema;
+        private BindingSource statusModelBindingSource;
     }
 }

@@ -1,29 +1,30 @@
-using Core.Model;
+using Core.Model.Filter;
+using Core.Model.Item;
+using Core.Model.ItemCinema;
 using Core.Repository;
-using ListWatchedMoviesAndSeries.Models;
 
 namespace Core.PageItem
 {
     public class WatchItemSearchRequest
     {
-        public WatchItemFilter Filter { get; set; }
+        public FilterItem Filter { get; set; }
 
-        public SortItem Sort { get; set; }
+        public SortField Sort { get; set; }
 
         public Page Page { get; set; }
 
-        public WatchItemSearchRequest() : this(new WatchItemFilter(), new SortItem(), new Page())
+        public WatchItemSearchRequest() : this(new FilterItem(), SortField.Title, new Page())
         {
         }
 
-        public WatchItemSearchRequest(WatchItemFilter filter, SortItem sort, Page page)
+        public WatchItemSearchRequest(FilterItem filter, SortField sort, Page page)
         {
             Filter = filter;
             Sort = sort;
             Page = page;
         }
 
-        public bool CompareFilter(WatchItemFilter filter) => Filter.Equals(filter);
+        public bool CompareFilter(FilterItem filter) => Filter.Equals(filter);
 
         public IQueryable<WatchItem> ApplyFilter(IQueryable<WatchItem> items) => Filter.Apply(items);
 

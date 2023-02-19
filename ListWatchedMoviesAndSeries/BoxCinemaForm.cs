@@ -1,11 +1,10 @@
-using Core.ItemFilter;
-using Core.Model.Item;
+using Core.Model.Filter.Components;
+using Core.Model.ItemCinema;
+using Core.Model.ItemCinema.Components;
 using Core.PageItem;
 using Core.Repository.DbContex;
 using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.EditorForm;
-using ListWatchedMoviesAndSeries.Models;
-using ListWatchedMoviesAndSeries.Models.Item;
 using ListWatchedMoviesAndSeries.Repository;
 using MaterialSkin.Controls;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +40,7 @@ namespace ListWatchedMoviesAndSeries
 
             _db = new WatchCinemaDbContext(builder.Options);
             _repository = new WatchItemRepository(_db);
+            _pagedList = _repository.GetPageCinema(_searchRequest);
 
             Load += BoxCinemaForm_Load;
         }
@@ -72,9 +72,9 @@ namespace ListWatchedMoviesAndSeries
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
             cmbFilterType.DataSource = Filter.TypeFilter;
-            cmbFilterWatch.DataSource = Filter.WatchFilter;
-            cmbPageSize.DataSource = Page.AvailablePageSizes;
-            cmbSortType.DataSource = Sort.SortingObjects;
+            cmbFilterWatch.DataSource = Filter.StatusFilter;
+            cmbPageSize.DataSource = Page.Items;
+            cmbSortType.DataSource = Sort.Items;
             cmbSortType.SelectedItem = Sort.Type;
             filterModelBindingSource.DataSource = Filter;
         }
@@ -90,10 +90,10 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnCancelFilter_Click(object sender, EventArgs e)
         {
-            Filter.Type = TypeCinemaFilter.AllCinema;
-            Filter.Watch = WatchCinemaFilter.AllCinema;
+            Filter.Type = TypeFilter.AllCinema;
+            Filter.Status = StatusFilter.AllCinema;
             cmbFilterType.SelectedItem = Filter.Type;
-            cmbFilterWatch.SelectedItem = Filter.Watch;
+            cmbFilterWatch.SelectedItem = Filter.Status;
             cmbFilterType.Refresh();
             cmbFilterWatch.Refresh();
         }
@@ -196,14 +196,14 @@ namespace ListWatchedMoviesAndSeries
 
         private void СmbPageSize_Changed(object sender, EventArgs e)
         {
-            Page.Size = Page.AvailablePageSizes[cmbPageSize.SelectedIndex];
+            Page.Size = Page.Items[cmbPageSize.SelectedIndex];
             Page.Number = 1;
             LoadData();
         }
 
         private void CmbSort_ChangedItem(object sender, EventArgs e)
         {
-            Sort.Type = Sort.SortingObjects[cmbSortType.SelectedIndex];
+            Sort.Type = Sort.Items[cmbSortType.SelectedIndex];
             LoadData();
         }
 
@@ -282,9 +282,9 @@ namespace ListWatchedMoviesAndSeries
         {
             foreach (var item in itemGrid)
             {
-                var intSequel = item.NumberSequel;
+                var intSequel = item.Sequel;
                 var formatDate = item.GetWatchData();
-                dgvCinema.Rows.Add(item.Name, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
+                dgvCinema.Rows.Add(item.Title, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
             }
         }
 
@@ -338,13 +338,14 @@ namespace ListWatchedMoviesAndSeries
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
             var status = StatusCinema.FromName(CellElement(rowItems, IndexColumnStatus));
 
-            if (strDateWatch != string.Empty && strDateWatch != null)
+            if (status != StatusCinema.Planned)
             {
-                var dateWatch = DateTime.Parse(strDateWatch);
                 if (!decimal.TryParse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Grade cannot be null."), out var grade))
                 {
                     throw new InvalidOperationException("Invalid cast.");
                 }
+
+                DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
 
                 var cinemaItem = new CinemaModel(
                                                    title,
@@ -377,21 +378,27 @@ namespace ListWatchedMoviesAndSeries
         /// <param name="rowIndex">Number row element.</param>
         private void ReplacementEditItem(CinemaModel cinemaItem, int rowIndex)
         {
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Name;
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.NumberSequel;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Title;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.Sequel;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = cinemaItem.Status;
 
-            if (cinemaItem.HasWatchDate())
+            if (cinemaItem.HasGrade())
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.Watch;
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Grade;
+
+                if (cinemaItem.HasGrade())
+                {
+                    dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
+                }
+                else
+                {
+                    dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
+                }
             }
             else
             {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = StatusCinema.NotWatch;
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
                 dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
             }
         }
