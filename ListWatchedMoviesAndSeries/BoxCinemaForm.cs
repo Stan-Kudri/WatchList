@@ -4,6 +4,7 @@ using Core.Model.ItemCinema.Components;
 using Core.PageItem;
 using Core.Repository.DbContex;
 using ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm;
+using ListWatchedMoviesAndSeries.ChildForms.Extension;
 using ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Repository;
 using MaterialSkin.Controls;
@@ -327,15 +328,9 @@ namespace ListWatchedMoviesAndSeries
         {
             var rowItems = dgvCinema.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
-            if (!int.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
-            {
-                throw new InvalidOperationException("Invalid cast.");
-            }
 
-            if (!Guid.TryParse(CellElement(rowItems, IndexColumnId), out var id))
-            {
-                throw new InvalidOperationException("Invalid cast.");
-            }
+            CellElement(rowItems, IndexColumnSequel).ParseItem(out int sequel);
+            CellElement(rowItems, IndexColumnId).ParseItem(out Guid id);
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
@@ -343,11 +338,7 @@ namespace ListWatchedMoviesAndSeries
 
             if (status != StatusCinema.Planned)
             {
-                if (!decimal.TryParse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Grade cannot be null."), out var grade))
-                {
-                    throw new InvalidOperationException("Invalid cast.");
-                }
-
+                CellElement(rowItems, IndexColumnGrade).ParseItem(out decimal grade);
                 DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
 
                 var cinemaItem = new CinemaModel(
