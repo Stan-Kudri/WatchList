@@ -3,7 +3,7 @@ using Core.Model.ItemCinema;
 using Core.Model.ItemCinema.Components;
 using Core.PageItem;
 using Core.Repository.DbContex;
-using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm;
 using ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Repository;
 using MaterialSkin.Controls;
@@ -194,11 +194,14 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void СmbPageSize_Changed(object sender, EventArgs e)
+        private void CmbPageSize_Changed(object sender, EventArgs e)
         {
-            Page.Size = Page.Items[cmbPageSize.SelectedIndex];
-            Page.Number = 1;
-            LoadData();
+            if (Page.ChangedPage(Page.Items[cmbPageSize.SelectedIndex]))
+            {
+                Page.Size = Page.Items[cmbPageSize.SelectedIndex];
+                Page.Number = 1;
+                LoadData();
+            }
         }
 
         private void CmbSort_ChangedItem(object sender, EventArgs e)

@@ -1,4 +1,4 @@
-using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm;
 
 namespace ListWatchedMoviesAndSeries
 {
@@ -341,7 +341,7 @@ namespace ListWatchedMoviesAndSeries
             cmbPageSize.Name = "cmbPageSize";
             cmbPageSize.Size = new Size(120, 23);
             cmbPageSize.TabIndex = 43;
-            cmbPageSize.SelectedIndexChanged += СmbPageSize_Changed;
+            cmbPageSize.SelectedIndexChanged += CmbPageSize_Changed;
             // 
             // pageModelBindingSource
             // 

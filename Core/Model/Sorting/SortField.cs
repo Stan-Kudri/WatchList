@@ -1,7 +1,7 @@
 using Ardalis.SmartEnum;
 using Core.Model.ItemCinema;
 
-namespace Core.Model.Item
+namespace Core.Model.Sorting
 {
     public class SortField : SmartEnum<SortField>
     {

@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using Core.Model.Filter;
 using Core.Model.Filter.Components;
 
-namespace ListWatchedMoviesAndSeries.BindingItem.Model
+namespace ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm
 {
     public class FilterModel : ModelBase
     {

@@ -1,4 +1,4 @@
-using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm;
 
 namespace ListWatchedMoviesAndSeries.EditorForm
 {
@@ -72,7 +72,7 @@ namespace ListWatchedMoviesAndSeries.EditorForm
             // cinemaModelBindingSource
             // 
             cinemaModelBindingSource.DataSource = typeof(CinemaModel);
-            // 
+            //
             // dateTimePickerCinema
             // 
             dateTimePickerCinema.CustomFormat = "\"dd.MM.yyyy\"";

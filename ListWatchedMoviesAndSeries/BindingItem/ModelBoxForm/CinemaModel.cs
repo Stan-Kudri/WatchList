@@ -1,7 +1,7 @@
 using Core.Model.ItemCinema;
 using Core.Model.ItemCinema.Components;
 
-namespace ListWatchedMoviesAndSeries.BindingItem.Model
+namespace ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm
 {
     public class CinemaModel : ModelBase
     {
