@@ -49,7 +49,7 @@ namespace ListWatchedMoviesAndSeries
             btnClearFilter = new MaterialSkin.Controls.MaterialButton();
             cmbFilterType = new MaterialSkin.Controls.MaterialComboBox();
             filterModelBindingSource = new BindingSource(components);
-            cmbFilterWatch = new MaterialSkin.Controls.MaterialComboBox();
+            cmbFilterStatus = new MaterialSkin.Controls.MaterialComboBox();
             cmbPageSize = new ComboBox();
             pageModelBindingSource = new BindingSource(components);
             btnBackPage = new MaterialSkin.Controls.MaterialButton();
@@ -282,6 +282,7 @@ namespace ListWatchedMoviesAndSeries
             cmbFilterType.AutoResize = false;
             cmbFilterType.BackColor = Color.FromArgb(255, 255, 255);
             cmbFilterType.DataBindings.Add(new Binding("SelectedValue", filterModelBindingSource, "Type", true));
+            cmbFilterType.DataBindings.Add(new Binding("DataSource", filterModelBindingSource, "TypeFilter", true));
             cmbFilterType.Depth = 0;
             cmbFilterType.DrawMode = DrawMode.OwnerDrawVariable;
             cmbFilterType.DropDownHeight = 174;
@@ -306,29 +307,30 @@ namespace ListWatchedMoviesAndSeries
             // 
             filterModelBindingSource.DataSource = typeof(FilterModel);
             // 
-            // cmbFilterWatch
+            // cmbFilterStatus
             // 
-            cmbFilterWatch.AutoResize = false;
-            cmbFilterWatch.BackColor = Color.FromArgb(255, 255, 255);
-            cmbFilterWatch.DataBindings.Add(new Binding("SelectedValue", filterModelBindingSource, "Status", true));
-            cmbFilterWatch.Depth = 0;
-            cmbFilterWatch.DrawMode = DrawMode.OwnerDrawVariable;
-            cmbFilterWatch.DropDownHeight = 174;
-            cmbFilterWatch.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbFilterWatch.DropDownWidth = 121;
-            cmbFilterWatch.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            cmbFilterWatch.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            cmbFilterWatch.IntegralHeight = false;
-            cmbFilterWatch.ItemHeight = 43;
-            cmbFilterWatch.Location = new Point(250, 70);
-            cmbFilterWatch.MaxDropDownItems = 4;
-            cmbFilterWatch.MaximumSize = new Size(235, 0);
-            cmbFilterWatch.MinimumSize = new Size(235, 0);
-            cmbFilterWatch.MouseState = MaterialSkin.MouseState.OUT;
-            cmbFilterWatch.Name = "cmbFilterWatch";
-            cmbFilterWatch.Size = new Size(235, 49);
-            cmbFilterWatch.StartIndex = 0;
-            cmbFilterWatch.TabIndex = 42;
+            cmbFilterStatus.AutoResize = false;
+            cmbFilterStatus.BackColor = Color.FromArgb(255, 255, 255);
+            cmbFilterStatus.DataBindings.Add(new Binding("SelectedValue", filterModelBindingSource, "Status", true));
+            cmbFilterStatus.DataBindings.Add(new Binding("DataSource", filterModelBindingSource, "StatusFilter", true));
+            cmbFilterStatus.Depth = 0;
+            cmbFilterStatus.DrawMode = DrawMode.OwnerDrawVariable;
+            cmbFilterStatus.DropDownHeight = 174;
+            cmbFilterStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbFilterStatus.DropDownWidth = 121;
+            cmbFilterStatus.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            cmbFilterStatus.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            cmbFilterStatus.IntegralHeight = false;
+            cmbFilterStatus.ItemHeight = 43;
+            cmbFilterStatus.Location = new Point(250, 70);
+            cmbFilterStatus.MaxDropDownItems = 4;
+            cmbFilterStatus.MaximumSize = new Size(235, 0);
+            cmbFilterStatus.MinimumSize = new Size(235, 0);
+            cmbFilterStatus.MouseState = MaterialSkin.MouseState.OUT;
+            cmbFilterStatus.Name = "cmbFilterStatus";
+            cmbFilterStatus.Size = new Size(235, 49);
+            cmbFilterStatus.StartIndex = 0;
+            cmbFilterStatus.TabIndex = 42;
             // 
             // cmbPageSize
             // 
@@ -513,7 +515,7 @@ namespace ListWatchedMoviesAndSeries
             Controls.Add(btnNextPage);
             Controls.Add(btnBackPage);
             Controls.Add(cmbPageSize);
-            Controls.Add(cmbFilterWatch);
+            Controls.Add(cmbFilterStatus);
             Controls.Add(cmbFilterType);
             Controls.Add(btnClearFilter);
             Controls.Add(btnUseFilter);
@@ -547,7 +549,7 @@ namespace ListWatchedMoviesAndSeries
         private MaterialSkin.Controls.MaterialButton btnUseFilter;
         private MaterialSkin.Controls.MaterialButton btnClearFilter;
         private MaterialSkin.Controls.MaterialComboBox cmbFilterType;
-        private MaterialSkin.Controls.MaterialComboBox cmbFilterWatch;
+        private MaterialSkin.Controls.MaterialComboBox cmbFilterStatus;
         private ComboBox cmbPageSize;
         private MaterialSkin.Controls.MaterialButton btnBackPage;
         private MaterialSkin.Controls.MaterialButton btnNextPage;

@@ -72,7 +72,7 @@ namespace ListWatchedMoviesAndSeries
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
             cmbFilterType.DataSource = Filter.TypeFilter;
-            cmbFilterWatch.DataSource = Filter.StatusFilter;
+            cmbFilterStatus.DataSource = Filter.StatusFilter;
             cmbPageSize.DataSource = Page.Items;
             cmbSortType.DataSource = Sort.Items;
             cmbSortType.SelectedItem = Sort.Type;
@@ -90,12 +90,12 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnCancelFilter_Click(object sender, EventArgs e)
         {
+            cmbFilterType.SelectedItem = TypeFilter.AllCinema;
+            cmbFilterStatus.SelectedItem = StatusFilter.AllCinema;
             Filter.Type = TypeFilter.AllCinema;
             Filter.Status = StatusFilter.AllCinema;
-            cmbFilterType.SelectedItem = Filter.Type;
-            cmbFilterWatch.SelectedItem = Filter.Status;
             cmbFilterType.Refresh();
-            cmbFilterWatch.Refresh();
+            cmbFilterStatus.Refresh();
         }
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
