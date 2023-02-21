@@ -128,7 +128,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
-            if (RemoveRowGrid(out string idItem))
+            if (RemoveRowGrid(out var idItem))
             {
                 if (!Guid.TryParse(idItem, out var id))
                 {
@@ -238,7 +238,7 @@ namespace ListWatchedMoviesAndSeries
             if (dgvCinema.SelectedRows.Count == 0)
             {
                 id = string.Empty;
-                MessageBoxProvider.ShowWarning("Highlight the desired line");
+                MessageBoxProvider.ShowWarning("Highlight the desired line.");
                 return false;
             }
 
@@ -433,17 +433,17 @@ namespace ListWatchedMoviesAndSeries
             LoadData();
         }
 
-        private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
-
-        private bool IsChangesSizePage() => _searchRequest.Page.Size != Page.Size;
-
-        private int ValueCmbSizePage() => Page.Items[cmbPageSize.SelectedIndex];
-
         private void CustomUpdateFormState()
         {
             var hasPageControl = _pagedList.PageCount > 0 ? true : false;
 
             btnBackPage.Enabled = btnEndPage.Enabled = btnNextPage.Enabled = btnStartPage.Enabled = labelTotalPage.Enabled = textBoxPage.Enabled = hasPageControl;
         }
+
+        private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
+
+        private bool IsChangesSizePage() => _searchRequest.Page.Size != Page.Size;
+
+        private int ValueCmbSizePage() => Page.Items[cmbPageSize.SelectedIndex];
     }
 }
