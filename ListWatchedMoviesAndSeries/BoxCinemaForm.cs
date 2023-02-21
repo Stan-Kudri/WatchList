@@ -197,7 +197,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void CmbPageSize_Changed(object sender, EventArgs e)
         {
-            var pageSizeCmb = ValueCmbSizePage();
+            var pageSizeCmb = SelectedValueSizePage();
 
             if (Page.ChangedPage(pageSizeCmb))
             {
@@ -444,6 +444,6 @@ namespace ListWatchedMoviesAndSeries
 
         private bool IsChangesSizePage() => _searchRequest.Page.Size != Page.Size;
 
-        private int ValueCmbSizePage() => Page.Items[cmbPageSize.SelectedIndex];
+        private int SelectedValueSizePage() => Page.Items[cmbPageSize.SelectedIndex];
     }
 }
