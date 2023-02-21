@@ -72,8 +72,8 @@ namespace ListWatchedMoviesAndSeries
 
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
-            cmbFilterType.DataSource = Filter.TypeFilter;
-            cmbFilterStatus.DataSource = Filter.StatusFilter;
+            cmbFilterType.DataSource = Filter.TypeItem;
+            cmbFilterStatus.DataSource = Filter.StatusItem;
             cmbPageSize.DataSource = Page.Items;
             cmbSortType.DataSource = Sort.Items;
             cmbSortType.SelectedItem = Sort.Type;
@@ -197,9 +197,11 @@ namespace ListWatchedMoviesAndSeries
 
         private void CmbPageSize_Changed(object sender, EventArgs e)
         {
-            if (Page.ChangedPage(Page.Items[cmbPageSize.SelectedIndex]))
+            var pageSizeCmb = ValueCmbSizePage();
+
+            if (Page.ChangedPage(pageSizeCmb))
             {
-                Page.Size = Page.Items[cmbPageSize.SelectedIndex];
+                Page.Size = pageSizeCmb;
                 Page.Number = 1;
                 LoadData();
             }
@@ -329,8 +331,8 @@ namespace ListWatchedMoviesAndSeries
             var rowItems = dgvCinema.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
 
-            CellElement(rowItems, IndexColumnSequel).ParseItem(out int sequel);
-            CellElement(rowItems, IndexColumnId).ParseItem(out Guid id);
+            CellElement(rowItems, IndexColumnSequel).ParseInt(out int sequel);
+            CellElement(rowItems, IndexColumnId).ParseGuid(out Guid id);
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
@@ -338,7 +340,7 @@ namespace ListWatchedMoviesAndSeries
 
             if (status != StatusCinema.Planned)
             {
-                CellElement(rowItems, IndexColumnGrade).ParseItem(out decimal grade);
+                CellElement(rowItems, IndexColumnGrade).ParseDecimal(out decimal grade);
                 DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
 
                 var cinemaItem = new CinemaModel(
@@ -363,7 +365,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString();
+        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString() ?? throw new Exception("String cannot be null.");
 
         /// <summary>
         /// Changing a table element.
@@ -434,6 +436,8 @@ namespace ListWatchedMoviesAndSeries
         private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
 
         private bool IsChangesSizePage() => _searchRequest.Page.Size != Page.Size;
+
+        private int ValueCmbSizePage() => Page.Items[cmbPageSize.SelectedIndex];
 
         private void CustomUpdateFormState()
         {

@@ -1,25 +1,35 @@
-using System.ComponentModel;
-
 namespace ListWatchedMoviesAndSeries.ChildForms.Extension
 {
     public static class TryParseExtension
     {
-        public static void ParseItem<T>(this string? str, out T value)
+        public static void ParseGuid(this string? str, out Guid value)
         {
-            if (str == null)
+            if (Guid.TryParse(str, out value))
             {
-                throw new ArgumentException("Value cannot be null.");
+                return;
             }
 
-            TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
-            try
+            throw new InvalidOperationException("Invalid cast.");
+        }
+
+        public static void ParseInt(this string? str, out int value)
+        {
+            if (int.TryParse(str, out value))
             {
-                value = (T)converter.ConvertFromString(str);
+                return;
             }
-            catch
+
+            throw new InvalidOperationException("Invalid cast.");
+        }
+
+        public static void ParseDecimal(this string? str, out decimal value)
+        {
+            if (decimal.TryParse(str, out value))
             {
-                throw new InvalidOperationException("Invalid cast.");
+                return;
             }
+
+            throw new InvalidOperationException("Invalid cast.");
         }
     }
 }

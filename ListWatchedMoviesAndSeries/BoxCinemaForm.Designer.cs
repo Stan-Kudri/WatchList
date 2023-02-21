@@ -282,7 +282,7 @@ namespace ListWatchedMoviesAndSeries
             cmbFilterType.AutoResize = false;
             cmbFilterType.BackColor = Color.FromArgb(255, 255, 255);
             cmbFilterType.DataBindings.Add(new Binding("SelectedValue", filterModelBindingSource, "Type", true));
-            cmbFilterType.DataBindings.Add(new Binding("DataSource", filterModelBindingSource, "TypeFilter", true));
+            cmbFilterType.DataBindings.Add(new Binding("DataSource", filterModelBindingSource, "TypeItem", true));
             cmbFilterType.Depth = 0;
             cmbFilterType.DrawMode = DrawMode.OwnerDrawVariable;
             cmbFilterType.DropDownHeight = 174;
@@ -312,7 +312,7 @@ namespace ListWatchedMoviesAndSeries
             cmbFilterStatus.AutoResize = false;
             cmbFilterStatus.BackColor = Color.FromArgb(255, 255, 255);
             cmbFilterStatus.DataBindings.Add(new Binding("SelectedValue", filterModelBindingSource, "Status", true));
-            cmbFilterStatus.DataBindings.Add(new Binding("DataSource", filterModelBindingSource, "StatusFilter", true));
+            cmbFilterStatus.DataBindings.Add(new Binding("DataSource", filterModelBindingSource, "StatusItem", true));
             cmbFilterStatus.Depth = 0;
             cmbFilterStatus.DrawMode = DrawMode.OwnerDrawVariable;
             cmbFilterStatus.DropDownHeight = 174;
