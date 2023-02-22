@@ -1,6 +1,6 @@
 using Core.Model.ItemCinema.Components;
-using ListWatchedMoviesAndSeries.BindingItem.Model;
 using ListWatchedMoviesAndSeries.BindingItem.ModelAddAndEditForm;
+using ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm;
 using ListWatchedMoviesAndSeries.ChildForms.Extension;
 using MaterialSkin.Controls;
 

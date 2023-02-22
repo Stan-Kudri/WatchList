@@ -1,6 +1,6 @@
 using Core.Model.Filter;
-using Core.Model.Item;
 using Core.Model.ItemCinema;
+using Core.Model.Sorting;
 using Core.Repository;
 
 namespace Core.PageItem

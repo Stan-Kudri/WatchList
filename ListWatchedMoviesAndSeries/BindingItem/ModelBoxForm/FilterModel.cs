@@ -2,16 +2,16 @@ using System.Collections.ObjectModel;
 using Core.Model.Filter;
 using Core.Model.Filter.Components;
 
-namespace ListWatchedMoviesAndSeries.BindingItem.Model
+namespace ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm
 {
     public class FilterModel : ModelBase
     {
-        private TypeFilter _type = Core.Model.Filter.Components.TypeFilter.AllCinema;
-        private StatusFilter _status = Core.Model.Filter.Components.StatusFilter.AllCinema;
+        private TypeFilter _type = TypeFilter.AllCinema;
+        private StatusFilter _status = StatusFilter.AllCinema;
 
-        public ObservableCollection<TypeFilter> TypeFilter { get; set; } = new ObservableCollection<TypeFilter>(Core.Model.Filter.Components.TypeFilter.List);
+        public ObservableCollection<TypeFilter> TypeItem { get; set; } = new ObservableCollection<TypeFilter>(TypeFilter.List);
 
-        public ObservableCollection<StatusFilter> StatusFilter { get; set; } = new ObservableCollection<StatusFilter>(Core.Model.Filter.Components.StatusFilter.List);
+        public ObservableCollection<StatusFilter> StatusItem { get; set; } = new ObservableCollection<StatusFilter>(StatusFilter.List);
 
         public TypeFilter Type
         {

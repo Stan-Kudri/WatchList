@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
-using Core.Model.Item;
+using Core.Model.Sorting;
 
-namespace ListWatchedMoviesAndSeries.BindingItem.Model
+namespace ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm
 {
     public class SortModel : ModelBase
     {

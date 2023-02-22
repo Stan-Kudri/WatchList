@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using Core.Repository;
 
-namespace ListWatchedMoviesAndSeries.BindingItem.Model
+namespace ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm
 {
     public class PageModel : ModelBase
     {
@@ -35,5 +35,7 @@ namespace ListWatchedMoviesAndSeries.BindingItem.Model
         }
 
         public Page GetPage() => new Page(Number, Size);
+
+        public bool ChangedPage(int pageSize) => pageSize != _size;
     }
 }

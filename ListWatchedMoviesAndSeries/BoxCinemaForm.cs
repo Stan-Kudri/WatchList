@@ -3,7 +3,8 @@ using Core.Model.ItemCinema;
 using Core.Model.ItemCinema.Components;
 using Core.PageItem;
 using Core.Repository.DbContex;
-using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm;
+using ListWatchedMoviesAndSeries.ChildForms.Extension;
 using ListWatchedMoviesAndSeries.EditorForm;
 using ListWatchedMoviesAndSeries.Repository;
 using MaterialSkin.Controls;
@@ -71,8 +72,8 @@ namespace ListWatchedMoviesAndSeries
 
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
-            cmbFilterType.DataSource = Filter.TypeFilter;
-            cmbFilterWatch.DataSource = Filter.StatusFilter;
+            cmbFilterType.DataSource = Filter.TypeItem;
+            cmbFilterStatus.DataSource = Filter.StatusItem;
             cmbPageSize.DataSource = Page.Items;
             cmbSortType.DataSource = Sort.Items;
             cmbSortType.SelectedItem = Sort.Type;
@@ -81,7 +82,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnUseFilter_Click(object sender, EventArgs e)
         {
-            if (!IsNotChangesFilter() || IsChangesSizePage())
+            if (!IsNotChangesFilter() || IsChangedSizePage())
             {
                 Page.Number = 1;
                 WriteDataToTable();
@@ -90,12 +91,12 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnCancelFilter_Click(object sender, EventArgs e)
         {
+            cmbFilterType.SelectedItem = TypeFilter.AllCinema;
+            cmbFilterStatus.SelectedItem = StatusFilter.AllCinema;
             Filter.Type = TypeFilter.AllCinema;
             Filter.Status = StatusFilter.AllCinema;
-            cmbFilterType.SelectedItem = Filter.Type;
-            cmbFilterWatch.SelectedItem = Filter.Status;
             cmbFilterType.Refresh();
-            cmbFilterWatch.Refresh();
+            cmbFilterStatus.Refresh();
         }
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
@@ -127,7 +128,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
-            if (RemoveRowGrid(out string idItem))
+            if (RemoveRowGrid(out var idItem))
             {
                 if (!Guid.TryParse(idItem, out var id))
                 {
@@ -194,11 +195,16 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private void СmbPageSize_Changed(object sender, EventArgs e)
+        private void CmbPageSize_Changed(object sender, EventArgs e)
         {
-            Page.Size = Page.Items[cmbPageSize.SelectedIndex];
-            Page.Number = 1;
-            LoadData();
+            var pageSizeCmb = SelectedPageSize();
+
+            if (Page.ChangedPage(pageSizeCmb))
+            {
+                Page.Size = pageSizeCmb;
+                Page.Number = 1;
+                LoadData();
+            }
         }
 
         private void CmbSort_ChangedItem(object sender, EventArgs e)
@@ -232,7 +238,7 @@ namespace ListWatchedMoviesAndSeries
             if (dgvCinema.SelectedRows.Count == 0)
             {
                 id = string.Empty;
-                MessageBoxProvider.ShowWarning("Highlight the desired line");
+                MessageBoxProvider.ShowWarning("Highlight the desired line.");
                 return false;
             }
 
@@ -324,15 +330,9 @@ namespace ListWatchedMoviesAndSeries
         {
             var rowItems = dgvCinema.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
-            if (!int.TryParse(CellElement(rowItems, IndexColumnSequel) ?? throw new ArgumentException("Sequel cannot be null."), out var sequel))
-            {
-                throw new InvalidOperationException("Invalid cast.");
-            }
 
-            if (!Guid.TryParse(CellElement(rowItems, IndexColumnId), out var id))
-            {
-                throw new InvalidOperationException("Invalid cast.");
-            }
+            CellElement(rowItems, IndexColumnSequel).ParseInt(out int sequel);
+            CellElement(rowItems, IndexColumnId).ParseGuid(out Guid id);
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
@@ -340,11 +340,7 @@ namespace ListWatchedMoviesAndSeries
 
             if (status != StatusCinema.Planned)
             {
-                if (!decimal.TryParse(CellElement(rowItems, IndexColumnGrade) ?? throw new ArgumentException("Grade cannot be null."), out var grade))
-                {
-                    throw new InvalidOperationException("Invalid cast.");
-                }
-
+                CellElement(rowItems, IndexColumnGrade).ParseDecimal(out decimal grade);
                 DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
 
                 var cinemaItem = new CinemaModel(
@@ -369,7 +365,7 @@ namespace ListWatchedMoviesAndSeries
             }
         }
 
-        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString();
+        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString() ?? throw new Exception("String cannot be null.");
 
         /// <summary>
         /// Changing a table element.
@@ -437,15 +433,17 @@ namespace ListWatchedMoviesAndSeries
             LoadData();
         }
 
-        private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
-
-        private bool IsChangesSizePage() => _searchRequest.Page.Size != Page.Size;
-
         private void CustomUpdateFormState()
         {
             var hasPageControl = _pagedList.PageCount > 0 ? true : false;
 
             btnBackPage.Enabled = btnEndPage.Enabled = btnNextPage.Enabled = btnStartPage.Enabled = labelTotalPage.Enabled = textBoxPage.Enabled = hasPageControl;
         }
+
+        private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
+
+        private bool IsChangedSizePage() => _searchRequest.Page.Size != Page.Size;
+
+        private int SelectedPageSize() => Page.Items[cmbPageSize.SelectedIndex];
     }
 }

@@ -1,4 +1,4 @@
-using ListWatchedMoviesAndSeries.BindingItem.Model;
+using ListWatchedMoviesAndSeries.BindingItem.ModelBoxForm;
 
 namespace ListWatchedMoviesAndSeries
 {
@@ -67,12 +67,12 @@ namespace ListWatchedMoviesAndSeries
             // 
             cinemaModelsBindingSource.DataSource = typeof(CinemaModel);
             // 
-            // numericSeaquel
+            // numericSequel
             // 
             numericSeaquel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "Sequel", true));
             numericSeaquel.Location = new Point(240, 100);
             numericSeaquel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericSeaquel.Name = "numericSeaquel";
+            numericSeaquel.Name = "numericSequel";
             numericSeaquel.Size = new Size(55, 23);
             numericSeaquel.TabIndex = 11;
             numericSeaquel.Value = new decimal(new int[] { 1, 0, 0, 0 });
