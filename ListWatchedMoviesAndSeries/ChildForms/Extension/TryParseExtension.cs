@@ -4,32 +4,26 @@ namespace ListWatchedMoviesAndSeries.ChildForms.Extension
     {
         public static void ParseGuid(this string? str, out Guid value)
         {
-            if (Guid.TryParse(str, out value))
+            if (!Guid.TryParse(str, out value))
             {
-                return;
+                throw new InvalidOperationException("Invalid cast.");
             }
-
-            throw new InvalidOperationException("Invalid cast.");
         }
 
         public static void ParseInt(this string? str, out int value)
         {
-            if (int.TryParse(str, out value))
+            if (!int.TryParse(str, out value))
             {
-                return;
+                throw new InvalidOperationException("Invalid cast.");
             }
-
-            throw new InvalidOperationException("Invalid cast.");
         }
 
         public static void ParseDecimal(this string? str, out decimal value)
         {
-            if (decimal.TryParse(str, out value))
+            if (!decimal.TryParse(str, out value))
             {
-                return;
+                throw new InvalidOperationException("Invalid cast.");
             }
-
-            throw new InvalidOperationException("Invalid cast.");
         }
     }
 }

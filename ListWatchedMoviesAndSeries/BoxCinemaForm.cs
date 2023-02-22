@@ -82,7 +82,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void BtnUseFilter_Click(object sender, EventArgs e)
         {
-            if (!IsNotChangesFilter() || IsChangesSizePage())
+            if (!IsNotChangesFilter() || IsChangedSizePage())
             {
                 Page.Number = 1;
                 WriteDataToTable();
@@ -197,7 +197,7 @@ namespace ListWatchedMoviesAndSeries
 
         private void CmbPageSize_Changed(object sender, EventArgs e)
         {
-            var pageSizeCmb = SelectedValueSizePage();
+            var pageSizeCmb = SelectedPageSize();
 
             if (Page.ChangedPage(pageSizeCmb))
             {
@@ -442,8 +442,8 @@ namespace ListWatchedMoviesAndSeries
 
         private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
 
-        private bool IsChangesSizePage() => _searchRequest.Page.Size != Page.Size;
+        private bool IsChangedSizePage() => _searchRequest.Page.Size != Page.Size;
 
-        private int SelectedValueSizePage() => Page.Items[cmbPageSize.SelectedIndex];
+        private int SelectedPageSize() => Page.Items[cmbPageSize.SelectedIndex];
     }
 }
