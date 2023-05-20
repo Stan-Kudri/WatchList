@@ -10,7 +10,8 @@ namespace Core.Model.ItemCinema.Components
         public static readonly StatusCinema Look = new StatusCinema("Look", 3);
         public static readonly StatusCinema Thrown = new StatusCinema("Thrown Watch", 4);
 
-        private StatusCinema(string name, int value) : base(name, value)
+        private StatusCinema(string name, int value)
+            : base(name, value)
         {
         }
     }
