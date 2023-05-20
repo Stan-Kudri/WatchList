@@ -47,7 +47,9 @@ namespace ListWatchedMoviesAndSeries.Repository
         {
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);
             if (item == null)
+            {
                 return;
+            }
 
             _db.RemoveRange(item);
             _db.SaveChanges();
@@ -56,11 +58,16 @@ namespace ListWatchedMoviesAndSeries.Repository
         public void Update(WatchItem editItem)
         {
             if (editItem == null)
+            {
                 return;
+            }
 
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
+
             if (item == null)
+            {
                 return;
+            }
 
             item.Sequel = editItem.Sequel;
             item.Date = editItem.Date;

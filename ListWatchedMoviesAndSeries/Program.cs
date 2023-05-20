@@ -2,7 +2,7 @@ using MaterialSkin;
 
 namespace ListWatchedMoviesAndSeries
 {
-    internal static class Program
+    internal class Program
     {
         /// <summary>
         ///  The main entry point for the application.

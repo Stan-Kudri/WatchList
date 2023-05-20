@@ -5,6 +5,17 @@ namespace Core.Repository
         private int _number;
         private int _size;
 
+        public Page()
+            : this(1, 5)
+        {
+        }
+
+        public Page(int number, int size)
+        {
+            _size = size;
+            _number = number;
+        }
+
         public int Number
         {
             get => _number;
@@ -14,6 +25,7 @@ namespace Core.Repository
                 {
                     throw new ArgumentException("Page number can not be less than zero.", nameof(value));
                 }
+
                 _number = value;
             }
         }
@@ -27,18 +39,9 @@ namespace Core.Repository
                 {
                     throw new ArgumentException("Page size can not be less than one.", nameof(value));
                 }
+
                 _size = value;
             }
-        }
-
-        public Page() : this(1, 5)
-        {
-        }
-
-        public Page(int number, int size)
-        {
-            _size = size;
-            _number = number;
         }
     }
 }

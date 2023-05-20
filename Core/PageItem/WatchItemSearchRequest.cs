@@ -7,13 +7,8 @@ namespace Core.PageItem
 {
     public class WatchItemSearchRequest
     {
-        public FilterItem Filter { get; set; }
-
-        public SortField Sort { get; set; }
-
-        public Page Page { get; set; }
-
-        public WatchItemSearchRequest() : this(new FilterItem(), SortField.Title, new Page())
+        public WatchItemSearchRequest()
+            : this(new FilterItem(), SortField.Title, new Page())
         {
         }
 
@@ -23,6 +18,12 @@ namespace Core.PageItem
             Sort = sort;
             Page = page;
         }
+
+        public FilterItem Filter { get; set; }
+
+        public SortField Sort { get; set; }
+
+        public Page Page { get; set; }
 
         public bool CompareFilter(FilterItem filter) => Filter.Equals(filter);
 

@@ -7,6 +7,30 @@ namespace Core.Model.ItemCinema
 {
     public class WatchItem : IEquatable<WatchItem>
     {
+        public WatchItem(
+                         string title,
+                         int sequel,
+                         StatusCinema status,
+                         TypeCinema type,
+                         Guid? id,
+                         DateTime? dateWatch,
+                         int? grade)
+        {
+            Id = id ?? Guid.NewGuid();
+            Title = title ?? throw new ArgumentNullException(nameof(title));
+            Sequel = sequel;
+            Type = type;
+            Status = status;
+            Date = dateWatch;
+            Grade = grade == null ? null : grade;
+        }
+
+        // EF core
+        private WatchItem()
+            : this(string.Empty, 0, StatusCinema.AllStatus, TypeCinema.AllType, null, null, 0)
+        {
+        }
+
         public Guid Id { get; set; }
 
         public string Title { get; set; }
@@ -21,22 +45,6 @@ namespace Core.Model.ItemCinema
 
         public int? Grade { get; set; }
 
-        // EF core
-        private WatchItem() : this(string.Empty, 0, StatusCinema.AllStatus, TypeCinema.AllType, null, null, 0)
-        {
-        }
-
-        public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
-        {
-            Id = id ?? Guid.NewGuid();
-            Title = title ?? throw new ArgumentNullException(nameof(title));
-            Sequel = sequel;
-            Type = type;
-            Status = status;
-            Date = dateWatch;
-            Grade = grade == null ? null : grade;
-        }
-
         public override int GetHashCode()
         {
             return HashCode.Combine(Id, Title, Grade, Date, Status, Type, Sequel);
@@ -50,7 +58,9 @@ namespace Core.Model.ItemCinema
         public bool Equals(WatchItem? other)
         {
             if (other == null)
+            {
                 return false;
+            }
 
             return Id == other.Id
                 && Title == other.Title
@@ -66,7 +76,7 @@ namespace Core.Model.ItemCinema
             return JsonSerializer.Serialize(this, new JsonSerializerOptions
             {
                 WriteIndented = true,
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             });
         }
 

@@ -5,7 +5,8 @@ namespace Core.Repository.Extension
 {
     public static class PropertyBuilderExtension
     {
-        public static void SmartEnumConversion<T>(this PropertyBuilder<T> type) where T : SmartEnum<T>
+        public static void SmartEnumConversion<T>(this PropertyBuilder<T> type)
+            where T : SmartEnum<T>
         {
             type.HasConversion(
                 x => x.Name,

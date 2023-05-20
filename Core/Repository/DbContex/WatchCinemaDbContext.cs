@@ -6,12 +6,13 @@ namespace Core.Repository.DbContex
 {
     public class WatchCinemaDbContext : DbContext
     {
-        public DbSet<WatchItem> WatchItem { get; set; } = null!;
-
-        public WatchCinemaDbContext(DbContextOptions options) : base(options)
+        public WatchCinemaDbContext(DbContextOptions options)
+            : base(options)
         {
             Database.EnsureCreated();
         }
+
+        public DbSet<WatchItem> WatchItem { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

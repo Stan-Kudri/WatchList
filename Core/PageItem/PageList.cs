@@ -27,18 +27,22 @@ namespace Core.PageItem
             {
                 throw new ArgumentNullException(nameof(items));
             }
+
             if (pageNumber < 0)
             {
                 throw new ArgumentException("Page number can not be less than zero.", nameof(pageNumber));
             }
+
             if (pageSize <= 0)
             {
                 throw new ArgumentException("Page size can not be less than one.", nameof(pageSize));
             }
+
             if (totalItems < 0)
             {
                 throw new ArgumentException("Total items can not be less than zero.", nameof(totalItems));
             }
+
             Items = items;
             PageNumber = pageNumber;
             PageSize = pageSize;
