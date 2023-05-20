@@ -1,4 +1,4 @@
-namespace Core.PageItem
+﻿namespace Core.PageItem
 {
     public class PagedList<T>
     {
