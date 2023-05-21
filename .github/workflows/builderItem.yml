@@ -27,13 +27,13 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
-
+        dotnet-version: 6.0.x    
+        
     - name: Restore dependencies
-      run: dotnet restore "WatchList"
-
+      run: dotnet restore     
+        
     - name: Build
-      run: dotnet build "WatchList" --no-restore
+      run: dotnet build "WatchList.WinForms/WatchList.WinForms.csproj" --no-restore
 
     - name: Test
-      run: dotnet test "WatchList.Test" --no-build --verbosity normal
+      run: dotnet test "WatchList.Test/WatchList.Test.csproj" --no-restore --verbosity normal

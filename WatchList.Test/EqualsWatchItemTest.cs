@@ -3,7 +3,7 @@ using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Test
 {
-    public class EqualsWatchItemlTest
+    public class EqualsWatchItemTest
     {
         public static IEnumerable<object[]> TwoNotEqualItem() => new List<object[]>
             {
