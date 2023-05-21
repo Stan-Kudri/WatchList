@@ -30,10 +30,10 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Restore dependencies
-      run: dotnet restore "ListWatchedMoviesAndSeries"
+      run: dotnet restore "WatchList"
 
     - name: Build
-      run: dotnet build "ListWatchedMoviesAndSeries" --no-restore
+      run: dotnet build "WatchList" --no-restore
 
     - name: Test
-      run: dotnet test "EqualsTest" --no-build --verbosity normal
+      run: dotnet test "WatchList.Test" --no-build --verbosity normal
