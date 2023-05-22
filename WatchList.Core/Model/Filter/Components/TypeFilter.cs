@@ -11,7 +11,7 @@ namespace WatchList.Core.Model.Filter.Components
         public static readonly TypeFilter Anime = new TypeFilter("Anime", 3, TypeCinema.Anime);
         public static readonly TypeFilter Cartoon = new TypeFilter("Cartoon", 4, TypeCinema.Cartoon);
 
-        private readonly TypeCinema _typeCinema = TypeCinema.AllType;
+        private readonly TypeCinema _typeCinema;
 
         private TypeFilter(string name, int value, TypeCinema typeCinema)
             : base(name, value)

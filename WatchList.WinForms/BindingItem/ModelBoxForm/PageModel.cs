@@ -5,16 +5,14 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
 {
     public class PageModel : ModelBase
     {
+        private const int StartPageSize = 5;
+        private const int NumberStartPage = 1;
+
         private int _size;
 
         private int _number;
 
-        public PageModel()
-            : this(1, 5)
-        {
-        }
-
-        public PageModel(int pageNumber, int pageSize)
+        public PageModel(int pageNumber = StartPageSize, int pageSize = NumberStartPage)
         {
             Number = pageNumber;
             Size = pageSize;

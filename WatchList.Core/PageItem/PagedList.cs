@@ -2,6 +2,9 @@ namespace WatchList.Core.PageItem
 {
     public class PagedList<T>
     {
+        private const int StartPageSize = 5;
+        private const int NumberStartPage = 1;
+
         public PagedList(IQueryable<T> items, int pageNumber, int pageSize)
             : this(GetPage(items, pageNumber, pageSize), pageNumber, pageSize, items.Count())
         {
@@ -35,11 +38,11 @@ namespace WatchList.Core.PageItem
             TotalItems = totalItems;
         }
 
-        public int PageNumber { get; private set; } = 1;
+        public int PageNumber { get; private set; } = NumberStartPage;
 
         public int TotalItems { get; private set; } = 0;
 
-        public int PageSize { get; private set; } = 5;
+        public int PageSize { get; private set; } = StartPageSize;
 
         public List<T> Items { get; private set; }
 

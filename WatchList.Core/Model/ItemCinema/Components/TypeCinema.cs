@@ -11,7 +11,7 @@ namespace WatchList.Core.Model.ItemCinema.Components
         public static readonly TypeCinema Anime = new TypeCinema("Anime", 3, "Season");
         public static readonly TypeCinema Cartoon = new TypeCinema("Cartoon", 4, "Part");
 
-        private readonly string _typeSequel = string.Empty;
+        private readonly string _typeSequel;
 
         private TypeCinema(string category, int value, string typeSequel)
             : base(category, value)
