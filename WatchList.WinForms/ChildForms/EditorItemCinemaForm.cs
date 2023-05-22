@@ -30,13 +30,9 @@ namespace WatchList.WinForms.EditorForm
             var id = _cinema.Id;
             var status = SelectedStatusCinema;
             decimal? grade = numericGradeCinema.Enabled ? numericGradeCinema.Value : null;
+            var date = status == StatusCinema.Viewed ? dateTimePickerCinema.Value : (DateTime?)null;
 
-            if (status == StatusCinema.Viewed)
-            {
-                return new CinemaModel(txtEditName.Text, numericEditSequel.Value, dateTimePickerCinema.Value, grade, status, type, id);
-            }
-
-            return new CinemaModel(txtEditName.Text, numericEditSequel.Value, null, grade, status, type, id);
+            return CinemaModel.CreateNonPlanned(txtEditName.Text, numericEditSequel.Value, date, grade, status, type, id);
         }
 
         private void BtnSaveEdit_Click(object sender, EventArgs e)

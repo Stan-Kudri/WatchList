@@ -5,6 +5,8 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
 {
     public class CinemaModel : ModelBase
     {
+        private const string FormatDate = "dd.MM.yyyy";
+
         private Guid _id;
         private string _title;
         private TypeCinema _type;
@@ -13,22 +15,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
         private DateTime? _date;
         private int? _grade;
 
-        public CinemaModel(string title, decimal? sequel, StatusCinema status, TypeCinema type)
-            : this(title, sequel, null, null, status, type, Guid.NewGuid())
-        {
-        }
-
-        public CinemaModel(string title, decimal? sequel, StatusCinema status, TypeCinema type, Guid? id)
-            : this(title, sequel, null, null, status, type, id)
-        {
-        }
-
-        public CinemaModel(string title, decimal? sequel, DateTime? date, decimal? grade, StatusCinema status, TypeCinema type)
-            : this(title, sequel, date, grade, status, type, Guid.NewGuid())
-        {
-        }
-
-        public CinemaModel(string title, decimal? sequel, DateTime? date, decimal? grade, StatusCinema status, TypeCinema type, Guid? id)
+        private CinemaModel(string title, decimal? sequel, DateTime? date, decimal? grade, StatusCinema status, TypeCinema type, Guid? id = null)
         {
             _id = id ?? Guid.NewGuid();
             _title = title ?? throw new ArgumentNullException(nameof(title));
@@ -81,9 +68,22 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
             set => SetField(ref _grade, value);
         }
 
+        public static CinemaModel CreateNonPlanned(
+            string title,
+            decimal? sequel,
+            DateTime? date,
+            decimal? grade,
+            StatusCinema status,
+            TypeCinema type,
+            Guid? id = null)
+            => new CinemaModel(title, sequel, date, grade, status, type, id);
+
+        public static CinemaModel CreatePlanned(string title, decimal? sequel, StatusCinema status, TypeCinema type, Guid? id)
+            => new CinemaModel(title, sequel, null, null, status, type, id);
+
         public WatchItem ToWatchItem() => new WatchItem(Title, Sequel, Status, Type, Id, Date ?? null, Grade);
 
-        public string GetWatchData() => Date?.ToString("dd.MM.yyyy") ?? string.Empty;
+        public string GetWatchData() => Date?.ToString(FormatDate) ?? string.Empty;
 
         public bool TryGetWatchDate(out DateTime date)
         {

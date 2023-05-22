@@ -337,31 +337,15 @@ namespace WatchList.WinForms
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
             var status = StatusCinema.FromName(CellElement(rowItems, IndexColumnStatus));
 
-            if (status != StatusCinema.Planned)
+            if (status == StatusCinema.Planned)
             {
-                CellElement(rowItems, IndexColumnGrade).ParseDecimal(out decimal grade);
-                DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
+                return CinemaModel.CreatePlanned(title, sequel, status, type, id);
+            }
 
-                var cinemaItem = new CinemaModel(
-                                                   title,
-                                                   sequel,
-                                                   dateWatch,
-                                                   grade,
-                                                   status,
-                                                   type,
-                                                   id);
-                return cinemaItem;
-            }
-            else
-            {
-                var cinemaItem = new CinemaModel(
-                                                  title,
-                                                  sequel,
-                                                  status,
-                                                  type,
-                                                  id);
-                return cinemaItem;
-            }
+            CellElement(rowItems, IndexColumnGrade).ParseDecimal(out decimal grade);
+            DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
+
+            return CinemaModel.CreateNonPlanned(title, sequel, dateWatch, grade, status, type, id);
         }
 
         private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString() ?? throw new Exception("String cannot be null.");
@@ -378,24 +362,8 @@ namespace WatchList.WinForms
             dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
             dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = cinemaItem.Status;
-
-            if (cinemaItem.HasGrade())
-            {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.Grade;
-
-                if (cinemaItem.HasGrade())
-                {
-                    dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
-                }
-                else
-                {
-                    dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = string.Empty;
-                }
-            }
-            else
-            {
-                dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = string.Empty;
-            }
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.HasGrade() ? cinemaItem.Grade : string.Empty;
+            dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
         }
 
         /// <summary>

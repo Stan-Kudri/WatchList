@@ -24,15 +24,15 @@ namespace WatchList.WinForms
 
         public CinemaModel GetCinema()
         {
+            var grade = (decimal?)null;
+
             if (numericGradeCinema.Enabled)
             {
-                DateTime? dateViewed = dateTimePickerCinema.Enabled == true ? dateTimePickerCinema.Value : null;
-                return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, dateViewed, numericGradeCinema.Value, _status, SelectedTypeCinema);
+                grade = numericGradeCinema.Value;
             }
-            else
-            {
-                return new CinemaModel(txtAddCinema.Text, numericSeaquel.Value, _status, SelectedTypeCinema);
-            }
+
+            DateTime? dateViewed = dateTimePickerCinema.Enabled == true ? dateTimePickerCinema.Value : null;
+            return CinemaModel.CreateNonPlanned(txtAddCinema.Text, numericSeaquel.Value, dateViewed, grade, _status, SelectedTypeCinema);
         }
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
