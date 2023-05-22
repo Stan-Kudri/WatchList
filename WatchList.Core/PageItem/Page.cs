@@ -2,16 +2,24 @@ namespace WatchList.Core.PageItem
 {
     public class Page
     {
+        private const int StartPageSize = 5;
+        private const int NumberStartPage = 1;
+
         private int _number;
         private int _size;
 
-        public Page()
-            : this(1, 5)
+        public Page(int number = NumberStartPage, int size = StartPageSize)
         {
-        }
+            if (number <= 0)
+            {
+                throw new ArgumentException("The page number is greater than zero.", nameof(number));
+            }
 
-        public Page(int number, int size)
-        {
+            if (size <= 0)
+            {
+                throw new ArgumentException("The page must contain an element.", nameof(number));
+            }
+
             _size = size;
             _number = number;
         }

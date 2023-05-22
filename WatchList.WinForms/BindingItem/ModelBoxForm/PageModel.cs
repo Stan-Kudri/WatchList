@@ -34,7 +34,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
             set => SetField(ref _size, value);
         }
 
-        public Page GetPage() => new Page(Number, Size);
+        public Page GetPage() => new Page(_number, _size);
 
         public bool ChangedPage(int pageSize) => pageSize != _size;
     }
