@@ -1,5 +1,4 @@
 using MaterialSkin.Controls;
-using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -8,6 +7,7 @@ using WatchList.Core.Repository;
 using WatchList.Core.Repository.DbContext;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
+using WatchList.WinForms.DbContext;
 using WatchList.WinForms.EditorForm;
 
 namespace WatchList.WinForms
@@ -33,13 +33,11 @@ namespace WatchList.WinForms
 
         private PagedList<WatchItem> _pagedList;
 
-        public BoxCinemaForm()
+        public BoxCinemaForm(WatchCinemaDbContext db)
         {
             InitializeComponent();
 
-            var builder = new DbContextOptionsBuilder().UseSqlite("Data Source=app.db");
-
-            _db = new WatchCinemaDbContext(builder.Options);
+            _db = db;
             _repository = new WatchItemRepository(_db);
             _pagedList = _repository.GetPageCinema(_searchRequest);
 
@@ -150,8 +148,9 @@ namespace WatchList.WinForms
 
             string fileName = openReplaceDataFromFile.FileName;
 
-            var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={fileName}");
-            var repository = new WatchItemRepository(new WatchCinemaDbContext(builder.Options));
+            var factory = new FileDbContextFactory(fileName);
+            var titleDbContext = factory.Create();
+            var repository = new WatchItemRepository(titleDbContext);
 
             _repository.RemoveAllItems();
             _repository.Add(repository.GetAll());

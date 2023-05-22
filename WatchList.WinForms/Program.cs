@@ -1,4 +1,5 @@
 using MaterialSkin;
+using WatchList.WinForms.DbContext;
 
 namespace WatchList.WinForms
 {
@@ -13,12 +14,14 @@ namespace WatchList.WinForms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new BoxCinemaForm());
 
+            using var db = new FileDbContextFactory("app.db").Create();
+            var form = new BoxCinemaForm(db);
             var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(new BoxCinemaForm());
+            materialSkinManager.AddFormToManage(form);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple800, Primary.DeepPurple600, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
+            Application.Run(form);
         }
     }
 }

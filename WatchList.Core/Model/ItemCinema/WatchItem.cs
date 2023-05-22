@@ -11,7 +11,7 @@ namespace WatchList.Core.Model.ItemCinema
 
         public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
         {
-            if (title == null || title.Length == 0)
+            if (title == null)
             {
                 throw new ArgumentException("Invalid title format.", nameof(title));
             }
@@ -19,16 +19,6 @@ namespace WatchList.Core.Model.ItemCinema
             if (sequel <= 0)
             {
                 throw new ArgumentException("The sequel number is greater than zero.", nameof(sequel));
-            }
-
-            if (status == StatusCinema.AllStatus)
-            {
-                throw new ArgumentException("Status missing.", nameof(status));
-            }
-
-            if (type == TypeCinema.AllType)
-            {
-                throw new ArgumentException("Type item missing.", nameof(type));
             }
 
             Title = title;
@@ -42,7 +32,7 @@ namespace WatchList.Core.Model.ItemCinema
 
         // EF core
         private WatchItem()
-            : this(string.Empty, 0, StatusCinema.AllStatus, TypeCinema.AllType, null, null, 0)
+            : this(string.Empty, 1, StatusCinema.AllStatus, TypeCinema.AllType, null, null, 0)
         {
         }
 
