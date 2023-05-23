@@ -9,7 +9,7 @@ namespace WatchList.Core.Model.ItemCinema
     {
         private const string FormatDate = "dd.MM.yyyy";
 
-        public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch, int? grade)
+        public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch = null, int? grade = null)
         {
             if (title == null)
             {
