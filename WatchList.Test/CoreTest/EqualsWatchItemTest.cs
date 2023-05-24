@@ -1,7 +1,7 @@
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 
-namespace WatchList.Test
+namespace WatchList.Test.CoreTest
 {
     public class EqualsWatchItemTest
     {
