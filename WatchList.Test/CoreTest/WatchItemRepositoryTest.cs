@@ -77,6 +77,7 @@ namespace WatchList.Test.CoreTest
             var pageItem = itemRepository.GetPageCinema(searchRequest);
             var actualItemPage = pageItem.Items;
 
+            // Assert
             actualItemPage.Should().Equal(expectWatchItems);
         }
 
@@ -97,6 +98,7 @@ namespace WatchList.Test.CoreTest
             itemRepository.Update(updateItem);
             var actualItemPage = itemRepository.GetPageCinema(searchRequest).Items;
 
+            // Assert
             actualItemPage.Should().Equal(expectWatchItems);
         }
     }
