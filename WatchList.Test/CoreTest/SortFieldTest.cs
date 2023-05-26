@@ -182,8 +182,8 @@ namespace WatchList.Test.CoreTest
 
             // Act
             itemRepository.Add(watchItems);
-            var pageItem = itemRepository.GetPageCinema(watchItemSearchRequest);
-            var actualItemPage = pageItem.Items;
+            var item = watchItemSearchRequest.ApplyOrderBy(appDbContext.WatchItem);
+            var actualItemPage = item.ToList();
 
             // Assert
             actualItemPage.Should().Equal(expectWatchItem);
