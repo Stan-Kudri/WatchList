@@ -32,13 +32,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
             },
         };
 
-        [Theory]
-        [MemberData(nameof(ItemsToCheckFilterByTypeMovie))]
-        public void List_0f_Filter_Items_By_Movies(List<WatchItem> watchItems, TypeFilter typeFilter, List<WatchItem> expectWatchItems)
-        {
-            CheckListEqualAfterApplyFilter(watchItems, typeFilter, expectWatchItems);
-        }
-
         public static IEnumerable<object[]> ItemsToCheckFilterByTypeCartoon() => new List<object[]>
         {
             new object[]
@@ -58,13 +51,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
                 },
             },
         };
-
-        [Theory]
-        [MemberData(nameof(ItemsToCheckFilterByTypeCartoon))]
-        public void List_0f_Filter_Items_By_Cartoon(List<WatchItem> watchItems, TypeFilter typeFilter, List<WatchItem> expectWatchItems)
-        {
-            CheckListEqualAfterApplyFilter(watchItems, typeFilter, expectWatchItems);
-        }
 
         public static IEnumerable<object[]> ItemsToCheckFilterByTypeSeries() => new List<object[]>
         {
@@ -86,13 +72,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
             },
         };
 
-        [Theory]
-        [MemberData(nameof(ItemsToCheckFilterByTypeSeries))]
-        public void List_0f_Filter_Items_By_Series(List<WatchItem> watchItems, TypeFilter typeFilter, List<WatchItem> expectWatchItems)
-        {
-            CheckListEqualAfterApplyFilter(watchItems, typeFilter, expectWatchItems);
-        }
-
         public static IEnumerable<object[]> ItemsToCheckFilterByTypeAnime() => new List<object[]>
         {
             new object[]
@@ -112,6 +91,27 @@ namespace WatchList.Test.CoreTest.FilterItemTest
                 },
             },
         };
+
+        [Theory]
+        [MemberData(nameof(ItemsToCheckFilterByTypeMovie))]
+        public void List_0f_Filter_Items_By_Movies(List<WatchItem> watchItems, TypeFilter typeFilter, List<WatchItem> expectWatchItems)
+        {
+            CheckListEqualAfterApplyFilter(watchItems, typeFilter, expectWatchItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ItemsToCheckFilterByTypeCartoon))]
+        public void List_0f_Filter_Items_By_Cartoon(List<WatchItem> watchItems, TypeFilter typeFilter, List<WatchItem> expectWatchItems)
+        {
+            CheckListEqualAfterApplyFilter(watchItems, typeFilter, expectWatchItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ItemsToCheckFilterByTypeSeries))]
+        public void List_0f_Filter_Items_By_Series(List<WatchItem> watchItems, TypeFilter typeFilter, List<WatchItem> expectWatchItems)
+        {
+            CheckListEqualAfterApplyFilter(watchItems, typeFilter, expectWatchItems);
+        }
 
         [Theory]
         [MemberData(nameof(ItemsToCheckFilterByTypeAnime))]

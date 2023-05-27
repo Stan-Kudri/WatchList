@@ -31,14 +31,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
             },
         };
 
-        [Theory]
-        [MemberData(nameof(ItemsToCheckFilterByStatusViewed))]
-        public void List_0f_Filter_Items_By_Status_Viewed(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
-        {
-            // Assert
-            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
-        }
-
         public static IEnumerable<object[]> ItemsToCheckFilterByStatusPlanned() => new List<object[]>
         {
             new object[]
@@ -60,14 +52,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
             },
         };
 
-        [Theory]
-        [MemberData(nameof(ItemsToCheckFilterByStatusPlanned))]
-        public void List_0f_Filter_Items_By_Status_Planned_Watch(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
-        {
-            // Assert
-            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
-        }
-
         public static IEnumerable<object[]> ItemsToCheckFilterByStatusThrown() => new List<object[]>
         {
             new object[]
@@ -88,14 +72,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
             },
         };
 
-        [Theory]
-        [MemberData(nameof(ItemsToCheckFilterByStatusThrown))]
-        public void List_0f_Filter_Items_By_Status_Thrown(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
-        {
-            // Assert
-            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
-        }
-
         public static IEnumerable<object[]> ItemsToCheckFilterByStatusLook() => new List<object[]>
         {
             new object[]
@@ -115,6 +91,30 @@ namespace WatchList.Test.CoreTest.FilterItemTest
                 },
             },
         };
+
+        [Theory]
+        [MemberData(nameof(ItemsToCheckFilterByStatusViewed))]
+        public void List_0f_Filter_Items_By_Status_Viewed(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
+        {
+            // Assert
+            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ItemsToCheckFilterByStatusPlanned))]
+        public void List_0f_Filter_Items_By_Status_Planned_Watch(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
+        {
+            // Assert
+            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ItemsToCheckFilterByStatusThrown))]
+        public void List_0f_Filter_Items_By_Status_Thrown(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
+        {
+            // Assert
+            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
+        }
 
         [Theory]
         [MemberData(nameof(ItemsToCheckFilterByStatusLook))]
