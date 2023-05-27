@@ -23,7 +23,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
                     new WatchItem("Драйв", 2, StatusCinema.Planned, TypeCinema.Movie, Guid.Parse("48d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     new WatchItem("Твое имя", 2, StatusCinema.Thrown, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7")),
                 },
-                StatusFilter.ViewedCinema,
                 new List<WatchItem>()
                 {
                     new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2013, 05, 11, 00, 00, 00), 8),
@@ -43,7 +42,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
                     new WatchItem("Драйв", 2, StatusCinema.Planned, TypeCinema.Movie, Guid.Parse("48d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     new WatchItem("Твое имя", 2, StatusCinema.Thrown, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7")),
                 },
-                StatusFilter.PlannedWatchCinema,
                 new List<WatchItem>()
                 {
                     new WatchItem("Человек-паук", 2, StatusCinema.Planned, TypeCinema.Series, Guid.Parse("38d4a999-ca7a-4b24-a78a-65733ba419a7")),
@@ -64,7 +62,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
                     new WatchItem("Драйв", 2, StatusCinema.Planned, TypeCinema.Movie, Guid.Parse("48d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     new WatchItem("Твое имя", 2, StatusCinema.Thrown, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7")),
                 },
-                StatusFilter.ThrownCinema,
                 new List<WatchItem>()
                 {
                     new WatchItem("Твое имя", 2, StatusCinema.Thrown, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7")),
@@ -84,7 +81,6 @@ namespace WatchList.Test.CoreTest.FilterItemTest
                     new WatchItem("Драйв", 2, StatusCinema.Planned, TypeCinema.Movie, Guid.Parse("48d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     new WatchItem("Твое имя", 2, StatusCinema.Thrown, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7")),
                 },
-                StatusFilter.LookCinema,
                 new List<WatchItem>()
                 {
                     new WatchItem("Хэнкок", 2, StatusCinema.Look, TypeCinema.Movie, Guid.Parse("28d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2015, 04, 12, 00, 00, 00), 9),
@@ -94,34 +90,34 @@ namespace WatchList.Test.CoreTest.FilterItemTest
 
         [Theory]
         [MemberData(nameof(ItemsToCheckFilterByStatusViewed))]
-        public void List_0f_Filter_Items_By_Status_Viewed(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
+        public void List_0f_Filter_Items_By_Status_Viewed(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
             // Assert
-            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
+            CheckListEqualAfterApplyFilter(watchItems, StatusFilter.ViewedCinema, expectWatchItems);
         }
 
         [Theory]
         [MemberData(nameof(ItemsToCheckFilterByStatusPlanned))]
-        public void List_0f_Filter_Items_By_Status_Planned_Watch(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
+        public void List_0f_Filter_Items_By_Status_Planned_Watch(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
             // Assert
-            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
+            CheckListEqualAfterApplyFilter(watchItems, StatusFilter.PlannedWatchCinema, expectWatchItems);
         }
 
         [Theory]
         [MemberData(nameof(ItemsToCheckFilterByStatusThrown))]
-        public void List_0f_Filter_Items_By_Status_Thrown(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
+        public void List_0f_Filter_Items_By_Status_Thrown(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
             // Assert
-            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
+            CheckListEqualAfterApplyFilter(watchItems, StatusFilter.ThrownCinema, expectWatchItems);
         }
 
         [Theory]
         [MemberData(nameof(ItemsToCheckFilterByStatusLook))]
-        public void List_0f_Filter_Items_By_Status_Look(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)
+        public void List_0f_Filter_Items_By_Status_Look(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
             // Assert
-            CheckListEqualAfterApplyFilter(watchItems, statusFilter, expectWatchItems);
+            CheckListEqualAfterApplyFilter(watchItems, StatusFilter.LookCinema, expectWatchItems);
         }
 
         private void CheckListEqualAfterApplyFilter(List<WatchItem> watchItems, StatusFilter statusFilter, List<WatchItem> expectWatchItems)

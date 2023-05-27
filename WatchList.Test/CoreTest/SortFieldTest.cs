@@ -26,7 +26,6 @@ namespace WatchList.Test.CoreTest
                     new WatchItem("Залечь на дно в Брюгге", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
                     new WatchItem("Джокер", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("68d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2020, 12, 10, 00, 00, 00), 10),
                 },
-                SortField.Title,
                 new List<WatchItem>()
                 {
                     new WatchItem("Джокер", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("68d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2020, 12, 10, 00, 00, 00), 10),
@@ -52,7 +51,6 @@ namespace WatchList.Test.CoreTest
                     new WatchItem("Залечь на дно в Брюгге", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
                     new WatchItem("Джокер", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("68d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2020, 12, 10, 00, 00, 00), 10),
                 },
-                SortField.Sequel,
                 new List<WatchItem>()
                 {
                     new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2013, 05, 11, 00, 00, 00), 8),
@@ -78,7 +76,6 @@ namespace WatchList.Test.CoreTest
                     new WatchItem("Залечь на дно в Брюгге", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
                     new WatchItem("Джокер", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("68d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2020, 12, 10, 00, 00, 00), 10),
                 },
-                SortField.Status,
                 new List<WatchItem>()
                 {
                     new WatchItem("Хэнкок", 2, StatusCinema.Look, TypeCinema.Movie, Guid.Parse("28d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2015, 04, 12, 00, 00, 00), 9),
@@ -104,7 +101,6 @@ namespace WatchList.Test.CoreTest
                     new WatchItem("Залечь на дно в Брюгге", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
                     new WatchItem("Джокер", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("68d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2020, 12, 10, 00, 00, 00), 10),
                 },
-                SortField.Data,
                 new List<WatchItem>()
                 {
                     new WatchItem("Залечь на дно в Брюгге", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
@@ -130,7 +126,6 @@ namespace WatchList.Test.CoreTest
                     new WatchItem("Залечь на дно в Брюгге", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
                     new WatchItem("Джокер", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("68d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2020, 12, 10, 00, 00, 00), 10),
                 },
-                SortField.Grade,
                 new List<WatchItem>()
                 {
                     new WatchItem("Залечь на дно в Брюгге", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
@@ -156,7 +151,6 @@ namespace WatchList.Test.CoreTest
                     new WatchItem("Твое имя", 2, StatusCinema.Viewed, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
                     new WatchItem("Джокер", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("68d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2020, 12, 10, 00, 00, 00), 10),
                 },
-                SortField.Type,
                 new List<WatchItem>()
                 {
                     new WatchItem("Твое имя", 2, StatusCinema.Viewed, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2022, 09, 10, 00, 00, 00), 10),
@@ -171,50 +165,50 @@ namespace WatchList.Test.CoreTest
 
         [Theory]
         [MemberData(nameof(TitleOrderWatchListItem))]
-        public void Order_List_Items_By_Title(List<WatchItem> watchItems, SortField sortField, List<WatchItem> expectWatchItem)
+        public void Order_List_Items_By_Title(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, sortField, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Title, expectWatchItem);
         }
 
         [Theory]
         [MemberData(nameof(SequelOrderWatchListItem))]
-        public void Order_List_Items_By_Sequel(List<WatchItem> watchItems, SortField sortField, List<WatchItem> expectWatchItem)
+        public void Order_List_Items_By_Sequel(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, sortField, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Sequel, expectWatchItem);
         }
 
         [Theory]
         [MemberData(nameof(StatusOrderWatchListItem))]
-        public void Order_List_Items_By_Status(List<WatchItem> watchItems, SortField sortField, List<WatchItem> expectWatchItem)
+        public void Order_List_Items_By_Status(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, sortField, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Status, expectWatchItem);
         }
 
         [Theory]
         [MemberData(nameof(DataOrderWatchListItem))]
-        public void Order_List_Items_By_Data(List<WatchItem> watchItems, SortField sortField, List<WatchItem> expectWatchItem)
+        public void Order_List_Items_By_Data(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, sortField, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Data, expectWatchItem);
         }
 
         [Theory]
         [MemberData(nameof(GradeOrderWatchListItem))]
-        public void Order_List_Items_By_Grade(List<WatchItem> watchItems, SortField sortField, List<WatchItem> expectWatchItem)
+        public void Order_List_Items_By_Grade(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, sortField, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Grade, expectWatchItem);
         }
 
         [Theory]
         [MemberData(nameof(TypeOrderWatchListItem))]
-        public void Order_List_Items_By_Type(List<WatchItem> watchItems, SortField sortField, List<WatchItem> expectWatchItem)
+        public void Order_List_Items_By_Type(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, sortField, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Type, expectWatchItem);
         }
 
         private void CheckListEqualAfterApplyOrderBy(List<WatchItem> watchItems, SortField sortField, List<WatchItem> expectWatchItem)
