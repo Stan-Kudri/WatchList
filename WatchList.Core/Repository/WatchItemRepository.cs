@@ -25,16 +25,17 @@ namespace WatchList.Core.Repository
 
         public void Add(WatchItem item)
         {
-            if (HasForDuplicateItem(item))
-            {
-                _db.Add(item);
-                _db.SaveChanges();
-            }
+            AddNonDuplicateItem(item);
+            _db.SaveChanges();
         }
 
-        public void Add(List<WatchItem> item)
+        public void Add(List<WatchItem> listItems)
         {
-            _db.AddRange(item);
+            foreach (var item in listItems)
+            {
+                AddNonDuplicateItem(item);
+            }
+
             _db.SaveChanges();
         }
 
@@ -66,6 +67,11 @@ namespace WatchList.Core.Repository
                 return;
             }
 
+            if (_db.WatchItem.FirstOrDefault(x => x.Title == editItem.Title && x.Sequel == editItem.Sequel && x.Type == editItem.Type) != null)
+            {
+                throw new ArgumentException("The changed element is a duplicate of another element from the database.", nameof(editItem));
+            }
+
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
 
             if (item == null)
@@ -82,7 +88,7 @@ namespace WatchList.Core.Repository
             _db.SaveChanges();
         }
 
-        private bool HasForDuplicateItem(WatchItem watchItem)
+        private void AddNonDuplicateItem(WatchItem watchItem)
         {
             var item = _db.WatchItem.FirstOrDefault(x =>
              (x.Title == watchItem.Title && x.Sequel == watchItem.Sequel && x.Type == watchItem.Type)
@@ -90,10 +96,12 @@ namespace WatchList.Core.Repository
 
             if (item == null)
             {
-                return true;
+                _db.Add(watchItem);
             }
-
-            return false;
+            else
+            {
+                throw new ArgumentException("The added element is a duplicate from the database.", nameof(watchItem));
+            }
         }
     }
 }
