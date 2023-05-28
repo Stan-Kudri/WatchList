@@ -25,8 +25,11 @@ namespace WatchList.Core.Repository
 
         public void Add(WatchItem item)
         {
-            _db.Add(item);
-            _db.SaveChanges();
+            if (HasForDuplicateItem(item))
+            {
+                _db.Add(item);
+                _db.SaveChanges();
+            }
         }
 
         public void Add(List<WatchItem> item)
@@ -46,12 +49,13 @@ namespace WatchList.Core.Repository
         public void Remove(Guid id)
         {
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);
+
             if (item == null)
             {
                 return;
             }
 
-            _db.RemoveRange(item);
+            _db.Remove(item);
             _db.SaveChanges();
         }
 
@@ -76,6 +80,20 @@ namespace WatchList.Core.Repository
             item.Type = editItem.Type;
 
             _db.SaveChanges();
+        }
+
+        private bool HasForDuplicateItem(WatchItem watchItem)
+        {
+            var item = _db.WatchItem.FirstOrDefault(x =>
+             (x.Title == watchItem.Title && x.Sequel == watchItem.Sequel && x.Type == watchItem.Type)
+             || x.Id == watchItem.Id);
+
+            if (item == null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
