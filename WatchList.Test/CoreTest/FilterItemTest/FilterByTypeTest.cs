@@ -92,6 +92,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         [MemberData(nameof(ItemsToCheckFilterByTypeMovie))]
         public void List_0f_Filter_Items_By_Movies(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
+            // Assert
             CheckListEqualAfterApplyFilter(watchItems, TypeFilter.Movie, expectWatchItems);
         }
 
@@ -99,6 +100,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         [MemberData(nameof(ItemsToCheckFilterByTypeCartoon))]
         public void List_0f_Filter_Items_By_Cartoon(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
+            // Assert
             CheckListEqualAfterApplyFilter(watchItems, TypeFilter.Cartoon, expectWatchItems);
         }
 
@@ -106,6 +108,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         [MemberData(nameof(ItemsToCheckFilterByTypeSeries))]
         public void List_0f_Filter_Items_By_Series(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
+            // Assert
             CheckListEqualAfterApplyFilter(watchItems, TypeFilter.Series, expectWatchItems);
         }
 
@@ -113,6 +116,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         [MemberData(nameof(ItemsToCheckFilterByTypeAnime))]
         public void List_0f_Filter_Items_By_Anime(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
+            // Assert
             CheckListEqualAfterApplyFilter(watchItems, TypeFilter.Anime, expectWatchItems);
         }
 
