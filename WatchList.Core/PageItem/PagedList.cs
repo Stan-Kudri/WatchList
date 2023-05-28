@@ -5,7 +5,7 @@ namespace WatchList.Core.PageItem
         private const int StartPageSize = 5;
         private const int NumberStartPage = 1;
 
-        public PagedList(IQueryable<T> items, int pageNumber, int pageSize)
+        public PagedList(IQueryable<T> items, int pageNumber = NumberStartPage, int pageSize = StartPageSize)
             : this(GetPage(items, pageNumber, pageSize), pageNumber, pageSize, items.Count())
         {
         }
