@@ -126,7 +126,18 @@ namespace WatchList.WinForms
                 }
 
                 var changedItemCinema = editItemForm.GetEditItemCinema();
-                EditItemGrid(changedItemCinema, indexRowCinema);
+
+                if (IsDuplicateItem(changedItemCinema))
+                {
+                    var idEditItem = item.Id;
+                    _repository.Remove(idEditItem);
+                }
+                else
+                {
+                    EditItemGrid(changedItemCinema, indexRowCinema);
+                }
+
+                LoadData();
             }
         }
 
@@ -421,7 +432,7 @@ namespace WatchList.WinForms
 
         private bool IsDuplicateItem(CinemaModel item)
         {
-            var duplicateItem = _db.WatchItem.FirstOrDefault(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type);
+            var duplicateItem = _db.WatchItem.FirstOrDefault(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
 
             if (duplicateItem != null)
             {
