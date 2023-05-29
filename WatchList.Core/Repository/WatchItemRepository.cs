@@ -25,7 +25,7 @@ namespace WatchList.Core.Repository
 
         public void Add(WatchItem item)
         {
-            AddNonDuplicateItem(item);
+            _db.Add(item);
             _db.SaveChanges();
         }
 
@@ -33,7 +33,7 @@ namespace WatchList.Core.Repository
         {
             foreach (var item in listItems)
             {
-                AddNonDuplicateItem(item);
+                _db.Add(item);
             }
 
             _db.SaveChanges();
@@ -60,19 +60,16 @@ namespace WatchList.Core.Repository
             _db.SaveChanges();
         }
 
-        public void Update(WatchItem editItem)
+        public void Update(WatchItem editItem) => UpdateByID(editItem, editItem.Id);
+
+        public void UpdateByID(WatchItem editItem, Guid? id)
         {
-            if (editItem == null)
+            if (editItem == null || id == null)
             {
-                return;
+                throw new ArgumentException("The received parameters are not correct.");
             }
 
-            if (_db.WatchItem.FirstOrDefault(x => x.Title == editItem.Title && x.Sequel == editItem.Sequel && x.Type == editItem.Type) != null)
-            {
-                throw new ArgumentException("The changed element is a duplicate of another element from the database.", nameof(editItem));
-            }
-
-            var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
+            var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);
 
             if (item == null)
             {
@@ -86,22 +83,6 @@ namespace WatchList.Core.Repository
             item.Type = editItem.Type;
 
             _db.SaveChanges();
-        }
-
-        private void AddNonDuplicateItem(WatchItem watchItem)
-        {
-            var item = _db.WatchItem.FirstOrDefault(x =>
-             (x.Title == watchItem.Title && x.Sequel == watchItem.Sequel && x.Type == watchItem.Type)
-             || x.Id == watchItem.Id);
-
-            if (item == null)
-            {
-                _db.Add(watchItem);
-            }
-            else
-            {
-                throw new ArgumentException("The added element is a duplicate from the database.", nameof(watchItem));
-            }
         }
     }
 }

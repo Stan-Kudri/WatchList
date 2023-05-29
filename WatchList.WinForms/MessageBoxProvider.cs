@@ -21,5 +21,10 @@ namespace WatchList.WinForms
         {
             return MessageBox.Show(message, "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
         }
+
+        public static bool ShowQuestionSaveItem(string messge)
+        {
+            return MessageBox.Show(messge, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK;
+        }
     }
 }

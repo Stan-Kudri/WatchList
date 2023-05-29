@@ -104,6 +104,19 @@ namespace WatchList.WinForms
             if (addForm.ShowDialog() == DialogResult.OK)
             {
                 var itemCinema = addForm.GetCinema();
+
+                if (HasDuplicateItem(itemCinema, out Guid? idDuplicateItem))
+                {
+                    var dialogResult = MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?");
+                    if (dialogResult)
+                    {
+                        _repository.UpdateByID(itemCinema.ToWatchItem(), idDuplicateItem);
+                        LoadData();
+                    }
+
+                    return;
+                }
+
                 AddItemToGrid(itemCinema);
             }
         }
@@ -412,5 +425,19 @@ namespace WatchList.WinForms
         private bool IsChangedSizePage() => _searchRequest.Page.Size != Page.Size;
 
         private int SelectedPageSize() => Page.Items[cmbPageSize.SelectedIndex];
+
+        private bool HasDuplicateItem(CinemaModel item, out Guid? idDuplicateItem)
+        {
+            var duplicateItem = _db.WatchItem.FirstOrDefault(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type);
+
+            if (duplicateItem == null)
+            {
+                idDuplicateItem = null;
+                return false;
+            }
+
+            idDuplicateItem = duplicateItem.Id;
+            return true;
+        }
     }
 }
