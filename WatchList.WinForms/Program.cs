@@ -21,7 +21,7 @@ namespace WatchList.WinForms
 
             materialSkinManager.AddFormToManage(form);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple800, Primary.DeepPurple600, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple900, Primary.DeepPurple700, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
 
             Application.Run(form);
         }
