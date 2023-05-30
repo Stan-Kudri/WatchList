@@ -3,11 +3,9 @@ using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.PageItem;
-using WatchList.Core.Repository;
 using WatchList.Core.Repository.DbContext;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
-using WatchList.WinForms.DbContext;
 using WatchList.WinForms.EditorForm;
 
 namespace WatchList.WinForms
@@ -25,9 +23,7 @@ namespace WatchList.WinForms
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
-        private readonly WatchCinemaDbContext _db;
-
-        private readonly WatchItemRepository _repository;
+        private readonly WatchItemService _itemService;
 
         private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
 
@@ -37,9 +33,8 @@ namespace WatchList.WinForms
         {
             InitializeComponent();
 
-            _db = db;
-            _repository = new WatchItemRepository(_db);
-            _pagedList = _repository.GetPageCinema(_searchRequest);
+            _itemService = new WatchItemService(db);
+            _pagedList = _itemService.GetPageList(_searchRequest);
 
             Load += BoxCinemaForm_Load;
         }
@@ -49,24 +44,6 @@ namespace WatchList.WinForms
         private PageModel Page { get; set; } = new PageModel();
 
         private SortModel Sort { get; set; } = new SortModel();
-
-        public void AddItemToGrid(CinemaModel cinema)
-        {
-            if (cinema?.Type != null)
-            {
-                _repository.Add(cinema.ToWatchItem());
-                WriteDataToTable();
-            }
-        }
-
-        public void EditItemGrid(CinemaModel cinema, int numberRowGridCinema)
-        {
-            if (cinema?.Type != null)
-            {
-                ReplacementEditItem(cinema, numberRowGridCinema);
-                _repository.Update(cinema.ToWatchItem());
-            }
-        }
 
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
         {
@@ -104,41 +81,28 @@ namespace WatchList.WinForms
             if (addForm.ShowDialog() == DialogResult.OK)
             {
                 var itemCinema = addForm.GetCinema();
-
-                if (!IsDuplicateItem(itemCinema))
-                {
-                    AddItemToGrid(itemCinema);
-                }
-
-                LoadData();
+                _itemService.AddItemToDatabase(itemCinema);
             }
+
+            WriteDataToTable();
         }
 
         private void BtnEditRow_Click(object sender, EventArgs e)
         {
-            if (IsEditRowGrid(out int indexRowCinema, out CinemaModel? item) && item != null)
+            if (IsEditRowGrid(out CinemaModel? oldItem) && oldItem != null)
             {
-                var editItemForm = new EditorItemCinemaForm(item);
+                var editItemForm = new EditorItemCinemaForm(oldItem);
 
                 if (editItemForm.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
 
-                var changedItemCinema = editItemForm.GetEditItemCinema();
-
-                if (IsDuplicateItem(changedItemCinema))
-                {
-                    var idEditItem = item.Id;
-                    _repository.Remove(idEditItem);
-                }
-                else
-                {
-                    EditItemGrid(changedItemCinema, indexRowCinema);
-                }
-
-                LoadData();
+                var changeItemCinema = editItemForm.GetEditItemCinema();
+                _itemService.EditItemToDatabase(oldItem, changeItemCinema);
             }
+
+            WriteDataToTable();
         }
 
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
@@ -150,7 +114,7 @@ namespace WatchList.WinForms
                     return;
                 }
 
-                _repository.Remove(id);
+                _itemService.Remove(id);
                 LoadData();
             }
         }
@@ -163,15 +127,7 @@ namespace WatchList.WinForms
                 return;
             }
 
-            string fileName = openReplaceDataFromFile.FileName;
-
-            var factory = new FileDbContextFactory(fileName);
-            var titleDbContext = factory.Create();
-            var repository = new WatchItemRepository(titleDbContext);
-
-            _repository.RemoveAllItems();
-            _repository.Add(repository.GetAll());
-
+            _itemService.ReplaceDataFromNewFile(openReplaceDataFromFile.FileName);
             WriteDataToTable();
         }
 
@@ -313,23 +269,21 @@ namespace WatchList.WinForms
         /// <summary>
         /// Edit the selected item.
         /// </summary>
-        /// <param name="rowIndex">Number row element.</param>
         /// <param name="cinemaItem">Element to change.</param>
         /// <returns>
         /// True:Row selected.
         /// False:Row not selected.
         /// </returns>
-        private bool IsEditRowGrid(out int rowIndex, out CinemaModel? cinemaItem)
+        private bool IsEditRowGrid(out CinemaModel? cinemaItem)
         {
             if (dgvCinema.SelectedRows.Count == 0)
             {
-                rowIndex = -1;
                 cinemaItem = null;
                 MessageBoxProvider.ShowWarning("Highlight the desired line");
                 return false;
             }
 
-            rowIndex = dgvCinema.CurrentCell.RowIndex;
+            var rowIndex = dgvCinema.CurrentCell.RowIndex;
             cinemaItem = GetItem(rowIndex);
             return true;
         }
@@ -368,22 +322,6 @@ namespace WatchList.WinForms
         private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString() ?? throw new Exception("String cannot be null.");
 
         /// <summary>
-        /// Changing a table element.
-        /// </summary>
-        /// <param name="cinemaItem">Element to change.</param>
-        /// <param name="rowIndex">Number row element.</param>
-        private void ReplacementEditItem(CinemaModel cinemaItem, int rowIndex)
-        {
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnName].Value = cinemaItem.Title;
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnSequel].Value = cinemaItem.Sequel;
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value = cinemaItem.Id;
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnType].Value = cinemaItem.Type;
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnStatus].Value = cinemaItem.Status;
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnGrade].Value = cinemaItem.HasGrade() ? cinemaItem.Grade : string.Empty;
-            dgvCinema.Rows[rowIndex].Cells[IndexColumnDate].Value = cinemaItem.GetWatchData();
-        }
-
-        /// <summary>
         /// Filling in tabular data from a file.
         /// </summary>
         /// <param name="grid">Table to fill.</param>
@@ -393,7 +331,7 @@ namespace WatchList.WinForms
             {
                 _searchRequest.Page = Page.GetPage();
                 _searchRequest.Sort = Sort.GetSortItem();
-                _pagedList = _repository.GetPageCinema(_searchRequest);
+                _pagedList = _itemService.GetPageList(_searchRequest);
                 var item = _pagedList.Items;
 
                 GridClear();
@@ -429,23 +367,5 @@ namespace WatchList.WinForms
         private bool IsChangedSizePage() => _searchRequest.Page.Size != Page.Size;
 
         private int SelectedPageSize() => Page.Items[cmbPageSize.SelectedIndex];
-
-        private bool IsDuplicateItem(CinemaModel item)
-        {
-            var duplicateItem = _db.WatchItem.FirstOrDefault(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
-
-            if (duplicateItem != null)
-            {
-                var dialogResult = MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?");
-                if (dialogResult)
-                {
-                    _repository.UpdateByID(item.ToWatchItem(), duplicateItem.Id);
-                }
-
-                return true;
-            }
-
-            return false;
-        }
     }
 }

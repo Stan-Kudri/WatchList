@@ -81,6 +81,7 @@ namespace WatchList.Core.Repository
             item.Grade = editItem.Grade;
             item.Title = editItem.Title;
             item.Type = editItem.Type;
+            item.Status = editItem.Status;
 
             _db.SaveChanges();
         }
