@@ -23,8 +23,6 @@ namespace WatchList.WinForms
 
         public void AddItemToDatabase(CinemaModel item) => _repository.Add(item.ToWatchItem());
 
-        public void Update(CinemaModel item) => _repository.Update(item.ToWatchItem());
-
         public void Remove(Guid id) => _repository.Remove(id);
 
         public void ReplaceDataFromNewFile(string fileName)
@@ -35,13 +33,6 @@ namespace WatchList.WinForms
 
             _repository.RemoveAllItems();
             _repository.Add(repository.GetAll());
-        }
-
-        public void EditDuplicateItem(CinemaModel oldItem, CinemaModel modifiedItem, Guid idDuplicateItem)
-        {
-            var idOldItem = oldItem.Id;
-            UpdateByID(modifiedItem, idDuplicateItem);
-            Remove(idOldItem);
         }
 
         public Guid? IdDuplicateItem(CinemaModel item)

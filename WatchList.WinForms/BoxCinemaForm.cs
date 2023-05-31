@@ -122,14 +122,11 @@ namespace WatchList.WinForms
             {
                 if (MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?"))
                 {
-                    _itemService.EditDuplicateItem(oldItem, modifiedItem, (Guid)idDuplicateItem);
+                    _itemService.Remove(oldItem.Id);
                 }
             }
-            else
-            {
-                _itemService.Update(modifiedItem);
-            }
 
+            _itemService.UpdateByID(modifiedItem, idDuplicateItem ?? modifiedItem.Id);
             WriteDataToTable();
         }
 
