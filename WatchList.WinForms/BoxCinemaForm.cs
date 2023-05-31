@@ -78,9 +78,23 @@ namespace WatchList.WinForms
         {
             var addForm = new AddCinemaForm();
 
-            if (addForm.ShowDialog() == DialogResult.OK)
+            if (addForm.ShowDialog() != DialogResult.OK)
             {
-                var itemCinema = addForm.GetCinema();
+                return;
+            }
+
+            var itemCinema = addForm.GetCinema();
+            var idDuplicateItem = _itemService.IdDuplicateItem(itemCinema);
+
+            if (idDuplicateItem != null)
+            {
+                if (MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?"))
+                {
+                    _itemService.UpdateByID(itemCinema, idDuplicateItem);
+                }
+            }
+            else
+            {
                 _itemService.AddItemToDatabase(itemCinema);
             }
 
@@ -89,17 +103,31 @@ namespace WatchList.WinForms
 
         private void BtnEditRow_Click(object sender, EventArgs e)
         {
-            if (IsEditRowGrid(out CinemaModel? oldItem) && oldItem != null)
+            if (!IsEditRowGrid(out CinemaModel? oldItem) || oldItem == null)
             {
-                var editItemForm = new EditorItemCinemaForm(oldItem);
+                return;
+            }
 
-                if (editItemForm.ShowDialog() != DialogResult.OK)
+            var editItemForm = new EditorItemCinemaForm(oldItem);
+
+            if (editItemForm.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            var modifiedItem = editItemForm.GetEditItemCinema();
+            var idDuplicateItem = _itemService.IdDuplicateItem(modifiedItem);
+
+            if (idDuplicateItem != null)
+            {
+                if (MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?"))
                 {
-                    return;
+                    _itemService.EditDuplicateItem(oldItem, modifiedItem, (Guid)idDuplicateItem);
                 }
-
-                var changeItemCinema = editItemForm.GetEditItemCinema();
-                _itemService.EditItemToDatabase(oldItem, changeItemCinema);
+            }
+            else
+            {
+                _itemService.Update(modifiedItem);
             }
 
             WriteDataToTable();
@@ -107,7 +135,7 @@ namespace WatchList.WinForms
 
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
-            if (RemoveRowGrid(out var idItem))
+            if (HasRemoveRowGrid(out var idItem))
             {
                 if (!Guid.TryParse(idItem, out var id))
                 {
@@ -205,7 +233,7 @@ namespace WatchList.WinForms
         /// </summary>
         /// <param name="id">Object ID to delete.</param>
         /// <returns>Is item remove.</returns>
-        private bool RemoveRowGrid(out string id)
+        private bool HasRemoveRowGrid(out string id)
         {
             if (dgvCinema.SelectedRows.Count == 0)
             {

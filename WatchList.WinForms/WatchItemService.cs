@@ -21,6 +21,10 @@ namespace WatchList.WinForms
 
         public PagedList<WatchItem> GetPageList(WatchItemSearchRequest itemSearchRequest) => _repository.GetPageCinema(itemSearchRequest);
 
+        public void AddItemToDatabase(CinemaModel item) => _repository.Add(item.ToWatchItem());
+
+        public void Update(CinemaModel item) => _repository.Update(item.ToWatchItem());
+
         public void Remove(Guid id) => _repository.Remove(id);
 
         public void ReplaceDataFromNewFile(string fileName)
@@ -33,43 +37,32 @@ namespace WatchList.WinForms
             _repository.Add(repository.GetAll());
         }
 
-        public void AddItemToDatabase(CinemaModel item)
+        public void EditDuplicateItem(CinemaModel oldItem, CinemaModel modifiedItem, Guid idDuplicateItem)
         {
-            if (!IsDuplicateItem(item))
-            {
-                _repository.Add(item.ToWatchItem());
-            }
+            var idOldItem = oldItem.Id;
+            UpdateByID(modifiedItem, idDuplicateItem);
+            Remove(idOldItem);
         }
 
-        public void EditItemToDatabase(CinemaModel oldItem, CinemaModel modifiedItem)
+        public Guid? IdDuplicateItem(CinemaModel item)
         {
-            if (IsDuplicateItem(modifiedItem))
+            var selectionItem = _db.WatchItem.Where(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
+            if (selectionItem.Any())
             {
-                var idEditItem = oldItem.Id;
-                Remove(idEditItem);
+                return selectionItem.First().Id;
             }
-            else
-            {
-                _repository.Update(modifiedItem.ToWatchItem());
-            }
+
+            return null;
         }
 
-        private bool IsDuplicateItem(CinemaModel item)
+        public void UpdateByID(CinemaModel item, Guid? idDuplicateItem)
         {
-            var duplicateItem = _db.WatchItem.FirstOrDefault(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
-
-            if (duplicateItem != null)
+            if (idDuplicateItem == null)
             {
-                var dialogResult = MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?");
-                if (dialogResult)
-                {
-                    _repository.UpdateByID(item.ToWatchItem(), duplicateItem.Id);
-                }
-
-                return true;
+                throw new ArgumentException("Duplicate element ID cannot be null.", nameof(idDuplicateItem));
             }
 
-            return false;
+            _repository.UpdateByID(item.ToWatchItem(), idDuplicateItem);
         }
     }
 }
