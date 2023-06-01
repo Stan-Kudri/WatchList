@@ -92,6 +92,10 @@ namespace WatchList.WinForms
                 {
                     _itemService.UpdateByID(itemCinema, idDuplicateItem);
                 }
+                else
+                {
+                    return;
+                }
             }
             else
             {
@@ -123,6 +127,10 @@ namespace WatchList.WinForms
                 if (MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?"))
                 {
                     _itemService.Remove(oldItem.Id);
+                }
+                else
+                {
+                    return;
                 }
             }
 
