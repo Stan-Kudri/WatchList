@@ -30,4 +30,8 @@
     <ProjectReference Include="..\WatchList.Core\WatchList.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="WinFormsTest\WatchItemServiceTest\" />
+  </ItemGroup>
+
 </Project>

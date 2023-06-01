@@ -62,13 +62,13 @@ namespace WatchList.WinForms
 
         private bool IsDuplicateItem(CinemaModel item)
         {
-            var selectionItem = _db.WatchItem.Where(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
+            var selectionItem = _db.WatchItem.Where(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id).SingleOrDefault();
 
-            if (selectionItem.Any())
+            if (selectionItem != null)
             {
                 if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
                 {
-                    _repository.UpdateByID(item.ToWatchItem(), selectionItem.First().Id);
+                    _repository.UpdateByID(item.ToWatchItem(), selectionItem.Id);
                 }
 
                 return true;
