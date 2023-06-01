@@ -4,24 +4,28 @@ using WatchList.Core.Repository;
 using WatchList.Core.Repository.DbContext;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.DbContext;
+using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms
 {
     public class WatchItemService
     {
+        private const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
+
         private readonly WatchCinemaDbContext _db;
 
         private readonly WatchItemRepository _repository;
 
-        public WatchItemService(WatchCinemaDbContext dbContext)
+        private readonly IMessageBox _messageBox;
+
+        public WatchItemService(WatchCinemaDbContext dbContext, IMessageBox messageBox)
         {
             _db = dbContext;
             _repository = new WatchItemRepository(_db);
+            _messageBox = messageBox;
         }
 
         public PagedList<WatchItem> GetPageList(WatchItemSearchRequest itemSearchRequest) => _repository.GetPageCinema(itemSearchRequest);
-
-        public void AddItemToDatabase(CinemaModel item) => _repository.Add(item.ToWatchItem());
 
         public void Remove(Guid id) => _repository.Remove(id);
 
@@ -35,25 +39,42 @@ namespace WatchList.WinForms
             _repository.Add(repository.GetAll());
         }
 
-        public Guid? IdDuplicateItem(CinemaModel item)
+        public void AddItemToDatabase(CinemaModel item)
         {
-            var selectionItem = _db.WatchItem.Where(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
-            if (selectionItem.Any())
+            if (!IsDuplicateItem(item))
             {
-                return selectionItem.First().Id;
+                _repository.Add(item.ToWatchItem());
             }
-
-            return null;
         }
 
-        public void UpdateByID(CinemaModel item, Guid? idDuplicateItem)
+        public void EditItemToDatabase(CinemaModel oldItem, CinemaModel modifiedItem)
         {
-            if (idDuplicateItem == null)
+            if (IsDuplicateItem(modifiedItem))
             {
-                throw new ArgumentException("Duplicate element ID cannot be null.", nameof(idDuplicateItem));
+                var idEditItem = oldItem.Id;
+                Remove(idEditItem);
+            }
+            else
+            {
+                _repository.Update(modifiedItem.ToWatchItem());
+            }
+        }
+
+        private bool IsDuplicateItem(CinemaModel item)
+        {
+            var selectionItem = _db.WatchItem.Where(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
+
+            if (selectionItem.Any())
+            {
+                if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
+                {
+                    _repository.UpdateByID(item.ToWatchItem(), selectionItem.First().Id);
+                }
+
+                return true;
             }
 
-            _repository.UpdateByID(item.ToWatchItem(), idDuplicateItem);
+            return false;
         }
     }
 }

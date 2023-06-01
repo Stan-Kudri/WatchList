@@ -1,4 +1,4 @@
-namespace WatchList.WinForms
+namespace WatchList.WinForms.Message
 {
     internal static class MessageBoxProvider
     {
@@ -22,9 +22,9 @@ namespace WatchList.WinForms
             return MessageBox.Show(message, "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
         }
 
-        public static bool ShowQuestionSaveItem(string messge)
+        public static bool ShowQuestionSaveItem(string message)
         {
-            return MessageBox.Show(messge, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK;
+            return MessageBox.Show(message, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK;
         }
     }
 }

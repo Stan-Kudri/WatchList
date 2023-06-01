@@ -7,6 +7,8 @@ using WatchList.Core.Repository.DbContext;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
 using WatchList.WinForms.EditorForm;
+using WatchList.WinForms.Message;
+using WatchList.WinForms.Message.Question;
 
 namespace WatchList.WinForms
 {
@@ -33,7 +35,8 @@ namespace WatchList.WinForms
         {
             InitializeComponent();
 
-            _itemService = new WatchItemService(db);
+            var messageBoxQuestion = new MessageBoxQuestion();
+            _itemService = new WatchItemService(db, messageBoxQuestion);
             _pagedList = _itemService.GetPageList(_searchRequest);
 
             Load += BoxCinemaForm_Load;
@@ -84,57 +87,26 @@ namespace WatchList.WinForms
             }
 
             var itemCinema = addForm.GetCinema();
-            var idDuplicateItem = _itemService.IdDuplicateItem(itemCinema);
-
-            if (idDuplicateItem != null)
-            {
-                if (MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?"))
-                {
-                    _itemService.UpdateByID(itemCinema, idDuplicateItem);
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                _itemService.AddItemToDatabase(itemCinema);
-            }
+            _itemService.AddItemToDatabase(itemCinema);
 
             WriteDataToTable();
         }
 
         private void BtnEditRow_Click(object sender, EventArgs e)
         {
-            if (!IsEditRowGrid(out CinemaModel? oldItem) || oldItem == null)
+            if (IsEditRowGrid(out CinemaModel? oldItem) && oldItem != null)
             {
-                return;
-            }
+                var editItemForm = new EditorItemCinemaForm(oldItem);
 
-            var editItemForm = new EditorItemCinemaForm(oldItem);
-
-            if (editItemForm.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-
-            var modifiedItem = editItemForm.GetEditItemCinema();
-            var idDuplicateItem = _itemService.IdDuplicateItem(modifiedItem);
-
-            if (idDuplicateItem != null)
-            {
-                if (MessageBoxProvider.ShowQuestionSaveItem("The append item is a duplicate. Replace element?"))
-                {
-                    _itemService.Remove(oldItem.Id);
-                }
-                else
+                if (editItemForm.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
+
+                var changeItemCinema = editItemForm.GetEditItemCinema();
+                _itemService.EditItemToDatabase(oldItem, changeItemCinema);
             }
 
-            _itemService.UpdateByID(modifiedItem, idDuplicateItem ?? modifiedItem.Id);
             WriteDataToTable();
         }
 
