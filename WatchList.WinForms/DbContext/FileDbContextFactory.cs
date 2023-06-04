@@ -3,9 +3,9 @@ using WatchList.Core.Repository.DbContext;
 
 namespace WatchList.WinForms.DbContext
 {
-    public sealed class FileDbContextFactory : IDbContextFactory
+    public sealed class FileDbContextFactory
     {
-        public string _path;
+        public string _path = "app.db";
 
         public FileDbContextFactory(string path) => _path = path;
 

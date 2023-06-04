@@ -4,8 +4,10 @@ using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository.DbContext;
+using WatchList.Core.Service;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
+using WatchList.WinForms.DbContext;
 using WatchList.WinForms.EditorForm;
 using WatchList.WinForms.Message;
 using WatchList.WinForms.Message.Question;
@@ -37,7 +39,7 @@ namespace WatchList.WinForms
 
             var messageBoxQuestion = new MessageBoxQuestion();
             _itemService = new WatchItemService(db, messageBoxQuestion);
-            _pagedList = _itemService.GetPageList(_searchRequest);
+            _pagedList = _itemService.GetPage(_searchRequest);
 
             Load += BoxCinemaForm_Load;
         }
@@ -87,7 +89,7 @@ namespace WatchList.WinForms
             }
 
             var itemCinema = addForm.GetCinema();
-            _itemService.AddItemToDatabase(itemCinema);
+            _itemService.Add(itemCinema.ToWatchItem());
 
             WriteDataToTable();
         }
@@ -104,7 +106,7 @@ namespace WatchList.WinForms
                 }
 
                 var changeItemCinema = editItemForm.GetEditItemCinema();
-                _itemService.EditItemToDatabase(oldItem, changeItemCinema);
+                _itemService.Edit(oldItem.ToWatchItem(), changeItemCinema.ToWatchItem());
             }
 
             WriteDataToTable();
@@ -132,7 +134,8 @@ namespace WatchList.WinForms
                 return;
             }
 
-            _itemService.ReplaceDataFromNewFile(openReplaceDataFromFile.FileName);
+            var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
+            _itemService.Replace(dbContext);
             WriteDataToTable();
         }
 
@@ -336,7 +339,7 @@ namespace WatchList.WinForms
             {
                 _searchRequest.Page = Page.GetPage();
                 _searchRequest.Sort = Sort.GetSortItem();
-                _pagedList = _itemService.GetPageList(_searchRequest);
+                _pagedList = _itemService.GetPage(_searchRequest);
                 var item = _pagedList.Items;
 
                 GridClear();

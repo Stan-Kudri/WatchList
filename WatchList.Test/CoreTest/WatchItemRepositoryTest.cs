@@ -73,8 +73,8 @@ namespace WatchList.Test.CoreTest
             var itemRepository = new WatchItemRepository(appDbContext);
 
             // Act
-            itemRepository.Add(watchItems);
-            var pageItem = itemRepository.GetPageCinema(searchRequest);
+            itemRepository.AddRange(watchItems);
+            var pageItem = itemRepository.GetPage(searchRequest);
             var actualItemPage = pageItem.Items;
 
             // Assert
@@ -94,9 +94,9 @@ namespace WatchList.Test.CoreTest
             var searchRequest = new WatchItemSearchRequest();
 
             // Act
-            itemRepository.Add(watchItems);
+            itemRepository.AddRange(watchItems);
             itemRepository.Update(updateItem);
-            var actualItemPage = itemRepository.GetPageCinema(searchRequest).Items;
+            var actualItemPage = itemRepository.GetPage(searchRequest).Items;
 
             // Assert
             actualItemPage.Should().Equal(expectWatchItems);
