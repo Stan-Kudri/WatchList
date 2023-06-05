@@ -106,7 +106,7 @@ namespace WatchList.WinForms
                 }
 
                 var changeItemCinema = editItemForm.GetEditItemCinema();
-                _itemService.Edit(oldItem.ToWatchItem(), changeItemCinema.ToWatchItem());
+                _itemService.Update(oldItem.ToWatchItem(), changeItemCinema.ToWatchItem());
             }
 
             WriteDataToTable();

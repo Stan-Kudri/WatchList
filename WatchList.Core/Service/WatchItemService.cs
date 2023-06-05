@@ -25,6 +25,8 @@ namespace WatchList.Core.Service
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
 
+        public List<WatchItem> GetAll() => _repository.GetAll();
+
         public void Remove(Guid id) => _repository.Remove(id);
 
         public void Replace(WatchCinemaDbContext dbContext)
@@ -49,7 +51,7 @@ namespace WatchList.Core.Service
             }
         }
 
-        public void Edit(WatchItem oldItem, WatchItem modifiedItem)
+        public void Update(WatchItem oldItem, WatchItem modifiedItem)
         {
             if (IsDuplicateItem(modifiedItem))
             {
@@ -67,7 +69,7 @@ namespace WatchList.Core.Service
 
         private bool IsDuplicateItem(WatchItem item)
         {
-            var selectItem = _db.WatchItem.Select(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
+            var selectItem = _db.WatchItem.Where(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
             var countDuplicate = selectItem.Count();
 
             if (countDuplicate > 1)
