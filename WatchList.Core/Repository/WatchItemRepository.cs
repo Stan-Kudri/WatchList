@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository.DbContext;
@@ -32,11 +33,7 @@ namespace WatchList.Core.Repository
             _db.SaveChanges();
         }
 
-        public void RemoveRange()
-        {
-            _db.RemoveRange();
-            _db.SaveChanges();
-        }
+        public void RemoveRange() => _db.WatchItem.ExecuteDelete();
 
         public void Remove(Guid id)
         {

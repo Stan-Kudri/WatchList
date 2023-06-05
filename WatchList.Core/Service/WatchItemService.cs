@@ -25,8 +25,6 @@ namespace WatchList.Core.Service
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
 
-        public void Update(WatchItem item) => _repository.Update(item);
-
         public void Remove(Guid id) => _repository.Remove(id);
 
         public void Replace(WatchCinemaDbContext dbContext)
@@ -65,16 +63,19 @@ namespace WatchList.Core.Service
             Update(modifiedItem);
         }
 
+        private void Update(WatchItem item) => _repository.Update(item);
+
         private bool IsDuplicateItem(WatchItem item)
         {
             var selectItem = _db.WatchItem.Select(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
+            var countDuplicate = selectItem.Count();
 
-            if (selectItem.Count() > 1)
+            if (countDuplicate > 1)
             {
                 throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
             }
 
-            return selectItem.Any();
+            return countDuplicate == 1;
         }
 
         private bool QuestionReplaceItem() => _messageBox.ShowQuestion(DuplicateReplaceMessage);

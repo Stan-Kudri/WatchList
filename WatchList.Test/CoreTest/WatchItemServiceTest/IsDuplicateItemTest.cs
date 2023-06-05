@@ -27,7 +27,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
 
         [Theory]
         [MemberData(nameof(ListWithTwoSameElements))]
-        public void Duplicate_Search_With_Duplicate_Element_Passed(List<WatchItem> watchItems, WatchItem duplicateItem)
+        public void Duplicate_Element_In_Database(List<WatchItem> watchItems, WatchItem duplicateItem)
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();

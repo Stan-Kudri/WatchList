@@ -332,7 +332,6 @@ namespace WatchList.WinForms
         /// <summary>
         /// Filling in tabular data from a file.
         /// </summary>
-        /// <param name="grid">Table to fill.</param>
         private void LoadData()
         {
             try
