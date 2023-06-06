@@ -242,13 +242,11 @@ namespace WatchList.WinForms
         /// Filling the table with data.
         /// </summary>
         /// <param name="itemGrid">List of elements.</param>
-        private void AddCinemaGrid(List<WatchItem> itemGrid)
+        private void FillingInGridData(List<WatchItem> itemGrid)
         {
             foreach (var item in itemGrid)
             {
-                var intSequel = item.Sequel;
-                var formatDate = item.GetWatchData();
-                dgvCinema.Rows.Add(item.Title, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id, item.Type);
+                dgvCinema.Rows.Add(item.Title, item.Sequel, item.Status.Name, item.GetWatchData(), item.Grade, item.Id, item.Type);
             }
         }
 
@@ -298,10 +296,10 @@ namespace WatchList.WinForms
                 var item = _pagedList.Items;
 
                 GridClear();
-                AddCinemaGrid(item);
+                FillingInGridData(item);
                 CustomUpdateFormState();
 
-                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1).ToString());
+                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1));
                 textBoxPage.Text = _pagedList.PageNumber.ToString();
             }
             catch (Exception error)
