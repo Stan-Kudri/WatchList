@@ -67,7 +67,7 @@ namespace WatchList.WinForms
             if (!IsNotChangesFilter() || IsChangedSizePage())
             {
                 Page.Number = 1;
-                WriteDataToTable();
+                UpdateGridData();
             }
         }
 
@@ -93,13 +93,15 @@ namespace WatchList.WinForms
             var itemCinema = addForm.GetCinema();
             _itemService.Add(itemCinema.ToWatchItem());
 
-            WriteDataToTable();
+            UpdateGridData();
         }
 
         private void BtnEditRow_Click(object sender, EventArgs e)
         {
-            if (IsEditRowGrid(out CinemaModel? oldItem) && oldItem != null)
+            var indexEditRow = GetSelectedRowIndexes();
+            if (indexEditRow.Count == 1)
             {
+                var oldItem = GetItem(indexEditRow.First());
                 var editItemForm = new EditorItemCinemaForm(oldItem);
 
                 if (editItemForm.ShowDialog() != DialogResult.OK)
@@ -109,9 +111,12 @@ namespace WatchList.WinForms
 
                 var changeItemCinema = editItemForm.GetEditItemCinema();
                 _itemService.Update(oldItem.ToWatchItem(), changeItemCinema.ToWatchItem());
+                UpdateGridData();
             }
-
-            WriteDataToTable();
+            else
+            {
+                MessageBoxProvider.ShowWarning("Select one item.");
+            }
         }
 
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
@@ -145,7 +150,7 @@ namespace WatchList.WinForms
 
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             _itemService.Replace(dbContext);
-            WriteDataToTable();
+            UpdateGridData();
         }
 
         private void BtnBackPage_Click(object sender, EventArgs e)
@@ -248,28 +253,6 @@ namespace WatchList.WinForms
         }
 
         /// <summary>
-        /// Edit the selected item.
-        /// </summary>
-        /// <param name="cinemaItem">Element to change.</param>
-        /// <returns>
-        /// True:Row selected.
-        /// False:Row not selected.
-        /// </returns>
-        private bool IsEditRowGrid(out CinemaModel? cinemaItem)
-        {
-            if (dgvCinema.SelectedRows.Count == 0)
-            {
-                cinemaItem = null;
-                MessageBoxProvider.ShowWarning("Highlight the desired line");
-                return false;
-            }
-
-            var rowIndex = dgvCinema.CurrentCell.RowIndex;
-            cinemaItem = GetItem(rowIndex);
-            return true;
-        }
-
-        /// <summary>
         /// Get item by ID from the table.
         /// </summary>
         /// <param name="indexRow">Number row element.</param>
@@ -345,7 +328,7 @@ namespace WatchList.WinForms
 
         private void GridClear() => dgvCinema.Rows.Clear();
 
-        private void WriteDataToTable()
+        private void UpdateGridData()
         {
             _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Sort.GetSortItem(), Page.GetPage());
             LoadData();
@@ -355,7 +338,13 @@ namespace WatchList.WinForms
         {
             var hasPageControl = _pagedList.PageCount > 0 ? true : false;
 
-            btnBackPage.Enabled = btnEndPage.Enabled = btnNextPage.Enabled = btnStartPage.Enabled = labelTotalPage.Enabled = textBoxPage.Enabled = hasPageControl;
+            btnBackPage.Enabled =
+                btnEndPage.Enabled =
+                btnNextPage.Enabled =
+                btnStartPage.Enabled =
+                labelTotalPage.Enabled =
+                textBoxPage.Enabled =
+                hasPageControl;
         }
 
         private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
