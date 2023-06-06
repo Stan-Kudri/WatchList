@@ -3,7 +3,7 @@ using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
-using WatchList.Test.CoreTest.WatchItemServiceTest.MessageBoxTest;
+using WatchList.Test.CoreTest.WatchItemServiceTest.Component;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest
 {
@@ -57,7 +57,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var repository = new WatchItemRepository(dbContext);
-            var messageBox = new MessageBoxTrue();
+            var messageBox = new FakeMessageBox(true);
             var service = new WatchItemService(dbContext, messageBox);
 
             // Act
@@ -74,7 +74,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var repository = new WatchItemRepository(dbContext);
-            var messageBox = new MessageBoxTrue();
+            var messageBox = new FakeMessageBox(true);
             var service = new WatchItemService(dbContext, messageBox);
 
             // Act
