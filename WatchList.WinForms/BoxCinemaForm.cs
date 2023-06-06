@@ -114,14 +114,9 @@ namespace WatchList.WinForms
 
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
-            if (HasRemoveRowGrid(out var idItem))
+            if (HasRemoveRowGrid(out var idItem) && idItem != null)
             {
-                if (!Guid.TryParse(idItem, out var id))
-                {
-                    return;
-                }
-
-                _itemService.Remove(id);
+                _itemService.Remove((Guid)idItem);
                 LoadData();
             }
         }
@@ -213,11 +208,11 @@ namespace WatchList.WinForms
         /// </summary>
         /// <param name="id">Object ID to delete.</param>
         /// <returns>Is item remove.</returns>
-        private bool HasRemoveRowGrid(out string id)
+        private bool HasRemoveRowGrid(out Guid? id)
         {
             if (dgvCinema.SelectedRows.Count == 0)
             {
-                id = string.Empty;
+                id = null;
                 MessageBoxProvider.ShowWarning("Highlight the desired line.");
                 return false;
             }
@@ -232,18 +227,18 @@ namespace WatchList.WinForms
         /// Get ID on the selected line table.
         /// </summary>
         /// <returns> ID. </returns>
-        private string SelectedRowCinemaId()
+        private Guid? SelectedRowCinemaId()
         {
             var rowIndex = dgvCinema.CurrentCell.RowIndex;
-            var id = dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value;
-            return id.ToString() ?? string.Empty;
+            var id = (Guid?)dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value;
+            return id;
         }
 
         /// <summary>
         /// Delete line table by Id.
         /// </summary>
         /// <param name="id">Object ID to delete.</param>
-        private void RemoveItemRowGrid(string? id)
+        private void RemoveItemRowGrid(Guid? id)
         {
             if (dgvCinema.RowCount == 0)
             {
@@ -252,7 +247,8 @@ namespace WatchList.WinForms
 
             foreach (DataGridViewRow row in dgvCinema.Rows)
             {
-                if (row.Cells[IndexColumnId].Value.ToString() == id)
+                var idItem = (Guid?)row.Cells[IndexColumnId].Value;
+                if (idItem != null && idItem == id)
                 {
                     dgvCinema.Rows.RemoveAt(row.Index);
                     break;
@@ -270,7 +266,7 @@ namespace WatchList.WinForms
             {
                 var intSequel = item.Sequel;
                 var formatDate = item.GetWatchData();
-                dgvCinema.Rows.Add(item.Title, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
+                dgvCinema.Rows.Add(item.Title, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id, item.Type);
             }
         }
 
