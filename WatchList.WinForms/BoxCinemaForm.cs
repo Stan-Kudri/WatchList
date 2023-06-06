@@ -19,6 +19,8 @@ namespace WatchList.WinForms
     /// </summary>
     public partial class BoxCinemaForm : MaterialForm
     {
+        private const string HighlightTheDesiredLine = "No items selected.";
+
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
         private const int IndexColumnStatus = 2;
@@ -114,11 +116,23 @@ namespace WatchList.WinForms
 
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
-            if (HasRemoveRowGrid(out var idItem) && idItem != null)
+            var selectedRowIds = GetSelectedRowIndexes()
+                .Select(idx => (Guid)dgvCinema.Rows[idx].Cells[IndexColumnId].Value)
+                .ToList();
+
+            if (selectedRowIds.Count == 0)
             {
-                _itemService.Remove((Guid)idItem);
-                LoadData();
+                MessageBoxProvider.ShowWarning(HighlightTheDesiredLine);
+                return;
             }
+
+            foreach (var id in selectedRowIds)
+            {
+                RemoveItemRowGrid(id);
+                _itemService.Remove(id);
+            }
+
+            LoadData();
         }
 
         private void BtnReplaceFile_Click(object sender, EventArgs e)
@@ -203,48 +217,11 @@ namespace WatchList.WinForms
         }
 
         /// <summary>
-        /// Deleting a row of table data.
-        /// Out ID in delete from another table.
-        /// </summary>
-        /// <param name="id">Object ID to delete.</param>
-        /// <returns>Is item remove.</returns>
-        private bool HasRemoveRowGrid(out Guid? id)
-        {
-            if (dgvCinema.SelectedRows.Count == 0)
-            {
-                id = null;
-                MessageBoxProvider.ShowWarning("Highlight the desired line.");
-                return false;
-            }
-
-            id = SelectedRowCinemaId();
-            RemoveItemRowGrid(id);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Get ID on the selected line table.
-        /// </summary>
-        /// <returns> ID. </returns>
-        private Guid? SelectedRowCinemaId()
-        {
-            var rowIndex = dgvCinema.CurrentCell.RowIndex;
-            var id = (Guid?)dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value;
-            return id;
-        }
-
-        /// <summary>
         /// Delete line table by Id.
         /// </summary>
         /// <param name="id">Object ID to delete.</param>
         private void RemoveItemRowGrid(Guid? id)
         {
-            if (dgvCinema.RowCount == 0)
-            {
-                MessageBoxProvider.ShowError("The element is missing from the table.");
-            }
-
             foreach (DataGridViewRow row in dgvCinema.Rows)
             {
                 var idItem = (Guid?)row.Cells[IndexColumnId].Value;
@@ -348,6 +325,22 @@ namespace WatchList.WinForms
             {
                 MessageBoxProvider.ShowError(error.Message);
             }
+        }
+
+        private HashSet<int> GetSelectedRowIndexes()
+        {
+            var result = new HashSet<int>();
+            foreach (DataGridViewRow dgvCinemaSelectedRow in dgvCinema.SelectedRows)
+            {
+                result.Add(dgvCinemaSelectedRow.Index);
+            }
+
+            foreach (DataGridViewCell dgvCinemaSelectedCell in dgvCinema.SelectedCells)
+            {
+                result.Add(dgvCinemaSelectedCell.RowIndex);
+            }
+
+            return result;
         }
 
         private void GridClear() => dgvCinema.Rows.Clear();
