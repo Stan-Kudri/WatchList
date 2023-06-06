@@ -38,26 +38,42 @@ namespace WatchList.Core.Service
 
         public void Add(WatchItem item)
         {
-            if (!IsDuplicateItem(item))
+            var selectItem = _db.WatchItem.Where(x =>
+                x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
+            var countDuplicate = selectItem.Count();
+
+            if (countDuplicate > 1)
+            {
+                throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
+            }
+            else if (countDuplicate == 0)
             {
                 _repository.Add(item);
                 return;
             }
 
-            if (QuestionReplaceItem())
+            if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
             {
-                item.Id = IdDuplicateItem(item);
+                item.Id = selectItem.First().Id;
                 Update(item);
             }
         }
 
         public void Update(WatchItem oldItem, WatchItem modifiedItem)
         {
-            if (IsDuplicateItem(modifiedItem))
+            var selectItem = _db.WatchItem.Where(x =>
+                x.Title == modifiedItem.Title && x.Sequel == modifiedItem.Sequel && x.Type == modifiedItem.Type && x.Id != modifiedItem.Id);
+            var countDuplicate = selectItem.Count();
+
+            if (countDuplicate > 1)
             {
-                if (QuestionReplaceItem())
+                throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
+            }
+            else if (countDuplicate == 1)
+            {
+                if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
                 {
-                    modifiedItem.Id = IdDuplicateItem(modifiedItem);
+                    modifiedItem.Id = selectItem.First().Id;
                     Remove(oldItem.Id);
                 }
             }
@@ -66,23 +82,5 @@ namespace WatchList.Core.Service
         }
 
         private void Update(WatchItem item) => _repository.Update(item);
-
-        private bool IsDuplicateItem(WatchItem item)
-        {
-            var selectItem = _db.WatchItem.Where(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
-            var countDuplicate = selectItem.Count();
-
-            if (countDuplicate > 1)
-            {
-                throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
-            }
-
-            return countDuplicate == 1;
-        }
-
-        private bool QuestionReplaceItem() => _messageBox.ShowQuestion(DuplicateReplaceMessage);
-
-        private Guid IdDuplicateItem(WatchItem item) =>
-            _db.WatchItem.First(x => x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id).Id;
     }
 }
