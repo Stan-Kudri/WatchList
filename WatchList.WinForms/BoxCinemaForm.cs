@@ -9,6 +9,7 @@ using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
 using WatchList.WinForms.DbContext;
 using WatchList.WinForms.EditorForm;
+using WatchList.WinForms.Extension;
 using WatchList.WinForms.Message;
 using WatchList.WinForms.Message.Question;
 
@@ -102,15 +103,15 @@ namespace WatchList.WinForms
             if (indexEditRow.Count == 1)
             {
                 var oldItem = GetItem(indexEditRow.First());
-                var editItemForm = new EditorItemCinemaForm(oldItem);
+                var updateForm = new EditorItemCinemaForm(oldItem);
 
-                if (editItemForm.ShowDialog() != DialogResult.OK)
+                if (updateForm.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
 
-                var changeItemCinema = editItemForm.GetEditItemCinema();
-                _itemService.Update(oldItem.ToWatchItem(), changeItemCinema.ToWatchItem());
+                var updateItem = updateForm.GetEditItemCinema();
+                _itemService.Update(oldItem.ToWatchItem(), updateItem.ToWatchItem());
                 UpdateGridData();
             }
             else
@@ -122,7 +123,7 @@ namespace WatchList.WinForms
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
             var selectedRowIds = GetSelectedRowIndexes()
-                .Select(idx => (Guid)dgvCinema.Rows[idx].Cells[IndexColumnId].Value)
+                .Select(idx => dgvCinema.IdRowItem(idx))
                 .ToList();
 
             if (selectedRowIds.Count == 0)
@@ -229,7 +230,7 @@ namespace WatchList.WinForms
         {
             foreach (DataGridViewRow row in dgvCinema.Rows)
             {
-                var idItem = (Guid?)row.Cells[IndexColumnId].Value;
+                var idItem = row.IdRowItem();
                 if (idItem != null && idItem == id)
                 {
                     dgvCinema.Rows.RemoveAt(row.Index);
@@ -241,13 +242,59 @@ namespace WatchList.WinForms
         /// <summary>
         /// Filling the table with data.
         /// </summary>
-        /// <param name="itemGrid">List of elements.</param>
-        private void FillingInGridData(List<WatchItem> itemGrid)
+        /// <param name="items">List of elements.</param>
+        private void FillGrid(List<WatchItem> items)
         {
-            foreach (var item in itemGrid)
+            foreach (var item in items)
             {
                 dgvCinema.Rows.Add(item.Title, item.Sequel, item.Status.Name, item.GetWatchData(), item.Grade, item.Id, item.Type);
             }
+        }
+
+        /// <summary>
+        /// Filling in tabular data from a file.
+        /// </summary>
+        private void LoadData()
+        {
+            try
+            {
+                _searchRequest.Page = Page.GetPage();
+                _searchRequest.Sort = Sort.GetSortItem();
+                _pagedList = _itemService.GetPage(_searchRequest);
+                var item = _pagedList.Items;
+
+                GridClear();
+                FillGrid(item);
+                CustomUpdateFormState();
+
+                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1));
+                textBoxPage.Text = _pagedList.PageNumber.ToString();
+            }
+            catch (Exception error)
+            {
+                MessageBoxProvider.ShowError(error.Message);
+            }
+        }
+
+        private void GridClear() => dgvCinema.Rows.Clear();
+
+        private void UpdateGridData()
+        {
+            _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Sort.GetSortItem(), Page.GetPage());
+            LoadData();
+        }
+
+        private void CustomUpdateFormState()
+        {
+            var hasPageControl = _pagedList.PageCount > 0 ? true : false;
+
+            btnBackPage.Enabled =
+                btnEndPage.Enabled =
+                    btnNextPage.Enabled =
+                        btnStartPage.Enabled =
+                            labelTotalPage.Enabled =
+                                textBoxPage.Enabled =
+                                    hasPageControl;
         }
 
         /// <summary>
@@ -281,33 +328,6 @@ namespace WatchList.WinForms
             return CinemaModel.CreateNonPlanned(title, sequel, dateWatch, grade, status, type, id);
         }
 
-        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString() ?? throw new Exception("String cannot be null.");
-
-        /// <summary>
-        /// Filling in tabular data from a file.
-        /// </summary>
-        private void LoadData()
-        {
-            try
-            {
-                _searchRequest.Page = Page.GetPage();
-                _searchRequest.Sort = Sort.GetSortItem();
-                _pagedList = _itemService.GetPage(_searchRequest);
-                var item = _pagedList.Items;
-
-                GridClear();
-                FillingInGridData(item);
-                CustomUpdateFormState();
-
-                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1));
-                textBoxPage.Text = _pagedList.PageNumber.ToString();
-            }
-            catch (Exception error)
-            {
-                MessageBoxProvider.ShowError(error.Message);
-            }
-        }
-
         private HashSet<int> GetSelectedRowIndexes()
         {
             var result = new HashSet<int>();
@@ -324,26 +344,7 @@ namespace WatchList.WinForms
             return result;
         }
 
-        private void GridClear() => dgvCinema.Rows.Clear();
-
-        private void UpdateGridData()
-        {
-            _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Sort.GetSortItem(), Page.GetPage());
-            LoadData();
-        }
-
-        private void CustomUpdateFormState()
-        {
-            var hasPageControl = _pagedList.PageCount > 0 ? true : false;
-
-            btnBackPage.Enabled =
-                btnEndPage.Enabled =
-                btnNextPage.Enabled =
-                btnStartPage.Enabled =
-                labelTotalPage.Enabled =
-                textBoxPage.Enabled =
-                hasPageControl;
-        }
+        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString() ?? throw new Exception("String cannot be null.");
 
         private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
 
