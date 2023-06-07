@@ -74,10 +74,8 @@ namespace WatchList.WinForms
 
         private void BtnCancelFilter_Click(object sender, EventArgs e)
         {
-            cmbFilterType.SelectedItem = TypeFilter.AllCinema;
-            cmbFilterStatus.SelectedItem = StatusFilter.AllCinema;
-            Filter.Type = TypeFilter.AllCinema;
-            Filter.Status = StatusFilter.AllCinema;
+            cmbFilterType.SelectedItem = Filter.Type = TypeFilter.AllCinema;
+            cmbFilterStatus.SelectedItem = Filter.Status = StatusFilter.AllCinema;
             cmbFilterType.Refresh();
             cmbFilterStatus.Refresh();
         }
