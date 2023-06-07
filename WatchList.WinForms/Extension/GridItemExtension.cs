@@ -7,5 +7,7 @@ namespace WatchList.WinForms.Extension
         public static Guid? IdRowItem(this DataGridViewRow dataRow) => (Guid?)dataRow.Cells[IndexColumnId].Value;
 
         public static Guid IdRowItem(this DataGridView dataGrid, int index) => (Guid)dataGrid.Rows[index].Cells[IndexColumnId].Value;
+
+        public static string? StringFromCell(this DataGridViewRow dateRow, int indexColumn) => dateRow.Cells[indexColumn].Value.ToString();
     }
 }

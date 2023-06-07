@@ -281,14 +281,23 @@ namespace WatchList.WinForms
             }
         }
 
+        /// <summary>
+        /// Delete data from the table.
+        /// </summary>
         private void GridClear() => dgvCinema.Rows.Clear();
 
+        /// <summary>
+        /// Create a new SearchRequest in the database for the selected ComboBox("Filter", "Sort", "PageNumber") and updates the tabular data on it.
+        /// </summary>
         private void UpdateGridData()
         {
             _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Sort.GetSortItem(), Page.GetPage());
             LoadData();
         }
 
+        /// <summary>
+        /// The method creates a data change/input restriction if the number of pages is zero.
+        /// </summary>
         private void CustomUpdateFormState()
         {
             var hasPageControl = _pagedList.PageCount > 0 ? true : false;
@@ -333,6 +342,12 @@ namespace WatchList.WinForms
             return CinemaModel.CreateNonPlanned(title, sequel, dateWatch, grade, status, type, id);
         }
 
+        /// <summary>
+        /// Gets the line numbers that are selected, without duplicates.
+        /// </summary>
+        /// <returns>
+        /// Selection line numbers.
+        /// </returns>
         private HashSet<int> GetSelectedRowIndexes()
         {
             var result = new HashSet<int>();
@@ -349,12 +364,30 @@ namespace WatchList.WinForms
             return result;
         }
 
-        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString() ?? throw new Exception("String cannot be null.");
+        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.StringFromCell(indexColumn) ?? throw new Exception("String cannot be null.");
 
+        /// <summary>
+        /// The method checks whether the element selection filter has been changed.
+        /// </summary>
+        /// <returns>
+        /// True - The filter has been changed. False - else.
+        /// </returns>
         private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
 
+        /// <summary>
+        /// The method checks if the size of the page data has changed.
+        /// </summary>
+        /// <returns>
+        /// True - The page size has been changed. False - else.
+        /// </returns>
         private bool IsChangedSizePage() => _searchRequest.Page.Size != Page.Size;
 
+        /// <summary>
+        /// Get the size of the page data.
+        /// </summary>
+        /// <returns>
+        /// Page size.
+        /// </returns>
         private int SelectedPageSize() => Page.Items[cmbPageSize.SelectedIndex];
     }
 }
