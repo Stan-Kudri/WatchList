@@ -132,6 +132,11 @@ namespace WatchList.WinForms
                 return;
             }
 
+            if (!MessageBoxProvider.ShowQuestion("Delete selected items?"))
+            {
+                return;
+            }
+
             foreach (var id in selectedRowIds)
             {
                 RemoveItemRowGrid(id);
