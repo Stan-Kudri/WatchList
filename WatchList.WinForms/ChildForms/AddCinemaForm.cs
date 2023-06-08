@@ -25,14 +25,9 @@ namespace WatchList.WinForms
 
         public CinemaModel GetCinema()
         {
-            var grade = (decimal?)null;
-
-            if (numericGradeCinema.Enabled)
-            {
-                grade = numericGradeCinema.Value;
-            }
-
+            decimal? grade = numericGradeCinema.Enabled == true ? numericGradeCinema.Value : null;
             DateTime? dateViewed = dateTimePickerCinema.Enabled == true ? dateTimePickerCinema.Value : null;
+
             return CinemaModel.CreateNonPlanned(txtAddCinema.Text, numericSeaquel.Value, dateViewed, grade, _status, SelectedTypeCinema);
         }
 

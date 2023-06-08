@@ -213,7 +213,7 @@ namespace WatchList.WinForms
 
         private void TextBoxPage_TextChanged(object sender, EventArgs e)
         {
-            if (!int.TryParse(textBoxPage.Text, out int pageNumber)
+            if (!int.TryParse(textBoxPage.Text, out var pageNumber)
                 || pageNumber > _pagedList.PageCount
                 || _pagedList.PageNumber == Page.Number)
             {
