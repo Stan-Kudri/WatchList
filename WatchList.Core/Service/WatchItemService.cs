@@ -39,8 +39,9 @@ namespace WatchList.Core.Service
         public void Add(WatchItem item)
         {
             var selectItem = _db.WatchItem.Where(x =>
-                x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id);
-            var countDuplicate = selectItem.Count();
+                x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id).
+                Take(2).Select(x => x.Id).ToList();
+            var countDuplicate = selectItem.Count;
 
             if (countDuplicate > 1)
             {
@@ -54,7 +55,7 @@ namespace WatchList.Core.Service
 
             if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
             {
-                item.Id = selectItem.First().Id;
+                item.Id = selectItem[0];
                 Update(item);
             }
         }
@@ -62,8 +63,9 @@ namespace WatchList.Core.Service
         public void Update(WatchItem oldItem, WatchItem modifiedItem)
         {
             var selectItem = _db.WatchItem.Where(x =>
-                x.Title == modifiedItem.Title && x.Sequel == modifiedItem.Sequel && x.Type == modifiedItem.Type && x.Id != modifiedItem.Id);
-            var countDuplicate = selectItem.Count();
+                x.Title == modifiedItem.Title && x.Sequel == modifiedItem.Sequel && x.Type == modifiedItem.Type && x.Id != modifiedItem.Id).
+                Take(2).Select(x => x.Id).ToList();
+            var countDuplicate = selectItem.Count;
 
             if (countDuplicate > 1)
             {
@@ -73,7 +75,7 @@ namespace WatchList.Core.Service
             {
                 if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
                 {
-                    modifiedItem.Id = selectItem.First().Id;
+                    modifiedItem.Id = selectItem[0];
                     Remove(oldItem.Id);
                 }
             }

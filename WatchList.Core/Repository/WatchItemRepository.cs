@@ -52,7 +52,7 @@ namespace WatchList.Core.Repository
         {
             if (editItem == null)
             {
-                throw new ArgumentException("The received parameters are not correct.");
+                throw new ArgumentNullException("The received parameters are not correct.");
             }
 
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
