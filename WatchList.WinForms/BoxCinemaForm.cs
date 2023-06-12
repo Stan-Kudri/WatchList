@@ -9,6 +9,7 @@ using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
 using WatchList.WinForms.DbContext;
 using WatchList.WinForms.EditorForm;
+using WatchList.WinForms.Extension;
 using WatchList.WinForms.Message;
 using WatchList.WinForms.Message.Question;
 
@@ -19,6 +20,8 @@ namespace WatchList.WinForms
     /// </summary>
     public partial class BoxCinemaForm : MaterialForm
     {
+        private const string HighlightTheDesiredLine = "No items selected.";
+
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
         private const int IndexColumnStatus = 2;
@@ -65,16 +68,14 @@ namespace WatchList.WinForms
             if (!IsNotChangesFilter() || IsChangedSizePage())
             {
                 Page.Number = 1;
-                WriteDataToTable();
+                UpdateGridData();
             }
         }
 
         private void BtnCancelFilter_Click(object sender, EventArgs e)
         {
-            cmbFilterType.SelectedItem = TypeFilter.AllCinema;
-            cmbFilterStatus.SelectedItem = StatusFilter.AllCinema;
-            Filter.Type = TypeFilter.AllCinema;
-            Filter.Status = StatusFilter.AllCinema;
+            cmbFilterType.SelectedItem = Filter.Type = TypeFilter.AllCinema;
+            cmbFilterStatus.SelectedItem = Filter.Status = StatusFilter.AllCinema;
             cmbFilterType.Refresh();
             cmbFilterStatus.Refresh();
         }
@@ -91,39 +92,56 @@ namespace WatchList.WinForms
             var itemCinema = addForm.GetCinema();
             _itemService.Add(itemCinema.ToWatchItem());
 
-            WriteDataToTable();
+            UpdateGridData();
         }
 
         private void BtnEditRow_Click(object sender, EventArgs e)
         {
-            if (IsEditRowGrid(out CinemaModel? oldItem) && oldItem != null)
+            var indexEditRow = GetSelectedRowIndexes();
+            if (indexEditRow.Count == 1)
             {
-                var editItemForm = new EditorItemCinemaForm(oldItem);
+                var oldItem = GetItem(indexEditRow.First());
+                var updateForm = new EditorItemCinemaForm(oldItem);
 
-                if (editItemForm.ShowDialog() != DialogResult.OK)
+                if (updateForm.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
 
-                var changeItemCinema = editItemForm.GetEditItemCinema();
-                _itemService.Update(oldItem.ToWatchItem(), changeItemCinema.ToWatchItem());
+                var updateItem = updateForm.GetEditItemCinema();
+                _itemService.Update(oldItem.ToWatchItem(), updateItem.ToWatchItem());
+                UpdateGridData();
             }
-
-            WriteDataToTable();
+            else
+            {
+                MessageBoxProvider.ShowWarning("Select one item.");
+            }
         }
 
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
-            if (HasRemoveRowGrid(out var idItem))
-            {
-                if (!Guid.TryParse(idItem, out var id))
-                {
-                    return;
-                }
+            var selectedRowIds = GetSelectedRowIndexes()
+                .Select(idx => dgvCinema.IdRowItem(idx))
+                .ToList();
 
-                _itemService.Remove(id);
-                LoadData();
+            if (selectedRowIds.Count == 0)
+            {
+                MessageBoxProvider.ShowWarning(HighlightTheDesiredLine);
+                return;
             }
+
+            if (!MessageBoxProvider.ShowQuestion("Delete selected items?"))
+            {
+                return;
+            }
+
+            foreach (var id in selectedRowIds)
+            {
+                RemoveItemRowGrid(id);
+                _itemService.Remove(id);
+            }
+
+            LoadData();
         }
 
         private void BtnReplaceFile_Click(object sender, EventArgs e)
@@ -136,7 +154,7 @@ namespace WatchList.WinForms
 
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             _itemService.Replace(dbContext);
-            WriteDataToTable();
+            UpdateGridData();
         }
 
         private void BtnBackPage_Click(object sender, EventArgs e)
@@ -195,7 +213,7 @@ namespace WatchList.WinForms
 
         private void TextBoxPage_TextChanged(object sender, EventArgs e)
         {
-            if (!int.TryParse(textBoxPage.Text, out int pageNumber)
+            if (!int.TryParse(textBoxPage.Text, out var pageNumber)
                 || pageNumber > _pagedList.PageCount
                 || _pagedList.PageNumber == Page.Number)
             {
@@ -208,51 +226,15 @@ namespace WatchList.WinForms
         }
 
         /// <summary>
-        /// Deleting a row of table data.
-        /// Out ID in delete from another table.
-        /// </summary>
-        /// <param name="id">Object ID to delete.</param>
-        /// <returns>Is item remove.</returns>
-        private bool HasRemoveRowGrid(out string id)
-        {
-            if (dgvCinema.SelectedRows.Count == 0)
-            {
-                id = string.Empty;
-                MessageBoxProvider.ShowWarning("Highlight the desired line.");
-                return false;
-            }
-
-            id = SelectedRowCinemaId();
-            RemoveItemRowGrid(id);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Get ID on the selected line table.
-        /// </summary>
-        /// <returns> ID. </returns>
-        private string SelectedRowCinemaId()
-        {
-            var rowIndex = dgvCinema.CurrentCell.RowIndex;
-            var id = dgvCinema.Rows[rowIndex].Cells[IndexColumnId].Value;
-            return id.ToString() ?? string.Empty;
-        }
-
-        /// <summary>
         /// Delete line table by Id.
         /// </summary>
         /// <param name="id">Object ID to delete.</param>
-        private void RemoveItemRowGrid(string? id)
+        private void RemoveItemRowGrid(Guid? id)
         {
-            if (dgvCinema.RowCount == 0)
-            {
-                MessageBoxProvider.ShowError("The element is missing from the table.");
-            }
-
             foreach (DataGridViewRow row in dgvCinema.Rows)
             {
-                if (row.Cells[IndexColumnId].Value.ToString() == id)
+                var idItem = row.IdRowItem();
+                if (idItem != null && idItem == id)
                 {
                     dgvCinema.Rows.RemoveAt(row.Index);
                     break;
@@ -263,37 +245,68 @@ namespace WatchList.WinForms
         /// <summary>
         /// Filling the table with data.
         /// </summary>
-        /// <param name="itemGrid">List of elements.</param>
-        private void AddCinemaGrid(List<WatchItem> itemGrid)
+        /// <param name="items">List of elements.</param>
+        private void FillGrid(List<WatchItem> items)
         {
-            foreach (var item in itemGrid)
+            foreach (var item in items)
             {
-                var intSequel = item.Sequel;
-                var formatDate = item.GetWatchData();
-                dgvCinema.Rows.Add(item.Title, intSequel.ToString(), item.Status.Name, formatDate, item.Grade, item.Id.ToString(), item.Type);
+                dgvCinema.Rows.Add(item.Title, item.Sequel, item.Status.Name, item.GetWatchData(), item.Grade, item.Id, item.Type);
             }
         }
 
         /// <summary>
-        /// Edit the selected item.
+        /// Filling in tabular data from a file.
         /// </summary>
-        /// <param name="cinemaItem">Element to change.</param>
-        /// <returns>
-        /// True:Row selected.
-        /// False:Row not selected.
-        /// </returns>
-        private bool IsEditRowGrid(out CinemaModel? cinemaItem)
+        private void LoadData()
         {
-            if (dgvCinema.SelectedRows.Count == 0)
+            try
             {
-                cinemaItem = null;
-                MessageBoxProvider.ShowWarning("Highlight the desired line");
-                return false;
-            }
+                _searchRequest.Page = Page.GetPage();
+                _searchRequest.Sort = Sort.GetSortItem();
+                _pagedList = _itemService.GetPage(_searchRequest);
+                var item = _pagedList.Items;
 
-            var rowIndex = dgvCinema.CurrentCell.RowIndex;
-            cinemaItem = GetItem(rowIndex);
-            return true;
+                GridClear();
+                FillGrid(item);
+                CustomUpdateFormState();
+
+                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1));
+                textBoxPage.Text = _pagedList.PageNumber.ToString();
+            }
+            catch (Exception error)
+            {
+                MessageBoxProvider.ShowError(error.Message);
+            }
+        }
+
+        /// <summary>
+        /// Delete data from the table.
+        /// </summary>
+        private void GridClear() => dgvCinema.Rows.Clear();
+
+        /// <summary>
+        /// Create a new SearchRequest in the database for the selected ComboBox("Filter", "Sort", "PageNumber") and updates the tabular data on it.
+        /// </summary>
+        private void UpdateGridData()
+        {
+            _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Sort.GetSortItem(), Page.GetPage());
+            LoadData();
+        }
+
+        /// <summary>
+        /// The method creates a data change/input restriction if the number of pages is zero.
+        /// </summary>
+        private void CustomUpdateFormState()
+        {
+            var hasPageControl = _pagedList.PageCount > 0 ? true : false;
+
+            btnBackPage.Enabled =
+                btnEndPage.Enabled =
+                    btnNextPage.Enabled =
+                        btnStartPage.Enabled =
+                            labelTotalPage.Enabled =
+                                textBoxPage.Enabled =
+                                    hasPageControl;
         }
 
         /// <summary>
@@ -327,52 +340,52 @@ namespace WatchList.WinForms
             return CinemaModel.CreateNonPlanned(title, sequel, dateWatch, grade, status, type, id);
         }
 
-        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.Cells[indexColumn].Value.ToString() ?? throw new Exception("String cannot be null.");
+        /// <summary>
+        /// Gets the line numbers that are selected, without duplicates.
+        /// </summary>
+        /// <returns>
+        /// Selection line numbers.
+        /// </returns>
+        private HashSet<int> GetSelectedRowIndexes()
+        {
+            var result = new HashSet<int>();
+            foreach (DataGridViewRow dgvCinemaSelectedRow in dgvCinema.SelectedRows)
+            {
+                result.Add(dgvCinemaSelectedRow.Index);
+            }
+
+            foreach (DataGridViewCell dgvCinemaSelectedCell in dgvCinema.SelectedCells)
+            {
+                result.Add(dgvCinemaSelectedCell.RowIndex);
+            }
+
+            return result;
+        }
+
+        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.StringFromCell(indexColumn) ?? throw new Exception("String cannot be null.");
 
         /// <summary>
-        /// Filling in tabular data from a file.
+        /// The method checks whether the element selection filter has been changed.
         /// </summary>
-        private void LoadData()
-        {
-            try
-            {
-                _searchRequest.Page = Page.GetPage();
-                _searchRequest.Sort = Sort.GetSortItem();
-                _pagedList = _itemService.GetPage(_searchRequest);
-                var item = _pagedList.Items;
-
-                GridClear();
-                AddCinemaGrid(item);
-                CustomUpdateFormState();
-
-                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1).ToString());
-                textBoxPage.Text = _pagedList.PageNumber.ToString();
-            }
-            catch (Exception error)
-            {
-                MessageBoxProvider.ShowError(error.Message);
-            }
-        }
-
-        private void GridClear() => dgvCinema.Rows.Clear();
-
-        private void WriteDataToTable()
-        {
-            _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Sort.GetSortItem(), Page.GetPage());
-            LoadData();
-        }
-
-        private void CustomUpdateFormState()
-        {
-            var hasPageControl = _pagedList.PageCount > 0 ? true : false;
-
-            btnBackPage.Enabled = btnEndPage.Enabled = btnNextPage.Enabled = btnStartPage.Enabled = labelTotalPage.Enabled = textBoxPage.Enabled = hasPageControl;
-        }
-
+        /// <returns>
+        /// True - The filter has been changed. False - else.
+        /// </returns>
         private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
 
+        /// <summary>
+        /// The method checks if the size of the page data has changed.
+        /// </summary>
+        /// <returns>
+        /// True - The page size has been changed. False - else.
+        /// </returns>
         private bool IsChangedSizePage() => _searchRequest.Page.Size != Page.Size;
 
+        /// <summary>
+        /// Get the size of the page data.
+        /// </summary>
+        /// <returns>
+        /// Page size.
+        /// </returns>
         private int SelectedPageSize() => Page.Items[cmbPageSize.SelectedIndex];
     }
 }

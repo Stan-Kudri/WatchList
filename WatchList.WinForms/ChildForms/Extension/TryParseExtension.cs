@@ -25,5 +25,10 @@ namespace WatchList.WinForms.ChildForms.Extension
                 throw new InvalidOperationException("Invalid cast.");
             }
         }
+
+        public static bool ParseIntToDecimal(this int? valueInt, out decimal valueDecimal)
+        {
+            return decimal.TryParse(valueInt.ToString(), out valueDecimal);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace WatchList.WinForms.EditorForm
 
         public EditorItemCinemaForm(CinemaModel cinema)
         {
-            _cinema = cinema ?? throw new ArgumentException("Item cinema not null", nameof(cinema));
+            _cinema = cinema ?? throw new ArgumentNullException("Item cinema not null", nameof(cinema));
 
             InitializeComponent();
         }
@@ -57,10 +57,7 @@ namespace WatchList.WinForms.EditorForm
             }
         }
 
-        private void BtnReturnDataCinema_Click(object sender, EventArgs e)
-        {
-            SetupDefaultValues(_cinema);
-        }
+        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues(_cinema);
 
         private void EditorItemCinemaForm_Load(object sender, EventArgs e)
         {
@@ -82,7 +79,7 @@ namespace WatchList.WinForms.EditorForm
         {
             if (cinema.Sequel == 0)
             {
-                throw new Exception("Number sequel number greater than zero");
+                throw new ArgumentException("Number sequel number greater than zero");
             }
 
             txtEditName.Text = cinema.Title;
@@ -100,7 +97,7 @@ namespace WatchList.WinForms.EditorForm
             {
                 numericGradeCinema.Enabled = true;
 
-                if (decimal.TryParse(cinema.Grade.ToString(), out var value))
+                if (cinema.Grade.ParseIntToDecimal(out var value))
                 {
                     numericGradeCinema.Value = value;
                 }

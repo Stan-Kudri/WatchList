@@ -23,7 +23,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
             _type = type;
             _status = status;
             _date = date;
-            _grade = grade == null ? null : Convert.ToInt32((decimal)grade);
+            _grade = grade != null ? Convert.ToInt32((decimal)grade) : null;
         }
 
         public Guid Id
