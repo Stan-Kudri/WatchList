@@ -96,11 +96,7 @@ namespace WatchList.WinForms.ChildForms
             if (cinema.HasGrade())
             {
                 numericGradeCinema.Enabled = true;
-
-                if (cinema.Grade.ParseIntToDecimal(out var value))
-                {
-                    numericGradeCinema.Value = value;
-                }
+                numericGradeCinema.Value = cinema.Grade.ToDecimal();
             }
         }
 

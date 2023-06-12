@@ -322,8 +322,8 @@ namespace WatchList.WinForms
             var rowItems = dgvCinema.Rows[indexRow];
             var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
 
-            CellElement(rowItems, IndexColumnSequel).ParseInt(out int sequel);
-            CellElement(rowItems, IndexColumnId).ParseGuid(out Guid id);
+            var sequel = CellElement(rowItems, IndexColumnSequel).ParseInt();
+            var id = CellElement(rowItems, IndexColumnId).ParseGuid();
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
             var strDateWatch = CellElement(rowItems, IndexColumnDate);
@@ -334,7 +334,7 @@ namespace WatchList.WinForms
                 return CinemaModel.CreatePlanned(title, sequel, status, type, id);
             }
 
-            CellElement(rowItems, IndexColumnGrade).ParseDecimal(out decimal grade);
+            var grade = CellElement(rowItems, IndexColumnGrade).ParseDecimal();
             DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
 
             return CinemaModel.CreateNonPlanned(title, sequel, dateWatch, grade, status, type, id);

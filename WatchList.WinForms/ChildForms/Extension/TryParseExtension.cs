@@ -2,33 +2,36 @@ namespace WatchList.WinForms.ChildForms.Extension
 {
     public static class TryParseExtension
     {
-        public static void ParseGuid(this string? str, out Guid value)
+        public static Guid ParseGuid(this string? str)
         {
-            if (!Guid.TryParse(str, out value))
+            if (!Guid.TryParse(str, out var value))
             {
                 throw new InvalidOperationException("Invalid cast.");
             }
+
+            return value;
         }
 
-        public static void ParseInt(this string? str, out int value)
+        public static int ParseInt(this string? str)
         {
-            if (!int.TryParse(str, out value))
+            if (!int.TryParse(str, out var value))
             {
                 throw new InvalidOperationException("Invalid cast.");
             }
+
+            return value;
         }
 
-        public static void ParseDecimal(this string? str, out decimal value)
+        public static decimal ParseDecimal(this string? str)
         {
-            if (!decimal.TryParse(str, out value))
+            if (!decimal.TryParse(str, out var value))
             {
                 throw new InvalidOperationException("Invalid cast.");
             }
+
+            return value;
         }
 
-        public static bool ParseIntToDecimal(this int? valueInt, out decimal valueDecimal)
-        {
-            return decimal.TryParse(valueInt.ToString(), out valueDecimal);
-        }
+        public static decimal ToDecimal(this int? valueInt) => Convert.ToDecimal(valueInt);
     }
 }

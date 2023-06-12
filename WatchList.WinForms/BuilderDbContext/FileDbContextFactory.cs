@@ -5,7 +5,7 @@ namespace WatchList.WinForms.BuilderDbContext
 {
     public sealed class FileDbContextFactory
     {
-        public string _path = "app.db";
+        public string _path;
 
         public FileDbContextFactory(string path) => _path = path;
 
