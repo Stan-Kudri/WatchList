@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using WatchList.Core.Repository.DbContext;
+using WatchList.Core.Repository.Db;
 
-namespace WatchList.WinForms.DbContext
+namespace WatchList.WinForms.BuilderDbContext
 {
     public sealed class FileDbContextFactory
     {
@@ -12,7 +12,9 @@ namespace WatchList.WinForms.DbContext
         public WatchCinemaDbContext Create()
         {
             var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={_path}");
-            return new WatchCinemaDbContext(builder.Options);
+            var dbContext = new WatchCinemaDbContext(builder.Options);
+            dbContext.Database.EnsureCreated();
+            return dbContext;
         }
     }
 }

@@ -1,6 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using WatchList.Core.Repository.DbContext;
+using WatchList.Core.Repository.Db;
 
 namespace WatchList.Test
 {
@@ -11,9 +11,10 @@ namespace WatchList.Test
             var sqlLiteConnection = new SqliteConnection("Data Source=:memory:");
             sqlLiteConnection.Open();
 
-            var option = new DbContextOptionsBuilder().UseSqlite(sqlLiteConnection);
-
-            return new WatchCinemaDbContext(option.Options);
+            var builder = new DbContextOptionsBuilder().UseSqlite(sqlLiteConnection);
+            var dbContext = new WatchCinemaDbContext(builder.Options);
+            dbContext.Database.EnsureCreated();
+            return dbContext;
         }
     }
 }

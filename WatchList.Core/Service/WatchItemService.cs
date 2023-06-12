@@ -1,7 +1,7 @@
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
-using WatchList.Core.Repository.DbContext;
+using WatchList.Core.Repository.Db;
 using WatchList.Core.Service.Component;
 
 namespace WatchList.Core.Service

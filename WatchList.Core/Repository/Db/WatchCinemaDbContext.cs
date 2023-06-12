@@ -2,14 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Repository.Extension;
 
-namespace WatchList.Core.Repository.DbContext
+namespace WatchList.Core.Repository.Db
 {
-    public class WatchCinemaDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class WatchCinemaDbContext : DbContext
     {
         public WatchCinemaDbContext(DbContextOptions options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
 
         public DbSet<WatchItem> WatchItem { get; set; } = null!;
