@@ -12,8 +12,6 @@ namespace WatchList.Core.Repository
 
         public WatchItemRepository(WatchCinemaDbContext db) => _db = db;
 
-        public List<WatchItem> GetAll() => _db.WatchItem.ToList() ?? new List<WatchItem>();
-
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest searchRequest)
         {
             var query = searchRequest.ApplyFilter(_db.WatchItem);

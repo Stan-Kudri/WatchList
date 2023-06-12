@@ -62,7 +62,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             dbContext.AddRange(items);
             dbContext.SaveChanges();
             service.Update(editItem, updateItem);
-            var actualItems = service.GetAll();
+            var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
             actualItems.Should().Equal(expectItems);
@@ -81,7 +81,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             dbContext.AddRange(items);
             dbContext.SaveChanges();
             service.Update(editItem, updateItem);
-            var actualItems = service.GetAll();
+            var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
             actualItems.Should().Equal(items);

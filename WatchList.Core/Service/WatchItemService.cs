@@ -27,8 +27,6 @@ namespace WatchList.Core.Service
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
 
-        public List<WatchItem> GetAll() => _repository.GetAll();
-
         public void Remove(Guid id) => _repository.Remove(id);
 
         public void Replace(WatchCinemaDbContext dbContext)

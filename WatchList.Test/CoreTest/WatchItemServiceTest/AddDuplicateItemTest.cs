@@ -79,7 +79,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             dbContext.AddRange(items);
             dbContext.SaveChanges();
             service.Add(addItem);
-            var actualItems = service.GetAll();
+            var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
             actualItems.Should().Equal(expectItems);
