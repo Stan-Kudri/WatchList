@@ -27,12 +27,6 @@ namespace WatchList.Core.Repository
             _db.SaveChanges();
         }
 
-        public void AddRange(List<WatchItem> items)
-        {
-            _db.AddRange(items);
-            _db.SaveChanges();
-        }
-
         public void RemoveRange() => _db.WatchItem.ExecuteDelete();
 
         public void Remove(Guid id)

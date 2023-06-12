@@ -4,7 +4,6 @@ using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
-using WatchList.Core.Repository;
 
 namespace WatchList.Test.CoreTest
 {
@@ -215,11 +214,11 @@ namespace WatchList.Test.CoreTest
         {
             // Arrange
             var appDbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(appDbContext);
             var watchItemSearchRequest = new WatchItemSearchRequest(new FilterItem(), sortField, new Page(NumberStartPage, StartPageSize));
 
             // Act
-            itemRepository.AddRange(watchItems);
+            appDbContext.AddRange(watchItems);
+            appDbContext.SaveChanges();
             var item = watchItemSearchRequest.ApplyOrderBy(appDbContext.WatchItem);
             var actualItemPage = item.ToList();
 

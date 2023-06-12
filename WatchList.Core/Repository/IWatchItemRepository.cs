@@ -1,13 +1,14 @@
 using WatchList.Core.Model.ItemCinema;
+using WatchList.Core.PageItem;
 
 namespace WatchList.Core.Repository
 {
     public interface IWatchItemRepository
     {
-        List<WatchItem> GetAll();
+        public PagedList<WatchItem> GetPage(WatchItemSearchRequest searchRequest);
 
-        void Add(WatchItem items);
+        public void Add(WatchItem items);
 
-        void Remove(Guid id);
+        public void Remove(Guid id);
     }
 }

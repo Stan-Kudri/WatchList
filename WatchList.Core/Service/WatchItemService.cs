@@ -1,4 +1,6 @@
+using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
+using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
 using WatchList.Core.Repository.Db;
@@ -33,7 +35,20 @@ namespace WatchList.Core.Service
         {
             var repository = new WatchItemRepository(dbContext);
             _repository.RemoveRange();
-            _repository.AddRange(repository.GetAll());
+            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
+            var pageCourt = searchRequest.Page.Number;
+
+            if (pageCourt < 1)
+            {
+                throw new InvalidOperationException("There are no elements in the file.");
+            }
+
+            for (var i = 1; i <= pageCourt; i++)
+            {
+                _db.AddRange(repository.GetPage(searchRequest).Items);
+            }
+
+            _db.SaveChanges();
         }
 
         public void Add(WatchItem item)

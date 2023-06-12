@@ -1,7 +1,6 @@
 using FluentAssertions;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Test.CoreTest.WatchItemServiceTest.Component;
 
@@ -56,12 +55,12 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
-            var repository = new WatchItemRepository(dbContext);
             var messageBox = new FakeMessageBox(true);
             var service = new WatchItemService(dbContext, messageBox);
 
             // Act
-            repository.AddRange(items);
+            dbContext.AddRange(items);
+            dbContext.SaveChanges();
             service.Update(editItem, updateItem);
             var actualItems = service.GetAll();
 
@@ -75,12 +74,12 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
-            var repository = new WatchItemRepository(dbContext);
             var messageBox = new FakeMessageBox(false);
             var service = new WatchItemService(dbContext, messageBox);
 
             // Act
-            repository.AddRange(items);
+            dbContext.AddRange(items);
+            dbContext.SaveChanges();
             service.Update(editItem, updateItem);
             var actualItems = service.GetAll();
 
