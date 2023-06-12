@@ -10,6 +10,6 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.Component
 
         public FakeMessageBox(bool result) => _result = result;
 
-        public bool ShowQuestion(string message = DuplicateReplaceMessage) => _result;
+        public bool ShowQuestionSaveItem(string message = DuplicateReplaceMessage) => _result;
     }
 }

@@ -53,7 +53,7 @@ namespace WatchList.Core.Service
                 return;
             }
 
-            if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
+            if (_messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
             {
                 item.Id = selectItem[0];
                 Update(item);
@@ -73,7 +73,7 @@ namespace WatchList.Core.Service
             }
             else if (countDuplicate == 1)
             {
-                if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
+                if (_messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
                 {
                     modifiedItem.Id = selectItem[0];
                     Remove(oldItem.Id);
