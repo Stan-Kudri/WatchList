@@ -219,7 +219,7 @@ namespace WatchList.Test.CoreTest
             var watchItemSearchRequest = new WatchItemSearchRequest(new FilterItem(), sortField, new Page(NumberStartPage, StartPageSize));
 
             // Act
-            itemRepository.Add(watchItems);
+            itemRepository.AddRange(watchItems);
             var item = watchItemSearchRequest.ApplyOrderBy(appDbContext.WatchItem);
             var actualItemPage = item.ToList();
 

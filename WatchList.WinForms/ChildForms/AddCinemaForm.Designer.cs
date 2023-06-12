@@ -67,12 +67,12 @@ namespace WatchList.WinForms
             // 
             cinemaModelsBindingSource.DataSource = typeof(CinemaModel);
             // 
-            // numericSequel
+            // numericSeaquel
             // 
             numericSeaquel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "Sequel", true));
-            numericSeaquel.Location = new Point(240, 100);
+            numericSeaquel.Location = new Point(300, 100);
             numericSeaquel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericSeaquel.Name = "numericSequel";
+            numericSeaquel.Name = "numericSeaquel";
             numericSeaquel.Size = new Size(55, 23);
             numericSeaquel.TabIndex = 11;
             numericSeaquel.Value = new decimal(new int[] { 1, 0, 0, 0 });
@@ -94,7 +94,7 @@ namespace WatchList.WinForms
             numericGradeCinema.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "Grade", true));
             numericGradeCinema.Enabled = false;
             numericGradeCinema.InterceptArrowKeys = false;
-            numericGradeCinema.Location = new Point(240, 128);
+            numericGradeCinema.Location = new Point(295, 128);
             numericGradeCinema.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             numericGradeCinema.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericGradeCinema.Name = "numericGradeCinema";
@@ -110,7 +110,7 @@ namespace WatchList.WinForms
             labelGrade.Depth = 0;
             labelGrade.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelGrade.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelGrade.Location = new Point(310, 130);
+            labelGrade.Location = new Point(240, 128);
             labelGrade.MouseState = MaterialSkin.MouseState.HOVER;
             labelGrade.Name = "labelGrade";
             labelGrade.Size = new Size(43, 19);
@@ -138,7 +138,7 @@ namespace WatchList.WinForms
             labelNumberSequel.Depth = 0;
             labelNumberSequel.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelNumberSequel.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelNumberSequel.Location = new Point(305, 102);
+            labelNumberSequel.Location = new Point(240, 100);
             labelNumberSequel.MouseState = MaterialSkin.MouseState.HOVER;
             labelNumberSequel.Name = "labelNumberSequel";
             labelNumberSequel.Size = new Size(49, 19);
@@ -217,9 +217,9 @@ namespace WatchList.WinForms
             cmbTypeCinema.DataBindings.Add(new Binding("DataSource", typeModelBindingSource, "Items", true));
             cmbTypeCinema.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTypeCinema.FormattingEnabled = true;
-            cmbTypeCinema.Location = new Point(10, 100);
+            cmbTypeCinema.Location = new Point(55, 100);
             cmbTypeCinema.Name = "cmbTypeCinema";
-            cmbTypeCinema.Size = new Size(155, 23);
+            cmbTypeCinema.Size = new Size(170, 23);
             cmbTypeCinema.TabIndex = 27;
             cmbTypeCinema.SelectedIndexChanged += CmbTypeCinema_Changed;
             // 
@@ -233,7 +233,7 @@ namespace WatchList.WinForms
             cmbStatusCinema.DataBindings.Add(new Binding("DataSource", statusModelBindingSource, "Items", true));
             cmbStatusCinema.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbStatusCinema.FormattingEnabled = true;
-            cmbStatusCinema.Location = new Point(10, 128);
+            cmbStatusCinema.Location = new Point(70, 128);
             cmbStatusCinema.Name = "cmbStatusCinema";
             cmbStatusCinema.Size = new Size(155, 23);
             cmbStatusCinema.TabIndex = 28;
@@ -250,7 +250,7 @@ namespace WatchList.WinForms
             labelStatus.Depth = 0;
             labelStatus.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelStatus.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelStatus.Location = new Point(175, 130);
+            labelStatus.Location = new Point(10, 128);
             labelStatus.MouseState = MaterialSkin.MouseState.HOVER;
             labelStatus.Name = "labelStatus";
             labelStatus.Size = new Size(47, 19);
@@ -264,7 +264,7 @@ namespace WatchList.WinForms
             labelType.Depth = 0;
             labelType.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelType.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelType.Location = new Point(175, 102);
+            labelType.Location = new Point(10, 100);
             labelType.MouseState = MaterialSkin.MouseState.HOVER;
             labelType.Name = "labelType";
             labelType.Size = new Size(36, 19);

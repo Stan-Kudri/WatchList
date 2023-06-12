@@ -128,7 +128,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
             var watchItemSearchRequest = new WatchItemSearchRequest(new FilterItem(typeFilter, StatusFilter.AllCinema), SortField.Title, new Page());
 
             // Act
-            itemRepository.Add(watchItems);
+            itemRepository.AddRange(watchItems);
             var actualWatchItem = watchItemSearchRequest.ApplyFilter(dbContext.WatchItem).ToList();
 
             // Assert

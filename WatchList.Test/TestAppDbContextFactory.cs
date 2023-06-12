@@ -12,9 +12,8 @@ namespace WatchList.Test
             sqlLiteConnection.Open();
 
             var option = new DbContextOptionsBuilder().UseSqlite(sqlLiteConnection);
-            var context = new WatchCinemaDbContext(option.Options);
 
-            return context;
+            return new WatchCinemaDbContext(option.Options);
         }
     }
 }

@@ -3,6 +3,7 @@ using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.WinForms.BindingItem.ModelAddAndEditForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
+using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms.EditorForm
 {

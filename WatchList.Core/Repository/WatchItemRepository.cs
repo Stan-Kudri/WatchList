@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository.DbContext;
@@ -9,14 +10,11 @@ namespace WatchList.Core.Repository
     {
         private readonly WatchCinemaDbContext _db;
 
-        public WatchItemRepository(WatchCinemaDbContext db)
-        {
-            _db = db;
-        }
+        public WatchItemRepository(WatchCinemaDbContext db) => _db = db;
 
         public List<WatchItem> GetAll() => _db.WatchItem.ToList() ?? new List<WatchItem>();
 
-        public PagedList<WatchItem> GetPageCinema(WatchItemSearchRequest searchRequest)
+        public PagedList<WatchItem> GetPage(WatchItemSearchRequest searchRequest)
         {
             var query = searchRequest.ApplyFilter(_db.WatchItem);
             query = searchRequest.ApplyOrderBy(query);
@@ -29,29 +27,24 @@ namespace WatchList.Core.Repository
             _db.SaveChanges();
         }
 
-        public void Add(List<WatchItem> item)
+        public void AddRange(List<WatchItem> items)
         {
-            _db.AddRange(item);
+            _db.AddRange(items);
             _db.SaveChanges();
         }
 
-        public void RemoveAllItems()
-        {
-            foreach (var item in _db.WatchItem)
-            {
-                _db.Remove(item);
-            }
-        }
+        public void RemoveRange() => _db.WatchItem.ExecuteDelete();
 
         public void Remove(Guid id)
         {
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);
+
             if (item == null)
             {
                 return;
             }
 
-            _db.RemoveRange(item);
+            _db.Remove(item);
             _db.SaveChanges();
         }
 
@@ -59,7 +52,7 @@ namespace WatchList.Core.Repository
         {
             if (editItem == null)
             {
-                return;
+                throw new ArgumentNullException("The received parameters are not correct.");
             }
 
             var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
@@ -74,6 +67,7 @@ namespace WatchList.Core.Repository
             item.Grade = editItem.Grade;
             item.Title = editItem.Title;
             item.Type = editItem.Type;
+            item.Status = editItem.Status;
 
             _db.SaveChanges();
         }
