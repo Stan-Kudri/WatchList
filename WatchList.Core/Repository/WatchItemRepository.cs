@@ -37,15 +37,15 @@ namespace WatchList.Core.Repository
 
         public void Remove(Guid id)
         {
-            var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);
-
-            if (item == null)
+            var selectItem = _db.WatchItem.Where(x => x.Id == id);
+            if (selectItem.Count() != 1)
             {
-                return;
+                throw new InvalidOperationException("Interaction element not found.");
             }
-
-            _db.Remove(item);
-            _db.SaveChanges();
+            else
+            {
+                selectItem.ExecuteDelete();
+            }
         }
 
         public void Update(WatchItem editItem)
@@ -55,12 +55,7 @@ namespace WatchList.Core.Repository
                 throw new ArgumentNullException("The received parameters are not correct.");
             }
 
-            var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
-
-            if (item == null)
-            {
-                return;
-            }
+            var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id) ?? throw new InvalidOperationException("Interaction element not found.");
 
             item.Sequel = editItem.Sequel;
             item.Date = editItem.Date;
