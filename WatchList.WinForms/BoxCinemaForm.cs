@@ -326,7 +326,6 @@ namespace WatchList.WinForms
             var id = CellElement(rowItems, IndexColumnId).ParseGuid();
 
             var type = TypeCinema.FromName(CellElement(rowItems, IndexColumnType));
-            var strDateWatch = CellElement(rowItems, IndexColumnDate);
             var status = StatusCinema.FromName(CellElement(rowItems, IndexColumnStatus));
 
             if (status == StatusCinema.Planned)
@@ -335,7 +334,8 @@ namespace WatchList.WinForms
             }
 
             var grade = CellElement(rowItems, IndexColumnGrade).ParseDecimal();
-            DateTime? dateWatch = status == StatusCinema.Viewed && strDateWatch != null ? DateTime.Parse(strDateWatch) : null;
+            var strDateWatch = CellElement(rowItems, IndexColumnDate);
+            DateTime? dateWatch = status == StatusCinema.Viewed ? DateTime.Parse(strDateWatch) : null;
 
             return CinemaModel.CreateNonPlanned(title, sequel, dateWatch, grade, status, type, id);
         }
@@ -362,7 +362,7 @@ namespace WatchList.WinForms
             return result;
         }
 
-        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.GetString(indexColumn) ?? throw new Exception("String cannot be null.");
+        private string CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.GetString(indexColumn) ?? throw new Exception("String cannot be null.");
 
         /// <summary>
         /// The method checks whether the element selection filter has been changed.
