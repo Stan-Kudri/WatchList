@@ -121,7 +121,7 @@ namespace WatchList.WinForms
         private void BtnDeleteMovie_Click(object sender, EventArgs e)
         {
             var selectedRowIds = GetSelectedRowIndexes()
-                .Select(idx => dgvCinema.IdRowItem(idx))
+                .Select(idx => dgvCinema.Rows[idx].Get<Guid>(IndexColumnId))
                 .ToList();
 
             if (selectedRowIds.Count == 0)
@@ -233,7 +233,7 @@ namespace WatchList.WinForms
         {
             foreach (DataGridViewRow row in dgvCinema.Rows)
             {
-                var idItem = row.IdRowItem();
+                var idItem = row.Get<Guid?>(IndexColumnId);
                 if (idItem != null && idItem == id)
                 {
                     dgvCinema.Rows.RemoveAt(row.Index);
@@ -362,7 +362,7 @@ namespace WatchList.WinForms
             return result;
         }
 
-        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.StringFromCell(indexColumn) ?? throw new Exception("String cannot be null.");
+        private string? CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.GetString(indexColumn) ?? throw new Exception("String cannot be null.");
 
         /// <summary>
         /// The method checks whether the element selection filter has been changed.
