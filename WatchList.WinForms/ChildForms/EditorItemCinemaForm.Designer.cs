@@ -1,6 +1,6 @@
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 
-namespace WatchList.WinForms.EditorForm
+namespace WatchList.WinForms.ChildForms
 {
     partial class EditorItemCinemaForm
     {

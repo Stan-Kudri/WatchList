@@ -5,7 +5,7 @@ using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
 using WatchList.WinForms.Message;
 
-namespace WatchList.WinForms.EditorForm
+namespace WatchList.WinForms.ChildForms
 {
     /// <summary>
     /// This class Form performs an function Edit Cinema item.
