@@ -25,9 +25,6 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
             set => SetField(ref _status, value);
         }
 
-        public FilterItem GetFilter()
-        {
-            return new FilterItem(Type, Status);
-        }
+        public FilterItem GetFilter() => new FilterItem(Type, Status);
     }
 }

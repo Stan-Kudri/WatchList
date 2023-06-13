@@ -12,10 +12,7 @@ namespace WatchList.Core.Model.Filter.Components
         public static readonly TypeFilter Cartoon = new TypeFilter("Cartoon", 4, TypeCinema.Cartoon);
 
         private TypeFilter(string name, int value, TypeCinema typeCinema)
-            : base(name, value)
-        {
-            Type = typeCinema;
-        }
+            : base(name, value) => Type = typeCinema;
 
         public TypeCinema Type { get; }
     }

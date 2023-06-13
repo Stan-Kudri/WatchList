@@ -12,10 +12,7 @@ namespace WatchList.Core.Model.Filter.Components
         public static readonly StatusFilter ThrownCinema = new StatusFilter("Thrown Watch Cinema", 4, StatusCinema.Thrown);
 
         private StatusFilter(string name, int value, StatusCinema status)
-            : base(name, value)
-        {
-            Status = status;
-        }
+            : base(name, value) => Status = status;
 
         public StatusCinema Status { get; }
     }

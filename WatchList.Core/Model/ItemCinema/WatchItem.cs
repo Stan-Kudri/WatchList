@@ -42,10 +42,7 @@ namespace WatchList.Core.Model.ItemCinema
 
         public override int GetHashCode() => HashCode.Combine(Id, Title, Grade, Date, Status, Type, Sequel);
 
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as WatchItem);
-        }
+        public override bool Equals(object? obj) => Equals(obj as WatchItem);
 
         public bool Equals(WatchItem? other)
         {
