@@ -10,7 +10,6 @@ namespace WatchList.Test
         {
             var sqlLiteConnection = new SqliteConnection("Data Source=:memory:");
             sqlLiteConnection.Open();
-
             var builder = new DbContextOptionsBuilder().UseSqlite(sqlLiteConnection);
             var dbContext = new WatchCinemaDbContext(builder.Options);
             dbContext.Database.EnsureCreated();

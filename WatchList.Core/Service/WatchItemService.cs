@@ -36,7 +36,7 @@ namespace WatchList.Core.Service
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
             var pageCourt = searchRequest.Page.Number;
 
-            if (pageCourt < 1)
+            if (pageCourt < 0)
             {
                 throw new InvalidOperationException("There are no elements in the file.");
             }
@@ -60,7 +60,8 @@ namespace WatchList.Core.Service
             {
                 throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
             }
-            else if (countDuplicate == 0)
+
+            if (countDuplicate == 0)
             {
                 _repository.Add(item);
                 return;
@@ -84,7 +85,8 @@ namespace WatchList.Core.Service
             {
                 throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
             }
-            else if (countDuplicate == 1)
+
+            if (countDuplicate == 1)
             {
                 if (_messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
                 {
