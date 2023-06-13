@@ -1,5 +1,6 @@
 using MaterialSkin.Controls;
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelAddAndEditForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
@@ -13,11 +14,12 @@ namespace WatchList.WinForms.ChildForms
     public partial class EditorItemCinemaForm : MaterialForm
     {
         private readonly CinemaModel _cinema;
+        private readonly IMessageBox _messageBox;
 
         public EditorItemCinemaForm(CinemaModel cinema)
         {
             _cinema = cinema ?? throw new ArgumentNullException("Item cinema not null", nameof(cinema));
-
+            _messageBox = new MessageBoxShow();
             InitializeComponent();
         }
 
@@ -40,18 +42,18 @@ namespace WatchList.WinForms.ChildForms
         {
             if (!ValidateFields(out string errorMessage))
             {
-                MessageBoxProvider.ShowWarning(errorMessage);
+                _messageBox.ShowWarning(errorMessage);
                 DialogResult = DialogResult.TryAgain;
             }
             else
             {
-                if (HasChanges() && MessageBoxProvider.ShowQuestion("Save edit item Cinema?"))
+                if (HasChanges() && _messageBox.ShowQuestion("Save edit item Cinema?"))
                 {
                     DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    MessageBoxProvider.ShowInfo("No changed item cinema.");
+                    _messageBox.ShowInfo("No changed item cinema.");
                     Close();
                 }
             }

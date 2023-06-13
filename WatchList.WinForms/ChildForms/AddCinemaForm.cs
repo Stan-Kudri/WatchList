@@ -1,5 +1,6 @@
 using MaterialSkin.Controls;
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelAddAndEditForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
@@ -12,10 +13,13 @@ namespace WatchList.WinForms.ChildForms
     /// </summary>
     public partial class AddCinemaForm : MaterialForm
     {
+        private readonly IMessageBox _messageBox;
+
         private StatusCinema _status = StatusCinema.Planned;
 
         public AddCinemaForm()
         {
+            _messageBox = new MessageBoxShow();
             InitializeComponent();
         }
 
@@ -35,7 +39,7 @@ namespace WatchList.WinForms.ChildForms
         {
             if (!ValidateFields(out var errorMessage))
             {
-                MessageBoxProvider.ShowWarning(errorMessage);
+                _messageBox.ShowWarning(errorMessage);
                 DialogResult = DialogResult.TryAgain;
             }
             else

@@ -5,6 +5,7 @@ using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository.Db;
 using WatchList.Core.Service;
+using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.BuilderDbContext;
 using WatchList.WinForms.ChildForms;
@@ -30,6 +31,7 @@ namespace WatchList.WinForms
         private const int IndexColumnType = 6;
 
         private readonly WatchItemService _itemService;
+        private readonly IMessageBox _messageBox;
 
         private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
 
@@ -38,9 +40,8 @@ namespace WatchList.WinForms
         public BoxCinemaForm(WatchCinemaDbContext db)
         {
             InitializeComponent();
-
-            var messageBoxQuestion = new MessageBoxQuestion();
-            _itemService = new WatchItemService(db, messageBoxQuestion);
+            _messageBox = new MessageBoxShow();
+            _itemService = new WatchItemService(db, _messageBox);
             _pagedList = _itemService.GetPage(_searchRequest);
 
             Load += BoxCinemaForm_Load;
@@ -113,7 +114,7 @@ namespace WatchList.WinForms
             }
             else
             {
-                MessageBoxProvider.ShowWarning("Select one item.");
+                _messageBox.ShowWarning("Select one item.");
             }
         }
 
@@ -125,11 +126,11 @@ namespace WatchList.WinForms
 
             if (selectedRowIds.Count == 0)
             {
-                MessageBoxProvider.ShowWarning(HighlightTheDesiredLine);
+                _messageBox.ShowWarning(HighlightTheDesiredLine);
                 return;
             }
 
-            if (!MessageBoxProvider.ShowQuestion("Delete selected items?"))
+            if (!_messageBox.ShowQuestion("Delete selected items?"))
             {
                 return;
             }
@@ -274,7 +275,7 @@ namespace WatchList.WinForms
             }
             catch (Exception error)
             {
-                MessageBoxProvider.ShowError(error.Message);
+                _messageBox.ShowError(error.Message);
             }
         }
 
