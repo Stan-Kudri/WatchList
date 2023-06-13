@@ -56,7 +56,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var messageBox = new FakeMessageBox(true);
-            var service = new WatchItemService(dbContext, messageBox);
+            var service = new WatchItemService(dbContext, messageBox.SaveItem());
 
             // Act
             dbContext.AddRange(items);
@@ -75,7 +75,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var messageBox = new FakeMessageBox(false);
-            var service = new WatchItemService(dbContext, messageBox);
+            var service = new WatchItemService(dbContext, messageBox.SaveItem());
 
             // Act
             dbContext.AddRange(items);

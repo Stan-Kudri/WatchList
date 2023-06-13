@@ -1,8 +1,9 @@
+using Moq;
 using WatchList.Core.Service.Component;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest.Component
 {
-    public class FakeMessageBox : IMessageBox
+    public class FakeMessageBox
     {
         private const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
 
@@ -10,20 +11,11 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.Component
 
         public FakeMessageBox(bool result) => _result = result;
 
-        public bool ShowQuestionSaveItem(string message = DuplicateReplaceMessage) => _result;
-
-        public void ShowError(string message)
+        public IMessageBox SaveItem(string message = DuplicateReplaceMessage)
         {
-        }
-
-        public void ShowInfo(string message)
-        {
-        }
-
-        public bool ShowQuestion(string message) => _result;
-
-        public void ShowWarning(string message)
-        {
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(message)).Returns(_result);
+            return messageBox.Object;
         }
     }
 }
