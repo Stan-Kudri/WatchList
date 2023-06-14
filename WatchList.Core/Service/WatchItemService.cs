@@ -51,11 +51,6 @@ namespace WatchList.Core.Service
                 Take(2).Select(x => x.Id).ToList();
             var countDuplicate = selectItem.Count;
 
-            if (countDuplicate > 1)
-            {
-                throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
-            }
-
             if (countDuplicate == 0)
             {
                 _repository.Add(item);
@@ -75,11 +70,6 @@ namespace WatchList.Core.Service
                 x.Title == modifiedItem.Title && x.Sequel == modifiedItem.Sequel && x.Type == modifiedItem.Type && x.Id != modifiedItem.Id).
                 Take(2).Select(x => x.Id).ToList();
             var countDuplicate = selectItem.Count;
-
-            if (countDuplicate > 1)
-            {
-                throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
-            }
 
             if (countDuplicate == 1)
             {
