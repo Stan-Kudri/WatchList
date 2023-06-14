@@ -41,6 +41,6 @@ namespace WatchList.Core.Model.Filter
         public override bool Equals(object? obj) => Equals(obj as FilterItem);
 
         public bool Equals(FilterItem? other) =>
-            other == null ? false : TypeFilter == other.TypeFilter && StatusFilter == other.StatusFilter;
+            other != null && TypeFilter == other.TypeFilter && StatusFilter == other.StatusFilter;
     }
 }

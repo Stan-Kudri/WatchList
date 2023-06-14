@@ -34,14 +34,9 @@ namespace WatchList.Core.Service
             var repository = new WatchItemRepository(dbContext);
             _repository.RemoveRange();
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
-            var pageCourt = searchRequest.Page.Number;
+            var pageCount = searchRequest.Page.Number;
 
-            if (pageCourt < 0)
-            {
-                throw new InvalidOperationException("There are no elements in the file.");
-            }
-
-            for (var i = 1; i <= pageCourt; i++)
+            for (var i = 1; i <= pageCount; i++)
             {
                 _db.AddRange(repository.GetPage(searchRequest).Items);
             }

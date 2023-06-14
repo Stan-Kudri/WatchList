@@ -57,10 +57,10 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             var dbContext = new TestAppDbContextFactory().Create();
             var messageBox = new FakeMessageBox(true);
             var service = new WatchItemService(dbContext, messageBox.SaveItem());
-
-            // Act
             dbContext.AddRange(items);
             dbContext.SaveChanges();
+
+            // Act
             service.Update(editItem, updateItem);
             var actualItems = dbContext.WatchItem.ToList();
 
@@ -76,10 +76,10 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             var dbContext = new TestAppDbContextFactory().Create();
             var messageBox = new FakeMessageBox(false);
             var service = new WatchItemService(dbContext, messageBox.SaveItem());
-
-            // Act
             dbContext.AddRange(items);
             dbContext.SaveChanges();
+
+            // Act
             service.Update(editItem, updateItem);
             var actualItems = dbContext.WatchItem.ToList();
 

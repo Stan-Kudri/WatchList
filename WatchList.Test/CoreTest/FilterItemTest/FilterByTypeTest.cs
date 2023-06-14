@@ -124,10 +124,10 @@ namespace WatchList.Test.CoreTest.FilterItemTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var watchItemSearchRequest = new WatchItemSearchRequest(new FilterItem(typeFilter, StatusFilter.AllCinema), SortField.Title, new Page());
-
-            // Act
             dbContext.AddRange(watchItems);
             dbContext.SaveChanges();
+
+            // Act
             var actualWatchItem = watchItemSearchRequest.ApplyFilter(dbContext.WatchItem).ToList();
 
             // Assert

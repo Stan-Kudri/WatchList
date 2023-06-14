@@ -215,10 +215,10 @@ namespace WatchList.Test.CoreTest
             // Arrange
             var appDbContext = new TestAppDbContextFactory().Create();
             var watchItemSearchRequest = new WatchItemSearchRequest(new FilterItem(), sortField, new Page(NumberStartPage, StartPageSize));
-
-            // Act
             appDbContext.AddRange(watchItems);
             appDbContext.SaveChanges();
+
+            // Act
             var item = watchItemSearchRequest.ApplyOrderBy(appDbContext.WatchItem);
             var actualItemPage = item.ToList();
 

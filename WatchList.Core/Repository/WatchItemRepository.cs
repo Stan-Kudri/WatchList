@@ -30,13 +30,9 @@ namespace WatchList.Core.Repository
         public void Remove(Guid id)
         {
             var selectItem = _db.WatchItem.Where(x => x.Id == id);
-            if (selectItem.Count() != 1)
+            if (selectItem.ExecuteDelete() != 1)
             {
                 throw new InvalidOperationException("Interaction element not found.");
-            }
-            else
-            {
-                selectItem.ExecuteDelete();
             }
         }
 
