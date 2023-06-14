@@ -1,13 +1,16 @@
 using FluentAssertions;
+using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Service;
-using WatchList.Test.CoreTest.WatchItemServiceTest.Component;
+using WatchList.Core.Service.Component;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest
 {
     public class NonDuplicateElementsTest
     {
+        private const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
+
         public static IEnumerable<object[]> ListWithNewItemAdded() => new List<object[]>
         {
             new object[]
@@ -64,8 +67,9 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
-            var messageBox = new FakeMessageBox(true);
-            var service = new WatchItemService(dbContext, messageBox.SaveItem());
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(DuplicateReplaceMessage)).Returns(true);
+            var service = new WatchItemService(dbContext, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
             service.Add(addItem);
@@ -83,8 +87,9 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
-            var messageBox = new FakeMessageBox(true);
-            var service = new WatchItemService(dbContext, messageBox.SaveItem());
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(DuplicateReplaceMessage)).Returns(true);
+            var service = new WatchItemService(dbContext, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
             service.Update(oldItem, updateItem);
