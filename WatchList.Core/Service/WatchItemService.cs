@@ -10,7 +10,7 @@ namespace WatchList.Core.Service
 {
     public class WatchItemService
     {
-        private const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
+        public const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
 
         private readonly WatchCinemaDbContext _db;
 
@@ -77,6 +77,10 @@ namespace WatchList.Core.Service
                 {
                     modifiedItem.Id = selectItem[0];
                     Remove(oldItem.Id);
+                }
+                else
+                {
+                    return;
                 }
             }
 

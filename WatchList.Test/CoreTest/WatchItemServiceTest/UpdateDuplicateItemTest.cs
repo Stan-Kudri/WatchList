@@ -9,8 +9,6 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
 {
     public class UpdateDuplicateItemTest
     {
-        private const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
-
         public static IEnumerable<object[]> ListOfElementsWithReplaceDuplicateElement() => new List<object[]>
         {
             new object[]
@@ -59,7 +57,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowQuestionSaveItem(DuplicateReplaceMessage)).Returns(true);
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
             var service = new WatchItemService(dbContext, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
@@ -79,7 +77,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowQuestionSaveItem(DuplicateReplaceMessage)).Returns(false);
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(false);
             var service = new WatchItemService(dbContext, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();

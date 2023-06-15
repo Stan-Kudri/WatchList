@@ -9,8 +9,6 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
 {
     public class NonDuplicateElementsTest
     {
-        private const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
-
         public static IEnumerable<object[]> ListWithNewItemAdded() => new List<object[]>
         {
             new object[]
@@ -68,13 +66,13 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowQuestionSaveItem(DuplicateReplaceMessage)).Returns(true);
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
             var service = new WatchItemService(dbContext, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
-            service.Add(addItem);
 
             // Act
+            service.Add(addItem);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
@@ -88,13 +86,13 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowQuestionSaveItem(DuplicateReplaceMessage)).Returns(true);
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
             var service = new WatchItemService(dbContext, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
-            service.Update(oldItem, updateItem);
 
             // Act
+            service.Update(oldItem, updateItem);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
