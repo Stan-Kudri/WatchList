@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Repository.Db;
+using WatchList.Migrations.SQLite;
 
 namespace WatchList.WinForms.BuilderDbContext
 {
@@ -11,10 +12,11 @@ namespace WatchList.WinForms.BuilderDbContext
 
         public WatchCinemaDbContext Create()
         {
-            var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={_path}");
-            var dbContext = new WatchCinemaDbContext(builder.Options);
-            dbContext.Database.EnsureCreated();
-            return dbContext;
+            var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source={_path}", x =>
+            {
+                x.MigrationsAssembly(typeof(DbContextFactory).Assembly.FullName);
+            });
+            return new WatchCinemaDbContext(builder.Options);
         }
     }
 }
