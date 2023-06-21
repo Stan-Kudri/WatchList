@@ -33,12 +33,15 @@ namespace WatchList.Core.Service
         {
             var repository = new WatchItemRepository(dbContext);
             _repository.RemoveRange();
+            _db.ChangeTracker.Clear();
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
-            var pageCount = searchRequest.Page.Number;
+            var pagedList = repository.GetPage(searchRequest);
 
-            for (var i = 1; i <= pageCount; i++)
+            while (searchRequest.Page.Number <= pagedList.PageCount)
             {
-                _db.AddRange(repository.GetPage(searchRequest).Items);
+                var itemPage = repository.GetPage(searchRequest).Items;
+                _db.WatchItem.AddRange(itemPage);
+                searchRequest.Page.Number += 1;
             }
 
             _db.SaveChanges();
