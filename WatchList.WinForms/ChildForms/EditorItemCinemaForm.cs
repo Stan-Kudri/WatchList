@@ -1,11 +1,12 @@
 using MaterialSkin.Controls;
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelAddAndEditForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
 using WatchList.WinForms.Message;
 
-namespace WatchList.WinForms.EditorForm
+namespace WatchList.WinForms.ChildForms
 {
     /// <summary>
     /// This class Form performs an function Edit Cinema item.
@@ -13,11 +14,12 @@ namespace WatchList.WinForms.EditorForm
     public partial class EditorItemCinemaForm : MaterialForm
     {
         private readonly CinemaModel _cinema;
+        private readonly IMessageBox _messageBox;
 
         public EditorItemCinemaForm(CinemaModel cinema)
         {
-            _cinema = cinema ?? throw new ArgumentException("Item cinema not null", nameof(cinema));
-
+            _cinema = cinema ?? throw new ArgumentNullException("Item cinema not null", nameof(cinema));
+            _messageBox = new MessageBoxShow();
             InitializeComponent();
         }
 
@@ -40,27 +42,24 @@ namespace WatchList.WinForms.EditorForm
         {
             if (!ValidateFields(out string errorMessage))
             {
-                MessageBoxProvider.ShowWarning(errorMessage);
+                _messageBox.ShowWarning(errorMessage);
                 DialogResult = DialogResult.TryAgain;
             }
             else
             {
-                if (HasChanges() && MessageBoxProvider.ShowQuestion("Save edit item Cinema?"))
+                if (HasChanges() && _messageBox.ShowQuestion("Save edit item Cinema?"))
                 {
                     DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    MessageBoxProvider.ShowInfo("No changed item cinema.");
+                    _messageBox.ShowInfo("No changed item cinema.");
                     Close();
                 }
             }
         }
 
-        private void BtnReturnDataCinema_Click(object sender, EventArgs e)
-        {
-            SetupDefaultValues(_cinema);
-        }
+        private void BtnReturnDataCinema_Click(object sender, EventArgs e) => SetupDefaultValues(_cinema);
 
         private void EditorItemCinemaForm_Load(object sender, EventArgs e)
         {
@@ -82,7 +81,7 @@ namespace WatchList.WinForms.EditorForm
         {
             if (cinema.Sequel == 0)
             {
-                throw new Exception("Number sequel number greater than zero");
+                throw new ArgumentException("Number sequel number greater than zero");
             }
 
             txtEditName.Text = cinema.Title;
@@ -99,11 +98,7 @@ namespace WatchList.WinForms.EditorForm
             if (cinema.HasGrade())
             {
                 numericGradeCinema.Enabled = true;
-
-                if (decimal.TryParse(cinema.Grade.ToString(), out var value))
-                {
-                    numericGradeCinema.Value = value;
-                }
+                numericGradeCinema.Value = cinema.Grade.ToDecimal();
             }
         }
 

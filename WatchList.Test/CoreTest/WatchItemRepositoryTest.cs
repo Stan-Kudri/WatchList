@@ -71,9 +71,10 @@ namespace WatchList.Test.CoreTest
             // Arrange
             var appDbContext = new TestAppDbContextFactory().Create();
             var itemRepository = new WatchItemRepository(appDbContext);
+            appDbContext.AddRange(watchItems);
+            appDbContext.SaveChanges();
 
             // Act
-            itemRepository.AddRange(watchItems);
             var pageItem = itemRepository.GetPage(searchRequest);
             var actualItemPage = pageItem.Items;
 
@@ -92,9 +93,10 @@ namespace WatchList.Test.CoreTest
             var appDbContext = new TestAppDbContextFactory().Create();
             var itemRepository = new WatchItemRepository(appDbContext);
             var searchRequest = new WatchItemSearchRequest();
+            appDbContext.AddRange(watchItems);
+            appDbContext.SaveChanges();
 
             // Act
-            itemRepository.AddRange(watchItems);
             itemRepository.Update(updateItem);
             var actualItemPage = itemRepository.GetPage(searchRequest).Items;
 

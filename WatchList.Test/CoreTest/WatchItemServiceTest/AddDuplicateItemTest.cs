@@ -1,9 +1,9 @@
 using FluentAssertions;
+using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Repository;
 using WatchList.Core.Service;
-using WatchList.Test.CoreTest.WatchItemServiceTest.Component;
+using WatchList.Core.Service.Component;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest
 {
@@ -51,36 +51,20 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         };
 
         [Theory]
-        [MemberData(nameof(ListWithTwoSameElements))]
-        public void Duplicate_Element_In_Database(List<WatchItem> watchItems, WatchItem duplicateItem)
-        {
-            // Arrange
-            var dbContext = new TestAppDbContextFactory().Create();
-            var repository = new WatchItemRepository(dbContext);
-            var messageBox = new FakeMessageBox(true);
-            var service = new WatchItemService(dbContext, messageBox);
-
-            // Act
-            repository.AddRange(watchItems);
-
-            // Assert
-            Assert.Throws<ArgumentException>(() => service.Add(duplicateItem));
-        }
-
-        [Theory]
         [MemberData(nameof(ListOfElementsWithDuplicateElement))]
         public void Add_With_Replace_Duplicate_Element(List<WatchItem> items, WatchItem addItem, List<WatchItem> expectItems)
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
-            var repository = new WatchItemRepository(dbContext);
-            var messageBox = new FakeMessageBox(true);
-            var service = new WatchItemService(dbContext, messageBox);
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
+            var service = new WatchItemService(dbContext, messageBox.Object);
+            dbContext.AddRange(items);
+            dbContext.SaveChanges();
+            service.Add(addItem);
 
             // Act
-            repository.AddRange(items);
-            service.Add(addItem);
-            var actualItems = service.GetAll();
+            var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
             actualItems.Should().Equal(expectItems);

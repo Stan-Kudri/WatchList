@@ -1,21 +1,25 @@
 using MaterialSkin.Controls;
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelAddAndEditForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
 using WatchList.WinForms.Message;
 
-namespace WatchList.WinForms
+namespace WatchList.WinForms.ChildForms
 {
     /// <summary>
     /// This class Form performs an function Add Cinema item.
     /// </summary>
     public partial class AddCinemaForm : MaterialForm
     {
+        private readonly IMessageBox _messageBox;
+
         private StatusCinema _status = StatusCinema.Planned;
 
         public AddCinemaForm()
         {
+            _messageBox = new MessageBoxShow();
             InitializeComponent();
         }
 
@@ -25,14 +29,9 @@ namespace WatchList.WinForms
 
         public CinemaModel GetCinema()
         {
-            var grade = (decimal?)null;
-
-            if (numericGradeCinema.Enabled)
-            {
-                grade = numericGradeCinema.Value;
-            }
-
+            decimal? grade = numericGradeCinema.Enabled == true ? numericGradeCinema.Value : null;
             DateTime? dateViewed = dateTimePickerCinema.Enabled == true ? dateTimePickerCinema.Value : null;
+
             return CinemaModel.CreateNonPlanned(txtAddCinema.Text, numericSeaquel.Value, dateViewed, grade, _status, SelectedTypeCinema);
         }
 
@@ -40,7 +39,7 @@ namespace WatchList.WinForms
         {
             if (!ValidateFields(out var errorMessage))
             {
-                MessageBoxProvider.ShowWarning(errorMessage);
+                _messageBox.ShowWarning(errorMessage);
                 DialogResult = DialogResult.TryAgain;
             }
             else

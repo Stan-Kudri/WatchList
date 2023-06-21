@@ -5,8 +5,6 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
 {
     public class CinemaModel : ModelBase
     {
-        private const string FormatDate = "dd.MM.yyyy";
-
         private Guid _id;
         private string _title;
         private TypeCinema _type;
@@ -23,7 +21,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
             _type = type;
             _status = status;
             _date = date;
-            _grade = grade == null ? null : Convert.ToInt32((decimal)grade);
+            _grade = grade != null ? Convert.ToInt32((decimal)grade) : null;
         }
 
         public Guid Id
@@ -82,8 +80,6 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
             => new CinemaModel(title, sequel, null, null, status, type, id);
 
         public WatchItem ToWatchItem() => new WatchItem(Title, Sequel, Status, Type, Id, Date ?? null, Grade);
-
-        public string GetWatchData() => Date?.ToString(FormatDate) ?? string.Empty;
 
         public bool TryGetWatchDate(out DateTime date)
         {

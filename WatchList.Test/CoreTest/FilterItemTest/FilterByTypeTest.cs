@@ -5,7 +5,6 @@ using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
-using WatchList.Core.Repository;
 
 namespace WatchList.Test.CoreTest.FilterItemTest
 {
@@ -124,11 +123,11 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext);
             var watchItemSearchRequest = new WatchItemSearchRequest(new FilterItem(typeFilter, StatusFilter.AllCinema), SortField.Title, new Page());
+            dbContext.AddRange(watchItems);
+            dbContext.SaveChanges();
 
             // Act
-            itemRepository.AddRange(watchItems);
             var actualWatchItem = watchItemSearchRequest.ApplyFilter(dbContext.WatchItem).ToList();
 
             // Assert

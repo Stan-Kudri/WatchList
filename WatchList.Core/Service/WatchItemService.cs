@@ -1,14 +1,16 @@
+using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
+using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
-using WatchList.Core.Repository.DbContext;
+using WatchList.Core.Repository.Db;
 using WatchList.Core.Service.Component;
 
 namespace WatchList.Core.Service
 {
     public class WatchItemService
     {
-        private const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
+        public const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
 
         private readonly WatchCinemaDbContext _db;
 
@@ -25,15 +27,21 @@ namespace WatchList.Core.Service
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
 
-        public List<WatchItem> GetAll() => _repository.GetAll();
-
         public void Remove(Guid id) => _repository.Remove(id);
 
         public void Replace(WatchCinemaDbContext dbContext)
         {
             var repository = new WatchItemRepository(dbContext);
             _repository.RemoveRange();
-            _repository.AddRange(repository.GetAll());
+            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
+            var pageCount = searchRequest.Page.Number;
+
+            for (var i = 1; i <= pageCount; i++)
+            {
+                _db.AddRange(repository.GetPage(searchRequest).Items);
+            }
+
+            _db.SaveChanges();
         }
 
         public void Add(WatchItem item)
@@ -43,17 +51,13 @@ namespace WatchList.Core.Service
                 Take(2).Select(x => x.Id).ToList();
             var countDuplicate = selectItem.Count;
 
-            if (countDuplicate > 1)
-            {
-                throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
-            }
-            else if (countDuplicate == 0)
+            if (countDuplicate == 0)
             {
                 _repository.Add(item);
                 return;
             }
 
-            if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
+            if (_messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
             {
                 item.Id = selectItem[0];
                 Update(item);
@@ -67,16 +71,16 @@ namespace WatchList.Core.Service
                 Take(2).Select(x => x.Id).ToList();
             var countDuplicate = selectItem.Count;
 
-            if (countDuplicate > 1)
+            if (countDuplicate == 1)
             {
-                throw new ArgumentException("The database is invalid. There are duplicate internal elements.");
-            }
-            else if (countDuplicate == 1)
-            {
-                if (_messageBox.ShowQuestion(DuplicateReplaceMessage))
+                if (_messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
                 {
                     modifiedItem.Id = selectItem[0];
                     Remove(oldItem.Id);
+                }
+                else
+                {
+                    return;
                 }
             }
 

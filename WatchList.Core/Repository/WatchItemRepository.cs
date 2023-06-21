@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
-using WatchList.Core.Repository.DbContext;
+using WatchList.Core.Repository.Db;
 using WatchList.Core.Repository.Extension;
 
 namespace WatchList.Core.Repository
@@ -11,8 +11,6 @@ namespace WatchList.Core.Repository
         private readonly WatchCinemaDbContext _db;
 
         public WatchItemRepository(WatchCinemaDbContext db) => _db = db;
-
-        public List<WatchItem> GetAll() => _db.WatchItem.ToList() ?? new List<WatchItem>();
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest searchRequest)
         {
@@ -27,25 +25,15 @@ namespace WatchList.Core.Repository
             _db.SaveChanges();
         }
 
-        public void AddRange(List<WatchItem> items)
-        {
-            _db.AddRange(items);
-            _db.SaveChanges();
-        }
-
         public void RemoveRange() => _db.WatchItem.ExecuteDelete();
 
         public void Remove(Guid id)
         {
-            var item = _db.WatchItem.FirstOrDefault(x => x.Id == id);
-
-            if (item == null)
+            var selectItem = _db.WatchItem.Where(x => x.Id == id);
+            if (selectItem.ExecuteDelete() != 1)
             {
-                return;
+                throw new InvalidOperationException("Interaction element not found.");
             }
-
-            _db.Remove(item);
-            _db.SaveChanges();
         }
 
         public void Update(WatchItem editItem)
@@ -55,12 +43,7 @@ namespace WatchList.Core.Repository
                 throw new ArgumentNullException("The received parameters are not correct.");
             }
 
-            var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id);
-
-            if (item == null)
-            {
-                return;
-            }
+            var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id) ?? throw new InvalidOperationException("Interaction element not found.");
 
             item.Sequel = editItem.Sequel;
             item.Date = editItem.Date;

@@ -15,10 +15,7 @@ namespace WatchList.Core.Model.Sorting
         private readonly Func<IQueryable<WatchItem>, IOrderedQueryable<WatchItem>> _orderByField;
 
         private SortField(string name, int value, Func<IQueryable<WatchItem>, IOrderedQueryable<WatchItem>> orderByField)
-            : base(name, value)
-        {
-            _orderByField = orderByField;
-        }
+            : base(name, value) => _orderByField = orderByField;
 
         public IOrderedQueryable<WatchItem> Apply(IQueryable<WatchItem> items) => _orderByField(items);
     }

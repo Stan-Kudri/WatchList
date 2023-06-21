@@ -11,22 +11,12 @@ namespace WatchList.Core.Model.ItemCinema
 
         public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch = null, int? grade = null)
         {
-            if (title == null)
-            {
-                throw new ArgumentException("Invalid title format.", nameof(title));
-            }
-
-            if (sequel <= 0)
-            {
-                throw new ArgumentException("The sequel number is greater than zero.", nameof(sequel));
-            }
-
-            Title = title;
-            Sequel = sequel;
+            Title = title ?? throw new ArgumentException("Invalid title format.", nameof(title));
+            Sequel = sequel > 0 ? sequel : throw new ArgumentException("The sequel number is greater than zero.", nameof(sequel));
             Type = type;
             Status = status;
             Date = dateWatch;
-            Grade = grade == null ? null : grade;
+            Grade = grade;
             Id = id ?? Guid.NewGuid();
         }
 
@@ -52,10 +42,7 @@ namespace WatchList.Core.Model.ItemCinema
 
         public override int GetHashCode() => HashCode.Combine(Id, Title, Grade, Date, Status, Type, Sequel);
 
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as WatchItem);
-        }
+        public override bool Equals(object? obj) => Equals(obj as WatchItem);
 
         public bool Equals(WatchItem? other)
         {
