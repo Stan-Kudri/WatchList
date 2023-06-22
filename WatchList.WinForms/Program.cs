@@ -1,4 +1,5 @@
 using MaterialSkin;
+using Microsoft.EntityFrameworkCore;
 using WatchList.WinForms.BuilderDbContext;
 
 namespace WatchList.WinForms
@@ -16,6 +17,7 @@ namespace WatchList.WinForms
             ApplicationConfiguration.Initialize();
 
             using var db = new FileDbContextFactory("app.db").Create();
+            db.Database.Migrate();
             var form = new BoxCinemaForm(db);
             var materialSkinManager = MaterialSkinManager.Instance;
 

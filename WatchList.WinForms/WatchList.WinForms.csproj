@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WatchList.Core\WatchList.Core.csproj" />
+    <ProjectReference Include="..\WatchList.Migrations.SQLite\WatchList.Migrations.SQLite.csproj" />
   </ItemGroup>
 
   <ItemGroup>
