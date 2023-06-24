@@ -6,6 +6,7 @@ using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
 using WatchList.Core.Repository.Db;
 using WatchList.Core.Service.Component;
+using WatchList.Core.Service.Extension;
 
 namespace WatchList.Core.Service
 {
@@ -42,10 +43,7 @@ namespace WatchList.Core.Service
                 var itemsPage = dataLoadItem.LoadItem(repository.GetPage(searchRequest).Items);
                 foreach (var item in itemsPage)
                 {
-                    var selectItem = _db.WatchItem.Where(x =>
-                        (x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type)
-                        || x.Id == item.Id).
-                        Take(2).Select(x => x.Id).ToList();
+                    var selectItem = _db.SelectIdItemsByDuplicate(item);
 
                     if (selectItem.Count == 0)
                     {
