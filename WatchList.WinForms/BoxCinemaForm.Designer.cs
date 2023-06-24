@@ -44,7 +44,7 @@ namespace WatchList.WinForms
             btnAddCinema = new MaterialSkin.Controls.MaterialButton();
             btnEditCinema = new MaterialSkin.Controls.MaterialButton();
             btnDeleteMovie = new MaterialSkin.Controls.MaterialButton();
-            btnReplaceData = new MaterialSkin.Controls.MaterialButton();
+            btnAddData = new MaterialSkin.Controls.MaterialButton();
             btnUseFilter = new MaterialSkin.Controls.MaterialButton();
             btnClearFilter = new MaterialSkin.Controls.MaterialButton();
             cmbFilterType = new MaterialSkin.Controls.MaterialComboBox();
@@ -211,27 +211,27 @@ namespace WatchList.WinForms
             btnDeleteMovie.UseVisualStyleBackColor = true;
             btnDeleteMovie.Click += BtnDeleteMovie_Click;
             // 
-            // btnReplaceData
+            // btnAddData
             // 
-            btnReplaceData.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnReplaceData.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnReplaceData.Depth = 0;
-            btnReplaceData.HighEmphasis = true;
-            btnReplaceData.Icon = null;
-            btnReplaceData.Location = new Point(485, 395);
-            btnReplaceData.Margin = new Padding(4, 6, 4, 6);
-            btnReplaceData.MaximumSize = new Size(150, 20);
-            btnReplaceData.MinimumSize = new Size(150, 20);
-            btnReplaceData.MouseState = MaterialSkin.MouseState.HOVER;
-            btnReplaceData.Name = "btnReplaceData";
-            btnReplaceData.NoAccentTextColor = Color.Empty;
-            btnReplaceData.Size = new Size(150, 20);
-            btnReplaceData.TabIndex = 38;
-            btnReplaceData.Text = "Replace data";
-            btnReplaceData.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnReplaceData.UseAccentColor = false;
-            btnReplaceData.UseVisualStyleBackColor = true;
-            btnReplaceData.Click += BtnReplaceFile_Click;
+            btnAddData.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnAddData.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnAddData.Depth = 0;
+            btnAddData.HighEmphasis = true;
+            btnAddData.Icon = null;
+            btnAddData.Location = new Point(485, 395);
+            btnAddData.Margin = new Padding(4, 6, 4, 6);
+            btnAddData.MaximumSize = new Size(150, 20);
+            btnAddData.MinimumSize = new Size(150, 20);
+            btnAddData.MouseState = MaterialSkin.MouseState.HOVER;
+            btnAddData.Name = "btnAddData";
+            btnAddData.NoAccentTextColor = Color.Empty;
+            btnAddData.Size = new Size(150, 20);
+            btnAddData.TabIndex = 38;
+            btnAddData.Text = "Add data";
+            btnAddData.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnAddData.UseAccentColor = false;
+            btnAddData.UseVisualStyleBackColor = true;
+            btnAddData.Click += BtnDownloadDataFile_Click;
             // 
             // btnUseFilter
             // 
@@ -519,7 +519,7 @@ namespace WatchList.WinForms
             Controls.Add(cmbFilterType);
             Controls.Add(btnClearFilter);
             Controls.Add(btnUseFilter);
-            Controls.Add(btnReplaceData);
+            Controls.Add(btnAddData);
             Controls.Add(btnDeleteMovie);
             Controls.Add(btnEditCinema);
             Controls.Add(btnAddCinema);
@@ -545,7 +545,7 @@ namespace WatchList.WinForms
         private MaterialSkin.Controls.MaterialButton btnAddCinema;
         private MaterialSkin.Controls.MaterialButton btnEditCinema;
         private MaterialSkin.Controls.MaterialButton btnDeleteMovie;
-        private MaterialSkin.Controls.MaterialButton btnReplaceData;
+        private MaterialSkin.Controls.MaterialButton btnAddData;
         private MaterialSkin.Controls.MaterialButton btnUseFilter;
         private MaterialSkin.Controls.MaterialButton btnClearFilter;
         private MaterialSkin.Controls.MaterialComboBox cmbFilterType;

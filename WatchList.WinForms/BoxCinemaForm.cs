@@ -1,4 +1,5 @@
 using MaterialSkin.Controls;
+using WatchList.Core.Model.DataLoading;
 using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -144,7 +145,7 @@ namespace WatchList.WinForms
             LoadData();
         }
 
-        private void BtnReplaceFile_Click(object sender, EventArgs e)
+        private void BtnDownloadDataFile_Click(object sender, EventArgs e)
         {
             var openReplaceDataFromFile = new OpenFileDialog { Filter = "Data Base (*.db)|*.db" };
             if (openReplaceDataFromFile.ShowDialog() == DialogResult.Cancel)
@@ -152,8 +153,16 @@ namespace WatchList.WinForms
                 return;
             }
 
+            var dataLoadingForm = new DataLoadingAlgorithm();
+            if (dataLoadingForm.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
-            _itemService.Replace(dbContext);
+            var algorithmLoadData = dataLoadingForm.GetLoadData();
+            var dataLoadItem = new DataLoadItem(algorithmLoadData.IsDeleteGrade);
+            _itemService.DownloadData(dbContext, dataLoadItem);
             UpdateGridData();
         }
 

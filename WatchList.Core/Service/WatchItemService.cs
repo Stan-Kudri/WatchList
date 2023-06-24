@@ -1,3 +1,4 @@
+using WatchList.Core.Model.DataLoading;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.Sorting;
@@ -29,18 +30,35 @@ namespace WatchList.Core.Service
 
         public void Remove(Guid id) => _repository.Remove(id);
 
-        public void Replace(WatchCinemaDbContext dbContext)
+        public void DownloadData(WatchCinemaDbContext dbContext, DataLoadItem dataLoadItem)
         {
             var repository = new WatchItemRepository(dbContext);
-            _repository.RemoveRange();
             _db.ChangeTracker.Clear();
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
             var pagedList = repository.GetPage(searchRequest);
 
             while (searchRequest.Page.Number <= pagedList.PageCount)
             {
-                var itemPage = repository.GetPage(searchRequest).Items;
-                _db.WatchItem.AddRange(itemPage);
+                var itemsPage = dataLoadItem.LoadItem(repository.GetPage(searchRequest).Items);
+                foreach (var item in itemsPage)
+                {
+                    var selectItem = _db.WatchItem.Where(x =>
+                        (x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type)
+                        || x.Id == item.Id).
+                        Take(2).Select(x => x.Id).ToList();
+
+                    if (selectItem.Count == 0)
+                    {
+                        _db.Add(item);
+                    }
+                    else if (_messageBox.ShowQuestionSaveItem(
+                        $"The append '{item.Title}' item is a duplicate. Replace element?"))
+                    {
+                        item.Id = selectItem[0];
+                        Update(item);
+                    }
+                }
+
                 searchRequest.Page.Number += 1;
             }
 
