@@ -1,6 +1,7 @@
 using WatchList.Core.Model.DataLoading;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
+using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
@@ -20,11 +21,14 @@ namespace WatchList.Core.Service
 
         private readonly IMessageBox _messageBox;
 
+        private DialogResultQuestion _dialogResultReplaceItem;
+
         public WatchItemService(WatchCinemaDbContext dbContext, IMessageBox messageBox)
         {
             _db = dbContext;
             _repository = new WatchItemRepository(_db);
             _messageBox = messageBox;
+            _dialogResultReplaceItem = DialogResultQuestion.Unknown;
         }
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
@@ -34,7 +38,6 @@ namespace WatchList.Core.Service
         public void DownloadData(WatchCinemaDbContext dbContext, DataLoadItem dataLoadItem)
         {
             var repository = new WatchItemRepository(dbContext);
-            _db.ChangeTracker.Clear();
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
             var pagedList = repository.GetPage(searchRequest);
 
@@ -50,8 +53,17 @@ namespace WatchList.Core.Service
                         item.Id = _db.ChangeIdOnDuplicate(item);
                         _db.Add(item);
                     }
-                    else if (_messageBox.ShowQuestionSaveItem(
-                        $"The append '{item.Title}' item is a duplicate. Replace element?"))
+
+                    switch (_dialogResultReplaceItem.QuestionResult)
+                    {
+                        case QuestionResultEnum.Unknown:
+                        case QuestionResultEnum.Yes:
+                        case QuestionResultEnum.No:
+                            _dialogResultReplaceItem = _messageBox.ShowQuestionReplaceItem(item.Title);
+                            break;
+                    }
+
+                    if (_dialogResultReplaceItem == DialogResultQuestion.AllYes || _dialogResultReplaceItem == DialogResultQuestion.Yes)
                     {
                         item.Id = selectItem[0];
                         Update(item);
@@ -61,6 +73,7 @@ namespace WatchList.Core.Service
                 searchRequest.Page.Number += 1;
             }
 
+            _dialogResultReplaceItem = DialogResultQuestion.Unknown;
             _db.SaveChanges();
         }
 

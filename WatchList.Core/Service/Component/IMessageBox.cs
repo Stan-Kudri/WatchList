@@ -1,3 +1,5 @@
+using WatchList.Core.Model.QuestionResult;
+
 namespace WatchList.Core.Service.Component
 {
     public interface IMessageBox
@@ -11,5 +13,7 @@ namespace WatchList.Core.Service.Component
         public bool ShowQuestion(string message);
 
         public bool ShowQuestionSaveItem(string message);
+
+        public DialogResultQuestion ShowQuestionReplaceItem(string titleItem);
     }
 }
