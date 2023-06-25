@@ -47,6 +47,7 @@ namespace WatchList.Core.Service
 
                     if (selectItem.Count == 0)
                     {
+                        item.Id = _db.ChangeIdOnDuplicate(item);
                         _db.Add(item);
                     }
                     else if (_messageBox.ShowQuestionSaveItem(
