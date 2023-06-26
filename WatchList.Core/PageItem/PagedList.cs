@@ -10,7 +10,7 @@ namespace WatchList.Core.PageItem
         {
         }
 
-        public PagedList(List<T> items, int pageNumber, int pageSize, int totalItems)
+        public PagedList(IQueryable<T> items, int pageNumber, int pageSize, int totalItems)
         {
             if (items == null)
             {
@@ -44,7 +44,9 @@ namespace WatchList.Core.PageItem
 
         public int PageSize { get; private set; } = StartPageSize;
 
-        public List<T> Items { get; private set; }
+        public IQueryable<T> Items { get; private set; }
+
+        public List<T> ListItem => Items.ToList();
 
         public int PageCount => PageSize != 0 ? (int)Math.Ceiling((double)TotalItems / PageSize) : 0;
 
@@ -52,7 +54,7 @@ namespace WatchList.Core.PageItem
 
         public bool HasNextPage => PageNumber < PageCount;
 
-        private static List<T> GetPage(IQueryable<T> items, int pageNumber, int pageSize)
-            => items.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+        private static IQueryable<T> GetPage(IQueryable<T> items, int pageNumber, int pageSize)
+            => items.Skip((pageNumber - 1) * pageSize).Take(pageSize);
     }
 }

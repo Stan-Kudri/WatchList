@@ -273,7 +273,7 @@ namespace WatchList.WinForms
                 _searchRequest.Page = Page.GetPage();
                 _searchRequest.Sort = Sort.GetSortItem();
                 _pagedList = _itemService.GetPage(_searchRequest);
-                var item = _pagedList.Items;
+                var item = _pagedList.ListItem;
 
                 GridClear();
                 FillGrid(item);

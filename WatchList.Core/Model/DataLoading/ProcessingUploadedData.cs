@@ -9,12 +9,12 @@ namespace WatchList.Core.Model.DataLoading
 
         public bool IsDeleteGrade { get; private set; }
 
-        public List<WatchItem> LoadItem(List<WatchItem> items)
+        public List<WatchItem> LoadItem(IQueryable<WatchItem> items)
         {
             if (!IsDeleteGrade ||
                 !items.Where(x => x.Date != null).Any())
             {
-                return items;
+                return items.ToList();
             }
 
             foreach (var item in items)
@@ -27,7 +27,7 @@ namespace WatchList.Core.Model.DataLoading
                 }
             }
 
-            return items;
+            return items.ToList();
         }
     }
 }
