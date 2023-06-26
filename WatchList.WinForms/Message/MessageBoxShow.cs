@@ -16,6 +16,6 @@ namespace WatchList.WinForms.Message
 
         public bool ShowQuestionSaveItem(string message) => MessageBox.Show(message, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK;
 
-        public DialogResultQuestion ShowQuestionReplaceItem(string titleItem) => titleItem.ShowQuestionReplace();
+        public DialogReplaceItemQuestion ShowDataReplaceQuestion(string titleItem) => titleItem.ShowQuestionReplace();
     }
 }

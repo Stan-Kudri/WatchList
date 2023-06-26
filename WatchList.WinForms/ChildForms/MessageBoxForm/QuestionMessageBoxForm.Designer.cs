@@ -1,6 +1,6 @@
 namespace WatchList.WinForms.ChildForms.MessageBoxForm
 {
-    partial class QuestionMessageBoxForm
+    partial class DataReplaceMessageForm
     {
         /// <summary>
         /// Required designer variable.

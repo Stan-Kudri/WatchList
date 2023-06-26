@@ -21,21 +21,21 @@ namespace WatchList.Core.Service
 
         private readonly IMessageBox _messageBox;
 
-        private DialogResultQuestion _dialogResultReplaceItem;
+        private DialogReplaceItemQuestion _dialogResultReplaceItem;
 
         public WatchItemService(WatchCinemaDbContext dbContext, IMessageBox messageBox)
         {
             _db = dbContext;
             _repository = new WatchItemRepository(_db);
             _messageBox = messageBox;
-            _dialogResultReplaceItem = DialogResultQuestion.Unknown;
+            _dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
         }
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
 
         public void Remove(Guid id) => _repository.Remove(id);
 
-        public void DownloadData(WatchCinemaDbContext dbContext, DataLoadItem dataLoadItem)
+        public void DownloadData(WatchCinemaDbContext dbContext, ProcessingUploadedData dataLoadItem)
         {
             var repository = new WatchItemRepository(dbContext);
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
@@ -46,11 +46,11 @@ namespace WatchList.Core.Service
                 var itemsPage = dataLoadItem.LoadItem(repository.GetPage(searchRequest).Items);
                 foreach (var item in itemsPage)
                 {
-                    var selectItem = _db.SelectIdItemsByDuplicate(item);
+                    var selectItem = _db.WatchItem.SelectIdItemsByDuplicate(item);
 
                     if (selectItem.Count == 0)
                     {
-                        item.Id = _db.ChangeIdOnDuplicate(item);
+                        item.Id = _db.ReplaceIdIfBusy(item);
                         _db.Add(item);
                     }
 
@@ -59,11 +59,11 @@ namespace WatchList.Core.Service
                         case QuestionResultEnum.Unknown:
                         case QuestionResultEnum.Yes:
                         case QuestionResultEnum.No:
-                            _dialogResultReplaceItem = _messageBox.ShowQuestionReplaceItem(item.Title);
+                            _dialogResultReplaceItem = _messageBox.ShowDataReplaceQuestion(item.Title);
                             break;
                     }
 
-                    if (_dialogResultReplaceItem == DialogResultQuestion.AllYes || _dialogResultReplaceItem == DialogResultQuestion.Yes)
+                    if (_dialogResultReplaceItem == DialogReplaceItemQuestion.AllYes || _dialogResultReplaceItem == DialogReplaceItemQuestion.Yes)
                     {
                         item.Id = selectItem[0];
                         Update(item);
@@ -73,7 +73,7 @@ namespace WatchList.Core.Service
                 searchRequest.Page.Number += 1;
             }
 
-            _dialogResultReplaceItem = DialogResultQuestion.Unknown;
+            _dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
             _db.SaveChanges();
         }
 

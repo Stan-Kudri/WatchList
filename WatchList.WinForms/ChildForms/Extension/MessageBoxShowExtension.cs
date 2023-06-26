@@ -5,9 +5,9 @@ namespace WatchList.WinForms.ChildForms.Extension
 {
     public static class MessageBoxShowExtension
     {
-        public static DialogResultQuestion ShowQuestionReplace(this string titleItem)
+        public static DialogReplaceItemQuestion ShowQuestionReplace(this string titleItem)
         {
-            var questForm = new QuestionMessageBoxForm(titleItem);
+            var questForm = new DataReplaceMessageForm(titleItem);
             if (questForm.ShowDialog() == DialogResult.OK)
             {
                 var questResult = questForm.ResultQuestion;
@@ -15,17 +15,17 @@ namespace WatchList.WinForms.ChildForms.Extension
                 switch (questResult)
                 {
                     case QuestionResultEnum.Yes:
-                        return DialogResultQuestion.Yes;
+                        return DialogReplaceItemQuestion.Yes;
                     case QuestionResultEnum.AllYes:
-                        return DialogResultQuestion.AllYes;
+                        return DialogReplaceItemQuestion.AllYes;
                     case QuestionResultEnum.No:
-                        return DialogResultQuestion.No;
+                        return DialogReplaceItemQuestion.No;
                     case QuestionResultEnum.AllNo:
-                        return DialogResultQuestion.AllNo;
+                        return DialogReplaceItemQuestion.AllNo;
                 }
             }
 
-            return DialogResultQuestion.Unknown;
+            return DialogReplaceItemQuestion.Unknown;
         }
     }
 }

@@ -14,6 +14,6 @@ namespace WatchList.Core.Service.Component
 
         public bool ShowQuestionSaveItem(string message);
 
-        public DialogResultQuestion ShowQuestionReplaceItem(string titleItem);
+        public DialogReplaceItemQuestion ShowDataReplaceQuestion(string titleItem);
     }
 }

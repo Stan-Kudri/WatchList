@@ -5,26 +5,26 @@ namespace WatchList.Core.Model.QuestionResult
         /// <summary>
         /// Unknown button
         /// </summary>
-        Unknown,
+        Unknown = 0,
 
         /// <summary>
         /// "Yes" button
         /// </summary>
-        Yes,
+        Yes = 1,
 
         /// <summary>
         /// "Yes, for all" button
         /// </summary>
-        AllYes,
+        AllYes = 2,
 
         /// <summary>
         /// "No" button
         /// </summary>
-        No,
+        No = 3,
 
         /// <summary>
         /// "No, for all" button
         /// </summary>
-        AllNo,
+        AllNo = 4,
     }
 }

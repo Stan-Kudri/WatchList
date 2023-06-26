@@ -1,8 +1,8 @@
 namespace WatchList.WinForms.BindingItem.ModelDataLoadingAlgorithm
 {
-    public class ModelLoadData
+    public class ModelProcessUploadData
     {
-        public ModelLoadData(bool isDeleteGrade) => IsDeleteGrade = isDeleteGrade;
+        public ModelProcessUploadData(bool isDeleteGrade) => IsDeleteGrade = isDeleteGrade;
 
         public bool IsDeleteGrade { get; private set; }
     }

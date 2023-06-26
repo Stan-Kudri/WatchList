@@ -1,6 +1,6 @@
 ﻿namespace WatchList.WinForms.ChildForms
 {
-    partial class DataLoadingAlgorithm
+    partial class DownloadDataProcessingForm
     {
         /// <summary>
         /// Required designer variable.

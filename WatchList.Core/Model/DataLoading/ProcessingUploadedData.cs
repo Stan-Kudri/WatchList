@@ -3,9 +3,9 @@ using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Core.Model.DataLoading
 {
-    public class DataLoadItem
+    public class ProcessingUploadedData
     {
-        public DataLoadItem(bool isDeleteGrade) => IsDeleteGrade = isDeleteGrade;
+        public ProcessingUploadedData(bool isDeleteGrade) => IsDeleteGrade = isDeleteGrade;
 
         public bool IsDeleteGrade { get; private set; }
 

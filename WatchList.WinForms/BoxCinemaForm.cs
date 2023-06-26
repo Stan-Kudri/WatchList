@@ -153,7 +153,7 @@ namespace WatchList.WinForms
                 return;
             }
 
-            var dataLoadingForm = new DataLoadingAlgorithm();
+            var dataLoadingForm = new DownloadDataProcessingForm();
             if (dataLoadingForm.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -161,7 +161,7 @@ namespace WatchList.WinForms
 
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             var algorithmLoadData = dataLoadingForm.GetLoadData();
-            var dataLoadItem = new DataLoadItem(algorithmLoadData.IsDeleteGrade);
+            var dataLoadItem = new ProcessingUploadedData(algorithmLoadData.IsDeleteGrade);
             _itemService.DownloadData(dbContext, dataLoadItem);
             UpdateGridData();
         }

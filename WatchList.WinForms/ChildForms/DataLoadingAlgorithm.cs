@@ -8,21 +8,21 @@ namespace WatchList.WinForms.ChildForms
     /// <summary>
     /// Form class for selecting data upload.
     /// </summary>
-    public partial class DataLoadingAlgorithm : MaterialForm
+    public partial class DownloadDataProcessingForm : MaterialForm
     {
         private readonly IMessageBox _messageBox;
 
-        public DataLoadingAlgorithm()
+        public DownloadDataProcessingForm()
         {
             _messageBox = new MessageBoxShow();
             InitializeComponent();
             SetupDefaultValues();
         }
 
-        public ModelLoadData GetLoadData()
+        public ModelProcessUploadData GetLoadData()
         {
             var isDeleteGrade = cbExistGrade.Checked;
-            return new ModelLoadData(isDeleteGrade);
+            return new ModelProcessUploadData(isDeleteGrade);
         }
 
         private void BtnClear_Click(object sender, EventArgs e) => SetupDefaultValues();
