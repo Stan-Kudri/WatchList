@@ -5,6 +5,9 @@ using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms.ChildForms
 {
+    /// <summary>
+    /// Form class for selecting data upload.
+    /// </summary>
     public partial class DataLoadingAlgorithm : MaterialForm
     {
         private readonly IMessageBox _messageBox;

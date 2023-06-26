@@ -2,6 +2,9 @@ using WatchList.Core.Model.QuestionResult;
 
 namespace WatchList.WinForms.ChildForms.MessageBoxForm
 {
+    /// <summary>
+    /// A form class with a choice of custom buttons for action when asked.
+    /// </summary>
     public partial class QuestionMessageBoxForm : Form
     {
         public QuestionMessageBoxForm(string titleItem)
