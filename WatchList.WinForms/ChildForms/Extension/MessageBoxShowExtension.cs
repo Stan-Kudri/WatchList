@@ -11,18 +11,7 @@ namespace WatchList.WinForms.ChildForms.Extension
             if (questForm.ShowDialog() == DialogResult.OK)
             {
                 var questResult = questForm.ResultQuestion;
-
-                switch (questResult)
-                {
-                    case QuestionResultEnum.Yes:
-                        return DialogReplaceItemQuestion.Yes;
-                    case QuestionResultEnum.AllYes:
-                        return DialogReplaceItemQuestion.AllYes;
-                    case QuestionResultEnum.No:
-                        return DialogReplaceItemQuestion.No;
-                    case QuestionResultEnum.AllNo:
-                        return DialogReplaceItemQuestion.AllNo;
-                }
+                return DialogReplaceItemQuestion.FromValue((int)questResult);
             }
 
             return DialogReplaceItemQuestion.Unknown;
