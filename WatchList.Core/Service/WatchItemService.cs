@@ -35,7 +35,7 @@ namespace WatchList.Core.Service
 
         public void Remove(Guid id) => _repository.Remove(id);
 
-        public void DownloadData(WatchCinemaDbContext dbContext, ProcessingUploadedData dataLoadItem)
+        public void DownloadData(WatchCinemaDbContext dbContext, ProcessUploadData dataLoadItem)
         {
             var repository = new WatchItemRepository(dbContext);
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));

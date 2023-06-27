@@ -1,6 +1,6 @@
 using MaterialSkin.Controls;
 using WatchList.Core.Service.Component;
-using WatchList.WinForms.BindingItem.ModelDataLoadingAlgorithm;
+using WatchList.WinForms.BindingItem.ModelDataLoad;
 using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms.ChildForms
@@ -8,11 +8,11 @@ namespace WatchList.WinForms.ChildForms
     /// <summary>
     /// Form class for selecting data upload.
     /// </summary>
-    public partial class DownloadDataProcessingForm : MaterialForm
+    public partial class DownloadDataProcessForm : MaterialForm
     {
         private readonly IMessageBox _messageBox;
 
-        public DownloadDataProcessingForm()
+        public DownloadDataProcessForm()
         {
             _messageBox = new MessageBoxShow();
             InitializeComponent();

@@ -1,4 +1,4 @@
-namespace WatchList.WinForms.BindingItem.ModelDataLoadingAlgorithm
+namespace WatchList.WinForms.BindingItem.ModelDataLoad
 {
     public class ModelProcessUploadData
     {
