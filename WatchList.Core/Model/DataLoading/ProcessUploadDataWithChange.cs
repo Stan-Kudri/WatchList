@@ -3,18 +3,18 @@ using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Core.Model.DataLoading
 {
-    public class ProcessUploadData
+    public class ProcessUploadDataWithChange
     {
-        public ProcessUploadData(bool isDeleteGrade) => IsDeleteGrade = isDeleteGrade;
+        public ProcessUploadDataWithChange(bool isDeleteGrade) => IsDeleteGrade = isDeleteGrade;
 
         public bool IsDeleteGrade { get; private set; }
 
-        public List<WatchItem> LoadItem(IQueryable<WatchItem> items)
+        public List<WatchItem> PagedList(List<WatchItem> items)
         {
             if (!IsDeleteGrade ||
                 !items.Where(x => x.Date != null).Any())
             {
-                return items.ToList();
+                return items;
             }
 
             foreach (var item in items)
@@ -27,7 +27,7 @@ namespace WatchList.Core.Model.DataLoading
                 }
             }
 
-            return items.ToList();
+            return items;
         }
     }
 }

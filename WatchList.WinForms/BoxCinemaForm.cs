@@ -153,7 +153,7 @@ namespace WatchList.WinForms
                 return;
             }
 
-            var dataLoadingForm = new DownloadDataProcessForm();
+            var dataLoadingForm = new MergeDatabaseForm();
             if (dataLoadingForm.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -161,7 +161,7 @@ namespace WatchList.WinForms
 
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             var algorithmLoadData = dataLoadingForm.GetLoadData();
-            var dataLoadItem = new ProcessUploadData(algorithmLoadData.IsDeleteGrade);
+            var dataLoadItem = new ProcessUploadDataWithChange(algorithmLoadData.IsDeleteGrade);
             _itemService.DownloadData(dbContext, dataLoadItem);
             UpdateGridData();
         }
@@ -273,7 +273,7 @@ namespace WatchList.WinForms
                 _searchRequest.Page = Page.GetPage();
                 _searchRequest.Sort = Sort.GetSortItem();
                 _pagedList = _itemService.GetPage(_searchRequest);
-                var item = _pagedList.ListItem;
+                var item = _pagedList.Items;
 
                 GridClear();
                 FillGrid(item);

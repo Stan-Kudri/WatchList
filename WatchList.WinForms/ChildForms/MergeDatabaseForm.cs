@@ -8,11 +8,11 @@ namespace WatchList.WinForms.ChildForms
     /// <summary>
     /// Form class for selecting data upload.
     /// </summary>
-    public partial class DownloadDataProcessForm : MaterialForm
+    public partial class MergeDatabaseForm : MaterialForm
     {
         private readonly IMessageBox _messageBox;
 
-        public DownloadDataProcessForm()
+        public MergeDatabaseForm()
         {
             _messageBox = new MessageBoxShow();
             InitializeComponent();

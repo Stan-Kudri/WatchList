@@ -1,6 +1,6 @@
 ﻿namespace WatchList.WinForms.ChildForms
 {
-    partial class DownloadDataProcessForm
+    partial class MergeDatabaseForm
     {
         /// <summary>
         /// Required designer variable.

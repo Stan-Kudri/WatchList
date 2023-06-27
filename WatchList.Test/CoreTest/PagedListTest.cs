@@ -32,7 +32,7 @@ namespace WatchList.Test.CoreTest
             // Assert
             Assert.Throws<ArgumentNullException>(() =>
                 {
-                    new PagedList<WatchItem>(watchItems.AsQueryable(), numberPage, pageSize, totalItem);
+                    new PagedList<WatchItem>(watchItems, numberPage, pageSize, totalItem);
                 });
         }
 
@@ -46,7 +46,7 @@ namespace WatchList.Test.CoreTest
             var totalItem = watchItems.Count;
 
             // Assert
-            Assert.Throws<ArgumentException>(() => { new PagedList<WatchItem>(watchItems.AsQueryable(), pageNumber, pageSize, totalItem); });
+            Assert.Throws<ArgumentException>(() => { new PagedList<WatchItem>(watchItems, pageNumber, pageSize, totalItem); });
         }
 
         [Theory]
@@ -59,7 +59,7 @@ namespace WatchList.Test.CoreTest
             var totalItem = watchItems.Count;
 
             // Assert
-            Assert.Throws<ArgumentException>(() => { new PagedList<WatchItem>(watchItems.AsQueryable(), pageNumber, pageSize, totalItem); });
+            Assert.Throws<ArgumentException>(() => { new PagedList<WatchItem>(watchItems, pageNumber, pageSize, totalItem); });
         }
 
         [Theory]
@@ -72,7 +72,7 @@ namespace WatchList.Test.CoreTest
             var totalItem = -2;
 
             // Assert
-            Assert.Throws<ArgumentException>(() => { new PagedList<WatchItem>(watchItems.AsQueryable(), pageNumber, pageSize, totalItem); });
+            Assert.Throws<ArgumentException>(() => { new PagedList<WatchItem>(watchItems, pageNumber, pageSize, totalItem); });
         }
     }
 }

@@ -35,7 +35,7 @@ namespace WatchList.Core.Service
 
         public void Remove(Guid id) => _repository.Remove(id);
 
-        public void DownloadData(WatchCinemaDbContext dbContext, ProcessUploadData dataLoadItem)
+        public void DownloadData(WatchCinemaDbContext dbContext, ProcessUploadDataWithChange dataLoadItem)
         {
             var repository = new WatchItemRepository(dbContext);
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
@@ -43,14 +43,14 @@ namespace WatchList.Core.Service
 
             while (searchRequest.Page.Number <= pagedList.PageCount)
             {
-                var itemsPage = dataLoadItem.LoadItem(repository.GetPage(searchRequest).Items);
+                var itemsPage = dataLoadItem.PagedList(repository.GetPage(searchRequest).Items.ToList());
                 foreach (var item in itemsPage)
                 {
                     var selectItem = _db.WatchItem.SelectIdItemsByDuplicate(item);
 
                     if (selectItem.Count == 0)
                     {
-                        item.Id = _db.ReplaceIdIfBusy(item);
+                        item.Id = _db.ReplaceIdIfOccupied(item);
                         _db.Add(item);
                     }
 
