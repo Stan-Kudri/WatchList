@@ -63,7 +63,7 @@ namespace WatchList.Core.Service
                             break;
                     }
 
-                    if (_dialogResultReplaceItem == DialogReplaceItemQuestion.AllYes || _dialogResultReplaceItem == DialogReplaceItemQuestion.Yes)
+                    if (_dialogResultReplaceItem.IsReplace)
                     {
                         item.Id = selectItem[0];
                         Update(item);

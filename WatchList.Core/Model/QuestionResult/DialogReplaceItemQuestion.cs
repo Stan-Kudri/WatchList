@@ -17,5 +17,24 @@ namespace WatchList.Core.Model.QuestionResult
         }
 
         public QuestionResultEnum QuestionResult { get; }
+
+        public bool IsReplace
+        {
+            get
+            {
+                if (QuestionResult == QuestionResultEnum.Yes || QuestionResult == QuestionResultEnum.AllYes)
+                {
+                    return true;
+                }
+                else if (QuestionResult == QuestionResultEnum.No || QuestionResult == QuestionResultEnum.AllNo)
+                {
+                    return false;
+                }
+                else
+                {
+                    throw new Exception("The answer is unknown.");
+                }
+            }
+        }
     }
 }
