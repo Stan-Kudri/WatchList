@@ -11,10 +11,7 @@ namespace WatchList.Core.Model.QuestionResult
         public static readonly DialogReplaceItemQuestion No = new DialogReplaceItemQuestion("No", QuestionResultEnum.No);
 
         private DialogReplaceItemQuestion(string name, QuestionResultEnum questionResult)
-            : base(name, (int)questionResult)
-        {
-            QuestionResult = questionResult;
-        }
+            : base(name, (int)questionResult) => QuestionResult = questionResult;
 
         public QuestionResultEnum QuestionResult { get; }
 

@@ -1,12 +1,14 @@
 using MaterialSkin.Controls;
-using WatchList.Core.Model.DataLoading;
 using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.PageItem;
+using WatchList.Core.Repository;
 using WatchList.Core.Repository.Db;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
+using WatchList.Core.Service.DataLoading;
+using WatchList.Core.Service.DataLoading.Rules;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.BuilderDbContext;
 using WatchList.WinForms.ChildForms;
@@ -33,6 +35,7 @@ namespace WatchList.WinForms
 
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
+        private readonly WatchCinemaDbContext _dbContext;
 
         private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
 
@@ -41,6 +44,7 @@ namespace WatchList.WinForms
         public BoxCinemaForm(WatchCinemaDbContext db)
         {
             InitializeComponent();
+            _dbContext = db;
             _messageBox = new MessageBoxShow();
             _itemService = new WatchItemService(db, _messageBox);
             _pagedList = _itemService.GetPage(_searchRequest);
@@ -161,8 +165,10 @@ namespace WatchList.WinForms
 
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             var algorithmLoadData = dataLoadingForm.GetLoadData();
-            var dataLoadItem = new ProcessUploadDataWithChange(algorithmLoadData.IsDeleteGrade);
-            _itemService.DownloadData(dbContext, dataLoadItem);
+            var loadRule = new DeleteGradeRule(algorithmLoadData.IsDeleteGrade);
+            var repositoryDataDownload = new WatchItemRepository(dbContext);
+            var downloadDataService = new DownloadDataService(_dbContext, _messageBox);
+            downloadDataService.Download(repositoryDataDownload, loadRule);
             UpdateGridData();
         }
 
