@@ -80,9 +80,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var dbContext = new TestAppDbContextFactory().Create();
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
 
-            var dialogResultReplaceItem = DialogReplaceItemQuestion.AllYes;
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(dialogResultReplaceItem);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRule = new DeleteGradeRule(false);
@@ -110,9 +109,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var dbContext = new TestAppDbContextFactory().Create();
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
 
-            var dialogResultReplaceItem = DialogReplaceItemQuestion.AllNo;
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(dialogResultReplaceItem);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllNo);
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRule = new DeleteGradeRule(false);

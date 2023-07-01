@@ -33,7 +33,7 @@ namespace WatchList.Core.Service.DataLoading
 
             while (searchRequest.Page.Number <= pagedList.PageCount)
             {
-                var itemsPage = processUploadData.Apply(repository.GetPage(searchRequest).Items.ToList());
+                var itemsPage = processUploadData.Apply(pagedList.Items.ToList());
                 foreach (var item in itemsPage)
                 {
                     var selectItem = _db.WatchItem.SelectIdItemsByDuplicate(item);
