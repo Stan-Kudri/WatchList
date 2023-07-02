@@ -25,9 +25,9 @@ namespace WatchList.Core.Service.DataLoading
             _messageBox = messageBox;
         }
 
-        public void Download(WatchItemRepository repository, ILoadRule processUploadData)
+        public void Download(WatchItemRepository repository, ILoadRule processUploadData, int numberOfItemPerPage = 500)
         {
-            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 5));
+            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, numberOfItemPerPage));
             var pagedList = repository.GetPage(searchRequest);
             var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
 
@@ -42,6 +42,7 @@ namespace WatchList.Core.Service.DataLoading
                     {
                         item.Id = _db.ReplaceIdIsNotFree(item);
                         _db.Add(item);
+                        continue;
                     }
 
                     switch (dialogResultReplaceItem.QuestionResult)
@@ -61,6 +62,7 @@ namespace WatchList.Core.Service.DataLoading
                 }
 
                 searchRequest.Page.Number += 1;
+                pagedList = repository.GetPage(searchRequest);
             }
 
             _db.SaveChanges();
