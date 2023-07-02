@@ -15,7 +15,7 @@ namespace WatchList.Core.Model.QuestionResult
 
         public QuestionResultEnum QuestionResult { get; }
 
-        public bool IsReplace
+        public bool IsYes
         {
             get
             {

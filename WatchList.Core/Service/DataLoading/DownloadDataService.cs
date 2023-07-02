@@ -27,7 +27,7 @@ namespace WatchList.Core.Service.DataLoading
 
         public void Download(WatchItemRepository repository, ILoadRule processUploadData)
         {
-            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
+            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 5));
             var pagedList = repository.GetPage(searchRequest);
             var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
 
@@ -40,7 +40,7 @@ namespace WatchList.Core.Service.DataLoading
 
                     if (selectItem.Count == 0)
                     {
-                        item.Id = _db.ReplaceIdIfOccupied(item);
+                        item.Id = _db.ReplaceIdIsNotFree(item);
                         _db.Add(item);
                     }
 
@@ -53,7 +53,7 @@ namespace WatchList.Core.Service.DataLoading
                             break;
                     }
 
-                    if (dialogResultReplaceItem.IsReplace)
+                    if (dialogResultReplaceItem.IsYes)
                     {
                         item.Id = selectItem[0];
                         _repository.Update(item);

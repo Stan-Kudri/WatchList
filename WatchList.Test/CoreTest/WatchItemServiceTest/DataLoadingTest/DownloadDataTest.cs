@@ -121,9 +121,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             dbContext.SaveChanges();
             dbContextDownloadItem.SaveChanges();
 
-            service.Download(repositoryDataDownload, loadRule);
-
             // Act
+            service.Download(repositoryDataDownload, loadRule);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
@@ -150,9 +149,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             dbContext.SaveChanges();
             dbContextDownloadItem.SaveChanges();
 
-            service.Download(repositoryDataDownload, loadRule);
-
             // Act
+            service.Download(repositoryDataDownload, loadRule);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
@@ -182,9 +180,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             dbContext.SaveChanges();
             dbContextDownloadItem.SaveChanges();
 
-            service.Download(repositoryDataDownload, loadRule);
-
             // Act
+            service.Download(repositoryDataDownload, loadRule);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
