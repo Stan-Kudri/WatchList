@@ -10,11 +10,11 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         public bool IsDeleteGrade { get; private set; }
 
-        public List<WatchItem> Apply(PagedList<WatchItem> items)
+        public PagedList<WatchItem> Apply(PagedList<WatchItem> items)
         {
             if (!IsDeleteGrade)
             {
-                return items.Items;
+                return items;
             }
 
             foreach (var item in items.Items)
@@ -29,7 +29,7 @@ namespace WatchList.Core.Service.DataLoading.Rules
                 item.Grade = null;
             }
 
-            return items.Items;
+            return items;
         }
     }
 }
