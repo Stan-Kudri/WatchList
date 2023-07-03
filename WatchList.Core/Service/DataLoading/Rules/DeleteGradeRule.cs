@@ -1,6 +1,5 @@
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.PageItem;
 
 namespace WatchList.Core.Service.DataLoading.Rules
 {
@@ -10,14 +9,14 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         public bool IsDeleteGrade { get; private set; }
 
-        public PagedList<WatchItem> Apply(PagedList<WatchItem> items)
+        public ICollection<WatchItem> Apply(ICollection<WatchItem> items)
         {
             if (!IsDeleteGrade)
             {
                 return items;
             }
 
-            foreach (var item in items.Items)
+            foreach (var item in items)
             {
                 if (item.Grade == null)
                 {
