@@ -31,6 +31,8 @@ namespace WatchList.WinForms
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            var dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            var dataGridViewCellStyle2 = new DataGridViewCellStyle();
             cinemaBindingSource = new BindingSource(components);
             openFileDialog = new OpenFileDialog();
             dgvCinema = new DataGridView();
@@ -76,26 +78,42 @@ namespace WatchList.WinForms
             // dgvCinema
             // 
             dgvCinema.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvCinema.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvCinema.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCinema.Columns.AddRange(new DataGridViewColumn[] { NameCinema, NumberCinema, WatchedCinema, DataWatchedCinema, GradeCinema, IdCinema, Cinema });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvCinema.DefaultCellStyle = dataGridViewCellStyle2;
             dgvCinema.Location = new Point(5, 120);
-            dgvCinema.MaximumSize = new Size(630, 240);
-            dgvCinema.MinimumSize = new Size(630, 240);
+            dgvCinema.MaximumSize = new Size(665, 240);
+            dgvCinema.MinimumSize = new Size(665, 240);
             dgvCinema.Name = "dgvCinema";
             dgvCinema.ReadOnly = true;
             dgvCinema.RowTemplate.Height = 25;
-            dgvCinema.Size = new Size(630, 240);
+            dgvCinema.Size = new Size(665, 240);
             dgvCinema.TabIndex = 16;
             dgvCinema.Tag = "Cinema";
             // 
             // NameCinema
             // 
-            NameCinema.FillWeight = 160F;
+            NameCinema.FillWeight = 180F;
             NameCinema.HeaderText = "Title";
             NameCinema.Name = "NameCinema";
             NameCinema.ReadOnly = true;
             NameCinema.SortMode = DataGridViewColumnSortMode.Programmatic;
-            NameCinema.Width = 160;
+            NameCinema.Width = 180;
             // 
             // NumberCinema
             // 
@@ -108,12 +126,10 @@ namespace WatchList.WinForms
             // 
             // WatchedCinema
             // 
-            WatchedCinema.FillWeight = 106F;
             WatchedCinema.HeaderText = "Status";
             WatchedCinema.Name = "WatchedCinema";
             WatchedCinema.ReadOnly = true;
             WatchedCinema.SortMode = DataGridViewColumnSortMode.Programmatic;
-            WatchedCinema.Width = 106;
             // 
             // DataWatchedCinema
             // 
@@ -124,12 +140,12 @@ namespace WatchList.WinForms
             // 
             // GradeCinema
             // 
-            GradeCinema.FillWeight = 50F;
+            GradeCinema.FillWeight = 55F;
             GradeCinema.HeaderText = "Grade";
             GradeCinema.Name = "GradeCinema";
             GradeCinema.ReadOnly = true;
             GradeCinema.SortMode = DataGridViewColumnSortMode.Programmatic;
-            GradeCinema.Width = 50;
+            GradeCinema.Width = 55;
             // 
             // IdCinema
             // 
@@ -140,10 +156,12 @@ namespace WatchList.WinForms
             // 
             // Cinema
             // 
+            Cinema.FillWeight = 90F;
             Cinema.HeaderText = "Type";
             Cinema.Name = "Cinema";
             Cinema.ReadOnly = true;
             Cinema.SortMode = DataGridViewColumnSortMode.Programmatic;
+            Cinema.Width = 90;
             // 
             // btnAddCinema
             // 
@@ -154,12 +172,12 @@ namespace WatchList.WinForms
             btnAddCinema.Icon = null;
             btnAddCinema.Location = new Point(5, 395);
             btnAddCinema.Margin = new Padding(4, 6, 4, 6);
-            btnAddCinema.MaximumSize = new Size(150, 20);
-            btnAddCinema.MinimumSize = new Size(150, 20);
+            btnAddCinema.MaximumSize = new Size(155, 20);
+            btnAddCinema.MinimumSize = new Size(155, 20);
             btnAddCinema.MouseState = MaterialSkin.MouseState.HOVER;
             btnAddCinema.Name = "btnAddCinema";
             btnAddCinema.NoAccentTextColor = Color.Empty;
-            btnAddCinema.Size = new Size(150, 20);
+            btnAddCinema.Size = new Size(155, 20);
             btnAddCinema.TabIndex = 32;
             btnAddCinema.Text = "Add Cinema";
             btnAddCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -174,14 +192,14 @@ namespace WatchList.WinForms
             btnEditCinema.Depth = 0;
             btnEditCinema.HighEmphasis = true;
             btnEditCinema.Icon = null;
-            btnEditCinema.Location = new Point(165, 395);
+            btnEditCinema.Location = new Point(175, 395);
             btnEditCinema.Margin = new Padding(4, 6, 4, 6);
-            btnEditCinema.MaximumSize = new Size(150, 20);
-            btnEditCinema.MinimumSize = new Size(150, 20);
+            btnEditCinema.MaximumSize = new Size(155, 20);
+            btnEditCinema.MinimumSize = new Size(155, 20);
             btnEditCinema.MouseState = MaterialSkin.MouseState.HOVER;
             btnEditCinema.Name = "btnEditCinema";
             btnEditCinema.NoAccentTextColor = Color.Empty;
-            btnEditCinema.Size = new Size(150, 20);
+            btnEditCinema.Size = new Size(155, 20);
             btnEditCinema.TabIndex = 36;
             btnEditCinema.Text = "Edit";
             btnEditCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -196,14 +214,14 @@ namespace WatchList.WinForms
             btnDeleteMovie.Depth = 0;
             btnDeleteMovie.HighEmphasis = true;
             btnDeleteMovie.Icon = null;
-            btnDeleteMovie.Location = new Point(325, 395);
+            btnDeleteMovie.Location = new Point(345, 395);
             btnDeleteMovie.Margin = new Padding(4, 6, 4, 6);
-            btnDeleteMovie.MaximumSize = new Size(150, 20);
-            btnDeleteMovie.MinimumSize = new Size(150, 20);
+            btnDeleteMovie.MaximumSize = new Size(155, 20);
+            btnDeleteMovie.MinimumSize = new Size(155, 20);
             btnDeleteMovie.MouseState = MaterialSkin.MouseState.HOVER;
             btnDeleteMovie.Name = "btnDeleteMovie";
             btnDeleteMovie.NoAccentTextColor = Color.Empty;
-            btnDeleteMovie.Size = new Size(150, 20);
+            btnDeleteMovie.Size = new Size(155, 20);
             btnDeleteMovie.TabIndex = 37;
             btnDeleteMovie.Text = "Delete";
             btnDeleteMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -218,14 +236,14 @@ namespace WatchList.WinForms
             btnAddData.Depth = 0;
             btnAddData.HighEmphasis = true;
             btnAddData.Icon = null;
-            btnAddData.Location = new Point(485, 395);
+            btnAddData.Location = new Point(515, 395);
             btnAddData.Margin = new Padding(4, 6, 4, 6);
-            btnAddData.MaximumSize = new Size(150, 20);
-            btnAddData.MinimumSize = new Size(150, 20);
+            btnAddData.MaximumSize = new Size(155, 20);
+            btnAddData.MinimumSize = new Size(155, 20);
             btnAddData.MouseState = MaterialSkin.MouseState.HOVER;
             btnAddData.Name = "btnAddData";
             btnAddData.NoAccentTextColor = Color.Empty;
-            btnAddData.Size = new Size(150, 20);
+            btnAddData.Size = new Size(155, 20);
             btnAddData.TabIndex = 38;
             btnAddData.Text = "Add data";
             btnAddData.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -240,14 +258,14 @@ namespace WatchList.WinForms
             btnUseFilter.Depth = 0;
             btnUseFilter.HighEmphasis = true;
             btnUseFilter.Icon = null;
-            btnUseFilter.Location = new Point(495, 95);
+            btnUseFilter.Location = new Point(515, 95);
             btnUseFilter.Margin = new Padding(4, 6, 4, 6);
-            btnUseFilter.MaximumSize = new Size(140, 20);
-            btnUseFilter.MinimumSize = new Size(140, 20);
+            btnUseFilter.MaximumSize = new Size(155, 20);
+            btnUseFilter.MinimumSize = new Size(155, 20);
             btnUseFilter.MouseState = MaterialSkin.MouseState.HOVER;
             btnUseFilter.Name = "btnUseFilter";
             btnUseFilter.NoAccentTextColor = Color.Empty;
-            btnUseFilter.Size = new Size(140, 20);
+            btnUseFilter.Size = new Size(155, 20);
             btnUseFilter.TabIndex = 39;
             btnUseFilter.Text = "Use Filter";
             btnUseFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -262,14 +280,14 @@ namespace WatchList.WinForms
             btnClearFilter.Depth = 0;
             btnClearFilter.HighEmphasis = true;
             btnClearFilter.Icon = null;
-            btnClearFilter.Location = new Point(495, 70);
+            btnClearFilter.Location = new Point(515, 70);
             btnClearFilter.Margin = new Padding(4, 6, 4, 6);
-            btnClearFilter.MaximumSize = new Size(140, 20);
-            btnClearFilter.MinimumSize = new Size(140, 20);
+            btnClearFilter.MaximumSize = new Size(155, 20);
+            btnClearFilter.MinimumSize = new Size(155, 20);
             btnClearFilter.MouseState = MaterialSkin.MouseState.HOVER;
             btnClearFilter.Name = "btnClearFilter";
             btnClearFilter.NoAccentTextColor = Color.Empty;
-            btnClearFilter.Size = new Size(140, 20);
+            btnClearFilter.Size = new Size(155, 20);
             btnClearFilter.TabIndex = 40;
             btnClearFilter.Text = "Clear Filter";
             btnClearFilter.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -295,11 +313,11 @@ namespace WatchList.WinForms
             cmbFilterType.ItemHeight = 43;
             cmbFilterType.Location = new Point(5, 70);
             cmbFilterType.MaxDropDownItems = 4;
-            cmbFilterType.MaximumSize = new Size(235, 0);
-            cmbFilterType.MinimumSize = new Size(235, 0);
+            cmbFilterType.MaximumSize = new Size(240, 0);
+            cmbFilterType.MinimumSize = new Size(240, 0);
             cmbFilterType.MouseState = MaterialSkin.MouseState.OUT;
             cmbFilterType.Name = "cmbFilterType";
-            cmbFilterType.Size = new Size(235, 49);
+            cmbFilterType.Size = new Size(240, 49);
             cmbFilterType.StartIndex = 0;
             cmbFilterType.TabIndex = 41;
             // 
@@ -322,13 +340,13 @@ namespace WatchList.WinForms
             cmbFilterStatus.ForeColor = Color.FromArgb(222, 0, 0, 0);
             cmbFilterStatus.IntegralHeight = false;
             cmbFilterStatus.ItemHeight = 43;
-            cmbFilterStatus.Location = new Point(250, 70);
+            cmbFilterStatus.Location = new Point(260, 70);
             cmbFilterStatus.MaxDropDownItems = 4;
-            cmbFilterStatus.MaximumSize = new Size(235, 0);
-            cmbFilterStatus.MinimumSize = new Size(235, 0);
+            cmbFilterStatus.MaximumSize = new Size(240, 0);
+            cmbFilterStatus.MinimumSize = new Size(240, 0);
             cmbFilterStatus.MouseState = MaterialSkin.MouseState.OUT;
             cmbFilterStatus.Name = "cmbFilterStatus";
-            cmbFilterStatus.Size = new Size(235, 49);
+            cmbFilterStatus.Size = new Size(240, 49);
             cmbFilterStatus.StartIndex = 0;
             cmbFilterStatus.TabIndex = 42;
             // 
@@ -337,7 +355,7 @@ namespace WatchList.WinForms
             cmbPageSize.DataBindings.Add(new Binding("SelectedValue", pageModelBindingSource, "Size", true));
             cmbPageSize.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPageSize.FormattingEnabled = true;
-            cmbPageSize.Location = new Point(115, 365);
+            cmbPageSize.Location = new Point(120, 365);
             cmbPageSize.Name = "cmbPageSize";
             cmbPageSize.Size = new Size(120, 23);
             cmbPageSize.TabIndex = 43;
@@ -354,7 +372,7 @@ namespace WatchList.WinForms
             btnBackPage.Depth = 0;
             btnBackPage.HighEmphasis = true;
             btnBackPage.Icon = null;
-            btnBackPage.Location = new Point(270, 366);
+            btnBackPage.Location = new Point(280, 366);
             btnBackPage.Margin = new Padding(4, 6, 4, 6);
             btnBackPage.MaximumSize = new Size(20, 20);
             btnBackPage.MinimumSize = new Size(20, 20);
@@ -376,7 +394,7 @@ namespace WatchList.WinForms
             btnNextPage.Depth = 0;
             btnNextPage.HighEmphasis = true;
             btnNextPage.Icon = null;
-            btnNextPage.Location = new Point(370, 366);
+            btnNextPage.Location = new Point(385, 366);
             btnNextPage.Margin = new Padding(4, 6, 4, 6);
             btnNextPage.MaximumSize = new Size(20, 20);
             btnNextPage.MinimumSize = new Size(20, 20);
@@ -398,7 +416,7 @@ namespace WatchList.WinForms
             btnStartPage.Depth = 0;
             btnStartPage.HighEmphasis = true;
             btnStartPage.Icon = null;
-            btnStartPage.Location = new Point(245, 366);
+            btnStartPage.Location = new Point(255, 366);
             btnStartPage.Margin = new Padding(4, 6, 4, 6);
             btnStartPage.MaximumSize = new Size(20, 20);
             btnStartPage.MinimumSize = new Size(20, 20);
@@ -420,7 +438,7 @@ namespace WatchList.WinForms
             btnEndPage.Depth = 0;
             btnEndPage.HighEmphasis = true;
             btnEndPage.Icon = null;
-            btnEndPage.Location = new Point(395, 366);
+            btnEndPage.Location = new Point(410, 366);
             btnEndPage.Margin = new Padding(4, 6, 4, 6);
             btnEndPage.MaximumSize = new Size(20, 20);
             btnEndPage.MinimumSize = new Size(20, 20);
@@ -438,7 +456,7 @@ namespace WatchList.WinForms
             // textBoxPage
             // 
             textBoxPage.DataBindings.Add(new Binding("Text", pageModelBindingSource, "Number", true));
-            textBoxPage.Location = new Point(295, 366);
+            textBoxPage.Location = new Point(310, 366);
             textBoxPage.MaximumSize = new Size(40, 20);
             textBoxPage.MinimumSize = new Size(40, 20);
             textBoxPage.Name = "textBoxPage";
@@ -451,7 +469,7 @@ namespace WatchList.WinForms
             labelTotalPage.AutoSize = true;
             labelTotalPage.Depth = 0;
             labelTotalPage.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelTotalPage.Location = new Point(341, 366);
+            labelTotalPage.Location = new Point(355, 366);
             labelTotalPage.MouseState = MaterialSkin.MouseState.HOVER;
             labelTotalPage.Name = "labelTotalPage";
             labelTotalPage.Size = new Size(17, 19);
@@ -477,7 +495,7 @@ namespace WatchList.WinForms
             labelSortType.BackColor = SystemColors.Control;
             labelSortType.Depth = 0;
             labelSortType.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelSortType.Location = new Point(422, 367);
+            labelSortType.Location = new Point(450, 367);
             labelSortType.MouseState = MaterialSkin.MouseState.HOVER;
             labelSortType.Name = "labelSortType";
             labelSortType.Size = new Size(51, 19);
@@ -489,9 +507,9 @@ namespace WatchList.WinForms
             cmbSortType.DataBindings.Add(new Binding("SelectedValue", sortModelBindingSource, "Type", true));
             cmbSortType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSortType.FormattingEnabled = true;
-            cmbSortType.Location = new Point(480, 365);
+            cmbSortType.Location = new Point(510, 365);
             cmbSortType.Name = "cmbSortType";
-            cmbSortType.Size = new Size(155, 23);
+            cmbSortType.Size = new Size(160, 23);
             cmbSortType.TabIndex = 55;
             cmbSortType.SelectedIndexChanged += CmbSort_ChangedItem;
             // 
@@ -504,7 +522,7 @@ namespace WatchList.WinForms
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(650, 425);
+            ClientSize = new Size(680, 425);
             Controls.Add(cmbSortType);
             Controls.Add(labelSortType);
             Controls.Add(labelTextSizePage);
@@ -525,9 +543,10 @@ namespace WatchList.WinForms
             Controls.Add(btnAddCinema);
             Controls.Add(dgvCinema);
             Margin = new Padding(3, 2, 3, 2);
-            MaximumSize = new Size(650, 425);
-            MinimumSize = new Size(650, 425);
+            MaximumSize = new Size(680, 425);
+            MinimumSize = new Size(680, 425);
             Name = "BoxCinemaForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "BoxCinema";
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).EndInit();
@@ -561,6 +580,8 @@ namespace WatchList.WinForms
         private MaterialSkin.Controls.MaterialLabel labelTextSizePage;
         private MaterialSkin.Controls.MaterialLabel labelSortType;
         private ComboBox cmbSortType;
+        private BindingSource filterModelBindingSource;
+        private BindingSource sortModelBindingSource;
         private DataGridViewTextBoxColumn NameCinema;
         private DataGridViewTextBoxColumn NumberCinema;
         private DataGridViewTextBoxColumn WatchedCinema;
@@ -568,7 +589,5 @@ namespace WatchList.WinForms
         private DataGridViewTextBoxColumn GradeCinema;
         private DataGridViewTextBoxColumn IdCinema;
         private DataGridViewTextBoxColumn Cinema;
-        private BindingSource filterModelBindingSource;
-        private BindingSource sortModelBindingSource;
     }
 }
