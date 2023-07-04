@@ -297,6 +297,7 @@ namespace WatchList.WinForms.ChildForms
             Location = new Point(370, 185);
             MaximumSize = new Size(370, 185);
             Name = "EditorItemCinemaForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Edit Item";
             Load += EditorItemCinemaForm_Load;
             ((System.ComponentModel.ISupportInitialize)numericGradeCinema).EndInit();

@@ -110,7 +110,7 @@
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += BtnClear_Click;
             // 
-            // DataLoadingAlgorithm
+            // MergeDatabaseForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -122,7 +122,8 @@
             Controls.Add(cbExistGrade);
             MaximumSize = new Size(420, 170);
             MinimumSize = new Size(420, 170);
-            Name = "DataLoadingAlgorithm";
+            Name = "MergeDatabaseForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Loading data";
             ResumeLayout(false);
             PerformLayout();

@@ -107,7 +107,7 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             labelTitleInfo.TabIndex = 6;
             labelTitleInfo.Text = "Title:";
             // 
-            // QuestionMessageBoxForm
+            // DataReplaceMessageForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -119,7 +119,8 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             Controls.Add(btnNo);
             Controls.Add(btnAllYes);
             Controls.Add(btnYes);
-            Name = "QuestionMessageBoxForm";
+            Name = "DataReplaceMessageForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Question";
             ResumeLayout(false);
             PerformLayout();

@@ -23,6 +23,7 @@ namespace WatchList.Core.Service.DataLoading
         public DownloadDataService(WatchCinemaDbContext db, IMessageBox messageBox)
         {
             _db = db;
+            db.ChangeTracker.Clear();
             _repository = new WatchItemRepository(_db);
             _messageBox = messageBox;
         }
