@@ -12,8 +12,6 @@ namespace WatchList.Core.Service.DataLoading
 {
     public class DownloadDataService
     {
-        public const int NumberOfItemPerPage = 500;
-
         private readonly WatchCinemaDbContext _db;
 
         private readonly WatchItemRepository _repository;
@@ -28,9 +26,11 @@ namespace WatchList.Core.Service.DataLoading
             _messageBox = messageBox;
         }
 
-        public void Download(WatchItemRepository repository, ILoadRule processUploadData, int numberOfItemPerPage = NumberOfItemPerPage)
+        public int NumberOfItemPerPage { get; set; } = 500;
+
+        public void Download(WatchItemRepository repository, ILoadRule processUploadData)
         {
-            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, numberOfItemPerPage));
+            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, NumberOfItemPerPage));
             var pagedList = repository.GetPage(searchRequest);
             var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
 

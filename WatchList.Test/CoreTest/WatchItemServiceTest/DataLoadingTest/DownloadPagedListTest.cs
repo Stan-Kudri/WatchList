@@ -56,6 +56,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
+            service.NumberOfItemPerPage = PageSize;
             var loadRule = new DeleteGradeRule(false);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
@@ -65,7 +66,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             dbContextDownloadItem.SaveChanges();
 
             // Act
-            service.Download(repositoryDataDownload, loadRule, PageSize);
+            service.Download(repositoryDataDownload, loadRule);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
