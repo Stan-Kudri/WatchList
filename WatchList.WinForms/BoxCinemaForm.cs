@@ -279,6 +279,12 @@ namespace WatchList.WinForms
                 _searchRequest.Page = Page.GetPage();
                 _searchRequest.Sort = Sort.GetSortItem();
                 _pagedList = _itemService.GetPage(_searchRequest);
+                if (_pagedList.Count == 0 && Page.Number != 1)
+                {
+                    Page.Number -= 1;
+                    LoadData();
+                }
+
                 var item = _pagedList.Items;
 
                 GridClear();
