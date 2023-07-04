@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace WatchList.Core.PageItem
 {
-    public class PagedList<T> : ICollection<T>
+    public class PagedList<T> : IReadOnlyCollection<T>
     {
         private const int StartPageSize = 5;
         private const int NumberStartPage = 1;
@@ -55,67 +55,6 @@ namespace WatchList.Core.PageItem
         public bool HasNextPage => PageNumber < PageCount;
 
         public int Count => Items.Count;
-
-        public bool IsReadOnly => false;
-
-        public void Add(T item)
-        {
-            if (Contains(item))
-            {
-                throw new ArgumentException("The element has already been added to the collection.", nameof(item));
-            }
-            else
-            {
-                Items.Add(item);
-            }
-        }
-
-        public void Clear() => Items.Clear();
-
-        public bool Contains(T item)
-        {
-            foreach (var element in Items)
-            {
-                if (item != null || item.Equals(element))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            if (array == null)
-            {
-                throw new ArgumentNullException("The array cannot be null.");
-            }
-            else if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("The starting array index cannot be negative.");
-            }
-            else if (Count > array.Length - arrayIndex)
-            {
-                throw new ArgumentException("The destination array has fewer elements than the collection.");
-            }
-
-            for (var i = 0; i < Count; i++)
-            {
-                array[i + arrayIndex] = Items[i];
-            }
-        }
-
-        public bool Remove(T item)
-        {
-            if (Contains(item))
-            {
-                Items.Remove(item);
-                return true;
-            }
-
-            return false;
-        }
 
         public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
 

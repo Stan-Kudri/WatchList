@@ -4,6 +4,6 @@ namespace WatchList.Core.Service.DataLoading.Rules
 {
     public interface ILoadRule
     {
-        ICollection<WatchItem> Apply(ICollection<WatchItem> items);
+        IReadOnlyCollection<WatchItem> Apply(IReadOnlyCollection<WatchItem> items);
     }
 }

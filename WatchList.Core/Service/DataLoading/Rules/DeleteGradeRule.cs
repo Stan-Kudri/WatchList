@@ -9,7 +9,7 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         public bool IsDeleteGrade { get; private set; }
 
-        public ICollection<WatchItem> Apply(ICollection<WatchItem> items)
+        public IReadOnlyCollection<WatchItem> Apply(IReadOnlyCollection<WatchItem> items)
         {
             if (!IsDeleteGrade)
             {
