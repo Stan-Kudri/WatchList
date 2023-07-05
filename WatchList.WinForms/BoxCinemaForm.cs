@@ -280,7 +280,7 @@ namespace WatchList.WinForms
                 _searchRequest.Page = Page.GetPage();
                 _searchRequest.Sort = Sort.GetSortItem();
                 _pagedList = _itemService.GetPage(_searchRequest);
-                if (_pagedList.Count == 0 && Page.Number != 1)
+                if (IsNotFirstPageEmpty())
                 {
                     Page.Number -= 1;
                     LoadData();
@@ -384,6 +384,17 @@ namespace WatchList.WinForms
             return result;
         }
 
+        /// <summary>
+        /// Gets a string from a table cell, if there is null then an exception.
+        /// </summary>
+        /// <param name="rowItem">Element row number.</param>
+        /// <param name="indexColumn">Column number.</param>
+        /// <returns>
+        /// Get the cell element in string representation.
+        /// </returns>
+        /// <exception cref="Exception">
+        /// String is null.
+        /// </exception>
         private string CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.GetString(indexColumn) ?? throw new Exception("String cannot be null.");
 
         /// <summary>
@@ -393,6 +404,14 @@ namespace WatchList.WinForms
         /// True - The filter has been changed. False - else.
         /// </returns>
         private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
+
+        /// <summary>
+        /// The method checks if the page is empty.
+        /// </summary>
+        /// <returns>
+        /// True - The page contains no elements and is not the first.
+        /// </returns>
+        private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
 
         /// <summary>
         /// The method checks if the size of the page data has changed.
