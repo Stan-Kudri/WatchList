@@ -1,6 +1,4 @@
-using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
-using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
 using WatchList.Core.Repository.Db;
@@ -28,24 +26,6 @@ namespace WatchList.Core.Service
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
 
         public void Remove(Guid id) => _repository.Remove(id);
-
-        public void Replace(WatchCinemaDbContext dbContext)
-        {
-            var repository = new WatchItemRepository(dbContext);
-            _repository.RemoveRange();
-            _db.ChangeTracker.Clear();
-            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, 500));
-            var pagedList = repository.GetPage(searchRequest);
-
-            while (searchRequest.Page.Number <= pagedList.PageCount)
-            {
-                var itemPage = repository.GetPage(searchRequest).Items;
-                _db.WatchItem.AddRange(itemPage);
-                searchRequest.Page.Number += 1;
-            }
-
-            _db.SaveChanges();
-        }
 
         public void Add(WatchItem item)
         {

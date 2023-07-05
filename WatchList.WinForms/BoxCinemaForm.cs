@@ -3,9 +3,12 @@ using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.PageItem;
+using WatchList.Core.Repository;
 using WatchList.Core.Repository.Db;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
+using WatchList.Core.Service.DataLoading;
+using WatchList.Core.Service.DataLoading.Rules;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.BuilderDbContext;
 using WatchList.WinForms.ChildForms;
@@ -21,6 +24,7 @@ namespace WatchList.WinForms
     public partial class BoxCinemaForm : MaterialForm
     {
         private const string HighlightTheDesiredLine = "No items selected.";
+        private const int NumberOfItemPerPage = 500;
 
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
@@ -32,6 +36,7 @@ namespace WatchList.WinForms
 
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
+        private readonly WatchCinemaDbContext _dbContext;
 
         private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
 
@@ -40,6 +45,7 @@ namespace WatchList.WinForms
         public BoxCinemaForm(WatchCinemaDbContext db)
         {
             InitializeComponent();
+            _dbContext = db;
             _messageBox = new MessageBoxShow();
             _itemService = new WatchItemService(db, _messageBox);
             _pagedList = _itemService.GetPage(_searchRequest);
@@ -144,7 +150,7 @@ namespace WatchList.WinForms
             LoadData();
         }
 
-        private void BtnReplaceFile_Click(object sender, EventArgs e)
+        private void BtnDownloadDataFile_Click(object sender, EventArgs e)
         {
             var openReplaceDataFromFile = new OpenFileDialog { Filter = "Data Base (*.db)|*.db" };
             if (openReplaceDataFromFile.ShowDialog() == DialogResult.Cancel)
@@ -152,8 +158,18 @@ namespace WatchList.WinForms
                 return;
             }
 
+            var dataLoadingForm = new MergeDatabaseForm();
+            if (dataLoadingForm.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
-            _itemService.Replace(dbContext);
+            var algorithmLoadData = dataLoadingForm.GetLoadData();
+            var loadRule = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
+            var repositoryDataDownload = new WatchItemRepository(dbContext);
+            var downloadDataService = new DownloadDataService(_dbContext, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
+            downloadDataService.Download(repositoryDataDownload, loadRule);
             UpdateGridData();
         }
 
@@ -264,6 +280,12 @@ namespace WatchList.WinForms
                 _searchRequest.Page = Page.GetPage();
                 _searchRequest.Sort = Sort.GetSortItem();
                 _pagedList = _itemService.GetPage(_searchRequest);
+                if (IsNotFirstPageEmpty())
+                {
+                    Page.Number -= 1;
+                    LoadData();
+                }
+
                 var item = _pagedList.Items;
 
                 GridClear();
@@ -362,6 +384,17 @@ namespace WatchList.WinForms
             return result;
         }
 
+        /// <summary>
+        /// Gets a string from a table cell, if there is null then an exception.
+        /// </summary>
+        /// <param name="rowItem">Element row number.</param>
+        /// <param name="indexColumn">Column number.</param>
+        /// <returns>
+        /// Get the cell element in string representation.
+        /// </returns>
+        /// <exception cref="Exception">
+        /// String is null.
+        /// </exception>
         private string CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.GetString(indexColumn) ?? throw new Exception("String cannot be null.");
 
         /// <summary>
@@ -371,6 +404,14 @@ namespace WatchList.WinForms
         /// True - The filter has been changed. False - else.
         /// </returns>
         private bool IsNotChangesFilter() => _searchRequest.CompareFilter(Filter.GetFilter());
+
+        /// <summary>
+        /// The method checks if the page is empty.
+        /// </summary>
+        /// <returns>
+        /// True - The page contains no elements and is not the first.
+        /// </returns>
+        private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
 
         /// <summary>
         /// The method checks if the size of the page data has changed.

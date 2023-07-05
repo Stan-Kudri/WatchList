@@ -1,8 +1,10 @@
+using System.Collections;
+
 namespace WatchList.Core.PageItem
 {
-    public class PagedList<T>
+    public class PagedList<T> : IReadOnlyCollection<T>
     {
-        private const int StartPageSize = 5;
+        private const int StartPageSize = 10;
         private const int NumberStartPage = 1;
 
         public PagedList(IQueryable<T> items, int pageNumber = NumberStartPage, int pageSize = StartPageSize)
@@ -51,6 +53,12 @@ namespace WatchList.Core.PageItem
         public bool HasPreviousPage => PageNumber > 1;
 
         public bool HasNextPage => PageNumber < PageCount;
+
+        public int Count => Items.Count;
+
+        public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         private static List<T> GetPage(IQueryable<T> items, int pageNumber, int pageSize)
             => items.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();

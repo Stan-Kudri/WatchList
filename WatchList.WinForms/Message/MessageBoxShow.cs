@@ -1,4 +1,6 @@
+using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Service.Component;
+using WatchList.WinForms.ChildForms.MessageBoxForm;
 
 namespace WatchList.WinForms.Message
 {
@@ -13,5 +15,15 @@ namespace WatchList.WinForms.Message
         public bool ShowQuestion(string message) => MessageBox.Show(message, "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
 
         public bool ShowQuestionSaveItem(string message) => MessageBox.Show(message, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK;
+
+        public DialogReplaceItemQuestion ShowDataReplaceQuestion(string titleItem)
+        {
+            using (var form = new DataReplaceMessageForm(titleItem))
+            {
+                return form.ShowDialog() == DialogResult.OK ?
+                DialogReplaceItemQuestion.FromValue((int)form.ResultQuestion) :
+                DialogReplaceItemQuestion.Unknown;
+            }
+        }
     }
 }

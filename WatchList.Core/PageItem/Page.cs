@@ -2,7 +2,7 @@ namespace WatchList.Core.PageItem
 {
     public class Page
     {
-        private const int StartPageSize = 5;
+        private const int StartPageSize = 10;
         private const int NumberStartPage = 1;
 
         private int _number;

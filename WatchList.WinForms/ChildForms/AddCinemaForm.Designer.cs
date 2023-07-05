@@ -295,6 +295,7 @@ namespace WatchList.WinForms.ChildForms
             MaximumSize = new Size(370, 185);
             MinimumSize = new Size(370, 185);
             Name = "AddCinemaForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Add Cinema";
             Load += AddCinemaForm_Load;
             ((System.ComponentModel.ISupportInitialize)cinemaModelsBindingSource).EndInit();
