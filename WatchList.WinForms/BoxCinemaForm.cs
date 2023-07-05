@@ -24,6 +24,7 @@ namespace WatchList.WinForms
     public partial class BoxCinemaForm : MaterialForm
     {
         private const string HighlightTheDesiredLine = "No items selected.";
+        private const int NumberOfItemPerPage = 500;
 
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
@@ -167,7 +168,7 @@ namespace WatchList.WinForms
             var algorithmLoadData = dataLoadingForm.GetLoadData();
             var loadRule = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
             var repositoryDataDownload = new WatchItemRepository(dbContext);
-            var downloadDataService = new DownloadDataService(_dbContext, _messageBox);
+            var downloadDataService = new DownloadDataService(_dbContext, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
             downloadDataService.Download(repositoryDataDownload, loadRule);
             UpdateGridData();
         }

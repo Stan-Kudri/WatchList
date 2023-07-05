@@ -55,8 +55,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(dbContext, messageBox.Object);
-            service.NumberOfItemPerPage = PageSize;
+            var service = new DownloadDataService(dbContext, messageBox.Object) { NumberOfItemPerPage = PageSize };
             var loadRule = new DeleteGradeRule(false);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
