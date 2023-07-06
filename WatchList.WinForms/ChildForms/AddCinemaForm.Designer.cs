@@ -33,7 +33,7 @@ namespace WatchList.WinForms.ChildForms
             components = new System.ComponentModel.Container();
             txtAddCinema = new TextBox();
             cinemaModelsBindingSource = new BindingSource(components);
-            numericSeaquel = new NumericUpDown();
+            numericSequel = new NumericUpDown();
             dateTimePickerCinema = new DateTimePicker();
             numericGradeCinema = new NumericUpDown();
             labelGrade = new MaterialSkin.Controls.MaterialLabel();
@@ -49,7 +49,7 @@ namespace WatchList.WinForms.ChildForms
             labelStatus = new MaterialSkin.Controls.MaterialLabel();
             labelType = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)cinemaModelsBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericSeaquel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericSequel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericGradeCinema).BeginInit();
             ((System.ComponentModel.ISupportInitialize)typeModelBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)statusModelBindingSource).BeginInit();
@@ -67,15 +67,15 @@ namespace WatchList.WinForms.ChildForms
             // 
             cinemaModelsBindingSource.DataSource = typeof(CinemaModel);
             // 
-            // numericSeaquel
+            // numericSequel
             // 
-            numericSeaquel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "Sequel", true));
-            numericSeaquel.Location = new Point(300, 100);
-            numericSeaquel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericSeaquel.Name = "numericSeaquel";
-            numericSeaquel.Size = new Size(55, 23);
-            numericSeaquel.TabIndex = 11;
-            numericSeaquel.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            numericSequel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "Sequel", true));
+            numericSequel.Location = new Point(300, 100);
+            numericSequel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericSequel.Name = "numericSequel";
+            numericSequel.Size = new Size(55, 23);
+            numericSequel.TabIndex = 11;
+            numericSequel.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // dateTimePickerCinema
             // 
@@ -290,7 +290,7 @@ namespace WatchList.WinForms.ChildForms
             Controls.Add(labelGrade);
             Controls.Add(numericGradeCinema);
             Controls.Add(dateTimePickerCinema);
-            Controls.Add(numericSeaquel);
+            Controls.Add(numericSequel);
             Controls.Add(txtAddCinema);
             MaximumSize = new Size(370, 185);
             MinimumSize = new Size(370, 185);
@@ -299,7 +299,7 @@ namespace WatchList.WinForms.ChildForms
             Text = "Add Cinema";
             Load += AddCinemaForm_Load;
             ((System.ComponentModel.ISupportInitialize)cinemaModelsBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericSeaquel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericSequel).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericGradeCinema).EndInit();
             ((System.ComponentModel.ISupportInitialize)typeModelBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)statusModelBindingSource).EndInit();
@@ -309,7 +309,7 @@ namespace WatchList.WinForms.ChildForms
 
         #endregion
         private TextBox txtAddCinema;
-        private NumericUpDown numericSeaquel;
+        private NumericUpDown numericSequel;
         private DateTimePicker dateTimePickerCinema;
         private NumericUpDown numericGradeCinema;
         private BindingSource cinemaModelsBindingSource;

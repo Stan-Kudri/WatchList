@@ -1,4 +1,5 @@
 using MaterialSkin.Controls;
+using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelDataLoad;
 using WatchList.WinForms.Message;
@@ -16,13 +17,15 @@ namespace WatchList.WinForms.ChildForms
         {
             _messageBox = new MessageBoxShow();
             InitializeComponent();
-            SetupDefaultValues();
         }
+
+        private TypeCinema SelectTypeCinema =>
+            cmbTypeCinema.SelectedValue != null ? (TypeCinema)cmbTypeCinema.SelectedValue : throw new Exception("Wrong combo box format");
 
         public ModelProcessUploadData GetLoadData()
         {
             var isDeleteGrade = cbExistGrade.Checked;
-            return new ModelProcessUploadData(isDeleteGrade);
+            return new ModelProcessUploadData(isDeleteGrade, SelectTypeCinema);
         }
 
         private void BtnClear_Click(object sender, EventArgs e) => SetupDefaultValues();
@@ -30,6 +33,7 @@ namespace WatchList.WinForms.ChildForms
         private void SetupDefaultValues()
         {
             cbExistGrade.Checked = false;
+            cmbTypeCinema.SelectedItem = TypeCinema.AllType;
         }
 
         private void BtnOk_Click(object sender, EventArgs e)
@@ -42,6 +46,13 @@ namespace WatchList.WinForms.ChildForms
             {
                 return;
             }
+        }
+
+        private void DatabaseForm_Load(object sender, EventArgs e)
+        {
+            typeUploadBindingSource.DataSource = new ModelTypeCinemaUpload();
+            cmbTypeCinema.SelectedItem = TypeCinema.AllType;
+            cbExistGrade.Checked = false;
         }
     }
 }
