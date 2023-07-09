@@ -3,9 +3,9 @@ using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Core.Service.DataLoading.Rules
 {
-    public class LoadRuleByTypeCinema : ILoadRule
+    public class FilterByTypeCinemaLoadRule : ILoadRule
     {
-        public LoadRuleByTypeCinema(TypeCinema typeCinema) => TypeCinemaDataLoad = typeCinema;
+        public FilterByTypeCinemaLoadRule(TypeCinema typeCinema) => TypeCinemaDataLoad = typeCinema;
 
         public TypeCinema TypeCinemaDataLoad { get; private set; }
 

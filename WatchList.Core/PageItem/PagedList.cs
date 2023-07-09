@@ -24,11 +24,6 @@ namespace WatchList.Core.PageItem
                 throw new ArgumentNullException(nameof(items));
             }
 
-            if (items.Count > pageSize)
-            {
-                throw new ArgumentException("The number of items is greater than the page size.", nameof(items));
-            }
-
             if (pageNumber < 0)
             {
                 throw new ArgumentException("Page number can not be less than zero.", nameof(pageNumber));
@@ -44,7 +39,7 @@ namespace WatchList.Core.PageItem
                 throw new ArgumentException("Total items can not be less than zero.", nameof(totalItems));
             }
 
-            Items = items;
+            Items = items.Take(pageSize).ToList();
             PageNumber = pageNumber;
             PageSize = pageSize;
             TotalItems = totalItems;
