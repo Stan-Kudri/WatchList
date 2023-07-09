@@ -167,7 +167,7 @@ namespace WatchList.WinForms
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             var algorithmLoadData = dataLoadingForm.GetLoadData();
             var loadRuleGrade = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
-            var loadRuleType = new TypeCinemaRule(algorithmLoadData.TypeCinemaLoad);
+            var loadRuleType = new LoadRuleByTypeCinema(algorithmLoadData.TypeCinemaLoad);
             var rules = new ILoadRule[] { loadRuleGrade, loadRuleType };
             var repositoryDataDownload = new WatchItemRepository(dbContext);
             var downloadDataService = new DownloadDataService(_dbContext, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };

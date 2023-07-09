@@ -1,12 +1,11 @@
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.PageItem;
 
 namespace WatchList.Core.Service.DataLoading.Rules
 {
-    public class TypeCinemaRule : ILoadRule
+    public class LoadRuleByTypeCinema : ILoadRule
     {
-        public TypeCinemaRule(TypeCinema typeCinema) => TypeCinemaDataLoad = typeCinema;
+        public LoadRuleByTypeCinema(TypeCinema typeCinema) => TypeCinemaDataLoad = typeCinema;
 
         public TypeCinema TypeCinemaDataLoad { get; private set; }
 
@@ -16,11 +15,8 @@ namespace WatchList.Core.Service.DataLoading.Rules
             {
                 return items;
             }
-            else
-            {
-                var itemCollection = new PagedList<WatchItem>(items.Where(x => x.Type == TypeCinemaDataLoad).AsQueryable());
-                return itemCollection;
-            }
+
+            return items.Where(x => x.Type == TypeCinemaDataLoad).ToList();
         }
     }
 }

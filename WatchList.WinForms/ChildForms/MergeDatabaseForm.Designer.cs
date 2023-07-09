@@ -158,9 +158,9 @@ namespace WatchList.WinForms.ChildForms
             labelTypeCinemaLoad.Location = new Point(166, 123);
             labelTypeCinemaLoad.MouseState = MaterialSkin.MouseState.HOVER;
             labelTypeCinemaLoad.Name = "labelTypeCinemaLoad";
-            labelTypeCinemaLoad.Size = new Size(94, 19);
+            labelTypeCinemaLoad.Size = new Size(36, 19);
             labelTypeCinemaLoad.TabIndex = 5;
-            labelTypeCinemaLoad.Text = "Type Cinema";
+            labelTypeCinemaLoad.Text = "Type";
             // 
             // MergeDatabaseForm
             // 
