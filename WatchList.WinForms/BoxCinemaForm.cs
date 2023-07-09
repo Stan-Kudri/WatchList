@@ -168,7 +168,7 @@ namespace WatchList.WinForms
             var algorithmLoadData = dataLoadingForm.GetLoadData();
             var loadRuleGrade = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
             var loadRuleType = new LoadRuleByTypeCinema(algorithmLoadData.TypeCinemaLoad);
-            var rules = new ILoadRule[] { loadRuleGrade, loadRuleType };
+            var rules = new AggregateLoadRule { loadRuleGrade, loadRuleType };
             var repositoryDataDownload = new WatchItemRepository(dbContext);
             var downloadDataService = new DownloadDataService(_dbContext, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
             downloadDataService.Download(repositoryDataDownload, rules);

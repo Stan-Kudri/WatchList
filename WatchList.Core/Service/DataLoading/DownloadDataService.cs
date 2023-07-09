@@ -1,5 +1,4 @@
 using WatchList.Core.Model.Filter;
-using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
@@ -29,7 +28,7 @@ namespace WatchList.Core.Service.DataLoading
 
         public int NumberOfItemPerPage { get; set; } = 500;
 
-        public void Download(WatchItemRepository repository, ILoadRule[] processUploadData)
+        public void Download(WatchItemRepository repository, ILoadRule loadRule)
         {
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, NumberOfItemPerPage));
             var pagedList = repository.GetPage(searchRequest);
@@ -37,13 +36,7 @@ namespace WatchList.Core.Service.DataLoading
 
             while (searchRequest.Page.Number <= pagedList.PageCount)
             {
-                IReadOnlyCollection<WatchItem> itemsPage = pagedList;
-                foreach (var apply in processUploadData)
-                {
-                    itemsPage = apply.Apply(itemsPage);
-                }
-
-                foreach (var item in itemsPage)
+                foreach (var item in loadRule.Apply(pagedList))
                 {
                     var selectItem = _db.WatchItem.SelectIdItemsByDuplicate(item);
 

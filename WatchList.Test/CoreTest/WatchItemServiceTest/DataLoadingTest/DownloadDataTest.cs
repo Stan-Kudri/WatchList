@@ -115,7 +115,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadRuleType = new LoadRuleByTypeCinema(TypeCinema.AllType);
-            var loadRule = new ILoadRule[] { loadRuleGrade, loadRuleType };
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -145,7 +145,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadRuleType = new LoadRuleByTypeCinema(TypeCinema.AllType);
-            var loadRule = new ILoadRule[] { loadRuleGrade, loadRuleType };
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -178,7 +178,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadRuleType = new LoadRuleByTypeCinema(TypeCinema.AllType);
-            var loadRule = new ILoadRule[] { loadRuleGrade, loadRuleType };
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
