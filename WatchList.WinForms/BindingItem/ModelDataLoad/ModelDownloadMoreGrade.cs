@@ -15,7 +15,7 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
         public ModelDownloadMoreGrade(Grade value) => _value = value;
 
         public ObservableCollection<Grade> Items { get; set; }
-            = new ObservableCollection<Grade>(Grade.List);
+            = new ObservableCollection<Grade>(Grade.List.OrderBy(x => x.Value));
 
         public Grade Value
         {
