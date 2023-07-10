@@ -2,6 +2,7 @@ using FluentAssertions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Model.Load;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
@@ -115,7 +116,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType });
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.NotGrade);
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -145,7 +147,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType });
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.NotGrade);
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -178,7 +181,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType });
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.NotGrade);
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
