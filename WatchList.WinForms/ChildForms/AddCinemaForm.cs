@@ -34,7 +34,7 @@ namespace WatchList.WinForms.ChildForms
             decimal? grade = numericGradeCinema.Enabled == true ? numericGradeCinema.Value : null;
             DateTime? dateViewed = dateTimePickerCinema.Enabled == true ? dateTimePickerCinema.Value : null;
 
-            return CinemaModel.CreateNonPlanned(txtAddCinema.Text, numericSeaquel.Value, dateViewed, grade, _status, SelectedTypeCinema);
+            return CinemaModel.CreateNonPlanned(txtAddCinema.Text, numericSequel.Value, dateViewed, grade, _status, SelectedTypeCinema);
         }
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
@@ -57,7 +57,7 @@ namespace WatchList.WinForms.ChildForms
             txtAddCinema.Text = string.Empty;
             numericGradeCinema.Enabled = false;
             numericGradeCinema.Value = 1;
-            numericSeaquel.Value = 1;
+            numericSequel.Value = 1;
             numericGradeCinema.ReadOnly = true;
             cmbTypeCinema.SelectedItem = TypeCinema.Movie;
             cmbStatusCinema.SelectedItem = StatusCinema.Planned;
@@ -70,7 +70,7 @@ namespace WatchList.WinForms.ChildForms
                 errorMessage = $"Enter {SelectedTypeCinema.Name} title";
                 return false;
             }
-            else if (numericSeaquel.Value == 0)
+            else if (numericSequel.Value == 0)
             {
                 errorMessage = $"Enter number {SelectedTypeCinema.Name}";
                 return false;

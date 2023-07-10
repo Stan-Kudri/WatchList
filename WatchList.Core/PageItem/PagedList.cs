@@ -12,6 +12,11 @@ namespace WatchList.Core.PageItem
         {
         }
 
+        public PagedList(IEnumerable<T> items, int pageNumber = NumberStartPage, int pageSize = StartPageSize)
+            : this(GetPage(items, pageNumber, pageSize), pageNumber, pageSize, items.Count())
+        {
+        }
+
         public PagedList(List<T> items, int pageNumber, int pageSize, int totalItems)
         {
             if (items == null)
@@ -34,7 +39,7 @@ namespace WatchList.Core.PageItem
                 throw new ArgumentException("Total items can not be less than zero.", nameof(totalItems));
             }
 
-            Items = items;
+            Items = items.Take(pageSize).ToList();
             PageNumber = pageNumber;
             PageSize = pageSize;
             TotalItems = totalItems;
@@ -61,6 +66,9 @@ namespace WatchList.Core.PageItem
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         private static List<T> GetPage(IQueryable<T> items, int pageNumber, int pageSize)
+            => items.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+        private static List<T> GetPage(IEnumerable<T> items, int pageNumber, int pageSize)
             => items.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
     }
 }

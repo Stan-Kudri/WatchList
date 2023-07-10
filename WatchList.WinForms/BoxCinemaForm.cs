@@ -166,10 +166,12 @@ namespace WatchList.WinForms
 
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             var algorithmLoadData = dataLoadingForm.GetLoadData();
-            var loadRule = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
+            var loadRuleGrade = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
+            var loadRuleType = new FilterByTypeCinemaLoadRule(algorithmLoadData.TypeCinemaLoad);
+            var rules = new AggregateLoadRule { loadRuleGrade, loadRuleType };
             var repositoryDataDownload = new WatchItemRepository(dbContext);
             var downloadDataService = new DownloadDataService(_dbContext, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
-            downloadDataService.Download(repositoryDataDownload, loadRule);
+            downloadDataService.Download(repositoryDataDownload, rules);
             UpdateGridData();
         }
 
