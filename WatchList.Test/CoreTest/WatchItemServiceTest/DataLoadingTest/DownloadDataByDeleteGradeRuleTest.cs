@@ -2,7 +2,6 @@ using FluentAssertions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Model.Load;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
@@ -11,9 +10,9 @@ using WatchList.Core.Service.DataLoading.Rules;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 {
-    public class DownloadDataTest
+    public class DownloadDataByDeleteGradeRuleTest
     {
-        public static IEnumerable<object[]> ListsWithTwoSameElementsWithReplacItem() => new List<object[]>
+        public static IEnumerable<object[]> ListsWithTwoSameElementsWithReplaceItem() => new List<object[]>
         {
             new object[]
             {
@@ -41,7 +40,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             },
         };
 
-        public static IEnumerable<object[]> ListsWithTwoSameElementsWithNotReplacItem() => new List<object[]>
+        public static IEnumerable<object[]> ListsWithTwoSameElementsWithNotReplaceItem() => new List<object[]>
         {
             new object[]
             {
@@ -103,7 +102,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         };
 
         [Theory]
-        [MemberData(nameof(ListsWithTwoSameElementsWithReplacItem))]
+        [MemberData(nameof(ListsWithTwoSameElementsWithReplaceItem))]
         public void Add_Data_File_And_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
         {
             // Arrange
@@ -115,9 +114,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.NotGrade);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade });
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -134,7 +131,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         }
 
         [Theory]
-        [MemberData(nameof(ListsWithTwoSameElementsWithNotReplacItem))]
+        [MemberData(nameof(ListsWithTwoSameElementsWithNotReplaceItem))]
         public void Add_Data_File_And_Not_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
         {
             // Arrange
@@ -146,9 +143,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.NotGrade);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade });
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -180,9 +175,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.NotGrade);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade });
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
