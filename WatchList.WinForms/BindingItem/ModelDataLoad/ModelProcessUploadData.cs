@@ -6,6 +6,7 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
     public class ModelProcessUploadData : ModelBase
     {
         public ModelProcessUploadData()
+            : this(false, TypeCinema.AllType, Grade.AnyGrade)
         {
         }
 
@@ -16,10 +17,10 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
             MoreGrade = moreGrade;
         }
 
-        public bool DeleteGrade { get; private set; }
+        public bool DeleteGrade { get; private set; } = false;
 
-        public TypeCinema TypeCinemaLoad { get; private set; }
+        public TypeCinema TypeCinemaLoad { get; private set; } = TypeCinema.AllType;
 
-        public Grade MoreGrade { get; private set; }
+        public Grade MoreGrade { get; private set; } = Grade.AnyGrade;
     }
 }
