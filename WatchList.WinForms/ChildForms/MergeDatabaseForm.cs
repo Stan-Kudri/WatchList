@@ -38,7 +38,7 @@ namespace WatchList.WinForms.ChildForms
         {
             cbExistGrade.Checked = false;
             cmbTypeCinema.SelectedItem = TypeCinema.AllType;
-            cmbGrade.SelectedItem = Grade.ExcludeGrade;
+            cmbGrade.SelectedItem = Grade.AnyGrade;
         }
 
         private void BtnOk_Click(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace WatchList.WinForms.ChildForms
             typeUploadBindingSource.DataSource = new ModelTypeCinemaUpload();
             moreGradeBindingSource.DataSource = new ModelDownloadMoreGrade();
             cmbTypeCinema.SelectedItem = TypeCinema.AllType;
-            cmbGrade.SelectedItem = Grade.ExcludeGrade;
+            cmbGrade.SelectedItem = Grade.AnyGrade;
             cbExistGrade.Checked = false;
         }
     }

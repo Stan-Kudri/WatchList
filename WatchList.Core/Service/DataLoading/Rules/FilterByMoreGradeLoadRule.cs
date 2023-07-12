@@ -14,7 +14,7 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         public IReadOnlyCollection<WatchItem> Apply(IReadOnlyCollection<WatchItem> items)
         {
-            if (MoreGrade.Value == Grade.ExcludeGrade.Value)
+            if (MoreGrade.Value == Grade.AnyGrade.Value)
             {
                 return items;
             }

@@ -59,7 +59,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var service = new DownloadDataService(dbContext, messageBox.Object) { NumberOfItemPerPage = PageSize };
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.ExcludeGrade);
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.AnyGrade);
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
