@@ -4,7 +4,7 @@ namespace WatchList.Core.Model.Load
 {
     public class Grade : SmartEnum<Grade>
     {
-        public static readonly Grade NotGrade = new Grade("Not Grade", 0);
+        public static readonly Grade ExcludeGrade = new Grade("Exclude Grade", 0);
         public static readonly Grade One = new Grade("1", 1);
         public static readonly Grade Two = new Grade("2", 2);
         public static readonly Grade Three = new Grade("3", 3);

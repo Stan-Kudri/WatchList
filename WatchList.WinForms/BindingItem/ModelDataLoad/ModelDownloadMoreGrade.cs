@@ -5,10 +5,10 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
 {
     public class ModelDownloadMoreGrade : ModelBase
     {
-        private Grade _value = Grade.NotGrade;
+        private Grade _value = Grade.ExcludeGrade;
 
         public ModelDownloadMoreGrade()
-            : this(Grade.NotGrade)
+            : this(Grade.ExcludeGrade)
         {
         }
 
