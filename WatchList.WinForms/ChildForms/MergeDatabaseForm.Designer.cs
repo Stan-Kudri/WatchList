@@ -134,7 +134,7 @@ namespace WatchList.WinForms.ChildForms
             cmbTypeCinema.DrawMode = DrawMode.OwnerDrawVariable;
             cmbTypeCinema.DropDownHeight = 174;
             cmbTypeCinema.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbTypeCinema.DropDownWidth = 121;
+            cmbTypeCinema.DropDownWidth = 110;
             cmbTypeCinema.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
             cmbTypeCinema.ForeColor = Color.FromArgb(222, 0, 0, 0);
             cmbTypeCinema.FormattingEnabled = true;
@@ -142,11 +142,11 @@ namespace WatchList.WinForms.ChildForms
             cmbTypeCinema.ItemHeight = 43;
             cmbTypeCinema.Location = new Point(10, 110);
             cmbTypeCinema.MaxDropDownItems = 4;
-            cmbTypeCinema.MaximumSize = new Size(130, 0);
-            cmbTypeCinema.MinimumSize = new Size(130, 0);
+            cmbTypeCinema.MaximumSize = new Size(120, 0);
+            cmbTypeCinema.MinimumSize = new Size(120, 0);
             cmbTypeCinema.MouseState = MaterialSkin.MouseState.OUT;
             cmbTypeCinema.Name = "cmbTypeCinema";
-            cmbTypeCinema.Size = new Size(130, 49);
+            cmbTypeCinema.Size = new Size(120, 49);
             cmbTypeCinema.StartIndex = 0;
             cmbTypeCinema.TabIndex = 4;
             // 
@@ -159,7 +159,7 @@ namespace WatchList.WinForms.ChildForms
             labelTypeCinemaLoad.AutoSize = true;
             labelTypeCinemaLoad.Depth = 0;
             labelTypeCinemaLoad.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelTypeCinemaLoad.Location = new Point(145, 123);
+            labelTypeCinemaLoad.Location = new Point(135, 123);
             labelTypeCinemaLoad.MouseState = MaterialSkin.MouseState.HOVER;
             labelTypeCinemaLoad.Name = "labelTypeCinemaLoad";
             labelTypeCinemaLoad.Size = new Size(36, 19);
@@ -186,11 +186,11 @@ namespace WatchList.WinForms.ChildForms
             cmbGrade.FormattingEnabled = true;
             cmbGrade.IntegralHeight = false;
             cmbGrade.ItemHeight = 43;
-            cmbGrade.Location = new Point(185, 108);
+            cmbGrade.Location = new Point(175, 108);
             cmbGrade.MaxDropDownItems = 4;
             cmbGrade.MouseState = MaterialSkin.MouseState.OUT;
             cmbGrade.Name = "cmbGrade";
-            cmbGrade.Size = new Size(162, 49);
+            cmbGrade.Size = new Size(172, 49);
             cmbGrade.StartIndex = 0;
             cmbGrade.TabIndex = 6;
             // 
