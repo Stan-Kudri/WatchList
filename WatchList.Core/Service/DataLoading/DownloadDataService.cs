@@ -38,7 +38,7 @@ namespace WatchList.Core.Service.DataLoading
             {
                 foreach (var item in loadRule.Apply(pagedList))
                 {
-                    var selectItem = isCaseSensitive == false ? _db.WatchItem.SelectDuplicateItems(item) : _db.WatchItem.DuplicateItemsCaseSensitive(item);
+                    var selectItem = !isCaseSensitive ? _db.WatchItem.SelectDuplicateItems(item) : _db.WatchItem.DuplicateItemsCaseSensitive(item);
 
                     if (selectItem.Count == 0)
                     {
