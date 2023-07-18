@@ -28,7 +28,7 @@ namespace WatchList.Core.Service.DataLoading
 
         public int NumberOfItemPerPage { get; set; } = 500;
 
-        public void Download(WatchItemRepository repository, ILoadRule loadRule)
+        public void Download(WatchItemRepository repository, ILoadRule loadRule, bool isCaseSensitive = false)
         {
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, NumberOfItemPerPage));
             var pagedList = repository.GetPage(searchRequest);
@@ -38,7 +38,7 @@ namespace WatchList.Core.Service.DataLoading
             {
                 foreach (var item in loadRule.Apply(pagedList))
                 {
-                    var selectItem = _db.WatchItem.SelectIdItemsByDuplicate(item);
+                    var selectItem = isCaseSensitive == false ? _db.WatchItem.SelectDuplicateItems(item) : _db.WatchItem.DuplicateItemsCaseSensitive(item);
 
                     if (selectItem.Count == 0)
                     {

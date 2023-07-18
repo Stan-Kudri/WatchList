@@ -171,10 +171,11 @@ namespace WatchList.WinForms
             var loadRuleType = new FilterByTypeCinemaLoadRule(algorithmLoadData.TypeCinemaLoad);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(algorithmLoadData.MoreGrade);
             var rules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade };
+            var loadRuleCaseSensitive = algorithmLoadData.CaseSensitive;
 
             var repositoryDataDownload = new WatchItemRepository(dbContext);
             var downloadDataService = new DownloadDataService(_dbContext, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
-            downloadDataService.Download(repositoryDataDownload, rules);
+            downloadDataService.Download(repositoryDataDownload, rules, loadRuleCaseSensitive);
             UpdateGridData();
         }
 

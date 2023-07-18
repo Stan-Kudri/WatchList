@@ -29,7 +29,8 @@ namespace WatchList.WinForms.ChildForms
         public ModelProcessUploadData GetLoadData()
         {
             var isDeleteGrade = cbExistGrade.Checked;
-            return new ModelProcessUploadData(isDeleteGrade, SelectTypeCinema, SelectGrade);
+            var caseExtensive = cbCaseSensitive.Checked;
+            return new ModelProcessUploadData(isDeleteGrade, caseExtensive, SelectTypeCinema, SelectGrade);
         }
 
         private void BtnClear_Click(object sender, EventArgs e) => SetupDefaultValues();
@@ -37,6 +38,7 @@ namespace WatchList.WinForms.ChildForms
         private void SetupDefaultValues()
         {
             cbExistGrade.Checked = false;
+            cbCaseSensitive.Checked = false;
             cmbTypeCinema.SelectedItem = TypeCinema.AllType;
             cmbGrade.SelectedItem = Grade.AnyGrade;
         }
@@ -60,6 +62,7 @@ namespace WatchList.WinForms.ChildForms
             cmbTypeCinema.SelectedItem = TypeCinema.AllType;
             cmbGrade.SelectedItem = Grade.AnyGrade;
             cbExistGrade.Checked = false;
+            cbCaseSensitive.Checked = false;
         }
     }
 }

@@ -39,6 +39,7 @@ namespace WatchList.WinForms.ChildForms
             moreGradeBindingSource = new BindingSource(components);
             cmbGrade = new MaterialSkin.Controls.MaterialComboBox();
             labelScoreMore = new MaterialSkin.Controls.MaterialLabel();
+            cbCaseSensitive = new MaterialSkin.Controls.MaterialCheckbox();
             ((System.ComponentModel.ISupportInitialize)typeUploadBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)moreGradeBindingSource).BeginInit();
             SuspendLayout();
@@ -66,7 +67,7 @@ namespace WatchList.WinForms.ChildForms
             btnOk.Depth = 0;
             btnOk.HighEmphasis = true;
             btnOk.Icon = null;
-            btnOk.Location = new Point(10, 170);
+            btnOk.Location = new Point(10, 210);
             btnOk.Margin = new Padding(4, 6, 4, 6);
             btnOk.MaximumSize = new Size(100, 36);
             btnOk.MinimumSize = new Size(100, 36);
@@ -88,7 +89,7 @@ namespace WatchList.WinForms.ChildForms
             btnCancel.Depth = 0;
             btnCancel.HighEmphasis = true;
             btnCancel.Icon = null;
-            btnCancel.Location = new Point(330, 170);
+            btnCancel.Location = new Point(330, 210);
             btnCancel.Margin = new Padding(4, 6, 4, 6);
             btnCancel.MaximumSize = new Size(100, 36);
             btnCancel.MinimumSize = new Size(100, 36);
@@ -109,7 +110,7 @@ namespace WatchList.WinForms.ChildForms
             btnClear.Depth = 0;
             btnClear.HighEmphasis = true;
             btnClear.Icon = null;
-            btnClear.Location = new Point(170, 170);
+            btnClear.Location = new Point(170, 210);
             btnClear.Margin = new Padding(4, 6, 4, 6);
             btnClear.MaximumSize = new Size(100, 36);
             btnClear.MinimumSize = new Size(100, 36);
@@ -140,7 +141,7 @@ namespace WatchList.WinForms.ChildForms
             cmbTypeCinema.FormattingEnabled = true;
             cmbTypeCinema.IntegralHeight = false;
             cmbTypeCinema.ItemHeight = 43;
-            cmbTypeCinema.Location = new Point(10, 110);
+            cmbTypeCinema.Location = new Point(10, 150);
             cmbTypeCinema.MaxDropDownItems = 4;
             cmbTypeCinema.MaximumSize = new Size(120, 0);
             cmbTypeCinema.MinimumSize = new Size(120, 0);
@@ -159,7 +160,7 @@ namespace WatchList.WinForms.ChildForms
             labelTypeCinemaLoad.AutoSize = true;
             labelTypeCinemaLoad.Depth = 0;
             labelTypeCinemaLoad.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelTypeCinemaLoad.Location = new Point(135, 123);
+            labelTypeCinemaLoad.Location = new Point(135, 163);
             labelTypeCinemaLoad.MouseState = MaterialSkin.MouseState.HOVER;
             labelTypeCinemaLoad.Name = "labelTypeCinemaLoad";
             labelTypeCinemaLoad.Size = new Size(36, 19);
@@ -186,7 +187,7 @@ namespace WatchList.WinForms.ChildForms
             cmbGrade.FormattingEnabled = true;
             cmbGrade.IntegralHeight = false;
             cmbGrade.ItemHeight = 43;
-            cmbGrade.Location = new Point(175, 108);
+            cmbGrade.Location = new Point(175, 150);
             cmbGrade.MaxDropDownItems = 4;
             cmbGrade.MouseState = MaterialSkin.MouseState.OUT;
             cmbGrade.Name = "cmbGrade";
@@ -199,19 +200,36 @@ namespace WatchList.WinForms.ChildForms
             labelScoreMore.AutoSize = true;
             labelScoreMore.Depth = 0;
             labelScoreMore.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelScoreMore.Location = new Point(353, 123);
+            labelScoreMore.Location = new Point(353, 163);
             labelScoreMore.MouseState = MaterialSkin.MouseState.HOVER;
             labelScoreMore.Name = "labelScoreMore";
             labelScoreMore.Size = new Size(81, 19);
             labelScoreMore.TabIndex = 7;
             labelScoreMore.Text = "Score more";
             // 
+            // cbCaseSensitive
+            // 
+            cbCaseSensitive.AutoSize = true;
+            cbCaseSensitive.Depth = 0;
+            cbCaseSensitive.Location = new Point(10, 107);
+            cbCaseSensitive.Margin = new Padding(0);
+            cbCaseSensitive.MouseLocation = new Point(-1, -1);
+            cbCaseSensitive.MouseState = MaterialSkin.MouseState.HOVER;
+            cbCaseSensitive.Name = "cbCaseSensitive";
+            cbCaseSensitive.ReadOnly = false;
+            cbCaseSensitive.Ripple = true;
+            cbCaseSensitive.Size = new Size(271, 37);
+            cbCaseSensitive.TabIndex = 8;
+            cbCaseSensitive.Text = "Case sensitive when loading data";
+            cbCaseSensitive.UseVisualStyleBackColor = true;
+            // 
             // MergeDatabaseForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
-            ClientSize = new Size(440, 210);
+            ClientSize = new Size(440, 250);
+            Controls.Add(cbCaseSensitive);
             Controls.Add(labelScoreMore);
             Controls.Add(cmbGrade);
             Controls.Add(labelTypeCinemaLoad);
@@ -220,8 +238,8 @@ namespace WatchList.WinForms.ChildForms
             Controls.Add(btnCancel);
             Controls.Add(btnOk);
             Controls.Add(cbExistGrade);
-            MaximumSize = new Size(440, 210);
-            MinimumSize = new Size(440, 210);
+            MaximumSize = new Size(440, 250);
+            MinimumSize = new Size(440, 250);
             Name = "MergeDatabaseForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Loading data";
@@ -244,5 +262,6 @@ namespace WatchList.WinForms.ChildForms
         private BindingSource moreGradeBindingSource;
         private MaterialSkin.Controls.MaterialComboBox cmbGrade;
         private MaterialSkin.Controls.MaterialLabel labelScoreMore;
+        private MaterialSkin.Controls.MaterialCheckbox cbCaseSensitive;
     }
 }
