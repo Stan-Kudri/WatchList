@@ -3,6 +3,7 @@ using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
 using WatchList.Core.Repository.Db;
 using WatchList.Core.Service.Component;
+using WatchList.Core.Service.Extension;
 
 namespace WatchList.Core.Service
 {
@@ -29,9 +30,7 @@ namespace WatchList.Core.Service
 
         public void Add(WatchItem item)
         {
-            var selectItem = _db.WatchItem.Where(x =>
-                x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type && x.Id != item.Id).
-                Take(2).Select(x => x.Id).ToList();
+            var selectItem = _db.WatchItem.SelectDuplicateItems(item);
             var countDuplicate = selectItem.Count;
 
             if (countDuplicate == 0)
@@ -49,9 +48,7 @@ namespace WatchList.Core.Service
 
         public void Update(WatchItem oldItem, WatchItem modifiedItem)
         {
-            var selectItem = _db.WatchItem.Where(x =>
-                x.Title == modifiedItem.Title && x.Sequel == modifiedItem.Sequel && x.Type == modifiedItem.Type && x.Id != modifiedItem.Id).
-                Take(2).Select(x => x.Id).ToList();
+            var selectItem = _db.WatchItem.SelectDuplicateItems(modifiedItem);
             var countDuplicate = selectItem.Count;
 
             if (countDuplicate == 1)
