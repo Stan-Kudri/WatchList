@@ -47,6 +47,7 @@ namespace WatchList.Core.Repository
             item.Date = editItem.Date;
             item.Grade = editItem.Grade;
             item.Title = editItem.Title;
+            item.TitleNormalized = editItem.TitleNormalized;
             item.Type = editItem.Type;
             item.Status = editItem.Status;
 

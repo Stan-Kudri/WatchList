@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Repository.Db;
 
@@ -17,7 +18,17 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         public IReadOnlyCollection<WatchItem> Apply(IReadOnlyCollection<WatchItem> items)
         {
-            throw new NotImplementedException();
+            if (!_isCaseSensitive)
+            {
+                return items;
+            }
+
+            var titles = items.Select(e => e.TitleNormalized).ToHashSet();
+            var duplicateRows = _dbContext.WatchItem.AsNoTracking()
+                .Where(e => titles.Contains(e.TitleNormalized))
+                .Select(e => e.TitleNormalized);
+            titles.ExceptWith(duplicateRows);
+            return items.Where(e => !titles.Contains(e.TitleNormalized)).ToList();
         }
     }
 }

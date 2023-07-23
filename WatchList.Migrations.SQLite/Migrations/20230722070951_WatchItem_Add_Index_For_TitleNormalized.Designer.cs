@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WatchList.Core.Repository.Db;
 
@@ -10,9 +11,11 @@ using WatchList.Core.Repository.Db;
 namespace WatchList.Migrations.SQLite.Migrations
 {
     [DbContext(typeof(WatchCinemaDbContext))]
-    partial class WatchCinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230722070951_WatchItem_Add_Index_For_TitleNormalized")]
+    partial class WatchItem_Add_Index_For_TitleNormalized
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.7");

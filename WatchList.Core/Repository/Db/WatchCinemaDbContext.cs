@@ -19,12 +19,14 @@ namespace WatchList.Core.Repository.Db
             {
                 buildAction.HasKey(x => x.Id);
                 buildAction.Property(x => x.Title).HasMaxLength(50).IsRequired();
+                buildAction.Property(x => x.TitleNormalized).HasMaxLength(50).IsRequired().HasDefaultValue(string.Empty);
                 buildAction.Property(x => x.Id).ValueGeneratedOnAdd();
                 buildAction.Property(x => x.Sequel).HasColumnType("INTEGER").IsRequired();
                 buildAction.Property(x => x.Date).HasColumnType("DATETIME");
                 buildAction.Property(x => x.Grade).HasColumnType("INTEGER");
                 buildAction.Property(x => x.Type).SmartEnumConversion();
                 buildAction.Property(x => x.Status).SmartEnumConversion();
+                buildAction.HasIndex(x => x.TitleNormalized);
             });
         }
     }

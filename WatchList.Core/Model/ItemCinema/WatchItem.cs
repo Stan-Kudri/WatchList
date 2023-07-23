@@ -17,6 +17,7 @@ namespace WatchList.Core.Model.ItemCinema
             Status = status;
             Date = dateWatch;
             Grade = grade;
+            TitleNormalized = Title.ToLower();
             Id = id ?? Guid.NewGuid();
         }
 
@@ -40,7 +41,9 @@ namespace WatchList.Core.Model.ItemCinema
 
         public int? Grade { get; set; }
 
-        public override int GetHashCode() => HashCode.Combine(Id, Title, Grade, Date, Status, Type, Sequel);
+        public string TitleNormalized { get; set; } = string.Empty;
+
+        public override int GetHashCode() => HashCode.Combine(Id, Title, TitleNormalized, Grade, Date, Status, Type, Sequel);
 
         public override bool Equals(object? obj) => Equals(obj as WatchItem);
 
@@ -53,6 +56,7 @@ namespace WatchList.Core.Model.ItemCinema
 
             return Id == other.Id
                 && Title == other.Title
+                && TitleNormalized == other.TitleNormalized
                 && Status == other.Status
                 && Type == other.Type
                 && Sequel == other.Sequel
