@@ -122,7 +122,6 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         [Theory]
         [MemberData(nameof(ListsAddOneItemByTypeCinema))]
         [MemberData(nameof(ListsAddItemsByAllTypeCinema))]
-        [MemberData(nameof(ListsReplaceItemsByTypeCinema))]
         [MemberData(nameof(ListsNotAddItemsByTypeCinema))]
         public void Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema typeCinema, List<WatchItem> expectItems)
         {

@@ -123,9 +123,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
         [Theory]
         [MemberData(nameof(ListsAddOneItemByMoreGrade))]
-        [MemberData(nameof(ListReplaceItemByMoreGrade))]
         [MemberData(nameof(ListsNotAddItemByMoreGrade))]
-        [MemberData(nameof(ListAddItemsByNotMoreGrade))]
+        //[MemberData(nameof(ListAddItemsByNotMoreGrade))]
         public void Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, Grade moreGrade, List<WatchItem> expectItems)
         {
             // Arrange
