@@ -170,7 +170,7 @@ namespace WatchList.WinForms
             var loadRuleHasGrade = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
             var loadRuleType = new FilterByTypeCinemaLoadRule(algorithmLoadData.TypeCinemaLoad);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(algorithmLoadData.MoreGrade);
-            var loadDuplicateItem = new DuplicateLoadRule(_dbContext, _messageBox, algorithmLoadData.ActionsWithDuplicates);
+            var loadDuplicateItem = new DuplicateLoadRule(_dbContext, algorithmLoadData.ActionsWithDuplicates);
             var rules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
 
             var repositoryDataDownload = new WatchItemRepository(dbContext);

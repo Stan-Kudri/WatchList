@@ -1,4 +1,3 @@
-using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Core.Service.DataLoading.Rules
@@ -9,14 +8,16 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         public TypeCinema TypeCinemaDataLoad { get; private set; }
 
-        public IReadOnlyCollection<WatchItem> Apply(IReadOnlyCollection<WatchItem> items)
+        public WatchItemCollection Apply(WatchItemCollection items)
         {
             if (TypeCinemaDataLoad == TypeCinema.AllType)
             {
                 return items;
             }
 
-            return items.Where(x => x.Type == TypeCinemaDataLoad).ToList();
+            items.Items = items.Items.Where(x => x.Type == TypeCinemaDataLoad).ToList();
+
+            return items;
         }
     }
 }

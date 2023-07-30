@@ -13,7 +13,7 @@ namespace WatchList.Core.Service.Extension
 
         public static List<Guid> DuplicateItemsCaseSensitive(this DbSet<WatchItem> dbSet, WatchItem item) =>
             dbSet.ToList().
-                    Where(x => x.Title.ToLower() == item.Title.ToLower() && x.Sequel == item.Sequel && x.Type == item.Type).
+                    Where(x => x.TitleNormalized == item.TitleNormalized && x.Sequel == item.Sequel && x.Type == item.Type).
                     Take(2).Select(x => x.Id).ToList();
 
         public static Guid ReplaceIdIsNotFree(this WatchCinemaDbContext dbContext, WatchItem item)

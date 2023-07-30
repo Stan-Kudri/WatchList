@@ -2,6 +2,7 @@ using FluentAssertions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Model.Load;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
@@ -134,7 +135,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema });
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionsWithDuplicates());
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);

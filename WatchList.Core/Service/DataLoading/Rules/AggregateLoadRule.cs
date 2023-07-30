@@ -1,5 +1,3 @@
-using WatchList.Core.Model.ItemCinema;
-
 namespace WatchList.Core.Service.DataLoading.Rules
 {
     public class AggregateLoadRule : List<ILoadRule>, ILoadRule
@@ -19,7 +17,7 @@ namespace WatchList.Core.Service.DataLoading.Rules
         {
         }
 
-        public IReadOnlyCollection<WatchItem> Apply(IReadOnlyCollection<WatchItem> items)
+        public WatchItemCollection Apply(WatchItemCollection items)
         {
             foreach (var apply in this)
             {

@@ -112,7 +112,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                 Grade.AnyGrade,
                 new List<WatchItem>()
                 {
-                    new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2013, 05, 11, 00, 00, 00), 7),
+                    new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2013, 05, 11, 00, 00, 00), 8),
                     new WatchItem("Драйв", 2, StatusCinema.Planned, TypeCinema.Movie, Guid.Parse("48d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     new WatchItem("Твое имя", 2, StatusCinema.Thrown, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     new WatchItem("Хэнкок", 2, StatusCinema.Look, TypeCinema.Movie, Guid.Parse("28d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2015, 04, 12, 00, 00, 00), 9),
@@ -124,7 +124,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         [Theory]
         [MemberData(nameof(ListsAddOneItemByMoreGrade))]
         [MemberData(nameof(ListsNotAddItemByMoreGrade))]
-        //[MemberData(nameof(ListAddItemsByNotMoreGrade))]
+        [MemberData(nameof(ListAddItemsByNotMoreGrade))]
         public void Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, Grade moreGrade, List<WatchItem> expectItems)
         {
             // Arrange
@@ -136,7 +136,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade });
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionsWithDuplicates());
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
