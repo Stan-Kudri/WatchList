@@ -44,13 +44,11 @@ namespace WatchList.Core.Service.DataLoading
                 searchRequest.Page.Number += 1;
                 pagedList = repository.GetPage(searchRequest);
             }
-
-            _db.SaveChanges();
         }
 
         private void AddItems(WatchItemCollection itemCollection)
         {
-            if (itemCollection.ItemsAdd?.Count != 0)
+            if (itemCollection.ItemsAdd?.Count <= 0)
             {
                 return;
             }
@@ -59,6 +57,7 @@ namespace WatchList.Core.Service.DataLoading
             {
                 item.Id = _db.ReplaceIdIsNotFree(item);
                 _db.Add(item);
+                _db.SaveChanges();
             }
         }
 
@@ -66,7 +65,7 @@ namespace WatchList.Core.Service.DataLoading
         {
             var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
 
-            if (!(itemCollection.ItemsDuplicate?.Count > 0))
+            if (itemCollection.ItemsDuplicate?.Count <= 0)
             {
                 return;
             }
