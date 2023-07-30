@@ -25,6 +25,5 @@ namespace WatchList.Migrations.SQLite
                 interceptor.Intercept(migrationName);
             }
         }
-
     }
 }

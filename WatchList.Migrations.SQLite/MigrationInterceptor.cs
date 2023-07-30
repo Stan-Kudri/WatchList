@@ -5,7 +5,7 @@ namespace WatchList.Migrations.SQLite
 {
     public class MigrationInterceptor
     {
-        private static Dictionary<string, IMigrationInterceptor> _interceptorsMap = Create();
+        private static readonly Dictionary<string, IMigrationInterceptor> _interceptorsMap = Create();
 
         private readonly WatchCinemaDbContext _db;
 

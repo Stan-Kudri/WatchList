@@ -32,55 +32,69 @@ namespace WatchList.Core.Service.DataLoading
         {
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, NumberOfItemPerPage));
             var pagedList = repository.GetPage(searchRequest);
-            var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
 
             while (searchRequest.Page.Number <= pagedList.PageCount)
             {
                 var watchItemCollection = new WatchItemCollection(pagedList);
                 watchItemCollection = loadRule.Apply(watchItemCollection);
 
-                if (watchItemCollection.ItemsAdd?.Count > 0)
-                {
-                    foreach (var item in watchItemCollection.ItemsAdd)
-                    {
-                        item.Id = _db.ReplaceIdIsNotFree(item);
-                        _db.Add(item);
-                    }
-                }
-
-                if (watchItemCollection.ItemsDuplicate?.Count > 0)
-                {
-                    foreach (var item in watchItemCollection.ItemsDuplicate)
-                    {
-                        switch (dialogResultReplaceItem.QuestionResult)
-                        {
-                            case QuestionResultEnum.Unknown:
-                            case QuestionResultEnum.Yes:
-                            case QuestionResultEnum.No:
-                                dialogResultReplaceItem = _messageBox.ShowDataReplaceQuestion(item.Title);
-                                break;
-                        }
-
-                        if (dialogResultReplaceItem.IsYes)
-                        {
-                            if (watchItemCollection.IdDuplicate.TryGetValue(item.Id, out Guid value))
-                            {
-                                item.Id = value;
-                                _repository.Update(item);
-                            }
-                            else
-                            {
-                                throw new ArgumentException("Element not found with id.");
-                            }
-                        }
-                    }
-                }
+                AddItems(watchItemCollection);
+                UpdateItems(watchItemCollection);
 
                 searchRequest.Page.Number += 1;
                 pagedList = repository.GetPage(searchRequest);
             }
 
             _db.SaveChanges();
+        }
+
+        private void AddItems(WatchItemCollection itemCollection)
+        {
+            if (itemCollection.ItemsAdd?.Count != 0)
+            {
+                return;
+            }
+
+            foreach (var item in itemCollection.ItemsAdd)
+            {
+                item.Id = _db.ReplaceIdIsNotFree(item);
+                _db.Add(item);
+            }
+        }
+
+        private void UpdateItems(WatchItemCollection itemCollection)
+        {
+            var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
+
+            if (!(itemCollection.ItemsDuplicate?.Count > 0))
+            {
+                return;
+            }
+
+            foreach (var item in itemCollection.ItemsDuplicate)
+            {
+                switch (dialogResultReplaceItem.QuestionResult)
+                {
+                    case QuestionResultEnum.Unknown:
+                    case QuestionResultEnum.Yes:
+                    case QuestionResultEnum.No:
+                        dialogResultReplaceItem = _messageBox.ShowDataReplaceQuestion(item.Title);
+                        break;
+                }
+
+                if (dialogResultReplaceItem.IsYes)
+                {
+                    if (itemCollection.IdDuplicate.TryGetValue(item.Id, out Guid value))
+                    {
+                        item.Id = value;
+                        _repository.Update(item);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Element not found with id.");
+                    }
+                }
+            }
         }
     }
 }
