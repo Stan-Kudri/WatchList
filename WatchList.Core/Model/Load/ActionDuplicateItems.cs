@@ -2,14 +2,14 @@ using WatchList.Core.Model.Load.ItemActions;
 
 namespace WatchList.Core.Model.Load
 {
-    public class ActionsWithDuplicates
+    public class ActionDuplicateItems
     {
-        public ActionsWithDuplicates()
+        public ActionDuplicateItems()
             : this(false, new List<IsActionWithDuplicate>())
         {
         }
 
-        public ActionsWithDuplicates(bool actionSelected, List<IsActionWithDuplicate> listDuplicateLoadRule)
+        public ActionDuplicateItems(bool actionSelected, List<IsActionWithDuplicate> listDuplicateLoadRule)
         {
             ActionSelected = actionSelected;
 

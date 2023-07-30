@@ -34,11 +34,11 @@ namespace WatchList.WinForms.ChildForms
 
             if (!considerDuplicates)
             {
-                return new ModelProcessUploadData(isDeleteGrade, new ActionsWithDuplicates(), SelectTypeCinema, SelectGrade);
+                return new ModelProcessUploadData(isDeleteGrade, new ActionDuplicateItems(), SelectTypeCinema, SelectGrade);
             }
 
             var listDuplicateLoadRule = clbActionsWithDuplicates.Items.Select(e => new IsActionWithDuplicate((DuplicateLoadingRules)e.Tag, e.Checked)).ToList();
-            return new ModelProcessUploadData(isDeleteGrade, new ActionsWithDuplicates(considerDuplicates, listDuplicateLoadRule), SelectTypeCinema, SelectGrade);
+            return new ModelProcessUploadData(isDeleteGrade, new ActionDuplicateItems(considerDuplicates, listDuplicateLoadRule), SelectTypeCinema, SelectGrade);
         }
 
         private void BtnClear_Click(object sender, EventArgs e) => SetupDefaultValues();

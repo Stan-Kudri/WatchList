@@ -135,7 +135,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionsWithDuplicates());
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 

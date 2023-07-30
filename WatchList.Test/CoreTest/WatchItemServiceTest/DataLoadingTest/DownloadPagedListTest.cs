@@ -60,7 +60,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.AnyGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionsWithDuplicates());
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 

@@ -48,7 +48,7 @@ namespace WatchList.Core.Service.DataLoading
 
         private void AddItems(WatchItemCollection itemCollection)
         {
-            if (itemCollection.ItemsAdd?.Count <= 0)
+            if (itemCollection.ItemsAdd == null || itemCollection.ItemsAdd.Count <= 0)
             {
                 return;
             }
@@ -65,7 +65,7 @@ namespace WatchList.Core.Service.DataLoading
         {
             var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
 
-            if (itemCollection.ItemsDuplicate?.Count <= 0)
+            if (itemCollection.ItemsDuplicate == null || itemCollection.ItemsDuplicate.Count <= 0)
             {
                 return;
             }

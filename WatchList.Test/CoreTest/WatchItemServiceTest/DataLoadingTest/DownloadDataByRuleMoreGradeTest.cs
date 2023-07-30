@@ -136,7 +136,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionsWithDuplicates());
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 

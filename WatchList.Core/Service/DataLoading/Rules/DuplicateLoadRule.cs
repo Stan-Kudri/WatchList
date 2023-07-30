@@ -14,12 +14,17 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         private readonly WatchCinemaDbContext _dbContext;
 
-        public DuplicateLoadRule(WatchCinemaDbContext db, ActionsWithDuplicates actionsWithDuplicates)
+        public DuplicateLoadRule(WatchCinemaDbContext db, ActionDuplicateItems actionsWithDuplicates)
         {
             _dbContext = db;
             _actionSelected = actionsWithDuplicates.ActionSelected;
             if (_actionSelected)
             {
+                if (actionsWithDuplicates.UpdateDuplicate.CheckAction == null || actionsWithDuplicates.CaseSensitive.CheckAction == null)
+                {
+                    throw new ArgumentNullException(nameof(actionsWithDuplicates));
+                }
+
                 _updateDuplicate = (bool)actionsWithDuplicates.UpdateDuplicate.CheckAction;
                 _caseSensitive = (bool)actionsWithDuplicates.CaseSensitive.CheckAction;
             }
