@@ -76,16 +76,9 @@ namespace WatchList.WinForms.ChildForms
 
         private void CbConsiderDuplicates_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbConsiderDuplicates.Checked)
-            {
-                clbActionsWithDuplicates.Items.ForEach(e => e.Checked = true);
-                clbActionsWithDuplicates.Enabled = true;
-            }
-            else
-            {
-                clbActionsWithDuplicates.Items.ForEach(e => e.Checked = false);
-                clbActionsWithDuplicates.Enabled = false;
-            }
+            var checkedConsiderDuplicate = cbConsiderDuplicates.Checked;
+            clbActionsWithDuplicates.Items.ForEach(e => e.Checked = checkedConsiderDuplicate);
+            clbActionsWithDuplicates.Enabled = checkedConsiderDuplicate;
         }
 
         private void InitializeComboListBox()
