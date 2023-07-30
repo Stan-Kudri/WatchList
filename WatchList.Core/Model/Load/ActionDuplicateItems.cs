@@ -21,9 +21,9 @@ namespace WatchList.Core.Model.Load
                 return;
             }
 
-            if (listDuplicateLoadRule.Where(e => e.CheckAction == null).Any())
+            if (listDuplicateLoadRule.Any(e => e.CheckAction == null))
             {
-                throw new ArgumentException("Incorrect date.");
+                throw new ArgumentException("Invalid data when select actions with duplicates.");
             }
 
             foreach (var item in listDuplicateLoadRule)

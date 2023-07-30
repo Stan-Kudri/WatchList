@@ -48,16 +48,15 @@ namespace WatchList.Core.Service.DataLoading
 
         private void AddItems(WatchItemCollection itemCollection)
         {
-            if (itemCollection.ItemsAdd == null || itemCollection.ItemsAdd.Count <= 0)
+            if (itemCollection.NewItems == null || itemCollection.NewItems.Count <= 0)
             {
                 return;
             }
 
-            foreach (var item in itemCollection.ItemsAdd)
+            foreach (var item in itemCollection.NewItems)
             {
                 item.Id = _db.ReplaceIdIsNotFree(item);
-                _db.Add(item);
-                _db.SaveChanges();
+                _repository.Add(item);
             }
         }
 
@@ -65,12 +64,12 @@ namespace WatchList.Core.Service.DataLoading
         {
             var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
 
-            if (itemCollection.ItemsDuplicate == null || itemCollection.ItemsDuplicate.Count <= 0)
+            if (itemCollection.DuplicateItems == null || itemCollection.DuplicateItems.Count <= 0)
             {
                 return;
             }
 
-            foreach (var item in itemCollection.ItemsDuplicate)
+            foreach (var item in itemCollection.DuplicateItems)
             {
                 switch (dialogResultReplaceItem.QuestionResult)
                 {
@@ -83,7 +82,7 @@ namespace WatchList.Core.Service.DataLoading
 
                 if (dialogResultReplaceItem.IsYes)
                 {
-                    if (itemCollection.IdDuplicate.TryGetValue(item.Id, out Guid value))
+                    if (itemCollection.IdDuplicateFromDatabase.TryGetValue(item.Id, out Guid value))
                     {
                         item.Id = value;
                         _repository.Update(item);
