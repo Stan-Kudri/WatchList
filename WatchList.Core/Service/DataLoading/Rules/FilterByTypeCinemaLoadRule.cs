@@ -15,9 +15,9 @@ namespace WatchList.Core.Service.DataLoading.Rules
                 return items;
             }
 
-            items.Items = items.Items.Where(x => x.Type == TypeCinemaDataLoad).ToList();
+            var changeItems = items.Items.Where(x => x.Type == TypeCinemaDataLoad).ToList();
 
-            return items;
+            return new WatchItemCollection(changeItems);
         }
     }
 }

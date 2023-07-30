@@ -18,9 +18,9 @@ namespace WatchList.Core.Service.DataLoading.Rules
                 return items;
             }
 
-            items.Items = items.Items.Where(x => x.Grade >= MoreGrade.Value).ToList();
+            var changeItems = items.Items.Where(x => x.Grade >= MoreGrade.Value).ToList();
 
-            return items;
+            return new WatchItemCollection(changeItems);
         }
     }
 }
