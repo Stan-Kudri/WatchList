@@ -13,6 +13,21 @@ namespace WatchList.Core.Repository.Db
 
         public DbSet<WatchItem> WatchItem { get; set; } = null!;
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var insertedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Select(x => x.Entity);
+            foreach (var insertedEntry in insertedEntries)
+            {
+                var watchItemEntity = insertedEntry as WatchItem;
+                if (watchItemEntity != null)
+                {
+                    watchItemEntity.TitleNormalized = watchItemEntity.Title.ToLower();
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WatchItem>(buildAction =>

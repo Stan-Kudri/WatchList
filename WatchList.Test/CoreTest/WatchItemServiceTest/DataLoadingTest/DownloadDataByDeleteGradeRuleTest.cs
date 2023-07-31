@@ -1,8 +1,19 @@
+using FluentAssertions;
+using Moq;
+using WatchList.Core.Model.ItemCinema;
+using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Model.Load;
+using WatchList.Core.Model.Load.ItemActions;
+using WatchList.Core.Model.QuestionResult;
+using WatchList.Core.Repository;
+using WatchList.Core.Service.Component;
+using WatchList.Core.Service.DataLoading;
+using WatchList.Core.Service.DataLoading.Rules;
+
 namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 {
     public class DownloadDataByDeleteGradeRuleTest
     {
-        /*
         public static IEnumerable<object[]> ListsWithTwoSameElementsWithReplaceItem() => new List<object[]>
         {
             new object[]
@@ -107,8 +118,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadDuplicateItemRule = new DuplicateLoadRule(
                         dbContext,
-                        messageBox.Object,
-                        new ActionsWithDuplicates(true, new List<IsActionWithDuplicate>
+                        new ActionDuplicateItems(true, new List<IsActionWithDuplicate>
                         {
                             new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, true),
                             new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, true),
@@ -118,8 +128,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChanges();
-            dbContextDownloadItem.SaveChanges();
+            dbContext.SaveChangesAsync();
+            dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);
@@ -144,8 +154,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadDuplicateItemRule = new DuplicateLoadRule(
                         dbContext,
-                        messageBox.Object,
-                        new ActionsWithDuplicates(true, new List<IsActionWithDuplicate>
+                        new ActionDuplicateItems(true, new List<IsActionWithDuplicate>
                         {
                             new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, true),
                             new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, true),
@@ -155,8 +164,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChanges();
-            dbContextDownloadItem.SaveChanges();
+            dbContext.SaveChangesAsync();
+            dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);
@@ -184,8 +193,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var loadRuleGrade = new DeleteGradeRule(false);
             var loadDuplicateItemRule = new DuplicateLoadRule(
                         dbContext,
-                        messageBox.Object,
-                        new ActionsWithDuplicates(true, new List<IsActionWithDuplicate>
+                        new ActionDuplicateItems(true, new List<IsActionWithDuplicate>
                         {
                             new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, true),
                             new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, true),
@@ -195,8 +203,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChanges();
-            dbContextDownloadItem.SaveChanges();
+            dbContext.SaveChangesAsync();
+            dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);
@@ -205,6 +213,5 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             // Assert
             actualItems.Should().Equal(expectItems);
         }
-        */
     }
 }

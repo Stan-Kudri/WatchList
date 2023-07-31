@@ -142,8 +142,8 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChanges();
-            dbContextDownloadItem.SaveChanges();
+            dbContext.SaveChangesAsync();
+            dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);
