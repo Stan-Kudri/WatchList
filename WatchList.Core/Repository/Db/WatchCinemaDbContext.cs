@@ -13,15 +13,46 @@ namespace WatchList.Core.Repository.Db
 
         public DbSet<WatchItem> WatchItem { get; set; } = null!;
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public override int SaveChanges()
         {
-            var insertedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Select(x => x.Entity);
+            var insertedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Select(x => x.Entity).OfType<WatchItem>();
             foreach (var insertedEntry in insertedEntries)
             {
-                var watchItemEntity = insertedEntry as WatchItem;
-                if (watchItemEntity != null)
+                if (insertedEntry != null)
                 {
-                    watchItemEntity.TitleNormalized = watchItemEntity.Title.ToLower();
+                    insertedEntry.TitleNormalized = insertedEntry.Title.ToLower();
+                }
+            }
+
+            var modifiedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
+            foreach (var modifiedEntry in modifiedEntries)
+            {
+                if (modifiedEntry != null)
+                {
+                    modifiedEntry.TitleNormalized = modifiedEntry.Title.ToLower();
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var insertedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Select(x => x.Entity).OfType<WatchItem>();
+            foreach (var insertedEntry in insertedEntries)
+            {
+                if (insertedEntry != null)
+                {
+                    insertedEntry.TitleNormalized = insertedEntry.Title.ToLower();
+                }
+            }
+
+            var modifiedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
+            foreach (var modifiedEntry in modifiedEntries)
+            {
+                if (modifiedEntry != null)
+                {
+                    modifiedEntry.TitleNormalized = modifiedEntry.Title.ToLower();
                 }
             }
 

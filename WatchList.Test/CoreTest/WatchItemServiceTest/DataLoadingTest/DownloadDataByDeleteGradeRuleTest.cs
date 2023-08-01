@@ -128,8 +128,44 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChangesAsync();
-            dbContextDownloadItem.SaveChangesAsync();
+            dbContext.SaveChanges();
+            dbContextDownloadItem.SaveChanges();
+
+            // Act
+            service.Download(repositoryDataDownload, loadRule);
+            var actualItems = dbContext.WatchItem.ToList();
+
+            // Assert
+            actualItems.Should().Equal(expectItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ListsWithTwoSameElementsWithReplaceItem))]
+        public async Task Add_Data_File_And_Replace_Duplicate_ElementAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
+        {
+            // Arrange
+            var dbContext = new TestAppDbContextFactory().Create();
+            var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+
+            var service = new DownloadDataService(dbContext, messageBox.Object);
+            var loadRuleGrade = new DeleteGradeRule(false);
+            var loadDuplicateItemRule = new DuplicateLoadRule(
+                        dbContext,
+                        new ActionDuplicateItems(true, new List<IsActionWithDuplicate>
+                        {
+                            new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, true),
+                            new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, true),
+                        }));
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
+
+            dbContext.AddRange(items);
+            dbContextDownloadItem.AddRange(addDownloadItem);
+            await dbContext.SaveChangesAsync();
+            await dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);
@@ -164,8 +200,44 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChangesAsync();
-            dbContextDownloadItem.SaveChangesAsync();
+            dbContext.SaveChanges();
+            dbContextDownloadItem.SaveChanges();
+
+            // Act
+            service.Download(repositoryDataDownload, loadRule);
+            var actualItems = dbContext.WatchItem.ToList();
+
+            // Assert
+            actualItems.Should().Equal(expectItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ListsWithTwoSameElementsWithNotReplaceItem))]
+        public async Task Add_Data_File_And_Not_Replace_Duplicate_ElementAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
+        {
+            // Arrange
+            var dbContext = new TestAppDbContextFactory().Create();
+            var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllNo);
+
+            var service = new DownloadDataService(dbContext, messageBox.Object);
+            var loadRuleGrade = new DeleteGradeRule(false);
+            var loadDuplicateItemRule = new DuplicateLoadRule(
+                        dbContext,
+                        new ActionDuplicateItems(true, new List<IsActionWithDuplicate>
+                        {
+                            new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, true),
+                            new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, true),
+                        }));
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
+
+            dbContext.AddRange(items);
+            dbContextDownloadItem.AddRange(addDownloadItem);
+            await dbContext.SaveChangesAsync();
+            await dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);
@@ -203,8 +275,47 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChangesAsync();
-            dbContextDownloadItem.SaveChangesAsync();
+            dbContext.SaveChanges();
+            dbContextDownloadItem.SaveChanges();
+
+            // Act
+            service.Download(repositoryDataDownload, loadRule);
+            var actualItems = dbContext.WatchItem.ToList();
+
+            // Assert
+            actualItems.Should().Equal(expectItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ListsWithTwoSameElements))]
+        public async Task Add_Data_File_And_One_Replace_And_Not_Replace_Duplicate_ElementAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, Dictionary<string, DialogReplaceItemQuestion> dictionaryAddItem, List<WatchItem> expectItems)
+        {
+            // Arrange
+            var dbContext = new TestAppDbContextFactory().Create();
+            var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+
+            var messageBox = new Mock<IMessageBox>();
+            foreach (var item in dictionaryAddItem)
+            {
+                messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).Returns(item.Value);
+            }
+
+            var service = new DownloadDataService(dbContext, messageBox.Object);
+            var loadRuleGrade = new DeleteGradeRule(false);
+            var loadDuplicateItemRule = new DuplicateLoadRule(
+                        dbContext,
+                        new ActionDuplicateItems(true, new List<IsActionWithDuplicate>
+                        {
+                            new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, true),
+                            new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, true),
+                        }));
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
+
+            dbContext.AddRange(items);
+            dbContextDownloadItem.AddRange(addDownloadItem);
+            await dbContext.SaveChangesAsync();
+            await dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);

@@ -66,8 +66,40 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChangesAsync();
-            dbContextDownloadItem.SaveChangesAsync();
+            dbContext.SaveChanges();
+            dbContextDownloadItem.SaveChanges();
+
+            // Act
+            service.Download(repositoryDataDownload, loadRule);
+            var actualItems = dbContext.WatchItem.ToList();
+
+            // Assert
+            actualItems.Should().Equal(expectItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ListItemsInFileAfterLoading))]
+        public async Task Add_Data_FileAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
+        {
+            // Arrange
+            var dbContext = new TestAppDbContextFactory().Create();
+            var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+
+            var service = new DownloadDataService(dbContext, messageBox.Object) { NumberOfItemPerPage = PageSize };
+            var loadRuleGrade = new DeleteGradeRule(false);
+            var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.AnyGrade);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade, loadRuleDuplicateItem });
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
+
+            dbContext.AddRange(items);
+            dbContextDownloadItem.AddRange(addDownloadItem);
+            await dbContext.SaveChangesAsync();
+            await dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);
