@@ -37,7 +37,10 @@ namespace WatchList.WinForms.ChildForms
                 return new ModelProcessUploadData(isDeleteGrade, new ActionDuplicateItems(), SelectTypeCinema, SelectGrade);
             }
 
-            var listDuplicateLoadRule = clbActionsWithDuplicates.Items.Select(e => new IsActionWithDuplicate((DuplicateLoadingRules)e.Tag, e.Checked)).ToList();
+            var listDuplicateLoadRule = clbActionsWithDuplicates.Items.Select(e => new IsActionWithDuplicate(
+                rulesDuplicateLoading: (DuplicateLoadingRules)e.Tag
+                    ?? throw new NullReferenceException("Null reference argument for parameter 'rulesDuplicateLoading'"),
+                checkAction: e.Checked)).ToList();
             return new ModelProcessUploadData(isDeleteGrade, new ActionDuplicateItems(considerDuplicates, listDuplicateLoadRule), SelectTypeCinema, SelectGrade);
         }
 

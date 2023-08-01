@@ -42,8 +42,8 @@ namespace WatchList.Core.Model.Load
 
         public bool ActionSelected { get; set; } = false;
 
-        public IsActionWithDuplicate UpdateDuplicate { get; private set; }
+        public IsActionWithDuplicate UpdateDuplicate { get; private set; } = new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, null);
 
-        public IsActionWithDuplicate CaseSensitive { get; private set; }
+        public IsActionWithDuplicate CaseSensitive { get; private set; } = new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, null);
     }
 }
