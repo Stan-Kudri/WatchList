@@ -31,6 +31,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                     new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733b2319a7"), new DateTime(2013, 05, 11, 00, 00, 00), 7),
                     new WatchItem("Хэнкок", 2, StatusCinema.Look, TypeCinema.Movie, Guid.Parse("28d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2010, 04, 12, 00, 00, 00), 6),
                 },
+                DialogReplaceItemQuestion.AllYes,
                 new List<WatchItem>()
                 {
                     new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2013, 05, 11, 00, 00, 00), 7),
@@ -59,6 +60,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                     new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733b2319a7"), new DateTime(2013, 05, 11, 00, 00, 00), 7),
                     new WatchItem("Хэнкок", 2, StatusCinema.Planned, TypeCinema.Movie, Guid.Parse("28d4a999-ca7a-4b24-a78a-65733bff19a7")),
                 },
+                DialogReplaceItemQuestion.AllNo,
                 new List<WatchItem>()
                 {
                     new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2013, 05, 11, 00, 00, 00), 8),
@@ -105,14 +107,15 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
         [Theory]
         [MemberData(nameof(ListsWithTwoSameElementsWithReplaceItem))]
-        public void Add_Data_File_And_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
+        [MemberData(nameof(ListsWithTwoSameElementsWithNotReplaceItem))]
+        public void Add_Data_File_And_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, DialogReplaceItemQuestion dialogReplaceItem, List<WatchItem> expectItems)
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
 
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(dialogReplaceItem);
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
@@ -141,86 +144,15 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
         [Theory]
         [MemberData(nameof(ListsWithTwoSameElementsWithReplaceItem))]
-        public async Task Add_Data_File_And_Replace_Duplicate_ElementAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
-        {
-            // Arrange
-            var dbContext = new TestAppDbContextFactory().Create();
-            var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-
-            var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
-
-            var service = new DownloadDataService(dbContext, messageBox.Object);
-            var loadRuleGrade = new DeleteGradeRule(false);
-            var loadDuplicateItemRule = new DuplicateLoadRule(
-                        dbContext,
-                        new ActionDuplicateItems(true, new List<DuplicateLoadingRules>
-                        {
-                            new DuplicateLoadingRules(DuplicateLoadingRules.UpdateDuplicate, true),
-                            new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, true),
-                        }));
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
-
-            dbContext.AddRange(items);
-            dbContextDownloadItem.AddRange(addDownloadItem);
-            await dbContext.SaveChangesAsync();
-            await dbContextDownloadItem.SaveChangesAsync();
-
-            // Act
-            service.Download(repositoryDataDownload, loadRule);
-            var actualItems = dbContext.WatchItem.ToList();
-
-            // Assert
-            actualItems.Should().Equal(expectItems);
-        }
-
-        [Theory]
         [MemberData(nameof(ListsWithTwoSameElementsWithNotReplaceItem))]
-        public void Add_Data_File_And_Not_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
+        public async Task Add_Data_File_And_Replace_Duplicate_ElementAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, DialogReplaceItemQuestion dialogReplaceItem, List<WatchItem> expectItems)
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
 
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllNo);
-
-            var service = new DownloadDataService(dbContext, messageBox.Object);
-            var loadRuleGrade = new DeleteGradeRule(false);
-            var loadDuplicateItemRule = new DuplicateLoadRule(
-                        dbContext,
-                        new ActionDuplicateItems(true, new List<DuplicateLoadingRules>
-                        {
-                            new DuplicateLoadingRules(DuplicateLoadingRules.UpdateDuplicate, true),
-                            new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, true),
-                        }));
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
-
-            dbContext.AddRange(items);
-            dbContextDownloadItem.AddRange(addDownloadItem);
-            dbContext.SaveChanges();
-            dbContextDownloadItem.SaveChanges();
-
-            // Act
-            service.Download(repositoryDataDownload, loadRule);
-            var actualItems = dbContext.WatchItem.ToList();
-
-            // Assert
-            actualItems.Should().Equal(expectItems);
-        }
-
-        [Theory]
-        [MemberData(nameof(ListsWithTwoSameElementsWithNotReplaceItem))]
-        public async Task Add_Data_File_And_Not_Replace_Duplicate_ElementAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
-        {
-            // Arrange
-            var dbContext = new TestAppDbContextFactory().Create();
-            var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-
-            var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllNo);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(dialogReplaceItem);
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleGrade = new DeleteGradeRule(false);
