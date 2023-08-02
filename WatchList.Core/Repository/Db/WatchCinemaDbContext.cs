@@ -44,8 +44,8 @@ namespace WatchList.Core.Repository.Db
 
         private void SaveChangesWatchItem()
         {
-            var insertedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
-            foreach (var changeEntry in insertedEntries)
+            var changedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
+            foreach (var changeEntry in changedEntries)
             {
                 changeEntry.TitleNormalized = changeEntry.Title.ToLower();
             }
