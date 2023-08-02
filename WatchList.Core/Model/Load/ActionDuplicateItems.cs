@@ -5,18 +5,18 @@ namespace WatchList.Core.Model.Load
     public class ActionDuplicateItems
     {
         public ActionDuplicateItems()
-            : this(false, new List<IsActionWithDuplicate>())
+            : this(false, new List<DuplicateLoadingRules>())
         {
         }
 
-        public ActionDuplicateItems(bool actionSelected, List<IsActionWithDuplicate> listDuplicateLoadRule)
+        public ActionDuplicateItems(bool actionSelected, List<DuplicateLoadingRules> listDuplicateLoadRule)
         {
-            ActionSelected = actionSelected;
+            IsActionSelected = actionSelected;
 
-            if (!ActionSelected)
+            if (!IsActionSelected)
             {
-                UpdateDuplicate = new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, null);
-                CaseSensitive = new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, null);
+                UpdateDuplicate = DuplicateLoadingRules.UpdateDuplicate;
+                CaseSensitive = DuplicateLoadingRules.CaseSensitive;
 
                 return;
             }
@@ -28,22 +28,22 @@ namespace WatchList.Core.Model.Load
 
             foreach (var item in listDuplicateLoadRule)
             {
-                if (item.RulesDuplicateLoading == DuplicateLoadingRules.UpdateDuplicate)
+                if (item == DuplicateLoadingRules.UpdateDuplicate)
                 {
                     UpdateDuplicate = item;
                 }
 
-                if (item.RulesDuplicateLoading == DuplicateLoadingRules.CaseSensitive)
+                if (item == DuplicateLoadingRules.CaseSensitive)
                 {
                     CaseSensitive = item;
                 }
             }
         }
 
-        public bool ActionSelected { get; set; } = false;
+        public bool IsActionSelected { get; set; } = false;
 
-        public IsActionWithDuplicate UpdateDuplicate { get; private set; } = new IsActionWithDuplicate(DuplicateLoadingRules.UpdateDuplicate, null);
+        public DuplicateLoadingRules UpdateDuplicate { get; private set; } = DuplicateLoadingRules.UpdateDuplicate;
 
-        public IsActionWithDuplicate CaseSensitive { get; private set; } = new IsActionWithDuplicate(DuplicateLoadingRules.CaseSensitive, null);
+        public DuplicateLoadingRules CaseSensitive { get; private set; } = DuplicateLoadingRules.CaseSensitive;
     }
 }
