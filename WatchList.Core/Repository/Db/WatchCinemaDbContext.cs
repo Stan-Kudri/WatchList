@@ -15,47 +15,13 @@ namespace WatchList.Core.Repository.Db
 
         public override int SaveChanges()
         {
-            var insertedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Select(x => x.Entity).OfType<WatchItem>();
-            foreach (var insertedEntry in insertedEntries)
-            {
-                if (insertedEntry != null)
-                {
-                    insertedEntry.TitleNormalized = insertedEntry.Title.ToLower();
-                }
-            }
-
-            var modifiedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
-            foreach (var modifiedEntry in modifiedEntries)
-            {
-                if (modifiedEntry != null)
-                {
-                    modifiedEntry.TitleNormalized = modifiedEntry.Title.ToLower();
-                }
-            }
-
+            SaveChangesWatchItem();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var insertedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Select(x => x.Entity).OfType<WatchItem>();
-            foreach (var insertedEntry in insertedEntries)
-            {
-                if (insertedEntry != null)
-                {
-                    insertedEntry.TitleNormalized = insertedEntry.Title.ToLower();
-                }
-            }
-
-            var modifiedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
-            foreach (var modifiedEntry in modifiedEntries)
-            {
-                if (modifiedEntry != null)
-                {
-                    modifiedEntry.TitleNormalized = modifiedEntry.Title.ToLower();
-                }
-            }
-
+            SaveChangesWatchItem();
             return base.SaveChangesAsync(cancellationToken);
         }
 
@@ -74,6 +40,15 @@ namespace WatchList.Core.Repository.Db
                 buildAction.Property(x => x.Status).SmartEnumConversion();
                 buildAction.HasIndex(x => x.TitleNormalized);
             });
+        }
+
+        private void SaveChangesWatchItem()
+        {
+            var insertedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
+            foreach (var changeEntry in insertedEntries)
+            {
+                changeEntry.TitleNormalized = changeEntry.Title.ToLower();
+            }
         }
     }
 }

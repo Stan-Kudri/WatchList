@@ -21,7 +21,6 @@ namespace WatchList.Core.Repository
 
         public void Add(WatchItem item)
         {
-            item.TitleNormalized = item.Title.ToLower();
             _db.Add(item);
             _db.SaveChanges();
         }
@@ -48,7 +47,6 @@ namespace WatchList.Core.Repository
             item.Date = editItem.Date;
             item.Grade = editItem.Grade;
             item.Title = editItem.Title;
-            item.TitleNormalized = editItem.TitleNormalized;
             item.Type = editItem.Type;
             item.Status = editItem.Status;
 
