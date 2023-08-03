@@ -38,5 +38,14 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             ResultQuestion = QuestionResultEnum.No;
             DialogResult = DialogResult.OK;
         }
+
+        private void Btn_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                ResultQuestion = QuestionResultEnum.No;
+                DialogResult = DialogResult.OK;
+            }
+        }
     }
 }

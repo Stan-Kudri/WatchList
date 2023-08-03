@@ -39,6 +39,8 @@ namespace WatchList.WinForms.ChildForms
             moreGradeBindingSource = new BindingSource(components);
             cmbGrade = new MaterialSkin.Controls.MaterialComboBox();
             labelScoreMore = new MaterialSkin.Controls.MaterialLabel();
+            cbConsiderDuplicates = new MaterialSkin.Controls.MaterialCheckbox();
+            clbActionsWithDuplicates = new MaterialSkin.Controls.MaterialCheckedListBox();
             ((System.ComponentModel.ISupportInitialize)typeUploadBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)moreGradeBindingSource).BeginInit();
             SuspendLayout();
@@ -61,12 +63,13 @@ namespace WatchList.WinForms.ChildForms
             // 
             // btnOk
             // 
+            btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnOk.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnOk.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnOk.Depth = 0;
             btnOk.HighEmphasis = true;
             btnOk.Icon = null;
-            btnOk.Location = new Point(10, 170);
+            btnOk.Location = new Point(10, 270);
             btnOk.Margin = new Padding(4, 6, 4, 6);
             btnOk.MaximumSize = new Size(100, 36);
             btnOk.MinimumSize = new Size(100, 36);
@@ -83,12 +86,13 @@ namespace WatchList.WinForms.ChildForms
             // 
             // btnCancel
             // 
+            btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnCancel.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnCancel.Depth = 0;
             btnCancel.HighEmphasis = true;
             btnCancel.Icon = null;
-            btnCancel.Location = new Point(330, 170);
+            btnCancel.Location = new Point(333, 270);
             btnCancel.Margin = new Padding(4, 6, 4, 6);
             btnCancel.MaximumSize = new Size(100, 36);
             btnCancel.MinimumSize = new Size(100, 36);
@@ -104,12 +108,13 @@ namespace WatchList.WinForms.ChildForms
             // 
             // btnClear
             // 
+            btnClear.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnClear.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnClear.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnClear.Depth = 0;
             btnClear.HighEmphasis = true;
             btnClear.Icon = null;
-            btnClear.Location = new Point(170, 170);
+            btnClear.Location = new Point(170, 270);
             btnClear.Margin = new Padding(4, 6, 4, 6);
             btnClear.MaximumSize = new Size(100, 36);
             btnClear.MinimumSize = new Size(100, 36);
@@ -140,7 +145,7 @@ namespace WatchList.WinForms.ChildForms
             cmbTypeCinema.FormattingEnabled = true;
             cmbTypeCinema.IntegralHeight = false;
             cmbTypeCinema.ItemHeight = 43;
-            cmbTypeCinema.Location = new Point(10, 110);
+            cmbTypeCinema.Location = new Point(10, 210);
             cmbTypeCinema.MaxDropDownItems = 4;
             cmbTypeCinema.MaximumSize = new Size(120, 0);
             cmbTypeCinema.MinimumSize = new Size(120, 0);
@@ -159,7 +164,7 @@ namespace WatchList.WinForms.ChildForms
             labelTypeCinemaLoad.AutoSize = true;
             labelTypeCinemaLoad.Depth = 0;
             labelTypeCinemaLoad.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelTypeCinemaLoad.Location = new Point(135, 123);
+            labelTypeCinemaLoad.Location = new Point(135, 223);
             labelTypeCinemaLoad.MouseState = MaterialSkin.MouseState.HOVER;
             labelTypeCinemaLoad.Name = "labelTypeCinemaLoad";
             labelTypeCinemaLoad.Size = new Size(36, 19);
@@ -186,7 +191,7 @@ namespace WatchList.WinForms.ChildForms
             cmbGrade.FormattingEnabled = true;
             cmbGrade.IntegralHeight = false;
             cmbGrade.ItemHeight = 43;
-            cmbGrade.Location = new Point(175, 108);
+            cmbGrade.Location = new Point(175, 210);
             cmbGrade.MaxDropDownItems = 4;
             cmbGrade.MouseState = MaterialSkin.MouseState.OUT;
             cmbGrade.Name = "cmbGrade";
@@ -199,19 +204,52 @@ namespace WatchList.WinForms.ChildForms
             labelScoreMore.AutoSize = true;
             labelScoreMore.Depth = 0;
             labelScoreMore.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelScoreMore.Location = new Point(353, 123);
+            labelScoreMore.Location = new Point(353, 223);
             labelScoreMore.MouseState = MaterialSkin.MouseState.HOVER;
             labelScoreMore.Name = "labelScoreMore";
             labelScoreMore.Size = new Size(81, 19);
             labelScoreMore.TabIndex = 7;
             labelScoreMore.Text = "Score more";
             // 
+            // cbConsiderDuplicates
+            // 
+            cbConsiderDuplicates.AutoSize = true;
+            cbConsiderDuplicates.Depth = 0;
+            cbConsiderDuplicates.Location = new Point(10, 107);
+            cbConsiderDuplicates.Margin = new Padding(0);
+            cbConsiderDuplicates.MouseLocation = new Point(-1, -1);
+            cbConsiderDuplicates.MouseState = MaterialSkin.MouseState.HOVER;
+            cbConsiderDuplicates.Name = "cbConsiderDuplicates";
+            cbConsiderDuplicates.ReadOnly = false;
+            cbConsiderDuplicates.Ripple = true;
+            cbConsiderDuplicates.Size = new Size(174, 37);
+            cbConsiderDuplicates.TabIndex = 9;
+            cbConsiderDuplicates.Text = "Consider duplicates";
+            cbConsiderDuplicates.UseVisualStyleBackColor = true;
+            cbConsiderDuplicates.CheckedChanged += CbConsiderDuplicates_CheckedChanged;
+            // 
+            // clbActionsWithDuplicates
+            // 
+            clbActionsWithDuplicates.AutoScroll = true;
+            clbActionsWithDuplicates.BackColor = SystemColors.Control;
+            clbActionsWithDuplicates.Depth = 0;
+            clbActionsWithDuplicates.Enabled = false;
+            clbActionsWithDuplicates.Location = new Point(187, 107);
+            clbActionsWithDuplicates.MouseState = MaterialSkin.MouseState.HOVER;
+            clbActionsWithDuplicates.Name = "clbActionsWithDuplicates";
+            clbActionsWithDuplicates.Size = new Size(234, 97);
+            clbActionsWithDuplicates.Striped = false;
+            clbActionsWithDuplicates.StripeDarkColor = Color.Empty;
+            clbActionsWithDuplicates.TabIndex = 10;
+            // 
             // MergeDatabaseForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
-            ClientSize = new Size(440, 210);
+            ClientSize = new Size(440, 310);
+            Controls.Add(clbActionsWithDuplicates);
+            Controls.Add(cbConsiderDuplicates);
             Controls.Add(labelScoreMore);
             Controls.Add(cmbGrade);
             Controls.Add(labelTypeCinemaLoad);
@@ -220,8 +258,8 @@ namespace WatchList.WinForms.ChildForms
             Controls.Add(btnCancel);
             Controls.Add(btnOk);
             Controls.Add(cbExistGrade);
-            MaximumSize = new Size(440, 210);
-            MinimumSize = new Size(440, 210);
+            MaximumSize = new Size(440, 310);
+            MinimumSize = new Size(440, 310);
             Name = "MergeDatabaseForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Loading data";
@@ -244,5 +282,7 @@ namespace WatchList.WinForms.ChildForms
         private BindingSource moreGradeBindingSource;
         private MaterialSkin.Controls.MaterialComboBox cmbGrade;
         private MaterialSkin.Controls.MaterialLabel labelScoreMore;
+        private MaterialSkin.Controls.MaterialCheckbox cbConsiderDuplicates;
+        private MaterialSkin.Controls.MaterialCheckedListBox clbActionsWithDuplicates;
     }
 }

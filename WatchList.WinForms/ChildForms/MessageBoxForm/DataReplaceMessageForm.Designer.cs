@@ -122,6 +122,7 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             Name = "DataReplaceMessageForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Question";
+            FormClosing += Btn_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }

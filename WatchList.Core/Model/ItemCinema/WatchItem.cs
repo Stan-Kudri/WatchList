@@ -40,6 +40,8 @@ namespace WatchList.Core.Model.ItemCinema
 
         public int? Grade { get; set; }
 
+        public string TitleNormalized { get; set; } = string.Empty;
+
         public override int GetHashCode() => HashCode.Combine(Id, Title, Grade, Date, Status, Type, Sequel);
 
         public override bool Equals(object? obj) => Equals(obj as WatchItem);

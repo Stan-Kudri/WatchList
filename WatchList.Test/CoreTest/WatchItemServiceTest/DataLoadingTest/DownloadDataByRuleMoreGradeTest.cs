@@ -112,7 +112,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                 Grade.AnyGrade,
                 new List<WatchItem>()
                 {
-                    new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2013, 05, 11, 00, 00, 00), 7),
+                    new WatchItem("Тор", 1, StatusCinema.Viewed, TypeCinema.Cartoon, Guid.Parse("18d4a732-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2013, 05, 11, 00, 00, 00), 8),
                     new WatchItem("Драйв", 2, StatusCinema.Planned, TypeCinema.Movie, Guid.Parse("48d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     new WatchItem("Твое имя", 2, StatusCinema.Thrown, TypeCinema.Anime, Guid.Parse("58d4a999-ca7a-4b24-a78a-65733ba419a7")),
                     new WatchItem("Хэнкок", 2, StatusCinema.Look, TypeCinema.Movie, Guid.Parse("28d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2015, 04, 12, 00, 00, 00), 9),
@@ -123,7 +123,6 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
         [Theory]
         [MemberData(nameof(ListsAddOneItemByMoreGrade))]
-        [MemberData(nameof(ListReplaceItemByMoreGrade))]
         [MemberData(nameof(ListsNotAddItemByMoreGrade))]
         [MemberData(nameof(ListAddItemsByNotMoreGrade))]
         public void Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, Grade moreGrade, List<WatchItem> expectItems)
@@ -137,13 +136,46 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade });
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
             dbContext.SaveChanges();
             dbContextDownloadItem.SaveChanges();
+
+            // Act
+            service.Download(repositoryDataDownload, loadRule);
+            var actualItems = dbContext.WatchItem.ToList();
+
+            // Assert
+            actualItems.Should().Equal(expectItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ListsAddOneItemByMoreGrade))]
+        [MemberData(nameof(ListsNotAddItemByMoreGrade))]
+        [MemberData(nameof(ListAddItemsByNotMoreGrade))]
+        public async Task Load_Data_File_By_Rule_Type_CinemaAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, Grade moreGrade, List<WatchItem> expectItems)
+        {
+            // Arrange
+            var dbContext = new TestAppDbContextFactory().Create();
+            var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+
+            var service = new DownloadDataService(dbContext, messageBox.Object);
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
+
+            dbContext.AddRange(items);
+            dbContextDownloadItem.AddRange(addDownloadItem);
+            await dbContext.SaveChangesAsync();
+            await dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);

@@ -2,6 +2,7 @@ using FluentAssertions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Model.Load;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
@@ -122,7 +123,6 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         [Theory]
         [MemberData(nameof(ListsAddOneItemByTypeCinema))]
         [MemberData(nameof(ListsAddItemsByAllTypeCinema))]
-        [MemberData(nameof(ListsReplaceItemsByTypeCinema))]
         [MemberData(nameof(ListsNotAddItemsByTypeCinema))]
         public void Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema typeCinema, List<WatchItem> expectItems)
         {
@@ -135,13 +135,46 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(dbContext, messageBox.Object);
             var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema });
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
             dbContext.SaveChanges();
             dbContextDownloadItem.SaveChanges();
+
+            // Act
+            service.Download(repositoryDataDownload, loadRule);
+            var actualItems = dbContext.WatchItem.ToList();
+
+            // Assert
+            actualItems.Should().Equal(expectItems);
+        }
+
+        [Theory]
+        [MemberData(nameof(ListsAddOneItemByTypeCinema))]
+        [MemberData(nameof(ListsAddItemsByAllTypeCinema))]
+        [MemberData(nameof(ListsNotAddItemsByTypeCinema))]
+        public async Task Load_Data_File_By_Rule_Type_CinemaAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema typeCinema, List<WatchItem> expectItems)
+        {
+            // Arrange
+            var dbContext = new TestAppDbContextFactory().Create();
+            var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+
+            var messageBox = new Mock<IMessageBox>();
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+
+            var service = new DownloadDataService(dbContext, messageBox.Object);
+            var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
+            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
+
+            dbContext.AddRange(items);
+            dbContextDownloadItem.AddRange(addDownloadItem);
+            await dbContext.SaveChangesAsync();
+            await dbContextDownloadItem.SaveChangesAsync();
 
             // Act
             service.Download(repositoryDataDownload, loadRule);

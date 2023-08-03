@@ -6,18 +6,21 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
     public class ModelProcessUploadData : ModelBase
     {
         public ModelProcessUploadData()
-            : this(false, TypeCinema.AllType, Grade.AnyGrade)
+            : this(false, new ActionDuplicateItems(), TypeCinema.AllType, Grade.AnyGrade)
         {
         }
 
-        public ModelProcessUploadData(bool deleteGrade, TypeCinema typeCinema, Grade moreGrade)
+        public ModelProcessUploadData(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema typeCinema, Grade moreGrade)
         {
-            TypeCinemaLoad = typeCinema;
             DeleteGrade = deleteGrade;
+            ActionsWithDuplicates = actionsWithDuplicates;
+            TypeCinemaLoad = typeCinema;
             MoreGrade = moreGrade;
         }
 
         public bool DeleteGrade { get; private set; } = false;
+
+        public ActionDuplicateItems ActionsWithDuplicates { get; private set; } = new ActionDuplicateItems();
 
         public TypeCinema TypeCinemaLoad { get; private set; } = TypeCinema.AllType;
 
