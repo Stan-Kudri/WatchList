@@ -15,13 +15,13 @@ namespace WatchList.Core.Repository.Db
 
         public override int SaveChanges()
         {
-            SaveChangesWatchItem();
+            UpdateTitleNormalized();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            SaveChangesWatchItem();
+            UpdateTitleNormalized();
             return base.SaveChangesAsync(cancellationToken);
         }
 
@@ -42,7 +42,7 @@ namespace WatchList.Core.Repository.Db
             });
         }
 
-        private void SaveChangesWatchItem()
+        private void UpdateTitleNormalized()
         {
             var changedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
             foreach (var changeEntry in changedEntries)

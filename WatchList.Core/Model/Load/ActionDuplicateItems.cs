@@ -11,9 +11,9 @@ namespace WatchList.Core.Model.Load
 
         public ActionDuplicateItems(bool actionSelected, List<DuplicateLoadingRules> listDuplicateLoadRule)
         {
-            IsActionSelected = actionSelected;
+            ActionSelected = actionSelected;
 
-            if (!IsActionSelected)
+            if (!ActionSelected)
             {
                 UpdateDuplicate = DuplicateLoadingRules.UpdateDuplicate;
                 CaseSensitive = DuplicateLoadingRules.CaseSensitive;
@@ -40,7 +40,7 @@ namespace WatchList.Core.Model.Load
             }
         }
 
-        public bool IsActionSelected { get; set; } = false;
+        public bool ActionSelected { get; set; } = false;
 
         public DuplicateLoadingRules UpdateDuplicate { get; private set; } = DuplicateLoadingRules.UpdateDuplicate;
 

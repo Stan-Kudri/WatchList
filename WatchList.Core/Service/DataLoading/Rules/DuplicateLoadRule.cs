@@ -17,7 +17,7 @@ namespace WatchList.Core.Service.DataLoading.Rules
         public DuplicateLoadRule(WatchCinemaDbContext db, ActionDuplicateItems actionsWithDuplicates)
         {
             _dbContext = db;
-            _actionSelected = actionsWithDuplicates.IsActionSelected;
+            _actionSelected = actionsWithDuplicates.ActionSelected;
             if (_actionSelected)
             {
                 if (actionsWithDuplicates.UpdateDuplicate.CheckAction == null || actionsWithDuplicates.CaseSensitive.CheckAction == null)
