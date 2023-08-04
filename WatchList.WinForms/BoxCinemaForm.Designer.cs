@@ -31,8 +31,8 @@ namespace WatchList.WinForms
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            var dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            var dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            var dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            var dataGridViewCellStyle4 = new DataGridViewCellStyle();
             cinemaBindingSource = new BindingSource(components);
             openFileDialog = new OpenFileDialog();
             dgvCinema = new DataGridView();
@@ -66,7 +66,7 @@ namespace WatchList.WinForms
             sortModelBindingSource = new BindingSource(components);
             tlPanelActionsWithElements = new TableLayoutPanel();
             tlPanelPage = new TableLayoutPanel();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            tlPanelFilter = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).BeginInit();
             ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).BeginInit();
@@ -74,7 +74,7 @@ namespace WatchList.WinForms
             ((System.ComponentModel.ISupportInitialize)sortModelBindingSource).BeginInit();
             tlPanelActionsWithElements.SuspendLayout();
             tlPanelPage.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            tlPanelFilter.SuspendLayout();
             SuspendLayout();
             // 
             // openFileDialog
@@ -86,24 +86,24 @@ namespace WatchList.WinForms
             dgvCinema.AllowUserToAddRows = false;
             dgvCinema.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvCinema.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvCinema.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvCinema.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvCinema.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCinema.Columns.AddRange(new DataGridViewColumn[] { NameCinema, NumberCinema, WatchedCinema, DataWatchedCinema, GradeCinema, IdCinema, Cinema });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvCinema.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvCinema.DefaultCellStyle = dataGridViewCellStyle4;
             dgvCinema.Location = new Point(5, 120);
             dgvCinema.MinimumSize = new Size(665, 240);
             dgvCinema.Name = "dgvCinema";
@@ -578,20 +578,20 @@ namespace WatchList.WinForms
             tlPanelPage.Size = new Size(665, 30);
             tlPanelPage.TabIndex = 57;
             // 
-            // tableLayoutPanel1
+            // tlPanelFilter
             // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(btnClearFilter, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnUseFilter, 0, 1);
-            tableLayoutPanel1.Location = new Point(510, 65);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(160, 54);
-            tableLayoutPanel1.TabIndex = 58;
+            tlPanelFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tlPanelFilter.ColumnCount = 1;
+            tlPanelFilter.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlPanelFilter.Controls.Add(btnClearFilter, 0, 0);
+            tlPanelFilter.Controls.Add(btnUseFilter, 0, 1);
+            tlPanelFilter.Location = new Point(510, 65);
+            tlPanelFilter.Name = "tlPanelFilter";
+            tlPanelFilter.RowCount = 2;
+            tlPanelFilter.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tlPanelFilter.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tlPanelFilter.Size = new Size(160, 54);
+            tlPanelFilter.TabIndex = 58;
             // 
             // BoxCinemaForm
             // 
@@ -599,7 +599,7 @@ namespace WatchList.WinForms
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(680, 425);
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(tlPanelFilter);
             Controls.Add(tlPanelPage);
             Controls.Add(tlPanelActionsWithElements);
             Controls.Add(cmbFilterStatus);
@@ -619,8 +619,8 @@ namespace WatchList.WinForms
             tlPanelActionsWithElements.PerformLayout();
             tlPanelPage.ResumeLayout(false);
             tlPanelPage.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            tlPanelFilter.ResumeLayout(false);
+            tlPanelFilter.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -658,6 +658,6 @@ namespace WatchList.WinForms
         private DataGridViewTextBoxColumn Cinema;
         private TableLayoutPanel tlPanelActionsWithElements;
         private TableLayoutPanel tlPanelPage;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tlPanelFilter;
     }
 }
