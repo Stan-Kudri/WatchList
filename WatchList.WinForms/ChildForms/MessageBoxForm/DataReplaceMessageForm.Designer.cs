@@ -35,13 +35,20 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             labelQuestion = new Label();
             labelTitleItem = new Label();
             labelTitleInfo = new Label();
+            tlButtonPanel = new TableLayoutPanel();
+            tlTitlePanel = new TableLayoutPanel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            tlButtonPanel.SuspendLayout();
+            tlTitlePanel.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // btnYes
             // 
-            btnYes.Location = new Point(10, 75);
+            btnYes.Dock = DockStyle.Fill;
+            btnYes.Location = new Point(3, 3);
             btnYes.Name = "btnYes";
-            btnYes.Size = new Size(75, 25);
+            btnYes.Size = new Size(84, 24);
             btnYes.TabIndex = 0;
             btnYes.Text = "Yes";
             btnYes.UseVisualStyleBackColor = true;
@@ -49,9 +56,10 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             // 
             // btnAllYes
             // 
-            btnAllYes.Location = new Point(105, 75);
+            btnAllYes.Dock = DockStyle.Fill;
+            btnAllYes.Location = new Point(93, 3);
             btnAllYes.Name = "btnAllYes";
-            btnAllYes.Size = new Size(75, 25);
+            btnAllYes.Size = new Size(84, 24);
             btnAllYes.TabIndex = 1;
             btnAllYes.Text = "Yes, for all";
             btnAllYes.UseVisualStyleBackColor = true;
@@ -59,9 +67,10 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             // 
             // btnNo
             // 
-            btnNo.Location = new Point(300, 75);
+            btnNo.Dock = DockStyle.Fill;
+            btnNo.Location = new Point(273, 3);
             btnNo.Name = "btnNo";
-            btnNo.Size = new Size(75, 25);
+            btnNo.Size = new Size(84, 24);
             btnNo.TabIndex = 2;
             btnNo.Text = "No";
             btnNo.UseVisualStyleBackColor = true;
@@ -69,9 +78,10 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             // 
             // btnAllNo
             // 
-            btnAllNo.Location = new Point(205, 75);
+            btnAllNo.Dock = DockStyle.Fill;
+            btnAllNo.Location = new Point(183, 3);
             btnAllNo.Name = "btnAllNo";
-            btnAllNo.Size = new Size(75, 25);
+            btnAllNo.Size = new Size(84, 24);
             btnAllNo.TabIndex = 3;
             btnAllNo.Text = "No, for all";
             btnAllNo.UseVisualStyleBackColor = true;
@@ -80,51 +90,111 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             // labelQuestion
             // 
             labelQuestion.AutoSize = true;
+            labelQuestion.Dock = DockStyle.Fill;
             labelQuestion.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            labelQuestion.Location = new Point(40, 20);
+            labelQuestion.Location = new Point(23, 3);
+            labelQuestion.Margin = new Padding(3);
             labelQuestion.Name = "labelQuestion";
-            labelQuestion.Size = new Size(307, 19);
+            labelQuestion.Size = new Size(314, 19);
             labelQuestion.TabIndex = 4;
             labelQuestion.Text = "The append item is a duplicate. Replace element?";
+            labelQuestion.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelTitleItem
             // 
             labelTitleItem.AutoSize = true;
+            labelTitleItem.Dock = DockStyle.Left;
             labelTitleItem.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTitleItem.Location = new Point(75, 40);
+            labelTitleItem.Location = new Point(53, 3);
+            labelTitleItem.Margin = new Padding(3);
             labelTitleItem.Name = "labelTitleItem";
             labelTitleItem.Size = new Size(37, 19);
             labelTitleItem.TabIndex = 5;
             labelTitleItem.Text = "Item";
+            labelTitleItem.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelTitleInfo
             // 
             labelTitleInfo.AutoSize = true;
+            labelTitleInfo.Dock = DockStyle.Fill;
             labelTitleInfo.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTitleInfo.Location = new Point(40, 40);
+            labelTitleInfo.Location = new Point(3, 3);
+            labelTitleInfo.Margin = new Padding(3);
             labelTitleInfo.Name = "labelTitleInfo";
-            labelTitleInfo.Size = new Size(37, 19);
+            labelTitleInfo.Size = new Size(44, 19);
             labelTitleInfo.TabIndex = 6;
             labelTitleInfo.Text = "Title:";
+            labelTitleInfo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tlButtonPanel
+            // 
+            tlButtonPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tlButtonPanel.ColumnCount = 4;
+            tlButtonPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlButtonPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlButtonPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlButtonPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlButtonPanel.Controls.Add(btnYes, 0, 0);
+            tlButtonPanel.Controls.Add(btnAllYes, 1, 0);
+            tlButtonPanel.Controls.Add(btnAllNo, 2, 0);
+            tlButtonPanel.Controls.Add(btnNo, 3, 0);
+            tlButtonPanel.Location = new Point(10, 70);
+            tlButtonPanel.Name = "tlButtonPanel";
+            tlButtonPanel.RowCount = 1;
+            tlButtonPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlButtonPanel.Size = new Size(360, 30);
+            tlButtonPanel.TabIndex = 7;
+            // 
+            // tlTitlePanel
+            // 
+            tlTitlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tlTitlePanel.ColumnCount = 2;
+            tlTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50F));
+            tlTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tlTitlePanel.Controls.Add(labelTitleInfo, 0, 0);
+            tlTitlePanel.Controls.Add(labelTitleItem, 1, 0);
+            tlTitlePanel.Location = new Point(40, 42);
+            tlTitlePanel.Name = "tlTitlePanel";
+            tlTitlePanel.RowCount = 1;
+            tlTitlePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlTitlePanel.Size = new Size(300, 25);
+            tlTitlePanel.TabIndex = 8;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 320F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(labelQuestion, 1, 0);
+            tableLayoutPanel1.Location = new Point(10, 10);
+            tableLayoutPanel1.MinimumSize = new Size(360, 25);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(360, 25);
+            tableLayoutPanel1.TabIndex = 9;
             // 
             // DataReplaceMessageForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(384, 111);
-            Controls.Add(labelTitleInfo);
-            Controls.Add(labelTitleItem);
-            Controls.Add(labelQuestion);
-            Controls.Add(btnAllNo);
-            Controls.Add(btnNo);
-            Controls.Add(btnAllYes);
-            Controls.Add(btnYes);
+            Controls.Add(tableLayoutPanel1);
+            Controls.Add(tlTitlePanel);
+            Controls.Add(tlButtonPanel);
+            MinimumSize = new Size(400, 150);
             Name = "DataReplaceMessageForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Question";
             FormClosing += Btn_FormClosing;
+            tlButtonPanel.ResumeLayout(false);
+            tlTitlePanel.ResumeLayout(false);
+            tlTitlePanel.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -136,5 +206,8 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
         private Label labelQuestion;
         private Label labelTitleItem;
         private Label labelTitleInfo;
+        private TableLayoutPanel tlButtonPanel;
+        private TableLayoutPanel tlTitlePanel;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }
