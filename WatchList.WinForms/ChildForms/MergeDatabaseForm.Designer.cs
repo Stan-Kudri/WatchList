@@ -41,8 +41,12 @@ namespace WatchList.WinForms.ChildForms
             labelScoreMore = new MaterialSkin.Controls.MaterialLabel();
             cbConsiderDuplicates = new MaterialSkin.Controls.MaterialCheckbox();
             clbActionsWithDuplicates = new MaterialSkin.Controls.MaterialCheckedListBox();
+            tlFirstPanelLoadingData = new TableLayoutPanel();
+            tlButtonPanelLoadingData = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)typeUploadBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)moreGradeBindingSource).BeginInit();
+            tlFirstPanelLoadingData.SuspendLayout();
+            tlButtonPanelLoadingData.SuspendLayout();
             SuspendLayout();
             // 
             // cbExistGrade
@@ -63,20 +67,19 @@ namespace WatchList.WinForms.ChildForms
             // 
             // btnOk
             // 
-            btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnOk.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnOk.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnOk.Depth = 0;
+            btnOk.Dock = DockStyle.Fill;
             btnOk.HighEmphasis = true;
             btnOk.Icon = null;
-            btnOk.Location = new Point(10, 270);
-            btnOk.Margin = new Padding(4, 6, 4, 6);
-            btnOk.MaximumSize = new Size(100, 36);
+            btnOk.Location = new Point(4, 6);
+            btnOk.Margin = new Padding(4, 6, 20, 6);
             btnOk.MinimumSize = new Size(100, 36);
             btnOk.MouseState = MaterialSkin.MouseState.HOVER;
             btnOk.Name = "btnOk";
             btnOk.NoAccentTextColor = Color.Empty;
-            btnOk.Size = new Size(100, 36);
+            btnOk.Size = new Size(120, 38);
             btnOk.TabIndex = 1;
             btnOk.Text = "OK";
             btnOk.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -86,20 +89,19 @@ namespace WatchList.WinForms.ChildForms
             // 
             // btnCancel
             // 
-            btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnCancel.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnCancel.Depth = 0;
+            btnCancel.Dock = DockStyle.Fill;
             btnCancel.HighEmphasis = true;
             btnCancel.Icon = null;
-            btnCancel.Location = new Point(333, 270);
-            btnCancel.Margin = new Padding(4, 6, 4, 6);
-            btnCancel.MaximumSize = new Size(100, 36);
+            btnCancel.Location = new Point(308, 6);
+            btnCancel.Margin = new Padding(20, 6, 4, 6);
             btnCancel.MinimumSize = new Size(100, 36);
             btnCancel.MouseState = MaterialSkin.MouseState.HOVER;
             btnCancel.Name = "btnCancel";
             btnCancel.NoAccentTextColor = Color.Empty;
-            btnCancel.Size = new Size(100, 36);
+            btnCancel.Size = new Size(123, 38);
             btnCancel.TabIndex = 2;
             btnCancel.Text = "Cancel";
             btnCancel.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -108,20 +110,19 @@ namespace WatchList.WinForms.ChildForms
             // 
             // btnClear
             // 
-            btnClear.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnClear.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnClear.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnClear.Depth = 0;
+            btnClear.Dock = DockStyle.Fill;
             btnClear.HighEmphasis = true;
             btnClear.Icon = null;
-            btnClear.Location = new Point(170, 270);
-            btnClear.Margin = new Padding(4, 6, 4, 6);
-            btnClear.MaximumSize = new Size(100, 36);
+            btnClear.Location = new Point(154, 6);
+            btnClear.Margin = new Padding(10, 6, 10, 6);
             btnClear.MinimumSize = new Size(100, 36);
             btnClear.MouseState = MaterialSkin.MouseState.HOVER;
             btnClear.Name = "btnClear";
             btnClear.NoAccentTextColor = Color.Empty;
-            btnClear.Size = new Size(100, 36);
+            btnClear.Size = new Size(124, 38);
             btnClear.TabIndex = 3;
             btnClear.Text = "Clear";
             btnClear.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -136,6 +137,7 @@ namespace WatchList.WinForms.ChildForms
             cmbTypeCinema.DataBindings.Add(new Binding("SelectedValue", typeUploadBindingSource, "SelectedValue", true));
             cmbTypeCinema.DataBindings.Add(new Binding("DataSource", typeUploadBindingSource, "Items", true));
             cmbTypeCinema.Depth = 0;
+            cmbTypeCinema.Dock = DockStyle.Fill;
             cmbTypeCinema.DrawMode = DrawMode.OwnerDrawVariable;
             cmbTypeCinema.DropDownHeight = 174;
             cmbTypeCinema.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -145,13 +147,12 @@ namespace WatchList.WinForms.ChildForms
             cmbTypeCinema.FormattingEnabled = true;
             cmbTypeCinema.IntegralHeight = false;
             cmbTypeCinema.ItemHeight = 43;
-            cmbTypeCinema.Location = new Point(10, 210);
+            cmbTypeCinema.Location = new Point(3, 3);
             cmbTypeCinema.MaxDropDownItems = 4;
-            cmbTypeCinema.MaximumSize = new Size(120, 0);
-            cmbTypeCinema.MinimumSize = new Size(120, 0);
+            cmbTypeCinema.MinimumSize = new Size(100, 0);
             cmbTypeCinema.MouseState = MaterialSkin.MouseState.OUT;
             cmbTypeCinema.Name = "cmbTypeCinema";
-            cmbTypeCinema.Size = new Size(120, 49);
+            cmbTypeCinema.Size = new Size(100, 49);
             cmbTypeCinema.StartIndex = 0;
             cmbTypeCinema.TabIndex = 4;
             // 
@@ -163,13 +164,16 @@ namespace WatchList.WinForms.ChildForms
             // 
             labelTypeCinemaLoad.AutoSize = true;
             labelTypeCinemaLoad.Depth = 0;
+            labelTypeCinemaLoad.Dock = DockStyle.Fill;
             labelTypeCinemaLoad.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelTypeCinemaLoad.Location = new Point(135, 223);
+            labelTypeCinemaLoad.Location = new Point(109, 3);
+            labelTypeCinemaLoad.Margin = new Padding(3);
             labelTypeCinemaLoad.MouseState = MaterialSkin.MouseState.HOVER;
             labelTypeCinemaLoad.Name = "labelTypeCinemaLoad";
-            labelTypeCinemaLoad.Size = new Size(36, 19);
+            labelTypeCinemaLoad.Size = new Size(39, 45);
             labelTypeCinemaLoad.TabIndex = 5;
             labelTypeCinemaLoad.Text = "Type";
+            labelTypeCinemaLoad.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // moreGradeBindingSource
             // 
@@ -182,6 +186,7 @@ namespace WatchList.WinForms.ChildForms
             cmbGrade.DataBindings.Add(new Binding("SelectedValue", moreGradeBindingSource, "Value", true));
             cmbGrade.DataBindings.Add(new Binding("DataSource", moreGradeBindingSource, "Items", true));
             cmbGrade.Depth = 0;
+            cmbGrade.Dock = DockStyle.Fill;
             cmbGrade.DrawMode = DrawMode.OwnerDrawVariable;
             cmbGrade.DropDownHeight = 174;
             cmbGrade.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -191,11 +196,12 @@ namespace WatchList.WinForms.ChildForms
             cmbGrade.FormattingEnabled = true;
             cmbGrade.IntegralHeight = false;
             cmbGrade.ItemHeight = 43;
-            cmbGrade.Location = new Point(175, 210);
+            cmbGrade.Location = new Point(154, 3);
             cmbGrade.MaxDropDownItems = 4;
+            cmbGrade.MinimumSize = new Size(170, 0);
             cmbGrade.MouseState = MaterialSkin.MouseState.OUT;
             cmbGrade.Name = "cmbGrade";
-            cmbGrade.Size = new Size(172, 49);
+            cmbGrade.Size = new Size(192, 49);
             cmbGrade.StartIndex = 0;
             cmbGrade.TabIndex = 6;
             // 
@@ -203,13 +209,16 @@ namespace WatchList.WinForms.ChildForms
             // 
             labelScoreMore.AutoSize = true;
             labelScoreMore.Depth = 0;
+            labelScoreMore.Dock = DockStyle.Fill;
             labelScoreMore.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelScoreMore.Location = new Point(353, 223);
+            labelScoreMore.Location = new Point(352, 3);
+            labelScoreMore.Margin = new Padding(3);
             labelScoreMore.MouseState = MaterialSkin.MouseState.HOVER;
             labelScoreMore.Name = "labelScoreMore";
-            labelScoreMore.Size = new Size(81, 19);
+            labelScoreMore.Size = new Size(80, 45);
             labelScoreMore.TabIndex = 7;
             labelScoreMore.Text = "Score more";
+            labelScoreMore.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // cbConsiderDuplicates
             // 
@@ -242,30 +251,65 @@ namespace WatchList.WinForms.ChildForms
             clbActionsWithDuplicates.StripeDarkColor = Color.Empty;
             clbActionsWithDuplicates.TabIndex = 10;
             // 
+            // tlFirstPanelLoadingData
+            // 
+            tlFirstPanelLoadingData.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tlFirstPanelLoadingData.ColumnCount = 4;
+            tlFirstPanelLoadingData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
+            tlFirstPanelLoadingData.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 45F));
+            tlFirstPanelLoadingData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
+            tlFirstPanelLoadingData.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 85F));
+            tlFirstPanelLoadingData.Controls.Add(labelScoreMore, 3, 0);
+            tlFirstPanelLoadingData.Controls.Add(cmbTypeCinema, 0, 0);
+            tlFirstPanelLoadingData.Controls.Add(labelTypeCinemaLoad, 1, 0);
+            tlFirstPanelLoadingData.Controls.Add(cmbGrade, 2, 0);
+            tlFirstPanelLoadingData.Location = new Point(9, 210);
+            tlFirstPanelLoadingData.MinimumSize = new Size(435, 51);
+            tlFirstPanelLoadingData.Name = "tlFirstPanelLoadingData";
+            tlFirstPanelLoadingData.RowCount = 1;
+            tlFirstPanelLoadingData.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlFirstPanelLoadingData.Size = new Size(435, 51);
+            tlFirstPanelLoadingData.TabIndex = 11;
+            // 
+            // tlButtonPanelLoadingData
+            // 
+            tlButtonPanelLoadingData.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tlButtonPanelLoadingData.ColumnCount = 3;
+            tlButtonPanelLoadingData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tlButtonPanelLoadingData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tlButtonPanelLoadingData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tlButtonPanelLoadingData.Controls.Add(btnOk, 0, 0);
+            tlButtonPanelLoadingData.Controls.Add(btnClear, 1, 0);
+            tlButtonPanelLoadingData.Controls.Add(btnCancel, 2, 0);
+            tlButtonPanelLoadingData.Location = new Point(9, 267);
+            tlButtonPanelLoadingData.Name = "tlButtonPanelLoadingData";
+            tlButtonPanelLoadingData.RowCount = 1;
+            tlButtonPanelLoadingData.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlButtonPanelLoadingData.Size = new Size(435, 50);
+            tlButtonPanelLoadingData.TabIndex = 12;
+            // 
             // MergeDatabaseForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
-            ClientSize = new Size(440, 310);
+            ClientSize = new Size(450, 320);
+            Controls.Add(tlButtonPanelLoadingData);
+            Controls.Add(tlFirstPanelLoadingData);
             Controls.Add(clbActionsWithDuplicates);
             Controls.Add(cbConsiderDuplicates);
-            Controls.Add(labelScoreMore);
-            Controls.Add(cmbGrade);
-            Controls.Add(labelTypeCinemaLoad);
-            Controls.Add(cmbTypeCinema);
-            Controls.Add(btnClear);
-            Controls.Add(btnCancel);
-            Controls.Add(btnOk);
             Controls.Add(cbExistGrade);
-            MaximumSize = new Size(440, 310);
-            MinimumSize = new Size(440, 310);
+            MinimumSize = new Size(450, 320);
             Name = "MergeDatabaseForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Loading data";
             Load += DatabaseForm_Load;
             ((System.ComponentModel.ISupportInitialize)typeUploadBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)moreGradeBindingSource).EndInit();
+            tlFirstPanelLoadingData.ResumeLayout(false);
+            tlFirstPanelLoadingData.PerformLayout();
+            tlButtonPanelLoadingData.ResumeLayout(false);
+            tlButtonPanelLoadingData.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -284,5 +328,7 @@ namespace WatchList.WinForms.ChildForms
         private MaterialSkin.Controls.MaterialLabel labelScoreMore;
         private MaterialSkin.Controls.MaterialCheckbox cbConsiderDuplicates;
         private MaterialSkin.Controls.MaterialCheckedListBox clbActionsWithDuplicates;
+        private TableLayoutPanel tlFirstPanelLoadingData;
+        private TableLayoutPanel tlButtonPanelLoadingData;
     }
 }
