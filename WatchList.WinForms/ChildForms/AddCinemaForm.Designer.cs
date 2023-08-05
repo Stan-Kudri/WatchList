@@ -81,11 +81,11 @@ namespace WatchList.WinForms.ChildForms
             // 
             numericSequel.DataBindings.Add(new Binding("Value", cinemaModelsBindingSource, "Sequel", true));
             numericSequel.Dock = DockStyle.Fill;
-            numericSequel.Location = new Point(188, 3);
+            numericSequel.Location = new Point(191, 3);
             numericSequel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericSequel.MinimumSize = new Size(60, 0);
             numericSequel.Name = "numericSequel";
-            numericSequel.Size = new Size(61, 23);
+            numericSequel.Size = new Size(60, 23);
             numericSequel.TabIndex = 11;
             numericSequel.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -110,13 +110,13 @@ namespace WatchList.WinForms.ChildForms
             numericGradeCinema.Dock = DockStyle.Fill;
             numericGradeCinema.Enabled = false;
             numericGradeCinema.InterceptArrowKeys = false;
-            numericGradeCinema.Location = new Point(305, 3);
+            numericGradeCinema.Location = new Point(307, 3);
             numericGradeCinema.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             numericGradeCinema.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericGradeCinema.MinimumSize = new Size(60, 0);
             numericGradeCinema.Name = "numericGradeCinema";
             numericGradeCinema.ReadOnly = true;
-            numericGradeCinema.Size = new Size(62, 23);
+            numericGradeCinema.Size = new Size(60, 23);
             numericGradeCinema.TabIndex = 17;
             numericGradeCinema.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -128,7 +128,7 @@ namespace WatchList.WinForms.ChildForms
             labelGrade.Dock = DockStyle.Fill;
             labelGrade.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelGrade.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelGrade.Location = new Point(255, 3);
+            labelGrade.Location = new Point(257, 3);
             labelGrade.Margin = new Padding(3);
             labelGrade.MouseState = MaterialSkin.MouseState.HOVER;
             labelGrade.Name = "labelGrade";
@@ -162,11 +162,11 @@ namespace WatchList.WinForms.ChildForms
             labelNumberSequel.Dock = DockStyle.Fill;
             labelNumberSequel.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             labelNumberSequel.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            labelNumberSequel.Location = new Point(133, 3);
+            labelNumberSequel.Location = new Point(131, 3);
             labelNumberSequel.Margin = new Padding(3);
             labelNumberSequel.MouseState = MaterialSkin.MouseState.HOVER;
             labelNumberSequel.Name = "labelNumberSequel";
-            labelNumberSequel.Size = new Size(49, 24);
+            labelNumberSequel.Size = new Size(54, 24);
             labelNumberSequel.TabIndex = 22;
             labelNumberSequel.Text = "Sequel";
             labelNumberSequel.TextAlign = ContentAlignment.MiddleCenter;
@@ -248,7 +248,7 @@ namespace WatchList.WinForms.ChildForms
             cmbTypeCinema.Location = new Point(43, 3);
             cmbTypeCinema.MinimumSize = new Size(82, 0);
             cmbTypeCinema.Name = "cmbTypeCinema";
-            cmbTypeCinema.Size = new Size(84, 23);
+            cmbTypeCinema.Size = new Size(82, 23);
             cmbTypeCinema.TabIndex = 27;
             cmbTypeCinema.SelectedIndexChanged += CmbTypeCinema_Changed;
             // 
@@ -333,7 +333,7 @@ namespace WatchList.WinForms.ChildForms
             tlFirstPanelAddCinema.ColumnCount = 6;
             tlFirstPanelAddCinema.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 40F));
             tlFirstPanelAddCinema.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            tlFirstPanelAddCinema.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 55F));
+            tlFirstPanelAddCinema.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
             tlFirstPanelAddCinema.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
             tlFirstPanelAddCinema.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50F));
             tlFirstPanelAddCinema.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
