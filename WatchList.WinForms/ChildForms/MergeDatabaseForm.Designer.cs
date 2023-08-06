@@ -75,11 +75,11 @@ namespace WatchList.WinForms.ChildForms
             btnOk.Icon = null;
             btnOk.Location = new Point(4, 6);
             btnOk.Margin = new Padding(4, 6, 20, 6);
-            btnOk.MinimumSize = new Size(100, 36);
+            btnOk.MinimumSize = new Size(100, 20);
             btnOk.MouseState = MaterialSkin.MouseState.HOVER;
             btnOk.Name = "btnOk";
             btnOk.NoAccentTextColor = Color.Empty;
-            btnOk.Size = new Size(120, 38);
+            btnOk.Size = new Size(120, 20);
             btnOk.TabIndex = 1;
             btnOk.Text = "OK";
             btnOk.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -97,11 +97,11 @@ namespace WatchList.WinForms.ChildForms
             btnCancel.Icon = null;
             btnCancel.Location = new Point(308, 6);
             btnCancel.Margin = new Padding(20, 6, 4, 6);
-            btnCancel.MinimumSize = new Size(100, 36);
+            btnCancel.MinimumSize = new Size(100, 20);
             btnCancel.MouseState = MaterialSkin.MouseState.HOVER;
             btnCancel.Name = "btnCancel";
             btnCancel.NoAccentTextColor = Color.Empty;
-            btnCancel.Size = new Size(123, 38);
+            btnCancel.Size = new Size(123, 20);
             btnCancel.TabIndex = 2;
             btnCancel.Text = "Cancel";
             btnCancel.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -118,11 +118,11 @@ namespace WatchList.WinForms.ChildForms
             btnClear.Icon = null;
             btnClear.Location = new Point(154, 6);
             btnClear.Margin = new Padding(10, 6, 10, 6);
-            btnClear.MinimumSize = new Size(100, 36);
+            btnClear.MinimumSize = new Size(100, 20);
             btnClear.MouseState = MaterialSkin.MouseState.HOVER;
             btnClear.Name = "btnClear";
             btnClear.NoAccentTextColor = Color.Empty;
-            btnClear.Size = new Size(124, 38);
+            btnClear.Size = new Size(124, 20);
             btnClear.TabIndex = 3;
             btnClear.Text = "Clear";
             btnClear.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -281,11 +281,11 @@ namespace WatchList.WinForms.ChildForms
             tlButtonPanelLoadingData.Controls.Add(btnOk, 0, 0);
             tlButtonPanelLoadingData.Controls.Add(btnClear, 1, 0);
             tlButtonPanelLoadingData.Controls.Add(btnCancel, 2, 0);
-            tlButtonPanelLoadingData.Location = new Point(9, 245);
+            tlButtonPanelLoadingData.Location = new Point(9, 240);
             tlButtonPanelLoadingData.Name = "tlButtonPanelLoadingData";
             tlButtonPanelLoadingData.RowCount = 1;
             tlButtonPanelLoadingData.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlButtonPanelLoadingData.Size = new Size(435, 50);
+            tlButtonPanelLoadingData.Size = new Size(435, 30);
             tlButtonPanelLoadingData.TabIndex = 12;
             // 
             // MergeDatabaseForm
@@ -293,13 +293,13 @@ namespace WatchList.WinForms.ChildForms
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
-            ClientSize = new Size(450, 300);
+            ClientSize = new Size(450, 270);
             Controls.Add(tlButtonPanelLoadingData);
             Controls.Add(tlFirstPanelLoadingData);
             Controls.Add(clbActionsWithDuplicates);
             Controls.Add(cbConsiderDuplicates);
             Controls.Add(cbExistGrade);
-            MinimumSize = new Size(450, 300);
+            MinimumSize = new Size(450, 270);
             Name = "MergeDatabaseForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Loading data";
