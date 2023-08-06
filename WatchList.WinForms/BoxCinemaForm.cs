@@ -152,14 +152,14 @@ namespace WatchList.WinForms
 
         private void BtnDownloadDataFile_Click(object sender, EventArgs e)
         {
-            var openReplaceDataFromFile = new OpenFileDialog { Filter = "Data Base (*.db)|*.db" };
-            if (openReplaceDataFromFile.ShowDialog() == DialogResult.Cancel)
+            var dataLoadingForm = new MergeDatabaseForm();
+            if (dataLoadingForm.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
 
-            var dataLoadingForm = new MergeDatabaseForm();
-            if (dataLoadingForm.ShowDialog() != DialogResult.OK)
+            var openReplaceDataFromFile = new OpenFileDialog { Filter = "Data Base (*.db)|*.db" };
+            if (openReplaceDataFromFile.ShowDialog() == DialogResult.Cancel)
             {
                 return;
             }
