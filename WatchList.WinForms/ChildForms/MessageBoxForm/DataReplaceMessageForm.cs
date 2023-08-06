@@ -10,7 +10,7 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
         public DataReplaceMessageForm(string titleItem)
         {
             InitializeComponent();
-            labelTitleItem.Text = $"{titleItem}";
+            labelTitleItem.Text = $"Title: {titleItem}";
         }
 
         public QuestionResultEnum ResultQuestion { get; private set; }

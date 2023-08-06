@@ -34,13 +34,12 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             btnAllNo = new Button();
             labelQuestion = new Label();
             labelTitleItem = new Label();
-            labelTitleInfo = new Label();
             tlButtonPanel = new TableLayoutPanel();
-            tlTitlePanel = new TableLayoutPanel();
             tableLayoutPanel1 = new TableLayoutPanel();
+            tlTitlePanel = new TableLayoutPanel();
             tlButtonPanel.SuspendLayout();
-            tlTitlePanel.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            tlTitlePanel.SuspendLayout();
             SuspendLayout();
             // 
             // btnYes
@@ -103,28 +102,15 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             // labelTitleItem
             // 
             labelTitleItem.AutoSize = true;
-            labelTitleItem.Dock = DockStyle.Left;
+            labelTitleItem.Dock = DockStyle.Fill;
             labelTitleItem.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTitleItem.Location = new Point(53, 3);
+            labelTitleItem.Location = new Point(21, 3);
             labelTitleItem.Margin = new Padding(3);
             labelTitleItem.Name = "labelTitleItem";
-            labelTitleItem.Size = new Size(37, 19);
+            labelTitleItem.Size = new Size(318, 18);
             labelTitleItem.TabIndex = 5;
             labelTitleItem.Text = "Item";
             labelTitleItem.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // labelTitleInfo
-            // 
-            labelTitleInfo.AutoSize = true;
-            labelTitleInfo.Dock = DockStyle.Fill;
-            labelTitleInfo.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTitleInfo.Location = new Point(3, 3);
-            labelTitleInfo.Margin = new Padding(3);
-            labelTitleInfo.Name = "labelTitleInfo";
-            labelTitleInfo.Size = new Size(44, 19);
-            labelTitleInfo.TabIndex = 6;
-            labelTitleInfo.Text = "Title:";
-            labelTitleInfo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tlButtonPanel
             // 
@@ -145,21 +131,6 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             tlButtonPanel.Size = new Size(360, 30);
             tlButtonPanel.TabIndex = 7;
             // 
-            // tlTitlePanel
-            // 
-            tlTitlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            tlTitlePanel.ColumnCount = 2;
-            tlTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50F));
-            tlTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tlTitlePanel.Controls.Add(labelTitleInfo, 0, 0);
-            tlTitlePanel.Controls.Add(labelTitleItem, 1, 0);
-            tlTitlePanel.Location = new Point(40, 42);
-            tlTitlePanel.Name = "tlTitlePanel";
-            tlTitlePanel.RowCount = 1;
-            tlTitlePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlTitlePanel.Size = new Size(300, 25);
-            tlTitlePanel.TabIndex = 8;
-            // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -176,13 +147,28 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             tableLayoutPanel1.Size = new Size(360, 25);
             tableLayoutPanel1.TabIndex = 9;
             // 
+            // tlTitlePanel
+            // 
+            tlTitlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tlTitlePanel.ColumnCount = 3;
+            tlTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tlTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
+            tlTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tlTitlePanel.Controls.Add(labelTitleItem, 1, 0);
+            tlTitlePanel.Location = new Point(10, 40);
+            tlTitlePanel.Name = "tlTitlePanel";
+            tlTitlePanel.RowCount = 1;
+            tlTitlePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlTitlePanel.Size = new Size(360, 24);
+            tlTitlePanel.TabIndex = 10;
+            // 
             // DataReplaceMessageForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(384, 111);
-            Controls.Add(tableLayoutPanel1);
             Controls.Add(tlTitlePanel);
+            Controls.Add(tableLayoutPanel1);
             Controls.Add(tlButtonPanel);
             MinimumSize = new Size(400, 150);
             Name = "DataReplaceMessageForm";
@@ -190,10 +176,10 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             Text = "Question";
             FormClosing += Btn_FormClosing;
             tlButtonPanel.ResumeLayout(false);
-            tlTitlePanel.ResumeLayout(false);
-            tlTitlePanel.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            tlTitlePanel.ResumeLayout(false);
+            tlTitlePanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -207,7 +193,7 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
         private Label labelTitleItem;
         private Label labelTitleInfo;
         private TableLayoutPanel tlButtonPanel;
-        private TableLayoutPanel tlTitlePanel;
         private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tlTitlePanel;
     }
 }
