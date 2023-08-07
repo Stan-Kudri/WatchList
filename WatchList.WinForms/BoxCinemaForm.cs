@@ -88,7 +88,7 @@ namespace WatchList.WinForms
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
         {
-            var addForm = new AddCinemaForm();
+            var addForm = new AddCinemaForm(_messageBox);
 
             if (addForm.ShowDialog() != DialogResult.OK)
             {
@@ -107,7 +107,7 @@ namespace WatchList.WinForms
             if (indexEditRow.Count == 1)
             {
                 var oldItem = GetItem(indexEditRow.First());
-                var updateForm = new EditorItemCinemaForm(oldItem);
+                var updateForm = new EditorItemCinemaForm(oldItem, _messageBox);
 
                 if (updateForm.ShowDialog() != DialogResult.OK)
                 {
@@ -152,7 +152,7 @@ namespace WatchList.WinForms
 
         private void BtnDownloadDataFile_Click(object sender, EventArgs e)
         {
-            var dataLoadingForm = new MergeDatabaseForm();
+            var dataLoadingForm = new MergeDatabaseForm(_messageBox);
             if (dataLoadingForm.ShowDialog() != DialogResult.OK)
             {
                 return;

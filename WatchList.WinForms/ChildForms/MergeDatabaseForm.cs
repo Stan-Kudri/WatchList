@@ -4,7 +4,6 @@ using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelDataLoad;
-using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms.ChildForms
 {
@@ -15,9 +14,9 @@ namespace WatchList.WinForms.ChildForms
     {
         private readonly IMessageBox _messageBox;
 
-        public MergeDatabaseForm()
+        public MergeDatabaseForm(IMessageBox messageBox)
         {
-            _messageBox = new MessageBoxShow();
+            _messageBox = messageBox;
             InitializeComponent();
         }
 

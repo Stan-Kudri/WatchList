@@ -4,7 +4,6 @@ using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelAddAndEditForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
-using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms.ChildForms
 {
@@ -17,9 +16,9 @@ namespace WatchList.WinForms.ChildForms
 
         private StatusCinema _status = StatusCinema.Planned;
 
-        public AddCinemaForm()
+        public AddCinemaForm(IMessageBox messageBox)
         {
-            _messageBox = new MessageBoxShow();
+            _messageBox = messageBox;
             InitializeComponent();
         }
 
