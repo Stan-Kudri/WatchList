@@ -21,6 +21,7 @@ namespace WatchList.Core.Repository
 
         public void Add(WatchItem item)
         {
+            item.Id = _db.ReplaceIdIsNotFree(item);
             _db.Add(item);
             _db.SaveChanges();
         }

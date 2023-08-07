@@ -129,11 +129,12 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+            var watchItemRepository = new WatchItemRepository(dbContext);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(dbContext, messageBox.Object);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object);
             var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
             var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
@@ -161,11 +162,12 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+            var watchItemRepository = new WatchItemRepository(dbContext);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(dbContext, messageBox.Object);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object);
             var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
             var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });

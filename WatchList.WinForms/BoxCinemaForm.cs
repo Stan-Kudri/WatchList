@@ -174,7 +174,9 @@ namespace WatchList.WinForms
             var rules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
 
             var repositoryDataDownload = new WatchItemRepository(dbContext);
-            var downloadDataService = new DownloadDataService(_dbContext, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
+            var repositoryGridItem = new WatchItemRepository(_dbContext);
+
+            var downloadDataService = new DownloadDataService(repositoryGridItem, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
             downloadDataService.Download(repositoryDataDownload, rules);
             UpdateGridData();
         }
