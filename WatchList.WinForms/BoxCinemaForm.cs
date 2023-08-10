@@ -4,7 +4,6 @@ using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
-using WatchList.Core.Repository.Db;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
@@ -36,18 +35,18 @@ namespace WatchList.WinForms
 
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
-        private readonly WatchCinemaDbContext _dbContext;
+        private readonly WatchItemRepository _itemRepository;
 
         private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
 
         private PagedList<WatchItem> _pagedList;
 
-        public BoxCinemaForm(WatchCinemaDbContext db)
+        public BoxCinemaForm(WatchItemRepository itemRepository)
         {
             InitializeComponent();
-            _dbContext = db;
+            _itemRepository = itemRepository;
             _messageBox = new MessageBoxShow();
-            _itemService = new WatchItemService(db, _messageBox);
+            _itemService = new WatchItemService(_itemRepository, _messageBox);
             _pagedList = _itemService.GetPage(_searchRequest);
 
             Load += BoxCinemaForm_Load;
@@ -170,11 +169,11 @@ namespace WatchList.WinForms
             var loadRuleHasGrade = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
             var loadRuleType = new FilterByTypeCinemaLoadRule(algorithmLoadData.TypeCinemaLoad);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(algorithmLoadData.MoreGrade);
-            var loadDuplicateItem = new DuplicateLoadRule(_dbContext, algorithmLoadData.ActionsWithDuplicates);
+            var loadDuplicateItem = new DuplicateLoadRule(_itemRepository, algorithmLoadData.ActionsWithDuplicates);
             var rules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
 
             var repositoryDataDownload = new WatchItemRepository(dbContext);
-            var repositoryGridItem = new WatchItemRepository(_dbContext);
+            var repositoryGridItem = _itemRepository;
 
             var downloadDataService = new DownloadDataService(repositoryGridItem, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
             downloadDataService.Download(repositoryDataDownload, rules);

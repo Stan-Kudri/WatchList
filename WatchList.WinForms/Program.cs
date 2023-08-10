@@ -1,4 +1,5 @@
 using MaterialSkin;
+using WatchList.Core.Repository;
 using WatchList.Migrations.SQLite;
 using WatchList.WinForms.BuilderDbContext;
 
@@ -19,7 +20,8 @@ namespace WatchList.WinForms
             using var db = new FileDbContextFactory("app.db").Create();
             var migrator = new DbMigrator(db);
             migrator.Migrate();
-            var form = new BoxCinemaForm(db);
+            var itemRepository = new WatchItemRepository(db);
+            var form = new BoxCinemaForm(itemRepository);
             var materialSkinManager = MaterialSkinManager.Instance;
 
             materialSkinManager.AddFormToManage(form);

@@ -1,6 +1,5 @@
 using WatchList.Core.Model.Load;
-using WatchList.Core.Repository.Db;
-using WatchList.Core.Service.Extension;
+using WatchList.Core.Repository;
 
 namespace WatchList.Core.Service.DataLoading.Rules
 {
@@ -12,11 +11,11 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         private readonly bool _caseSensitive;
 
-        private readonly WatchCinemaDbContext _dbContext;
+        private readonly WatchItemRepository _itemRepository;
 
-        public DuplicateLoadRule(WatchCinemaDbContext db, ActionDuplicateItems actionsWithDuplicates)
+        public DuplicateLoadRule(WatchItemRepository itemRepository, ActionDuplicateItems actionsWithDuplicates)
         {
-            _dbContext = db;
+            _itemRepository = itemRepository;
             _actionSelected = actionsWithDuplicates.ActionSelected;
             if (_actionSelected)
             {
@@ -38,7 +37,7 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
             foreach (var item in items.Items)
             {
-                var selectItem = _caseSensitive && _actionSelected ? _dbContext.WatchItem.SelectDuplicateItems(item) : _dbContext.WatchItem.DuplicateItemsCaseSensitive(item);
+                var selectItem = _caseSensitive && _actionSelected ? _itemRepository.SelectDuplicateItems(item) : _itemRepository.DuplicateItemsCaseSensitive(item);
                 if (selectItem.Count == 0)
                 {
                     idAddItems.Add(item.Id);

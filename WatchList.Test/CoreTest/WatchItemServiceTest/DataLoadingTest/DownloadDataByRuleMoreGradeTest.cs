@@ -129,6 +129,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
+            var itemRepository = new WatchItemRepository(dbContext);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
             var watchItemRepository = new WatchItemRepository(dbContext);
 
@@ -137,7 +138,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
+            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, new ActionDuplicateItems());
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
@@ -162,6 +163,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
+            var itemRepository = new WatchItemRepository(dbContext);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
             var watchItemRepository = new WatchItemRepository(dbContext);
 
@@ -170,7 +172,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
             var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
+            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, new ActionDuplicateItems());
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
