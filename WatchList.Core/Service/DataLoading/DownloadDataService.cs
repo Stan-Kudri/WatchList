@@ -14,13 +14,14 @@ namespace WatchList.Core.Service.DataLoading
 
         private readonly IMessageBox _messageBox;
 
-        public DownloadDataService(WatchItemRepository repository, IMessageBox messageBox)
+        public DownloadDataService(WatchItemRepository repository, IMessageBox messageBox, int numberOfItemPerPage = 500)
         {
             _repository = repository;
             _messageBox = messageBox;
+            NumberOfItemPerPage = numberOfItemPerPage;
         }
 
-        public int NumberOfItemPerPage { get; set; } = 500;
+        public int NumberOfItemPerPage { get; set; }
 
         public void Download(WatchItemRepository repository, ILoadRule loadRule)
         {

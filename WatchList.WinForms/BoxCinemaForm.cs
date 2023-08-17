@@ -1,4 +1,5 @@
 using MaterialSkin.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -13,7 +14,6 @@ using WatchList.WinForms.BuilderDbContext;
 using WatchList.WinForms.ChildForms;
 using WatchList.WinForms.ChildForms.Extension;
 using WatchList.WinForms.Extension;
-using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms
 {
@@ -23,7 +23,6 @@ namespace WatchList.WinForms
     public partial class BoxCinemaForm : MaterialForm
     {
         private const string HighlightTheDesiredLine = "No items selected.";
-        private const int NumberOfItemPerPage = 500;
 
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
@@ -33,6 +32,7 @@ namespace WatchList.WinForms
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
+        private readonly IServiceProvider _serviceProvider;
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
         private readonly WatchItemRepository _itemRepository;
@@ -41,12 +41,13 @@ namespace WatchList.WinForms
 
         private PagedList<WatchItem> _pagedList;
 
-        public BoxCinemaForm(WatchItemRepository itemRepository)
+        public BoxCinemaForm(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            _itemRepository = itemRepository;
-            _messageBox = new MessageBoxShow();
-            _itemService = new WatchItemService(_itemRepository, _messageBox);
+            _serviceProvider = serviceProvider;
+            _itemRepository = serviceProvider.GetRequiredService<WatchItemRepository>();
+            _messageBox = serviceProvider.GetRequiredService<IMessageBox>();
+            _itemService = serviceProvider.GetRequiredService<WatchItemService>();
             _pagedList = _itemService.GetPage(_searchRequest);
 
             Load += BoxCinemaForm_Load;
@@ -151,7 +152,7 @@ namespace WatchList.WinForms
 
         private void BtnDownloadDataFile_Click(object sender, EventArgs e)
         {
-            var dataLoadingForm = new MergeDatabaseForm(_messageBox);
+            var dataLoadingForm = _serviceProvider.GetRequiredService<MergeDatabaseForm>();
             if (dataLoadingForm.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -173,9 +174,8 @@ namespace WatchList.WinForms
             var rules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
 
             var repositoryDataDownload = new WatchItemRepository(dbContext);
-            var repositoryGridItem = _itemRepository;
 
-            var downloadDataService = new DownloadDataService(repositoryGridItem, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
+            var downloadDataService = _serviceProvider.GetRequiredService<DownloadDataService>();
             downloadDataService.Download(repositoryDataDownload, rules);
             UpdateGridData();
         }
