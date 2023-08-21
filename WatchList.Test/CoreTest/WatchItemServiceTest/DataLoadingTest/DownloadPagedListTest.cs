@@ -6,7 +6,6 @@ using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
-using WatchList.Core.Service.DataLoading.Rules;
 using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
@@ -60,11 +59,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object) { NumberOfItemPerPage = PageSize };
             var loadRuleConfig = new TestLoadRuleConfig();
-            var loadRuleGrade = new DeleteGradeRule(loadRuleConfig);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRuleConfig);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, loadRuleConfig);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade, loadRuleDuplicateItem });
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -95,11 +90,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object) { NumberOfItemPerPage = PageSize };
             var loadRuleConfig = new TestLoadRuleConfig();
-            var loadRuleGrade = new DeleteGradeRule(loadRuleConfig);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRuleConfig);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, loadRuleConfig);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade, loadRuleDuplicateItem });
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);

@@ -8,7 +8,6 @@ using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
-using WatchList.Core.Service.DataLoading.Rules;
 using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
@@ -121,7 +120,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(dialogReplaceItem);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
-            var loadRulesConfig = new TestLoadRuleConfig()
+            var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
                 ActionsWithDuplicates = new ActionDuplicateItems(true, new List<DuplicateLoadingRules>
@@ -130,9 +129,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                             new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, true),
                         }),
             };
-            var loadDuplicateItemRule = new DuplicateLoadRule(itemRepository, loadRulesConfig);
-            var loadRuleGrade = new FilterByMoreGradeLoadRule(loadRulesConfig);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -163,7 +160,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(dialogReplaceItem);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
-            var loadRulesConfig = new TestLoadRuleConfig()
+            var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
                 ActionsWithDuplicates = new ActionDuplicateItems(true, new List<DuplicateLoadingRules>
@@ -172,9 +169,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                             new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, true),
                         }),
             };
-            var loadDuplicateItemRule = new DuplicateLoadRule(itemRepository, loadRulesConfig);
-            var loadRuleGrade = new FilterByMoreGradeLoadRule(loadRulesConfig);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -207,7 +202,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             }
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
-            var loadRulesConfig = new TestLoadRuleConfig()
+            var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
                 ActionsWithDuplicates = new ActionDuplicateItems(true, new List<DuplicateLoadingRules>
@@ -216,9 +211,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                             new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, true),
                         }),
             };
-            var loadDuplicateItemRule = new DuplicateLoadRule(itemRepository, loadRulesConfig);
-            var loadRuleGrade = new FilterByMoreGradeLoadRule(loadRulesConfig);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -251,7 +244,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             }
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
-            var loadRulesConfig = new TestLoadRuleConfig()
+            var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
                 ActionsWithDuplicates = new ActionDuplicateItems(true, new List<DuplicateLoadingRules>
@@ -260,9 +253,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                             new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, true),
                         }),
             };
-            var loadDuplicateItemRule = new DuplicateLoadRule(itemRepository, loadRulesConfig);
-            var loadRuleGrade = new FilterByMoreGradeLoadRule(loadRulesConfig);
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadDuplicateItemRule });
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
