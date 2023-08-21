@@ -5,6 +5,7 @@ using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
+using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest
 {

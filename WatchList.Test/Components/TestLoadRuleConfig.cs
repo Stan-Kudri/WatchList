@@ -1,7 +1,7 @@
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
 
-namespace WatchList.Test
+namespace WatchList.Test.Components
 {
     public class TestLoadRuleConfig : ILoadRulesConfig
     {

@@ -5,6 +5,7 @@ using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
+using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest.FilterItemTest
 {

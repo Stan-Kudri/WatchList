@@ -2,7 +2,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Repository.Db;
 
-namespace WatchList.Test
+namespace WatchList.Test.Components
 {
     public class TestAppDbContextFactory
     {

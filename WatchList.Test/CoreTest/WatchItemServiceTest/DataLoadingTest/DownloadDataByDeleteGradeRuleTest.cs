@@ -9,6 +9,7 @@ using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
 using WatchList.Core.Service.DataLoading.Rules;
+using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 {
