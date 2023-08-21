@@ -2,7 +2,6 @@ using FluentAssertions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Model.Load;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
@@ -59,10 +58,11 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object) { NumberOfItemPerPage = PageSize };
-            var loadRuleGrade = new DeleteGradeRule(false);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.AnyGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, new ActionDuplicateItems());
+            var loadRuleConfig = new TestLoadRuleConfig();
+            var loadRuleGrade = new DeleteGradeRule(loadRuleConfig);
+            var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRuleConfig);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, loadRuleConfig);
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
@@ -93,10 +93,11 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object) { NumberOfItemPerPage = PageSize };
-            var loadRuleGrade = new DeleteGradeRule(false);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(TypeCinema.AllType);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(Grade.AnyGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, new ActionDuplicateItems());
+            var loadRuleConfig = new TestLoadRuleConfig();
+            var loadRuleGrade = new DeleteGradeRule(loadRuleConfig);
+            var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRuleConfig);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, loadRuleConfig);
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleGrade, loadRuleType, loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 

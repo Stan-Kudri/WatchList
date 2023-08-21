@@ -26,20 +26,20 @@ namespace WatchList.WinForms.ChildForms
         private Grade SelectGrade =>
             cmbGrade.SelectedValue != null ? (Grade)cmbGrade.SelectedValue : throw new Exception("Wrong combo box format");
 
-        public ModelProcessUploadData GetLoadData()
+        public ILoadRulesConfig GetLoadRuleConfig()
         {
             var isDeleteGrade = cbExistGrade.Checked;
             var considerDuplicates = cbConsiderDuplicates.Checked;
 
             if (!considerDuplicates)
             {
-                return new ModelProcessUploadData(isDeleteGrade, new ActionDuplicateItems(), SelectTypeCinema, SelectGrade);
+                return new LoadRulesConfigModel(isDeleteGrade, new ActionDuplicateItems(), SelectTypeCinema, SelectGrade);
             }
 
             var listDuplicateLoadRule = clbActionsWithDuplicates.Items.Select(e => new DuplicateLoadingRules(
                 e.Tag as DuplicateLoadingRules ?? throw new NullReferenceException("Null reference argument for parameter"),
                 checkAction: e.Checked)).ToList();
-            return new ModelProcessUploadData(isDeleteGrade, new ActionDuplicateItems(considerDuplicates, listDuplicateLoadRule), SelectTypeCinema, SelectGrade);
+            return new LoadRulesConfigModel(isDeleteGrade, new ActionDuplicateItems(considerDuplicates, listDuplicateLoadRule), SelectTypeCinema, SelectGrade);
         }
 
         private void BtnClear_Click(object sender, EventArgs e) => SetupDefaultValues();

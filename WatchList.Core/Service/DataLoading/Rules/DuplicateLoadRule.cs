@@ -13,8 +13,10 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
         private readonly WatchItemRepository _itemRepository;
 
-        public DuplicateLoadRule(WatchItemRepository itemRepository, ActionDuplicateItems actionsWithDuplicates)
+        public DuplicateLoadRule(WatchItemRepository itemRepository, ILoadRulesConfig config)
         {
+            var actionsWithDuplicates = config.ActionsWithDuplicates;
+
             _itemRepository = itemRepository;
             _actionSelected = actionsWithDuplicates.ActionSelected;
             if (_actionSelected)

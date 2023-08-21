@@ -137,8 +137,9 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, new ActionDuplicateItems());
+            var loadRulesConfig = new TestLoadRuleConfig() { MoreGrade = moreGrade };
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRulesConfig);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, loadRulesConfig);
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
@@ -171,8 +172,9 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, new ActionDuplicateItems());
+            var loadRulesConfig = new TestLoadRuleConfig() { MoreGrade = moreGrade };
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRulesConfig);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, loadRulesConfig);
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 

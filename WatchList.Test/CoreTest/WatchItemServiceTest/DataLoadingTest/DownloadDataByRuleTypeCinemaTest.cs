@@ -2,7 +2,6 @@ using FluentAssertions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Model.Load;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
@@ -136,8 +135,9 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
-            var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, new ActionDuplicateItems());
+            var loadRulesConfig = new TestLoadRuleConfig() { TypeCinemaLoad = typeCinema };
+            var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(loadRulesConfig);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, loadRulesConfig);
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
@@ -170,8 +170,9 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object);
-            var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, new ActionDuplicateItems());
+            var loadRulesConfig = new TestLoadRuleConfig() { TypeCinemaLoad = typeCinema };
+            var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(loadRulesConfig);
+            var loadRuleDuplicateItem = new DuplicateLoadRule(itemRepository, loadRulesConfig);
             var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 

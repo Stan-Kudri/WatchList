@@ -165,18 +165,17 @@ namespace WatchList.WinForms
             }
 
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
-            var algorithmLoadData = dataLoadingForm.GetLoadData();
-
-            var loadRuleHasGrade = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(algorithmLoadData.TypeCinemaLoad);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(algorithmLoadData.MoreGrade);
-            var loadDuplicateItem = new DuplicateLoadRule(_itemRepository, algorithmLoadData.ActionsWithDuplicates);
-            var rules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
+            var loadRuleConfig = dataLoadingForm.GetLoadRuleConfig();
+            var loadRuleHasGrade = new DeleteGradeRule(loadRuleConfig);
+            var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRuleConfig);
+            var loadDuplicateItem = new DuplicateLoadRule(_itemRepository, loadRuleConfig);
+            var aggregateRules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
 
             var repositoryDataDownload = new WatchItemRepository(dbContext);
 
             var downloadDataService = _serviceProvider.GetRequiredService<DownloadDataService>();
-            downloadDataService.Download(repositoryDataDownload, rules);
+            downloadDataService.Download(repositoryDataDownload, aggregateRules);
             UpdateGridData();
         }
 
