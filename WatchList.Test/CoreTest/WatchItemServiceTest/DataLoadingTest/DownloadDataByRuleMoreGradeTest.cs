@@ -7,7 +7,7 @@ using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
-using WatchList.Core.Service.DataLoading.Rules;
+using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 {
@@ -129,15 +129,16 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
+            var itemRepository = new WatchItemRepository(dbContext);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+            var watchItemRepository = new WatchItemRepository(dbContext);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(dbContext, messageBox.Object);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object);
+            var loadRuleConfig = new TestLoadRuleConfig() { MoreGrade = moreGrade };
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -161,15 +162,16 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
+            var itemRepository = new WatchItemRepository(dbContext);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+            var watchItemRepository = new WatchItemRepository(dbContext);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(dbContext, messageBox.Object);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(moreGrade);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleMoreGrade, loadRuleDuplicateItem });
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object);
+            var loadRuleConfig = new TestLoadRuleConfig() { MoreGrade = moreGrade };
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);

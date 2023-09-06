@@ -16,6 +16,7 @@ namespace WatchList.WinForms.BuilderDbContext
             {
                 x.MigrationsAssembly(typeof(DbContextFactory).Assembly.FullName);
             });
+
             return new WatchCinemaDbContext(builder.Options);
         }
     }

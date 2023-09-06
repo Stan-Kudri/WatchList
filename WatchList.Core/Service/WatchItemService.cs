@@ -1,9 +1,7 @@
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
-using WatchList.Core.Repository.Db;
 using WatchList.Core.Service.Component;
-using WatchList.Core.Service.Extension;
 
 namespace WatchList.Core.Service
 {
@@ -11,16 +9,13 @@ namespace WatchList.Core.Service
     {
         public const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
 
-        private readonly WatchCinemaDbContext _db;
-
         private readonly WatchItemRepository _repository;
 
         private readonly IMessageBox _messageBox;
 
-        public WatchItemService(WatchCinemaDbContext dbContext, IMessageBox messageBox)
+        public WatchItemService(WatchItemRepository itemRepository, IMessageBox messageBox)
         {
-            _db = dbContext;
-            _repository = new WatchItemRepository(_db);
+            _repository = itemRepository;
             _messageBox = messageBox;
         }
 
@@ -30,7 +25,7 @@ namespace WatchList.Core.Service
 
         public void Add(WatchItem item)
         {
-            var selectItem = _db.WatchItem.SelectDuplicateItems(item);
+            var selectItem = _repository.SelectDuplicateItems(item);
             var countDuplicate = selectItem.Count;
 
             if (countDuplicate == 0)
@@ -48,10 +43,10 @@ namespace WatchList.Core.Service
 
         public void Update(WatchItem oldItem, WatchItem modifiedItem)
         {
-            var selectItem = _db.WatchItem.SelectDuplicateItems(modifiedItem);
+            var selectItem = _repository.SelectDuplicateItems(modifiedItem);
             var countDuplicate = selectItem.Count;
 
-            if (countDuplicate == 1)
+            if (countDuplicate == 1 && oldItem.Title != modifiedItem.Title)
             {
                 if (_messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
                 {

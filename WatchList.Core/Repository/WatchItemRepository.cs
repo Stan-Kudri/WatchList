@@ -21,6 +21,7 @@ namespace WatchList.Core.Repository
 
         public void Add(WatchItem item)
         {
+            item.Id = _db.ReplaceIdIsNotFree(item);
             _db.Add(item);
             _db.SaveChanges();
         }
@@ -52,5 +53,15 @@ namespace WatchList.Core.Repository
 
             _db.SaveChanges();
         }
+
+        public List<Guid> SelectDuplicateItems(WatchItem item) =>
+            _db.WatchItem.Where(x =>
+                        (x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type)).
+                        Take(2).Select(x => x.Id).ToList();
+
+        public List<Guid> DuplicateItemsCaseSensitive(WatchItem item) =>
+            _db.WatchItem.ToList().
+                    Where(x => x.TitleNormalized == item.TitleNormalized && x.Sequel == item.Sequel && x.Type == item.Type).
+                    Take(2).Select(x => x.Id).ToList();
     }
 }

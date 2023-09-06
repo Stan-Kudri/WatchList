@@ -4,7 +4,6 @@ using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelAddAndEditForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
-using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms.ChildForms
 {
@@ -16,10 +15,10 @@ namespace WatchList.WinForms.ChildForms
         private readonly CinemaModel _cinema;
         private readonly IMessageBox _messageBox;
 
-        public EditorItemCinemaForm(CinemaModel cinema)
+        public EditorItemCinemaForm(CinemaModel cinema, IMessageBox messageBox)
         {
             _cinema = cinema ?? throw new ArgumentNullException("Item cinema not null", nameof(cinema));
-            _messageBox = new MessageBoxShow();
+            _messageBox = messageBox;
             InitializeComponent();
         }
 

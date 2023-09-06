@@ -3,14 +3,14 @@ using WatchList.Core.Model.Load;
 
 namespace WatchList.WinForms.BindingItem.ModelDataLoad
 {
-    public class ModelProcessUploadData : ModelBase
+    public class LoadRulesConfigModel : ModelBase, ILoadRulesConfig
     {
-        public ModelProcessUploadData()
+        public LoadRulesConfigModel()
             : this(false, new ActionDuplicateItems(), TypeCinema.AllType, Grade.AnyGrade)
         {
         }
 
-        public ModelProcessUploadData(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema typeCinema, Grade moreGrade)
+        public LoadRulesConfigModel(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema typeCinema, Grade moreGrade)
         {
             DeleteGrade = deleteGrade;
             ActionsWithDuplicates = actionsWithDuplicates;

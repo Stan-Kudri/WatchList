@@ -2,8 +2,10 @@ using FluentAssertions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
+using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest
 {
@@ -65,9 +67,10 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
+            var itemRepository = new WatchItemRepository(dbContext);
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
-            var service = new WatchItemService(dbContext, messageBox.Object);
+            var service = new WatchItemService(itemRepository, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
 
@@ -85,9 +88,10 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
+            var itemRepository = new WatchItemRepository(dbContext);
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
-            var service = new WatchItemService(dbContext, messageBox.Object);
+            var service = new WatchItemService(itemRepository, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
 

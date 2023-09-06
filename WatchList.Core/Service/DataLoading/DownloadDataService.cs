@@ -3,30 +3,25 @@ using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
-using WatchList.Core.Repository.Db;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading.Rules;
-using WatchList.Core.Service.Extension;
 
 namespace WatchList.Core.Service.DataLoading
 {
     public class DownloadDataService
     {
-        private readonly WatchCinemaDbContext _db;
-
         private readonly WatchItemRepository _repository;
 
         private readonly IMessageBox _messageBox;
 
-        public DownloadDataService(WatchCinemaDbContext db, IMessageBox messageBox)
+        public DownloadDataService(WatchItemRepository repository, IMessageBox messageBox, int numberOfItemPerPage = 500)
         {
-            _db = db;
-            db.ChangeTracker.Clear();
-            _repository = new WatchItemRepository(_db);
+            _repository = repository;
             _messageBox = messageBox;
+            NumberOfItemPerPage = numberOfItemPerPage;
         }
 
-        public int NumberOfItemPerPage { get; set; } = 500;
+        public int NumberOfItemPerPage { get; set; }
 
         public void Download(WatchItemRepository repository, ILoadRule loadRule)
         {
@@ -55,7 +50,6 @@ namespace WatchList.Core.Service.DataLoading
 
             foreach (var item in itemCollection.NewItems)
             {
-                item.Id = _db.ReplaceIdIsNotFree(item);
                 _repository.Add(item);
             }
         }

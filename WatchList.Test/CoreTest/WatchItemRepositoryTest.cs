@@ -6,6 +6,7 @@ using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
+using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest
 {

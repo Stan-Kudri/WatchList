@@ -1,10 +1,10 @@
 using MaterialSkin.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
-using WatchList.Core.Repository.Db;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
@@ -14,7 +14,6 @@ using WatchList.WinForms.BuilderDbContext;
 using WatchList.WinForms.ChildForms;
 using WatchList.WinForms.ChildForms.Extension;
 using WatchList.WinForms.Extension;
-using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms
 {
@@ -24,7 +23,6 @@ namespace WatchList.WinForms
     public partial class BoxCinemaForm : MaterialForm
     {
         private const string HighlightTheDesiredLine = "No items selected.";
-        private const int NumberOfItemPerPage = 500;
 
         private const int IndexColumnName = 0;
         private const int IndexColumnSequel = 1;
@@ -34,20 +32,22 @@ namespace WatchList.WinForms
         private const int IndexColumnId = 5;
         private const int IndexColumnType = 6;
 
+        private readonly IServiceProvider _serviceProvider;
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
-        private readonly WatchCinemaDbContext _dbContext;
+        private readonly WatchItemRepository _itemRepository;
 
         private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
 
         private PagedList<WatchItem> _pagedList;
 
-        public BoxCinemaForm(WatchCinemaDbContext db)
+        public BoxCinemaForm(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            _dbContext = db;
-            _messageBox = new MessageBoxShow();
-            _itemService = new WatchItemService(db, _messageBox);
+            _serviceProvider = serviceProvider;
+            _itemRepository = serviceProvider.GetRequiredService<WatchItemRepository>();
+            _messageBox = serviceProvider.GetRequiredService<IMessageBox>();
+            _itemService = serviceProvider.GetRequiredService<WatchItemService>();
             _pagedList = _itemService.GetPage(_searchRequest);
 
             Load += BoxCinemaForm_Load;
@@ -88,7 +88,7 @@ namespace WatchList.WinForms
 
         private void BtnAddCinema_Click(object sender, EventArgs e)
         {
-            var addForm = new AddCinemaForm();
+            var addForm = new AddCinemaForm(_messageBox);
 
             if (addForm.ShowDialog() != DialogResult.OK)
             {
@@ -107,7 +107,7 @@ namespace WatchList.WinForms
             if (indexEditRow.Count == 1)
             {
                 var oldItem = GetItem(indexEditRow.First());
-                var updateForm = new EditorItemCinemaForm(oldItem);
+                var updateForm = new EditorItemCinemaForm(oldItem, _messageBox);
 
                 if (updateForm.ShowDialog() != DialogResult.OK)
                 {
@@ -152,7 +152,7 @@ namespace WatchList.WinForms
 
         private void BtnDownloadDataFile_Click(object sender, EventArgs e)
         {
-            var dataLoadingForm = new MergeDatabaseForm();
+            var dataLoadingForm = _serviceProvider.GetRequiredService<MergeDatabaseForm>();
             if (dataLoadingForm.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -165,17 +165,17 @@ namespace WatchList.WinForms
             }
 
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
-            var algorithmLoadData = dataLoadingForm.GetLoadData();
-
-            var loadRuleHasGrade = new DeleteGradeRule(algorithmLoadData.DeleteGrade);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(algorithmLoadData.TypeCinemaLoad);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(algorithmLoadData.MoreGrade);
-            var loadDuplicateItem = new DuplicateLoadRule(_dbContext, algorithmLoadData.ActionsWithDuplicates);
-            var rules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
+            var loadRuleConfig = dataLoadingForm.GetLoadRuleConfig();
+            var loadRuleHasGrade = new DeleteGradeRule(loadRuleConfig);
+            var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
+            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRuleConfig);
+            var loadDuplicateItem = new DuplicateLoadRule(_itemRepository, loadRuleConfig);
+            var aggregateRules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
 
             var repositoryDataDownload = new WatchItemRepository(dbContext);
-            var downloadDataService = new DownloadDataService(_dbContext, _messageBox) { NumberOfItemPerPage = NumberOfItemPerPage };
-            downloadDataService.Download(repositoryDataDownload, rules);
+
+            var downloadDataService = _serviceProvider.GetRequiredService<DownloadDataService>();
+            downloadDataService.Download(repositoryDataDownload, aggregateRules);
             UpdateGridData();
         }
 

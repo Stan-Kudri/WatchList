@@ -1,6 +1,13 @@
 using MaterialSkin;
+using Microsoft.Extensions.DependencyInjection;
+using WatchList.Core.Repository;
+using WatchList.Core.Service;
+using WatchList.Core.Service.Component;
+using WatchList.Core.Service.DataLoading;
 using WatchList.Migrations.SQLite;
 using WatchList.WinForms.BuilderDbContext;
+using WatchList.WinForms.ChildForms;
+using WatchList.WinForms.Message;
 
 namespace WatchList.WinForms
 {
@@ -16,10 +23,27 @@ namespace WatchList.WinForms
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            using var db = new FileDbContextFactory("app.db").Create();
-            var migrator = new DbMigrator(db);
-            migrator.Migrate();
-            var form = new BoxCinemaForm(db);
+            var serviceCollection = new ServiceCollection()
+                .AddSingleton(new FileDbContextFactory("app.db"))
+                .AddScoped(e => e.GetRequiredService<FileDbContextFactory>().Create())
+                .AddScoped<DbMigrator>()
+                .AddScoped<WatchItemRepository>()
+                .AddScoped<IMessageBox, MessageBoxShow>()
+                .AddScoped<WatchItemService>()
+                .AddScoped<DownloadDataService>()
+                .AddTransient<MergeDatabaseForm>()
+                .AddTransient<BoxCinemaForm>();
+
+            using var contain = serviceCollection.BuildServiceProvider(new ServiceProviderOptions
+            {
+                ValidateOnBuild = true,
+                ValidateScopes = true,
+            });
+
+            using var scope = contain.CreateScope();
+
+            scope.ServiceProvider.GetRequiredService<DbMigrator>().Migrate();
+            var form = scope.ServiceProvider.GetRequiredService<BoxCinemaForm>();
             var materialSkinManager = MaterialSkinManager.Instance;
 
             materialSkinManager.AddFormToManage(form);

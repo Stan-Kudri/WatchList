@@ -1,10 +1,11 @@
 using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Model.Load;
 
 namespace WatchList.Core.Service.DataLoading.Rules
 {
     public class DeleteGradeRule : ILoadRule
     {
-        public DeleteGradeRule(bool isDeleteGrade) => IsDeleteGrade = isDeleteGrade;
+        public DeleteGradeRule(ILoadRulesConfig config) => IsDeleteGrade = config.DeleteGrade;
 
         public bool IsDeleteGrade { get; private set; }
 

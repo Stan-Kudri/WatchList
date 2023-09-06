@@ -2,12 +2,11 @@ using FluentAssertions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Model.Load;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
-using WatchList.Core.Service.DataLoading.Rules;
+using WatchList.Test.Components;
 
 namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 {
@@ -128,15 +127,16 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
+            var itemRepository = new WatchItemRepository(dbContext);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+            var watchItemRepository = new WatchItemRepository(dbContext);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(dbContext, messageBox.Object);
-            var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object);
+            var loadRuleConfig = new TestLoadRuleConfig() { TypeCinemaLoad = typeCinema };
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
@@ -160,15 +160,16 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
+            var itemRepository = new WatchItemRepository(dbContext);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
+            var watchItemRepository = new WatchItemRepository(dbContext);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(dbContext, messageBox.Object);
-            var loadRuleTypeCinema = new FilterByTypeCinemaLoadRule(typeCinema);
-            var loadRuleDuplicateItem = new DuplicateLoadRule(dbContext, new ActionDuplicateItems());
-            var loadRule = new AggregateLoadRule(new ILoadRule[] { loadRuleTypeCinema, loadRuleDuplicateItem });
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object);
+            var loadRuleConfig = new TestLoadRuleConfig() { TypeCinemaLoad = typeCinema };
+            var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
 
             dbContext.AddRange(items);
