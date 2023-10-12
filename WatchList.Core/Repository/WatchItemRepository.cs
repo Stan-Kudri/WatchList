@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository.Db;
@@ -9,8 +10,13 @@ namespace WatchList.Core.Repository
     public class WatchItemRepository : IWatchItemRepository
     {
         private readonly WatchCinemaDbContext _db;
+        private readonly ILogger _logger;
 
-        public WatchItemRepository(WatchCinemaDbContext db) => _db = db;
+        public WatchItemRepository(WatchCinemaDbContext db, ILogger logger)
+        {
+            _db = db;
+            _logger = logger;
+        }
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest searchRequest)
         {
@@ -24,6 +30,7 @@ namespace WatchList.Core.Repository
             item.Id = _db.ReplaceIdIsNotFree(item);
             _db.Add(item);
             _db.SaveChanges();
+            _logger.LogInformation("Add item with ID {0}", item.Id);
         }
 
         public void Remove(Guid id)
@@ -33,6 +40,8 @@ namespace WatchList.Core.Repository
             {
                 throw new InvalidOperationException("Interaction element not found.");
             }
+
+            _logger.LogInformation("Remove item with ID {0}", id);
         }
 
         public void Update(WatchItem editItem)
@@ -52,6 +61,8 @@ namespace WatchList.Core.Repository
             item.Status = editItem.Status;
 
             _db.SaveChanges();
+
+            _logger.LogInformation("Edit item with ID {0}", item.Id);
         }
 
         public List<Guid> SelectDuplicateItems(WatchItem item) =>

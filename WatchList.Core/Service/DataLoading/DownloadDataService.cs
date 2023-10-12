@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Model.Sorting;
@@ -11,13 +12,14 @@ namespace WatchList.Core.Service.DataLoading
     public class DownloadDataService
     {
         private readonly WatchItemRepository _repository;
-
         private readonly IMessageBox _messageBox;
+        private readonly ILogger _logger;
 
-        public DownloadDataService(WatchItemRepository repository, IMessageBox messageBox, int numberOfItemPerPage = 500)
+        public DownloadDataService(WatchItemRepository repository, IMessageBox messageBox, ILogger logger, int numberOfItemPerPage = 500)
         {
             _repository = repository;
             _messageBox = messageBox;
+            _logger = logger;
             NumberOfItemPerPage = numberOfItemPerPage;
         }
 
@@ -33,6 +35,7 @@ namespace WatchList.Core.Service.DataLoading
                 var watchItemCollection = new WatchItemCollection(pagedList);
                 watchItemCollection = loadRule.Apply(watchItemCollection);
 
+                _logger.LogInformation("Load items according to selected rules");
                 AddItems(watchItemCollection);
                 UpdateItems(watchItemCollection);
 

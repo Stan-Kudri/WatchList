@@ -1,5 +1,7 @@
 using MaterialSkin;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using WatchList.Core.Logger;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
@@ -23,6 +25,9 @@ namespace WatchList.WinForms
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
+            var path = "logs";
+            CreatDirectoryIfNotExists(path);
+
             var serviceCollection = new ServiceCollection()
                 .AddSingleton(new FileDbContextFactory("app.db"))
                 .AddScoped(e => e.GetRequiredService<FileDbContextFactory>().Create())
@@ -32,7 +37,9 @@ namespace WatchList.WinForms
                 .AddScoped<WatchItemService>()
                 .AddScoped<DownloadDataService>()
                 .AddTransient<MergeDatabaseForm>()
-                .AddTransient<BoxCinemaForm>();
+                .AddTransient<BoxCinemaForm>()
+                //.AddTransient<ILogger>(e => new ConsoleLogger(LogLevel.Information))
+                .AddTransient<ILogger>(e => new FileLogger(LogLevel.Trace, path));
 
             using var contain = serviceCollection.BuildServiceProvider(new ServiceProviderOptions
             {
@@ -50,7 +57,25 @@ namespace WatchList.WinForms
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple900, Primary.DeepPurple700, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
 
-            Application.Run(form);
+            var loger = scope.ServiceProvider.GetRequiredService<ILogger>();
+
+            try
+            {
+                loger.LogTrace("Launch the application");
+                Application.Run(form);
+            }
+            catch (Exception ex)
+            {
+                loger.LogError(ex, "Unhandled exception");
+            }
+        }
+
+        static void CreatDirectoryIfNotExists(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
     }
 }

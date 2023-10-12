@@ -610,6 +610,7 @@ namespace WatchList.WinForms
             Name = "BoxCinemaForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "BoxCinema";
+            FormClosed += BoxCinemaForm_FormClosed;
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).EndInit();
             ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).EndInit();

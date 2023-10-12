@@ -1,5 +1,6 @@
 using MaterialSkin.Controls;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -36,6 +37,7 @@ namespace WatchList.WinForms
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
         private readonly WatchItemRepository _itemRepository;
+        private readonly ILogger _logger;
 
         private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
 
@@ -48,8 +50,8 @@ namespace WatchList.WinForms
             _itemRepository = serviceProvider.GetRequiredService<WatchItemRepository>();
             _messageBox = serviceProvider.GetRequiredService<IMessageBox>();
             _itemService = serviceProvider.GetRequiredService<WatchItemService>();
+            _logger = serviceProvider.GetRequiredService<ILogger>();
             _pagedList = _itemService.GetPage(_searchRequest);
-
             Load += BoxCinemaForm_Load;
         }
 
@@ -95,6 +97,7 @@ namespace WatchList.WinForms
                 return;
             }
 
+            _logger.LogInformation("Click save add item");
             var itemCinema = addForm.GetCinema();
             _itemService.Add(itemCinema.ToWatchItem());
 
@@ -114,6 +117,7 @@ namespace WatchList.WinForms
                     return;
                 }
 
+                _logger.LogInformation("Click save edit item");
                 var updateItem = updateForm.GetEditItemCinema();
                 _itemService.Update(oldItem.ToWatchItem(), updateItem.ToWatchItem());
                 UpdateGridData();
@@ -141,6 +145,7 @@ namespace WatchList.WinForms
                 return;
             }
 
+            _logger.LogInformation("Click delite item");
             foreach (var id in selectedRowIds)
             {
                 RemoveItemRowGrid(id);
@@ -164,6 +169,7 @@ namespace WatchList.WinForms
                 return;
             }
 
+            _logger.LogInformation("Add item from the selected file <{0}>", openReplaceDataFromFile.FileName);
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             var loadRuleConfig = dataLoadingForm.GetLoadRuleConfig();
             var loadRuleHasGrade = new DeleteGradeRule(loadRuleConfig);
@@ -172,11 +178,16 @@ namespace WatchList.WinForms
             var loadDuplicateItem = new DuplicateLoadRule(_itemRepository, loadRuleConfig);
             var aggregateRules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
 
-            var repositoryDataDownload = new WatchItemRepository(dbContext);
+            var repositoryDataDownload = new WatchItemRepository(dbContext, _logger);
 
             var downloadDataService = _serviceProvider.GetRequiredService<DownloadDataService>();
             downloadDataService.Download(repositoryDataDownload, aggregateRules);
             UpdateGridData();
+        }
+
+        private void BoxCinemaForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _logger.LogInformation("Close App.");
         }
 
         private void BtnBackPage_Click(object sender, EventArgs e)
