@@ -4,7 +4,7 @@ namespace WatchList.Core.Logger
 {
     public sealed class ConsoleLogger : ILogger
     {
-        private LogLevel _logLevel;
+        private readonly LogLevel _logLevel;
 
         public ConsoleLogger(LogLevel logLevel) => _logLevel = logLevel;
 

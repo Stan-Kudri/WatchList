@@ -38,7 +38,7 @@ namespace WatchList.WinForms
                 .AddScoped<DownloadDataService>()
                 .AddTransient<MergeDatabaseForm>()
                 .AddTransient<BoxCinemaForm>()
-                //.AddTransient<ILogger>(e => new ConsoleLogger(LogLevel.Information))
+                .AddTransient<ILogger>(e => new ConsoleLogger(LogLevel.Information))
                 .AddTransient<ILogger>(e => new FileLogger(LogLevel.Trace, path));
 
             using var contain = serviceCollection.BuildServiceProvider(new ServiceProviderOptions
@@ -70,7 +70,7 @@ namespace WatchList.WinForms
             }
         }
 
-        static void CreatDirectoryIfNotExists(string path)
+        private static void CreatDirectoryIfNotExists(string path)
         {
             if (!Directory.Exists(path))
             {

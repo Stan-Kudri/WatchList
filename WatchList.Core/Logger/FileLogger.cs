@@ -5,7 +5,7 @@ namespace WatchList.Core.Logger
 {
     public sealed class FileLogger : ILogger
     {
-        private LogLevel _logLevel;
+        private readonly LogLevel _logLevel;
         private readonly string _pathFileLog;
 
         public FileLogger(LogLevel logLevel, string pathFileLog)
@@ -32,17 +32,17 @@ namespace WatchList.Core.Logger
             where TState : notnull
             => new Disposable();
 
+        private string BuildPath()
+        {
+            var dateStr = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return Path.Combine(_pathFileLog, dateStr + ".txt");
+        }
+
         private sealed class Disposable : IDisposable
         {
             public void Dispose()
             {
             }
-        }
-
-        private string BuildPath()
-        {
-            var dateStr = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            return Path.Combine(_pathFileLog, dateStr + ".txt");
         }
     }
 }

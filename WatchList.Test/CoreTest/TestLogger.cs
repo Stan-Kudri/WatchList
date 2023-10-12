@@ -4,7 +4,7 @@ namespace WatchList.Test.CoreTest
 {
     public sealed class TestLogger : ILogger
     {
-        private LogLevel _logLevel;
+        private readonly LogLevel _logLevel;
 
         public TestLogger(LogLevel logLevel = LogLevel.Trace) => _logLevel = logLevel;
 
