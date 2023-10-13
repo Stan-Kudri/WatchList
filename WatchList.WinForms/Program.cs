@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Logger;
 using WatchList.Core.Repository;
+using WatchList.Core.Repository.Db;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
@@ -32,14 +33,17 @@ namespace WatchList.WinForms
                 .AddSingleton(new FileDbContextFactory("app.db"))
                 .AddScoped(e => e.GetRequiredService<FileDbContextFactory>().Create())
                 .AddScoped<DbMigrator>()
-                .AddScoped<WatchItemRepository>()
+                .AddScoped<WatchItemRepository>(e => new WatchItemRepository(e.GetRequiredService<WatchCinemaDbContext>(), e.GetRequiredService<AggregateLogging>()))
                 .AddScoped<IMessageBox, MessageBoxShow>()
                 .AddScoped<WatchItemService>()
                 .AddScoped<DownloadDataService>()
                 .AddTransient<MergeDatabaseForm>()
                 .AddTransient<BoxCinemaForm>()
-                .AddTransient<ILogger>(e => new ConsoleLogger(LogLevel.Information))
-                .AddTransient<ILogger>(e => new FileLogger(LogLevel.Trace, path));
+                .AddSingleton(e => new ConsoleLogger(LogLevel.Information))
+                .AddSingleton(e => new FileLogger(LogLevel.Trace, path))
+                .AddSingleton<ILogger>(e => e.GetRequiredService<ConsoleLogger>())
+                .AddSingleton<ILogger>(e => e.GetRequiredService<FileLogger>())
+                .AddSingleton(e => new AggregateLogging() { e.GetRequiredService<ConsoleLogger>(), e.GetRequiredService<FileLogger>() });
 
             using var contain = serviceCollection.BuildServiceProvider(new ServiceProviderOptions
             {

@@ -185,9 +185,9 @@ namespace WatchList.WinForms
             UpdateGridData();
         }
 
-        private void BoxCinemaForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void BoxCinemaForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _logger.LogInformation("Close App.");
+            _logger.LogTrace("Close App.");
         }
 
         private void BtnBackPage_Click(object sender, EventArgs e)
