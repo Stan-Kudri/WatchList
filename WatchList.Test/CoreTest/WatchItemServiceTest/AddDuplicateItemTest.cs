@@ -58,7 +58,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext);
+            var itemRepository = new WatchItemRepository(dbContext, new TestLogger());
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
             var service = new WatchItemService(itemRepository, messageBox.Object);

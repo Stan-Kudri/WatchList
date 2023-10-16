@@ -49,18 +49,19 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public void Add_Data_File(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
         {
             // Arrange
+            var logger = new TestLogger();
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext);
+            var itemRepository = new WatchItemRepository(dbContext, logger);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext);
+            var watchItemRepository = new WatchItemRepository(dbContext, logger);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object) { NumberOfItemPerPage = PageSize };
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger) { NumberOfItemPerPage = PageSize };
             var loadRuleConfig = new TestLoadRuleConfig();
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
@@ -80,18 +81,19 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Add_Data_FileAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
         {
             // Arrange
+            var logger = new TestLogger();
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext);
+            var itemRepository = new WatchItemRepository(dbContext, logger);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext);
+            var watchItemRepository = new WatchItemRepository(dbContext, logger);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object) { NumberOfItemPerPage = PageSize };
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger) { NumberOfItemPerPage = PageSize };
             var loadRuleConfig = new TestLoadRuleConfig();
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
