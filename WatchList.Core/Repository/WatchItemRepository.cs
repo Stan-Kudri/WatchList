@@ -65,13 +65,13 @@ namespace WatchList.Core.Repository
             _logger.LogInformation("Edit item with ID {0}", item.Id);
         }
 
-        public List<Guid> SelectDuplicateItems(WatchItem item) =>
-            _db.WatchItem.Where(x =>
+        public List<Guid> SelectDuplicateItems(WatchItem item)
+             => _db.WatchItem.Where(x =>
                         (x.Title == item.Title && x.Sequel == item.Sequel && x.Type == item.Type)).
                         Take(2).Select(x => x.Id).ToList();
 
-        public List<Guid> DuplicateItemsCaseSensitive(WatchItem item) =>
-            _db.WatchItem.ToList().
+        public List<Guid> DuplicateItemsCaseSensitive(WatchItem item)
+            => _db.WatchItem.ToList().
                     Where(x => x.TitleNormalized == item.TitleNormalized && x.Sequel == item.Sequel && x.Type == item.Type).
                     Take(2).Select(x => x.Id).ToList();
     }

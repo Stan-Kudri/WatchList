@@ -12,7 +12,8 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
         {
         }
 
-        public ModelTypeCinemaUpload(TypeCinema type) => SelectedValue = type;
+        public ModelTypeCinemaUpload(TypeCinema type)
+            => SelectedValue = type;
 
         public ObservableCollection<TypeCinema> Items { get; set; }
             = new ObservableCollection<TypeCinema>(TypeCinema.List);

@@ -44,7 +44,10 @@ namespace WatchList.Core.Repository.Db
 
         private void UpdateTitleNormalized()
         {
-            var changedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).Select(x => x.Entity).OfType<WatchItem>();
+            var changedEntries = ChangeTracker.Entries()
+                                    .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified)
+                                    .Select(x => x.Entity).OfType<WatchItem>();
+
             foreach (var changeEntry in changedEntries)
             {
                 changeEntry.TitleNormalized = changeEntry.Title.ToLower();

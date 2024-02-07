@@ -6,8 +6,7 @@ namespace WatchList.Core.Model.Filter
 {
     public class FilterItem : IEquatable<FilterItem>
     {
-        public FilterItem()
-            : this(TypeFilter.AllCinema, StatusFilter.AllCinema)
+        public FilterItem() : this(TypeFilter.AllCinema, StatusFilter.AllCinema)
         {
         }
 
@@ -40,7 +39,7 @@ namespace WatchList.Core.Model.Filter
 
         public override bool Equals(object? obj) => Equals(obj as FilterItem);
 
-        public bool Equals(FilterItem? other) =>
-            other != null && TypeFilter == other.TypeFilter && StatusFilter == other.StatusFilter;
+        public bool Equals(FilterItem? other)
+            => other != null && TypeFilter == other.TypeFilter && StatusFilter == other.StatusFilter;
     }
 }

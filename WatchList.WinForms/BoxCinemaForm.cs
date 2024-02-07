@@ -170,6 +170,7 @@ namespace WatchList.WinForms
             }
 
             _logger.LogInformation("Add item from the selected file <{0}>", openReplaceDataFromFile.FileName);
+
             var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
             var loadRuleConfig = dataLoadingForm.GetLoadRuleConfig();
             var loadRuleHasGrade = new DeleteGradeRule(loadRuleConfig);
@@ -186,9 +187,7 @@ namespace WatchList.WinForms
         }
 
         private void BoxCinemaForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _logger.LogTrace("Close App.");
-        }
+            => _logger.LogTrace("Close App.");
 
         private void BtnBackPage_Click(object sender, EventArgs e)
         {
