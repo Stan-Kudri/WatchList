@@ -6,7 +6,8 @@ namespace WatchList.Core.Model.Filter
 {
     public class FilterItem : IEquatable<FilterItem>
     {
-        public FilterItem() : this(TypeFilter.AllCinema, StatusFilter.AllCinema)
+        public FilterItem()
+            : this(TypeFilter.AllCinema, StatusFilter.AllCinema)
         {
         }
 
