@@ -7,7 +7,6 @@ using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
 using WatchList.Migrations.SQLite;
-using WatchList.WinForms.BuilderDbContext;
 using WatchList.WinForms.ChildForms;
 using WatchList.WinForms.Message;
 

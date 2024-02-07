@@ -8,9 +8,11 @@ namespace WatchList.Migrations.SQLite
     {
         public WatchCinemaDbContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder().UseSqlite($"Data Source=app.db", b => b.MigrationsAssembly(typeof(DbContextFactory).Assembly.FullName));
-            var dbContext = new WatchCinemaDbContext(builder.Options);
-            return dbContext;
+            var builder = new DbContextOptionsBuilder().UseSqlite(
+                $"Data Source=app.db",
+                b => b.MigrationsAssembly(typeof(DbContextFactory).Assembly.FullName));
+
+            return new WatchCinemaDbContext(builder.Options);
         }
     }
 }

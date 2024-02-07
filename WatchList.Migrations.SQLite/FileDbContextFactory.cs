@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WatchList.Core.Repository.Db;
-using WatchList.Migrations.SQLite;
 
-namespace WatchList.WinForms.BuilderDbContext
+namespace WatchList.Migrations.SQLite
 {
     public sealed class FileDbContextFactory
     {

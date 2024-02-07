@@ -1,7 +1,6 @@
 using WatchList.Core.Repository.Db;
-using WatchList.Migrations.SQLite.Interceptors;
 
-namespace WatchList.Migrations.SQLite
+namespace WatchList.Migrations.SQLite.Interceptors
 {
     public class MigrationInterceptor
     {
