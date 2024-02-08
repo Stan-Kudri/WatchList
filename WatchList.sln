@@ -12,7 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WatchList.Core", "WatchList
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WatchList.Test", "WatchList.Test\WatchList.Test.csproj", "{8FF63CA9-9EDF-42A0-BEAC-B5C46365D427}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchList.Migrations.SQLite", "WatchList.Migrations.SQLite\WatchList.Migrations.SQLite.csproj", "{F5829BBE-84C7-43EF-83F2-EAF3E694F283}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WatchList.Migrations.SQLite", "WatchList.Migrations.SQLite\WatchList.Migrations.SQLite.csproj", "{F5829BBE-84C7-43EF-83F2-EAF3E694F283}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchList.MudBlazors", "WatchList.MudBlazors\WatchList.MudBlazors.csproj", "{F1C2F716-B695-48AF-AAAA-C05D77D2868B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{F5829BBE-84C7-43EF-83F2-EAF3E694F283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5829BBE-84C7-43EF-83F2-EAF3E694F283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5829BBE-84C7-43EF-83F2-EAF3E694F283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C2F716-B695-48AF-AAAA-C05D77D2868B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C2F716-B695-48AF-AAAA-C05D77D2868B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C2F716-B695-48AF-AAAA-C05D77D2868B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C2F716-B695-48AF-AAAA-C05D77D2868B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
