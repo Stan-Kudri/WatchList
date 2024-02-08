@@ -3,11 +3,11 @@ using WatchList.Core.Repository.Db;
 
 namespace WatchList.Migrations.SQLite
 {
-    public sealed class FileDbContextFactory
+    public sealed class DbContextFactoryMigrator
     {
         public string _path;
 
-        public FileDbContextFactory(string path) => _path = path;
+        public DbContextFactoryMigrator(string path) => _path = path;
 
         public WatchCinemaDbContext Create()
         {
@@ -16,7 +16,10 @@ namespace WatchList.Migrations.SQLite
                 x.MigrationsAssembly(typeof(DbContextFactory).Assembly.FullName);
             });
 
-            return new WatchCinemaDbContext(builder.Options);
+            var dbContext = new WatchCinemaDbContext(builder.Options);
+            dbContext.Migrate();
+
+            return dbContext;
         }
     }
 }

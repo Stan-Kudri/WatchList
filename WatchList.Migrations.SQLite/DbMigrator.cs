@@ -7,20 +7,16 @@ using WatchList.Migrations.SQLite.Interceptors;
 
 namespace WatchList.Migrations.SQLite
 {
-    public class DbMigrator
+    public static class DbMigrator
     {
-        private readonly WatchCinemaDbContext _db;
-
-        public DbMigrator(WatchCinemaDbContext db) => _db = db;
-
-        public void Migrate()
+        public static void Migrate(this WatchCinemaDbContext db)
         {
-            var interceptor = new MigrationInterceptor(_db);
+            var interceptor = new MigrationInterceptor(db);
 
-            var migrate = _db.Database.GetInfrastructure().GetService<IMigrator>()
+            var migrate = db.Database.GetInfrastructure().GetService<IMigrator>()
                 ?? throw new InvalidOperationException("Unable to found migrator service.");
 
-            foreach (var migrationName in _db.Database.GetPendingMigrations())
+            foreach (var migrationName in db.Database.GetPendingMigrations())
             {
                 migrate.Migrate(migrationName);
                 interceptor.Intercept(migrationName);

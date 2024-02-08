@@ -1,4 +1,5 @@
 using MaterialSkin;
+using MaterialSkin.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Logger;
@@ -27,17 +28,13 @@ namespace WatchList.WinForms
             var path = "logs";
             CreatDirectoryIfNotExists(path);
 
-            var serviceCollection = new ServiceCollection()
-                .AddSingleton(new FileDbContextFactory("app.db"))
-                .AddScoped(e => e.GetRequiredService<FileDbContextFactory>().Create())
-                .AddScoped<DbMigrator>()
-                .AddScoped<WatchItemRepository>()
-                .AddScoped<IMessageBox, MessageBoxShow>()
-                .AddScoped<WatchItemService>()
-                .AddScoped<DownloadDataService>()
-                .AddTransient<MergeDatabaseForm>()
-                .AddTransient<BoxCinemaForm>()
-                .AddSingleton<ILogger>(e => new AggregateLogging() { new ConsoleLogger(LogLevel.Trace), new FileLogger(LogLevel.Trace, path) });
+            var serviceCollection = AppServiceDI();
+
+            serviceCollection.AddSingleton<ILogger>(e => new AggregateLogging()
+            {
+                new ConsoleLogger(LogLevel.Trace),
+                new FileLogger(LogLevel.Trace, path)
+            });
 
             using var contain = serviceCollection.BuildServiceProvider(new ServiceProviderOptions
             {
@@ -47,13 +44,8 @@ namespace WatchList.WinForms
 
             using var scope = contain.CreateScope();
 
-            scope.ServiceProvider.GetRequiredService<DbMigrator>().Migrate();
             var form = scope.ServiceProvider.GetRequiredService<BoxCinemaForm>();
-            var materialSkinManager = MaterialSkinManager.Instance;
-
-            materialSkinManager.AddFormToManage(form);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple900, Primary.DeepPurple700, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
+            ApplyThemeMatherialForm(form);
 
             var loger = scope.ServiceProvider.GetRequiredService<ILogger>();
 
@@ -74,6 +66,24 @@ namespace WatchList.WinForms
             {
                 Directory.CreateDirectory(path);
             }
+        }
+
+        private static IServiceCollection AppServiceDI()
+            => new ServiceCollection().AddSingleton(new DbContextFactoryMigrator("app.db"))
+                                      .AddScoped(e => e.GetRequiredService<DbContextFactoryMigrator>().Create())
+                                      .AddScoped<WatchItemRepository>()
+                                      .AddScoped<IMessageBox, MessageBoxShow>()
+                                      .AddScoped<WatchItemService>()
+                                      .AddScoped<DownloadDataService>()
+                                      .AddTransient<MergeDatabaseForm>()
+                                      .AddTransient<BoxCinemaForm>();
+
+        private static void ApplyThemeMatherialForm(MaterialForm form)
+        {
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(form);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple900, Primary.DeepPurple700, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
         }
     }
 }

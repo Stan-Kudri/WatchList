@@ -171,7 +171,7 @@ namespace WatchList.WinForms
 
             _logger.LogInformation("Add item from the selected file <{0}>", openReplaceDataFromFile.FileName);
 
-            var dbContext = new FileDbContextFactory(openReplaceDataFromFile.FileName).Create();
+            var dbContext = new DbContextFactoryMigrator(openReplaceDataFromFile.FileName).Create();
             var loadRuleConfig = dataLoadingForm.GetLoadRuleConfig();
             var loadRuleHasGrade = new DeleteGradeRule(loadRuleConfig);
             var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
