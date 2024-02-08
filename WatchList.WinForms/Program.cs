@@ -33,7 +33,7 @@ namespace WatchList.WinForms
             serviceCollection.AddSingleton<ILogger>(e => new AggregateLogging()
             {
                 new ConsoleLogger(LogLevel.Trace),
-                new FileLogger(LogLevel.Trace, path)
+                new FileLogger(LogLevel.Trace, path),
             });
 
             using var contain = serviceCollection.BuildServiceProvider(new ServiceProviderOptions
