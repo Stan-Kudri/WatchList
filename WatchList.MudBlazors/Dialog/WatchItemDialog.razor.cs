@@ -122,7 +122,7 @@ namespace WatchList.MudBlazors.Dialog
                 return false;
             }
 
-            else if (_watchItemModel.Sequel == 0)
+            if (_watchItemModel.Sequel == 0)
             {
                 message = $"Enter number {_watchItemModel.Title}";
                 return false;

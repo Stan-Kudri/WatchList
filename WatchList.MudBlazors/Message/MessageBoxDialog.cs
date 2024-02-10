@@ -7,15 +7,13 @@ namespace WatchList.MudBlazors.Message
 {
     public class MessageBoxDialog : IMessageBox
     {
-        IDialogService _dialogService;
+        private readonly IDialogService _dialogService;
 
         public MessageBoxDialog(IDialogService dialogService)
             => _dialogService = dialogService;
 
         public DialogReplaceItemQuestion ShowDataReplaceQuestion(string titleItem)
-        {
-            return DialogReplaceItemQuestion.Yes;
-        }
+            => DialogReplaceItemQuestion.Yes;
 
         public void ShowError(string message)
             => _dialogService.ShowMessageBox("Error", message, yesText: "Ok");

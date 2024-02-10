@@ -28,7 +28,6 @@ namespace WatchList.MudBlazors.Extension
 
         private static bool DialogShow(DialogParameters<DialogYesNo> dialogParameters, IDialogService dialogService, string title, string content)
         {
-
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var dialog = dialogService.Show<DialogYesNo>(title, dialogParameters, options);
             var result = dialog.Result.Result;

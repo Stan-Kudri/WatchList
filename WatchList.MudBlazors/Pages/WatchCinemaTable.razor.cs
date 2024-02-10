@@ -15,14 +15,14 @@ namespace WatchList.MudBlazors.Pages
         [Inject] WatchItemService WatchItemService { get; set; } = null!;
         [Inject] private IDialogService DialogService { get; set; } = null!;
 
-        private IEnumerable<WatchItem>? _items;
+        private readonly PageModel _pageModel = new PageModel();
 
+        private IEnumerable<WatchItem>? _items;
         private HashSet<WatchItem> _selectedItems = new HashSet<WatchItem>();
         private bool _isSelectItems = true;
 
         private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
-        private PagedList<WatchItem> _pagedList;
-        private PageModel _pageModel = new PageModel();
+        private PagedList<WatchItem>? _pagedList = null;
 
         protected override void OnInitialized()
         {
