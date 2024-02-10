@@ -6,23 +6,29 @@ namespace WatchList.MudBlazors.Model
 {
     public class WatchItemModel
     {
-        private Guid _id;
-        private string _title;
-        private TypeCinema _type;
-        private int _sequel;
-        private StatusCinema _status;
-        private DateTime? _date;
-        private int? _grade;
+        private const int FirstValue = 1;
 
-        private WatchItemModel(string title, decimal? sequel, DateTime? date, decimal? grade, StatusCinema status, TypeCinema type, Guid? id = null)
+        private Guid _id = new Guid();
+        private string _title = string.Empty;
+        private TypeCinema _type = TypeCinema.Movie;
+        private int _sequel = FirstValue;
+        private StatusCinema _status = StatusCinema.Planned;
+        private DateTime? _date = null;
+        private int? _grade = FirstValue;
+
+        public WatchItemModel()
+        {
+        }
+
+        public WatchItemModel(string title, int sequel, DateTime? date, int? grade, StatusCinema status, TypeCinema type, Guid? id = null)
         {
             _id = id ?? Guid.NewGuid();
             _title = title ?? throw new ArgumentNullException(nameof(title));
-            _sequel = sequel == null ? 0 : Convert.ToInt32((decimal)sequel);
+            _sequel = sequel;
             _type = type;
             _status = status;
             _date = date;
-            _grade = grade != null ? Convert.ToInt32((decimal)grade) : null;
+            _grade = grade;
         }
 
         [Parameter]
@@ -76,18 +82,29 @@ namespace WatchList.MudBlazors.Model
 
         public static WatchItemModel CreateNonPlanned(
             string title,
-            decimal? sequel,
+            int sequel,
             DateTime? date,
-            decimal? grade,
+            int? grade,
             StatusCinema status,
             TypeCinema type,
             Guid? id = null)
             => new WatchItemModel(title, sequel, date, grade, status, type, id);
 
-        public static WatchItemModel CreatePlanned(string title, decimal? sequel, StatusCinema status, TypeCinema type, Guid? id)
+        public static WatchItemModel CreatePlanned(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id)
             => new WatchItemModel(title, sequel, null, null, status, type, id);
 
         public WatchItem ToWatchItem() => new WatchItem(Title, Sequel, Status, Type, Id, Date ?? null, Grade);
+
+        public void ClearData()
+        {
+            _title = string.Empty;
+            _id = new Guid();
+            _type = TypeCinema.Movie;
+            _sequel = FirstValue;
+            _status = StatusCinema.Planned;
+            _date = null;
+            _grade = FirstValue;
+        }
 
         public bool TryGetWatchDate(out DateTime date)
         {

@@ -96,7 +96,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             dbContext.SaveChanges();
 
             // Act
-            service.Update(oldItem, updateItem);
+            service.Updata(oldItem, updateItem);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert

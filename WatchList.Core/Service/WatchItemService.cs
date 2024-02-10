@@ -41,7 +41,7 @@ namespace WatchList.Core.Service
             }
         }
 
-        public void Update(WatchItem oldItem, WatchItem modifiedItem)
+        public void Updata(WatchItem oldItem, WatchItem modifiedItem)
         {
             var selectItem = _repository.SelectDuplicateItems(modifiedItem);
             var countDuplicate = selectItem.Count;
@@ -61,6 +61,8 @@ namespace WatchList.Core.Service
 
             Update(modifiedItem);
         }
+
+        public WatchItem GetItemById(Guid id) => _repository.GetItemById(id);
 
         private void Update(WatchItem item) => _repository.Update(item);
     }

@@ -6,6 +6,13 @@
 
 <MudPaper>
 
+    <MudToolBar>
+
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@((e) => SaveDialogItem())" Color="Color.Primary" Variant="Variant.Text" Title="Add Item" />
+
+    </MudToolBar>
+
     <MudTable Items="@_items" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="true" Dense="true" T="WatchItem" SelectedItemsChanged="OnSelectItems">
 
         <ColGroup>

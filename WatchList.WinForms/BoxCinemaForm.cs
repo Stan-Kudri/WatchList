@@ -119,7 +119,7 @@ namespace WatchList.WinForms
 
                 _logger.LogInformation("Click save edit item");
                 var updateItem = updateForm.GetEditItemCinema();
-                _itemService.Update(oldItem.ToWatchItem(), updateItem.ToWatchItem());
+                _itemService.Updata(oldItem.ToWatchItem(), updateItem.ToWatchItem());
                 UpdateGridData();
             }
             else
