@@ -5,8 +5,8 @@ namespace WatchList.Core.PageItem
         private const int StartPageSize = 10;
         private const int NumberStartPage = 1;
 
-        private int _number;
-        private int _size;
+        protected int _number;
+        protected int _size;
 
         public Page(int number = NumberStartPage, int size = StartPageSize)
         {

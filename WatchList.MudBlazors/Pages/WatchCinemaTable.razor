@@ -1,0 +1,45 @@
+﻿@using WatchList.Core.Model.ItemCinema
+
+@page "/watchlist"
+
+<MudText Style="text-align:center; font-size:16px; color:navy">List Cinema</MudText>
+
+<MudPaper>
+
+    <MudTable Items="@_items" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="true" Dense="true" T="WatchItem" SelectedItemsChanged="OnSelectItems">
+
+        <ColGroup>
+            <col style="width: 10%;" />
+            <col style="width: 20%;" />
+            <col style="width: 20%;" />
+            <col style="width: 15%;" />
+            <col style="width: 15%;" />
+            <col style="width: 20%;" />
+        </ColGroup>
+
+        <HeaderContent>
+            <MudTd Style="text-align:center; font-size:12px">Title</MudTd>
+            <MudTd Style="text-align:center; font-size:12px">Season/Part</MudTd>
+            <MudTd Style="text-align:center; font-size:12px">Status</MudTd>
+            <MudTd Style="text-align:center; font-size:12px">Data</MudTd>
+            <MudTd Style="text-align:center; font-size:12px">Grade</MudTd>
+            <MudTd Style="text-align:center; font-size:12px">Type</MudTd>
+        </HeaderContent>
+
+        <RowTemplate>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Title">@context.Title</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Season/Part">@context.Sequel</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Status">@context.Status</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Data">@context.Date</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Grade">@context.Grade</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Type">@context.Type</MudTh>
+        </RowTemplate>
+
+        <PagerContent>
+            <MudTablePager HorizontalAlignment="HorizontalAlignment.Center" PageSizeOptions="_pageModel.Items" />
+        </PagerContent>
+
+    </MudTable>
+
+</MudPaper>
+

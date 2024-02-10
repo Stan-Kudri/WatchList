@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WatchList.Test", "WatchList
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WatchList.Migrations.SQLite", "WatchList.Migrations.SQLite\WatchList.Migrations.SQLite.csproj", "{F5829BBE-84C7-43EF-83F2-EAF3E694F283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchList.MudBlazors", "WatchList.MudBlazors\WatchList.MudBlazors.csproj", "{F1C2F716-B695-48AF-AAAA-C05D77D2868B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WatchList.MudBlazors", "WatchList.MudBlazors\WatchList.MudBlazors.csproj", "{F1C2F716-B695-48AF-AAAA-C05D77D2868B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
