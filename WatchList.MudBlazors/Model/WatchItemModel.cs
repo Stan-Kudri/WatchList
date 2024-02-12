@@ -7,14 +7,15 @@ namespace WatchList.MudBlazors.Model
     public class WatchItemModel
     {
         private const int FirstValue = 1;
+        private const int Zero = 0;
 
-        private Guid _id = new Guid();
+        private Guid _id = Guid.NewGuid();
         private string _title = string.Empty;
         private TypeCinema _type = TypeCinema.Movie;
         private int _sequel = FirstValue;
         private StatusCinema _status = StatusCinema.Planned;
         private DateTime? _date = null;
-        private int? _grade = FirstValue;
+        private int? _grade = null;
 
         public WatchItemModel()
         {

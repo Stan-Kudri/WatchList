@@ -25,21 +25,21 @@
         </ColGroup>
 
         <HeaderContent>
-            <MudTd Style="text-align:center; font-size:12px">Title</MudTd>
-            <MudTd Style="text-align:center; font-size:12px">Season/Part</MudTd>
-            <MudTd Style="text-align:center; font-size:12px">Status</MudTd>
-            <MudTd Style="text-align:center; font-size:12px">Data</MudTd>
-            <MudTd Style="text-align:center; font-size:12px">Grade</MudTd>
-            <MudTd Style="text-align:center; font-size:12px">Type</MudTd>
+            <MudTd Style="text-align:center; font-size:14px">Title</MudTd>
+            <MudTd Style="text-align:center; font-size:14px">Season/Part</MudTd>
+            <MudTd Style="text-align:center; font-size:14px">Status</MudTd>
+            <MudTd Style="text-align:center; font-size:14px">Data</MudTd>
+            <MudTd Style="text-align:center; font-size:14px">Grade</MudTd>
+            <MudTd Style="text-align:center; font-size:14px">Type</MudTd>
         </HeaderContent>
 
         <RowTemplate>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Title">@context.Title</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Season/Part">@context.Sequel</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Status">@context.Status</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Data">@context.Date</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Grade">@context.Grade</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Type">@context.Type</MudTh>
+            <MudTh Style="text-align:center; font-size:14px" DataLabel="Title">@context.Title</MudTh>
+            <MudTh Style="text-align:center; font-size:14px" DataLabel="Season/Part">@context.Sequel</MudTh>
+            <MudTh Style="text-align:center; font-size:14px" DataLabel="Status">@context.Status</MudTh>
+            <MudTh Style="text-align:center; font-size:14px" DataLabel="Data">@context.Date?.ToString("d")</MudTh>
+            <MudTh Style="text-align:center; font-size:14px" DataLabel="Grade">@context.Grade</MudTh>
+            <MudTh Style="text-align:center; font-size:14px" DataLabel="Type">@context.Type</MudTh>
         </RowTemplate>
 
         <PagerContent>

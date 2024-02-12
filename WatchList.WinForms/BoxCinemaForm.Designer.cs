@@ -186,7 +186,7 @@ namespace WatchList.WinForms
             btnAddCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnAddCinema.UseAccentColor = false;
             btnAddCinema.UseVisualStyleBackColor = true;
-            btnAddCinema.Click += BtnAddCinema_Click;
+            btnAddCinema.Click += BtnAddCinema_ClickAsync;
             // 
             // btnEditCinema
             // 
@@ -208,7 +208,7 @@ namespace WatchList.WinForms
             btnEditCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnEditCinema.UseAccentColor = false;
             btnEditCinema.UseVisualStyleBackColor = true;
-            btnEditCinema.Click += BtnEditRow_Click;
+            btnEditCinema.Click += BtnEditRow_ClickAsync;
             // 
             // btnDeleteMovie
             // 
@@ -230,7 +230,7 @@ namespace WatchList.WinForms
             btnDeleteMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnDeleteMovie.UseAccentColor = false;
             btnDeleteMovie.UseVisualStyleBackColor = true;
-            btnDeleteMovie.Click += BtnDeleteMovie_Click;
+            btnDeleteMovie.Click += BtnDeleteMovie_ClickAsync;
             // 
             // btnAddData
             // 

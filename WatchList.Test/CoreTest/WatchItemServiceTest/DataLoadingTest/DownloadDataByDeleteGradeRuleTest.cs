@@ -108,7 +108,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         [Theory]
         [MemberData(nameof(ListsWithTwoSameElementsWithReplaceItem))]
         [MemberData(nameof(ListsWithTwoSameElementsWithNotReplaceItem))]
-        public void Add_Data_File_And_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, DialogReplaceItemQuestion dialogReplaceItem, List<WatchItem> expectItems)
+        public async Task Add_Data_File_And_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, DialogReplaceItemQuestion dialogReplaceItem, List<WatchItem> expectItems)
         {
             // Arrange
             var logger = new TestLogger();
@@ -118,7 +118,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var watchItemRepository = new WatchItemRepository(dbContext, logger);
 
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(dialogReplaceItem);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(dialogReplaceItem);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
             var loadRuleConfig = new TestLoadRuleConfig()
@@ -159,7 +159,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
 
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(dialogReplaceItem);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(dialogReplaceItem);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
             var loadRuleConfig = new TestLoadRuleConfig()
@@ -189,7 +189,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
         [Theory]
         [MemberData(nameof(ListsWithTwoSameElements))]
-        public void Add_Data_File_And_One_Replace_And_Not_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, Dictionary<string, DialogReplaceItemQuestion> dictionaryAddItem, List<WatchItem> expectItems)
+        public async Task Add_Data_File_And_One_Replace_And_Not_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, Dictionary<string, DialogReplaceItemQuestion> dictionaryAddItem, List<WatchItem> expectItems)
         {
             // Arrange
             var logger = new TestLogger();
@@ -201,7 +201,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             foreach (var item in dictionaryAddItem)
             {
-                messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).Returns(item.Value);
+                messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).ReturnsAsync(item.Value);
             }
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
@@ -244,7 +244,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             foreach (var item in dictionaryAddItem)
             {
-                messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).Returns(item.Value);
+                messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).ReturnsAsync(item.Value);
             }
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);

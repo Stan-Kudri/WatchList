@@ -4,16 +4,16 @@ namespace WatchList.Core.Service.Component
 {
     public interface IMessageBox
     {
-        public void ShowInfo(string message);
+        public Task ShowInfo(string message);
 
-        public void ShowWarning(string message);
+        public Task ShowWarning(string message);
 
-        public void ShowError(string message);
+        public Task ShowError(string message);
 
-        public bool ShowQuestion(string message);
+        public Task<bool> ShowQuestion(string message);
 
-        public bool ShowQuestionSaveItem(string message);
+        public Task<bool> ShowQuestionSaveItem(string message);
 
-        public DialogReplaceItemQuestion ShowDataReplaceQuestion(string titleItem);
+        public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem);
     }
 }

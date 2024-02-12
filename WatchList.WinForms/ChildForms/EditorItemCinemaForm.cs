@@ -39,22 +39,22 @@ namespace WatchList.WinForms.ChildForms
             return CinemaModel.CreateNonPlanned(txtEditName.Text, numericEditSequel.Value, date, grade, status, type, id);
         }
 
-        private void BtnSaveEdit_Click(object sender, EventArgs e)
+        private async void BtnSaveEdit_Click(object sender, EventArgs e)
         {
             if (!ValidateFields(out string errorMessage))
             {
-                _messageBox.ShowWarning(errorMessage);
+                await _messageBox.ShowWarning(errorMessage);
                 DialogResult = DialogResult.TryAgain;
             }
             else
             {
-                if (HasChanges() && _messageBox.ShowQuestion("Save edit item Cinema?"))
+                if (HasChanges() && await _messageBox.ShowQuestion("Save edit item Cinema?"))
                 {
                     DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    _messageBox.ShowInfo("No changed item cinema.");
+                    await _messageBox.ShowInfo("No changed item cinema.");
                     Close();
                 }
             }

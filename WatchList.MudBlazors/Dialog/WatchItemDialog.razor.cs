@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using WatchList.Core.Model.ItemCinema;
+using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Service;
 using WatchList.MudBlazors.Extension;
 using WatchList.MudBlazors.Model;
@@ -51,7 +52,7 @@ namespace WatchList.MudBlazors.Dialog
             }
 
             var item = _watchItemModel.ToWatchItem();
-            WatchItemService.Add(item);
+            await WatchItemService.AddAsync(item);
 
             MudDialog.Close();
         }
@@ -68,14 +69,14 @@ namespace WatchList.MudBlazors.Dialog
 
             if (!ValidateFields(out var message))
             {
-                ShowMessageWarning(message);
+                await ShowMessageWarning(message);
                 return;
             }
 
             var item = _watchItemModel.ToWatchItem();
             if (!_oldWatchItem.Equals(item))
             {
-                WatchItemService.Updata(_oldWatchItem, item);
+                await WatchItemService.UpdateAsync(_oldWatchItem, item);
             }
 
             MudDialog.Close();
@@ -116,7 +117,7 @@ namespace WatchList.MudBlazors.Dialog
                 return false;
             }
 
-            if (_watchItemModel.Grade <= 0)
+            if (_watchItemModel.Grade <= 0 && _watchItemModel.Status != StatusCinema.Planned)
             {
                 message = $"Grade cinema above in zero.";
                 return false;
@@ -125,6 +126,12 @@ namespace WatchList.MudBlazors.Dialog
             if (_watchItemModel.Sequel == 0)
             {
                 message = $"Enter number {_watchItemModel.Title}";
+                return false;
+            }
+
+            if (_watchItemModel.Date == null && _watchItemModel.Status == StatusCinema.Viewed)
+            {
+                message = "Ener the viewing date.";
                 return false;
             }
 

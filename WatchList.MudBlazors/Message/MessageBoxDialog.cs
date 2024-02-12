@@ -12,22 +12,22 @@ namespace WatchList.MudBlazors.Message
         public MessageBoxDialog(IDialogService dialogService)
             => _dialogService = dialogService;
 
-        public DialogReplaceItemQuestion ShowDataReplaceQuestion(string titleItem)
-            => DialogReplaceItemQuestion.Yes;
+        public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem)
+            => Task.FromResult(DialogReplaceItemQuestion.Yes);
 
-        public void ShowError(string message)
+        public Task ShowError(string message)
             => _dialogService.ShowMessageBox("Error", message, yesText: "Ok");
 
-        public void ShowInfo(string message)
+        public Task ShowInfo(string message)
             => _dialogService.ShowMessageBox("Information", message, yesText: "Ok");
 
-        public bool ShowQuestion(string message)
+        public Task<bool> ShowQuestion(string message)
             => _dialogService.DialogYesNoShow("Question", message);
 
-        public bool ShowQuestionSaveItem(string message)
+        public Task<bool> ShowQuestionSaveItem(string message)
             => _dialogService.DialogYesNoShow("Question", message);
 
-        public void ShowWarning(string message)
+        public Task ShowWarning(string message)
             => _dialogService.ShowMessageBox("Warning", message, yesText: "Ok");
     }
 }

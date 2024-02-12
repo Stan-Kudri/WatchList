@@ -23,7 +23,7 @@ namespace WatchList.Core.Service
 
         public void Remove(Guid id) => _repository.Remove(id);
 
-        public void Add(WatchItem item)
+        public async Task AddAsync(WatchItem item)
         {
             var selectItem = _repository.SelectDuplicateItems(item);
             var countDuplicate = selectItem.Count;
@@ -34,21 +34,21 @@ namespace WatchList.Core.Service
                 return;
             }
 
-            if (_messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
+            if (await _messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
             {
                 item.Id = selectItem[0];
                 Update(item);
             }
         }
 
-        public void Updata(WatchItem oldItem, WatchItem modifiedItem)
+        public async Task UpdateAsync(WatchItem oldItem, WatchItem modifiedItem)
         {
             var selectItem = _repository.SelectDuplicateItems(modifiedItem);
             var countDuplicate = selectItem.Count;
 
             if (countDuplicate == 1 && oldItem.Title != modifiedItem.Title)
             {
-                if (_messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
+                if (await _messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
                 {
                     modifiedItem.Id = selectItem[0];
                     Remove(oldItem.Id);

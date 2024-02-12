@@ -63,19 +63,19 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
 
         [Theory]
         [MemberData(nameof(ListWithNewItemAdded))]
-        public void Add_New_Item_In_Database(List<WatchItem> items, WatchItem addItem, List<WatchItem> expectItems)
+        public async Task Add_New_Item_In_Database(List<WatchItem> items, WatchItem addItem, List<WatchItem> expectItems)
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var itemRepository = new WatchItemRepository(dbContext, new TestLogger());
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).ReturnsAsync(true);
             var service = new WatchItemService(itemRepository, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
 
             // Act
-            service.Add(addItem);
+            service.AddAsync(addItem);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
@@ -84,19 +84,19 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
 
         [Theory]
         [MemberData(nameof(ListWithUpdatedItem))]
-        public void Update_Item_In_Database(List<WatchItem> items, WatchItem oldItem, WatchItem updateItem, List<WatchItem> expectItems)
+        public async Task Update_Item_In_DatabaseAsync(List<WatchItem> items, WatchItem oldItem, WatchItem updateItem, List<WatchItem> expectItems)
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var itemRepository = new WatchItemRepository(dbContext, new TestLogger());
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).ReturnsAsync(true);
             var service = new WatchItemService(itemRepository, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
 
             // Act
-            service.Updata(oldItem, updateItem);
+            await service.UpdateAsync(oldItem, updateItem);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert
