@@ -19,13 +19,7 @@ builder.Services.AddMudServices();
 
 builder.Services.AddSingleton(new DbContextFactoryMigrator("app.db"));
 builder.Services.AddScoped(e => e.GetRequiredService<DbContextFactoryMigrator>().Create());
-builder.Services.AddScoped(e => new AggregateLogging()
-            {
-                new ConsoleLogger(LogLevel.Trace),
-                //new FileLogger(LogLevel.Trace, path),
-            });
-builder.Logging.AddConsole();
-builder.Services.AddLogging();
+builder.Services.AddScoped(e => new AggregateLogging() { new ConsoleLogger(LogLevel.Trace), });
 builder.Services.AddScoped(e => new WatchItemRepository(e.GetRequiredService<WatchCinemaDbContext>(), e.GetRequiredService<AggregateLogging>()));
 builder.Services.AddScoped<IMessageBox, MessageBoxDialog>();
 builder.Services.AddScoped<WatchItemService>();
