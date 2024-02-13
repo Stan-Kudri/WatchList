@@ -3,6 +3,7 @@ using MudBlazor;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Service;
+using WatchList.Core.Service.Component;
 using WatchList.MudBlazors.Extension;
 using WatchList.MudBlazors.Model;
 
@@ -12,7 +13,7 @@ namespace WatchList.MudBlazors.Dialog
     {
         [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
         [Inject] private WatchItemService WatchItemService { get; set; } = null!;
-        [Inject] private IDialogService DialogService { get; set; } = null!;
+        [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
 
         private WatchItemModel _watchItemModel { get; set; } = new WatchItemModel();
         private string[] _errors = { };
@@ -37,7 +38,6 @@ namespace WatchList.MudBlazors.Dialog
 
         private void Close() => MudDialog.Cancel();
 
-        //Methods for add item type product
         private async Task Add()
         {
             if (_errors.Length != 0)
@@ -47,7 +47,7 @@ namespace WatchList.MudBlazors.Dialog
 
             if (!ValidateFields(out var message))
             {
-                ShowMessageWarning(message);
+                await MessageBoxDialog.ShowWarning(message);
                 return;
             }
 
@@ -59,7 +59,6 @@ namespace WatchList.MudBlazors.Dialog
 
         private void ClearData() => _watchItemModel.ClearData();
 
-        //Methods for edit item type product
         private async Task Updata()
         {
             if (_errors.Length != 0)
@@ -69,7 +68,7 @@ namespace WatchList.MudBlazors.Dialog
 
             if (!ValidateFields(out var message))
             {
-                await ShowMessageWarning(message);
+                await MessageBoxDialog.ShowWarning(message);
                 return;
             }
 
@@ -91,9 +90,6 @@ namespace WatchList.MudBlazors.Dialog
                 yield return "Field is required.";
             }
         }
-
-        private async Task ShowMessageWarning(string message)
-            => await DialogService.ShowMessageBox("Warning", message, yesText: "Ok");
 
         private bool ValidateFields(out string message)
         {
@@ -119,7 +115,7 @@ namespace WatchList.MudBlazors.Dialog
 
             if (_watchItemModel.Grade <= 0 && _watchItemModel.Status != StatusCinema.Planned)
             {
-                message = $"Grade cinema above in zero.";
+                message = "Grade cinema above in zero.";
                 return false;
             }
 

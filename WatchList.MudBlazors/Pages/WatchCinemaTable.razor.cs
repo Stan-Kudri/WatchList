@@ -5,6 +5,7 @@ using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.Sorting;
 using WatchList.Core.PageItem;
 using WatchList.Core.Service;
+using WatchList.Core.Service.Component;
 using WatchList.MudBlazors.Dialog;
 using WatchList.MudBlazors.Model;
 
@@ -12,8 +13,13 @@ namespace WatchList.MudBlazors.Pages
 {
     public partial class WatchCinemaTable
     {
+        private const int NonSelectItems = 0;
+
+        private const string MessageNoSelectItems = "No items selected.";
+
         [Inject] WatchItemService WatchItemService { get; set; } = null!;
-        [Inject] private IDialogService DialogService { get; set; } = null!;
+        [Inject] IDialogService DialogService { get; set; } = null!;
+        [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
 
         private readonly PageModel _pageModel = new PageModel();
 
@@ -21,16 +27,16 @@ namespace WatchList.MudBlazors.Pages
         private HashSet<WatchItem> _selectedItems = new HashSet<WatchItem>();
         private bool _isSelectItems = true;
 
-        private WatchItemSearchRequest _searchRequest = new WatchItemSearchRequest();
+        private WatchItemSearchRequest _itemsSearchRequest = new WatchItemSearchRequest();
         private PagedList<WatchItem>? _pagedList = null;
 
         protected override void OnInitialized()
         {
-            _searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, _pageModel);
+            _itemsSearchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, _pageModel);
             LoadData();
         }
 
-        private async Task SaveDialogItem(Guid? id = null)
+        private async Task SaveItemDialog(Guid? id = null)
         {
             var parameters = new DialogParameters<WatchItemDialog> { { x => x.Id, id } };
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
@@ -45,9 +51,41 @@ namespace WatchList.MudBlazors.Pages
             }
         }
 
+        private async Task RemoveItemsDialog()
+        {
+            if (_selectedItems.Count <= NonSelectItems)
+            {
+                await MessageBoxDialog.ShowWarning(MessageNoSelectItems);
+                return;
+            }
+
+            if (!await MessageBoxDialog.ShowQuestion("Delete selecte items?"))
+            {
+                return;
+            }
+
+            foreach (var item in _selectedItems)
+            {
+                WatchItemService.Remove(item.Id);
+            }
+
+            LoadData();
+        }
+
+        private async Task RemoveItemDialog(Guid id)
+        {
+            if (!await MessageBoxDialog.ShowQuestion("Delete selecte items?"))
+            {
+                return;
+            }
+
+            WatchItemService.Remove(id);
+            LoadData();
+        }
+
         private void LoadData()
         {
-            _pagedList = WatchItemService.GetPage(_searchRequest);
+            _pagedList = WatchItemService.GetPage(_itemsSearchRequest);
             _items = _pagedList.Items;
             StateHasChanged();
         }

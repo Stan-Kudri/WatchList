@@ -25,21 +25,22 @@
         </MudSelect>
 
 
-        <MudNumericField @bind-Value="_watchItemModel.Sequel" Label="@_watchItemModel.Type.TypeSequel" Variant="Variant.Text" Min="1" />
+        <MudNumericField @bind-Value="_watchItemModel.Sequel" Label="@_watchItemModel.Type.TypeSequel" Variant="Variant.Text" Min="1"/>
 
         @if (_watchItemModel.Status != StatusCinema.Planned)
         {
             <MudNumericField @bind-Value="_watchItemModel.Grade"
                              Label="Grade"
                              Variant="Variant.Text"
-                             Min="1" Max="10" />
+                             Min="1" Max="10"
+                             Validation="@(new Func<int,IEnumerable<string>>(ValidGrade))"/>
         }
         @if (_watchItemModel.Status == StatusCinema.Viewed)
         {
             <MudDatePicker @bind-Date=@_watchItemModel.Date
                            Label="Date"
                            MaxDate="DateTime.Now"
-                           Required="true" />
+                           Required="true"/>
         }
 
     </MudForm>

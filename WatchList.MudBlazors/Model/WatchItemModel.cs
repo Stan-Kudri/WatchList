@@ -7,7 +7,6 @@ namespace WatchList.MudBlazors.Model
     public class WatchItemModel
     {
         private const int FirstValue = 1;
-        private const int Zero = 0;
 
         private Guid _id = Guid.NewGuid();
         private string _title = string.Empty;
