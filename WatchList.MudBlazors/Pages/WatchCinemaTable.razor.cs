@@ -44,11 +44,7 @@ namespace WatchList.MudBlazors.Pages
 
             var dialog = await DialogService.ShowAsync<WatchItemDialog>(title, parameters, options);
             var result = await dialog.Result;
-
-            if (!result.Canceled)
-            {
-                LoadData();
-            }
+            LoadData();
         }
 
         private async Task RemoveItemsDialog()

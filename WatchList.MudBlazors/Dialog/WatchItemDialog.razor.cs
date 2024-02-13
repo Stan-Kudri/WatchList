@@ -113,7 +113,8 @@ namespace WatchList.MudBlazors.Dialog
                 return false;
             }
 
-            if (_watchItemModel.Grade <= 0 && _watchItemModel.Status != StatusCinema.Planned)
+            if ((_watchItemModel.Grade == null || _watchItemModel.Grade <= 0)
+                && _watchItemModel.Status != StatusCinema.Planned)
             {
                 message = "Grade cinema above in zero.";
                 return false;

@@ -32,8 +32,7 @@
             <MudNumericField @bind-Value="_watchItemModel.Grade"
                              Label="Grade"
                              Variant="Variant.Text"
-                             Min="1" Max="10"
-                             Validation="@(new Func<int,IEnumerable<string>>(ValidGrade))"/>
+                             Min="1" Max="10"/>
         }
         @if (_watchItemModel.Status == StatusCinema.Viewed)
         {
