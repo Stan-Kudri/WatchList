@@ -1,0 +1,78 @@
+﻿@using WatchList.Core.Model.ItemCinema.Components
+
+<MudContainer>
+
+    <MudForm @bind-Errors="@_errors" Model="@_watchItemModel">
+
+        <MudTextField T="string" Label="Title"
+                      InputType="InputType.Text"
+                      Required="true"
+                      @bind-Value=@_watchItemModel.Title
+                      Validation="@(new Func<string, IEnumerable<string>>(ValidFormatText))" />
+
+        <MudSelect T="TypeCinema" Label="Type" @bind-Value="_watchItemModel.Type" AdornmentIcon="@Icons.Material.Filled.ShortText">
+            @foreach (var item in TypeCinema.List.Where(x => x != TypeCinema.AllType).ToList())
+            {
+                <MudSelectItem T="TypeCinema" Value="@item" />
+            }
+        </MudSelect>
+
+        <MudSelect T="StatusCinema" Label="Status" @bind-Value="_watchItemModel.Status" AdornmentIcon="@Icons.Material.Filled.ShortText">
+            @foreach (var item in StatusCinema.List.Where(x => x != StatusCinema.AllStatus).ToList())
+            {
+                <MudSelectItem T="StatusCinema" Value="@item" />
+            }
+        </MudSelect>
+
+
+        <MudNumericField @bind-Value="_watchItemModel.Sequel" Label="@_watchItemModel.Type.TypeSequel" Variant="Variant.Text" Min="1"/>
+
+        @if (_watchItemModel.Status != StatusCinema.Planned)
+        {
+            <MudNumericField @bind-Value="_watchItemModel.Grade"
+                             Label="Grade"
+                             Variant="Variant.Text"
+                             Min="1" Max="10"/>
+        }
+        @if (_watchItemModel.Status == StatusCinema.Viewed)
+        {
+            <MudDatePicker @bind-Date=@_watchItemModel.Date
+                           Label="Date"
+                           MaxDate="DateTime.Now"
+                           Required="true"/>
+        }
+
+    </MudForm>
+
+    <MudSpacer />
+
+    <MudToolBar DisableGutters="true" Class="relative d-flex justify-end gap-1">
+
+        @if (_isAddItem)
+        {
+            <MudTooltip Text="Save" Placement="Placement.Bottom">
+                <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="Add">Save</MudButton>
+            </MudTooltip>
+            <MudTooltip Text="Clear" Placement="Placement.Bottom">
+                <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="ClearData">Clear</MudButton>
+            </MudTooltip>
+        }
+        else
+        {
+            <MudTooltip Text="Save" Placement="Placement.Bottom">
+                <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="Updata">Save</MudButton>
+            </MudTooltip>
+            <MudTooltip Text="Replace" Placement="Placement.Bottom">
+                <MudButton Class="ml-1" Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="RecoverPastData">Recover</MudButton>
+            </MudTooltip>
+        }
+
+        <MudTooltip Text="Close" Placement="Placement.Bottom">
+            <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="Close">Close</MudButton>
+        </MudTooltip>
+
+    </MudToolBar>
+
+</MudContainer>
+
+

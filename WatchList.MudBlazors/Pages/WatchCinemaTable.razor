@@ -1,0 +1,97 @@
+﻿@using Bromix.MudBlazor.MaterialDesignIcons
+@using WatchList.Core.Model.Filter.Components
+@using WatchList.Core.Model.ItemCinema
+@using WatchList.Core.Model.Sorting
+
+@page "/watchlist"
+
+<MudText Style="text-align:center; font-size:16px; color:navy;" Class="mt-6">List Cinema</MudText>
+
+<MudPaper>
+
+    <MudToolBar Style="place-items:end">
+
+
+        <div style="align-items:start">
+            <MudSelect T="SortField" Label="Sorting" AdornmentIcon="@Icons.Material.Filled.ShortText" @bind-Value="Sort.Type" OnClose="@LoadData" OnKeyUp="@LoadData">
+                @foreach (var item in Sort.Items.ToList())
+                {
+                    <MudSelectItem T="SortField" Value="@item" />
+                }
+            </MudSelect>
+        </div>
+
+        <MudSpacer/>
+
+        <div style="align-items:end">
+            <MudSelect T="TypeFilter" Label="Type cinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Class="mr-2" @bind-Value="Filter.Type">
+                @foreach (var item in Filter.TypeItem.ToList())
+                {
+                    <MudSelectItem T="TypeFilter" Value="@item" />
+                }
+            </MudSelect>
+        </div>
+
+        <div style="align-items:end">
+            <MudSelect T="StatusFilter" Label="Status" AdornmentIcon="@Icons.Material.Filled.ShortText" Class="mr-1" @bind-Value="Filter.Status">
+                @foreach (var item in Filter.StatusItem.ToList())
+                {
+                    <MudSelectItem T="StatusFilter" Value="@item" />
+                }
+            </MudSelect>
+        </div>
+
+        <MudTooltip Text="Use Filter" Placement="Placement.Top">
+            <MudIconButton Icon="@MaterialDesignIcons.Normal.Filter" OnClick="@LoadData" Color="Color.Primary" Variant="Variant.Text" Size="Size.Medium" />
+        </MudTooltip>
+        <MudTooltip Text="Off Filter" Placement="Placement.Top">
+            <MudIconButton Icon="@MaterialDesignIcons.Normal.FilterOff" OnClick="@ClearFilter" Color="Color.Primary" Variant="Variant.Text" Size="Size.Medium" />
+        </MudTooltip>
+
+    </MudToolBar>
+
+    <MudToolBar>
+
+        <MudSpacer />
+        <MudButton OnClick="@((e) => SaveItemDialog())" Color="Color.Tertiary" Variant="Variant.Outlined" Style="font-size:12px" Class="mr-3">Add Item</MudButton>
+        <MudButton OnClick="@RemoveItemsDialog" Color="Color.Error" Variant="Variant.Outlined" Style="font-size:12px" Disabled="@_isSelectItems">Remove Items</MudButton>
+
+    </MudToolBar>
+
+    <MudTable Items="@_items" Hover="true" SortLabel="Sort By" Elevation="0" Bordered="true" MultiSelection="true" Dense="true" T="WatchItem" SelectedItemsChanged="OnSelectItems">
+
+        <HeaderContent>
+            <MudTd Style="text-align:center; font-size:14px; ">Title</MudTd>
+            <MudTd Style="text-align:center; font-size:14px; ">Season/Part</MudTd>
+            <MudTd Style="text-align:center; font-size:14px; ">Status</MudTd>
+            <MudTd Style="text-align:center; font-size:14px; ">Data</MudTd>
+            <MudTd Style="text-align:center; font-size:14px; ">Grade</MudTd>
+            <MudTd Style="text-align:center; font-size:14px; ">Type</MudTd>
+            <MudTh></MudTh>
+        </HeaderContent>
+
+        <RowTemplate>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Title">@context.Title</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Season/Part">@context.Sequel</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Status">@context.Status</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Data">@context.Date?.ToString("d")</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Grade">@context.Grade</MudTh>
+            <MudTh Style="text-align:center; font-size:12px" DataLabel="Type">@context.Type</MudTh>
+            <MudTh Style="text-align:center">
+                <MudTooltip Text="Edit" Placement="Placement.Bottom">
+                     <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Pencil" Variant="Variant.Outlined" Size="Size.Large" Class="ml-1" OnClick="@((e) => SaveItemDialog(context.Id))" />
+                </MudTooltip>
+                <MudTooltip Text="Remove" Placement="Placement.Bottom">
+                        <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Delete" Variant="Variant.Outlined" Size="Size.Large" OnClick="@(() => RemoveItemDialog(context.Id))" />
+                </MudTooltip>
+            </MudTh>
+        </RowTemplate>
+
+        <PagerContent>
+            <MudTablePager HorizontalAlignment="HorizontalAlignment.Center" PageSizeOptions="_pageModel.Items" />
+        </PagerContent>
+
+    </MudTable>
+
+</MudPaper>
+

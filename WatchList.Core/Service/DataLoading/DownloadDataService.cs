@@ -57,7 +57,7 @@ namespace WatchList.Core.Service.DataLoading
             }
         }
 
-        private void UpdateItems(WatchItemCollection itemCollection)
+        private async Task UpdateItems(WatchItemCollection itemCollection)
         {
             var dialogResultReplaceItem = DialogReplaceItemQuestion.Unknown;
 
@@ -73,7 +73,7 @@ namespace WatchList.Core.Service.DataLoading
                     case QuestionResultEnum.Unknown:
                     case QuestionResultEnum.Yes:
                     case QuestionResultEnum.No:
-                        dialogResultReplaceItem = _messageBox.ShowDataReplaceQuestion(item.Title);
+                        dialogResultReplaceItem = await _messageBox.ShowDataReplaceQuestion(item.Title);
                         break;
                 }
 

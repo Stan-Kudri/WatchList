@@ -1,5 +1,12 @@
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using MudBlazor.Services;
+using WatchList.Core.Logger;
+using WatchList.Core.Repository;
+using WatchList.Core.Repository.Db;
+using WatchList.Core.Service;
+using WatchList.Core.Service.Component;
+using WatchList.Migrations.SQLite;
+using WatchList.MudBlazors.Message;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +16,14 @@ StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configurat
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
+
+builder.Services.AddSingleton(new DbContextFactoryMigrator("app.db"));
+builder.Services.AddScoped(e => e.GetRequiredService<DbContextFactoryMigrator>().Create());
+builder.Services.AddScoped(e => new AggregateLogging() { new ConsoleLogger(LogLevel.Trace), });
+builder.Services.AddScoped(e => new WatchItemRepository(e.GetRequiredService<WatchCinemaDbContext>(), e.GetRequiredService<AggregateLogging>()));
+builder.Services.AddScoped<IMessageBox, MessageBoxDialog>();
+builder.Services.AddScoped<WatchItemService>();
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 

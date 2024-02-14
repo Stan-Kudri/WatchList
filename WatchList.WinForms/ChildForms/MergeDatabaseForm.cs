@@ -52,9 +52,9 @@ namespace WatchList.WinForms.ChildForms
             cmbGrade.SelectedItem = Grade.AnyGrade;
         }
 
-        private void BtnOk_Click(object sender, EventArgs e)
+        private async void BtnOk_Click(object sender, EventArgs e)
         {
-            if (_messageBox.ShowQuestion("Add data from a file using the following algorithm?"))
+            if (await _messageBox.ShowQuestion("Add data from a file using the following algorithm?"))
             {
                 DialogResult = DialogResult.OK;
             }

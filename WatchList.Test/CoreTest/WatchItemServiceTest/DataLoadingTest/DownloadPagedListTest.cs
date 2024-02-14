@@ -46,7 +46,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
 
         [Theory]
         [MemberData(nameof(ListItemsInFileAfterLoading))]
-        public void Add_Data_File(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
+        public async Task Add_Data_File(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
         {
             // Arrange
             var logger = new TestLogger();
@@ -56,7 +56,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var watchItemRepository = new WatchItemRepository(dbContext, logger);
 
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger) { NumberOfItemPerPage = PageSize };
             var loadRuleConfig = new TestLoadRuleConfig();
@@ -88,7 +88,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var watchItemRepository = new WatchItemRepository(dbContext, logger);
 
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger) { NumberOfItemPerPage = PageSize };
             var loadRuleConfig = new TestLoadRuleConfig();

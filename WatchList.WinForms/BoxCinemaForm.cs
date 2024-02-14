@@ -88,7 +88,7 @@ namespace WatchList.WinForms
             cmbFilterStatus.Refresh();
         }
 
-        private void BtnAddCinema_Click(object sender, EventArgs e)
+        private async void BtnAddCinema_ClickAsync(object sender, EventArgs e)
         {
             var addForm = new AddCinemaForm(_messageBox);
 
@@ -99,12 +99,12 @@ namespace WatchList.WinForms
 
             _logger.LogInformation("Click save add item");
             var itemCinema = addForm.GetCinema();
-            _itemService.Add(itemCinema.ToWatchItem());
+            await _itemService.AddAsync(itemCinema.ToWatchItem());
 
             UpdateGridData();
         }
 
-        private void BtnEditRow_Click(object sender, EventArgs e)
+        private async void BtnEditRow_ClickAsync(object sender, EventArgs e)
         {
             var indexEditRow = GetSelectedRowIndexes();
             if (indexEditRow.Count == 1)
@@ -119,16 +119,16 @@ namespace WatchList.WinForms
 
                 _logger.LogInformation("Click save edit item");
                 var updateItem = updateForm.GetEditItemCinema();
-                _itemService.Update(oldItem.ToWatchItem(), updateItem.ToWatchItem());
+                await _itemService.UpdateAsync(oldItem.ToWatchItem(), updateItem.ToWatchItem());
                 UpdateGridData();
             }
             else
             {
-                _messageBox.ShowWarning("Select one item.");
+                await _messageBox.ShowWarning("Select one item.");
             }
         }
 
-        private void BtnDeleteMovie_Click(object sender, EventArgs e)
+        private async void BtnDeleteMovie_ClickAsync(object sender, EventArgs e)
         {
             var selectedRowIds = GetSelectedRowIndexes()
                 .Select(idx => dgvCinema.Rows[idx].Get<Guid>(IndexColumnId))
@@ -136,11 +136,11 @@ namespace WatchList.WinForms
 
             if (selectedRowIds.Count == 0)
             {
-                _messageBox.ShowWarning(HighlightTheDesiredLine);
+                await _messageBox.ShowWarning(HighlightTheDesiredLine);
                 return;
             }
 
-            if (!_messageBox.ShowQuestion("Delete selected items?"))
+            if (!await _messageBox.ShowQuestion("Delete selected items?"))
             {
                 return;
             }
@@ -152,7 +152,7 @@ namespace WatchList.WinForms
                 _itemService.Remove(id);
             }
 
-            LoadData();
+            await LoadDataAsync();
         }
 
         private void BtnDownloadDataFile_Click(object sender, EventArgs e)
@@ -189,43 +189,43 @@ namespace WatchList.WinForms
         private void BoxCinemaForm_FormClosing(object sender, FormClosingEventArgs e)
             => _logger.LogTrace("Close App.");
 
-        private void BtnBackPage_Click(object sender, EventArgs e)
+        private async void BtnBackPage_Click(object sender, EventArgs e)
         {
             if (_pagedList.HasPreviousPage)
             {
                 Page.Number--;
-                LoadData();
+                await LoadDataAsync();
             }
         }
 
-        private void BtnStartPage_Click(object sender, EventArgs e)
+        private async void BtnStartPage_Click(object sender, EventArgs e)
         {
             if (_pagedList.HasPreviousPage)
             {
                 Page.Number = 1;
-                LoadData();
+                await LoadDataAsync();
             }
         }
 
-        private void BtnNextPage_Click(object sender, EventArgs e)
+        private async void BtnNextPage_Click(object sender, EventArgs e)
         {
             if (_pagedList.HasNextPage)
             {
                 Page.Number++;
-                LoadData();
+                await LoadDataAsync();
             }
         }
 
-        private void BtnEndPage_Click(object sender, EventArgs e)
+        private async void BtnEndPage_Click(object sender, EventArgs e)
         {
             if (_pagedList.HasNextPage)
             {
                 Page.Number = _pagedList.PageCount;
-                LoadData();
+                await LoadDataAsync();
             }
         }
 
-        private void CmbPageSize_Changed(object sender, EventArgs e)
+        private async void CmbPageSize_Changed(object sender, EventArgs e)
         {
             var pageSizeCmb = SelectedPageSize();
 
@@ -233,17 +233,17 @@ namespace WatchList.WinForms
             {
                 Page.Size = pageSizeCmb;
                 Page.Number = 1;
-                LoadData();
+                await LoadDataAsync();
             }
         }
 
-        private void CmbSort_ChangedItem(object sender, EventArgs e)
+        private async void CmbSort_ChangedItem(object sender, EventArgs e)
         {
             Sort.Type = Sort.Items[cmbSortType.SelectedIndex];
-            LoadData();
+            await LoadDataAsync();
         }
 
-        private void TextBoxPage_TextChanged(object sender, EventArgs e)
+        private async void TextBoxPage_TextChanged(object sender, EventArgs e)
         {
             if (!int.TryParse(textBoxPage.Text, out var pageNumber)
                 || pageNumber > _pagedList.PageCount
@@ -254,7 +254,7 @@ namespace WatchList.WinForms
             }
 
             Page.Number = pageNumber;
-            LoadData();
+            await LoadDataAsync();
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace WatchList.WinForms
         /// <summary>
         /// Filling in tabular data from a file.
         /// </summary>
-        private void LoadData()
+        private async Task LoadDataAsync()
         {
             try
             {
@@ -299,7 +299,7 @@ namespace WatchList.WinForms
                 if (IsNotFirstPageEmpty())
                 {
                     Page.Number -= 1;
-                    LoadData();
+                    await LoadDataAsync();
                 }
 
                 var item = _pagedList.Items;
@@ -313,7 +313,7 @@ namespace WatchList.WinForms
             }
             catch (Exception error)
             {
-                _messageBox.ShowError(error.Message);
+                await _messageBox.ShowError(error.Message);
             }
         }
 
@@ -325,10 +325,10 @@ namespace WatchList.WinForms
         /// <summary>
         /// Create a new SearchRequest in the database for the selected ComboBox("Filter", "Sort", "PageNumber") and updates the tabular data on it.
         /// </summary>
-        private void UpdateGridData()
+        private async Task UpdateGridData()
         {
             _searchRequest = new WatchItemSearchRequest(Filter.GetFilter(), Sort.GetSortItem(), Page.GetPage());
-            LoadData();
+            await LoadDataAsync();
         }
 
         /// <summary>

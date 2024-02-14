@@ -36,11 +36,11 @@ namespace WatchList.WinForms.ChildForms
             return CinemaModel.CreateNonPlanned(txtAddCinema.Text, numericSequel.Value, dateViewed, grade, _status, SelectedTypeCinema);
         }
 
-        private void BtnAddCinema_Click(object sender, EventArgs e)
+        private async void BtnAddCinema_Click(object sender, EventArgs e)
         {
             if (!ValidateFields(out var errorMessage))
             {
-                _messageBox.ShowWarning(errorMessage);
+                await _messageBox.ShowWarning(errorMessage);
                 DialogResult = DialogResult.TryAgain;
             }
             else

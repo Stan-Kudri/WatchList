@@ -123,7 +123,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         [MemberData(nameof(ListsAddOneItemByTypeCinema))]
         [MemberData(nameof(ListsAddItemsByAllTypeCinema))]
         [MemberData(nameof(ListsNotAddItemsByTypeCinema))]
-        public void Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema typeCinema, List<WatchItem> expectItems)
+        public async Task Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema typeCinema, List<WatchItem> expectItems)
         {
             // Arrange
             var logger = new TestLogger();
@@ -133,7 +133,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var watchItemRepository = new WatchItemRepository(dbContext, logger);
 
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
             var loadRuleConfig = new TestLoadRuleConfig() { TypeCinemaLoad = typeCinema };
@@ -167,7 +167,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var watchItemRepository = new WatchItemRepository(dbContext, logger);
 
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).Returns(DialogReplaceItemQuestion.AllYes);
+            messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
             var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
             var loadRuleConfig = new TestLoadRuleConfig() { TypeCinemaLoad = typeCinema };

@@ -6,23 +6,37 @@ namespace WatchList.WinForms.Message
 {
     public class MessageBoxShow : IMessageBox
     {
-        public void ShowInfo(string message) => MessageBox.Show(message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        public Task ShowInfo(string message)
+        {
+            MessageBox.Show(message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return Task.CompletedTask;
+        }
 
-        public void ShowWarning(string message) => MessageBox.Show(message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        public Task ShowWarning(string message)
+        {
+            MessageBox.Show(message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return Task.CompletedTask;
+        }
 
-        public void ShowError(string message) => MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        public Task ShowError(string message)
+        {
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return Task.CompletedTask;
+        }
 
-        public bool ShowQuestion(string message) => MessageBox.Show(message, "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+        public Task<bool> ShowQuestion(string message)
+            => Task.FromResult(MessageBox.Show(message, "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
 
-        public bool ShowQuestionSaveItem(string message) => MessageBox.Show(message, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK;
+        public Task<bool> ShowQuestionSaveItem(string message) => Task.FromResult(MessageBox.Show(message, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK);
 
-        public DialogReplaceItemQuestion ShowDataReplaceQuestion(string titleItem)
+        public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem)
         {
             using (var form = new DataReplaceMessageForm(titleItem))
             {
-                return form.ShowDialog() == DialogResult.OK ?
-                DialogReplaceItemQuestion.FromValue((int)form.ResultQuestion) :
-                DialogReplaceItemQuestion.Unknown;
+                var res = form.ShowDialog() == DialogResult.OK ?
+                    DialogReplaceItemQuestion.FromValue((int)form.ResultQuestion) :
+                    DialogReplaceItemQuestion.Unknown;
+                return Task.FromResult(res);
             }
         }
     }

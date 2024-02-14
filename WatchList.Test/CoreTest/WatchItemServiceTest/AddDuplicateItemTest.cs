@@ -54,17 +54,17 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
 
         [Theory]
         [MemberData(nameof(ListOfElementsWithDuplicateElement))]
-        public void Add_With_Replace_Duplicate_Element(List<WatchItem> items, WatchItem addItem, List<WatchItem> expectItems)
+        public async Task Add_With_Replace_Duplicate_ElementAsync(List<WatchItem> items, WatchItem addItem, List<WatchItem> expectItems)
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
             var itemRepository = new WatchItemRepository(dbContext, new TestLogger());
             var messageBox = new Mock<IMessageBox>();
-            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).Returns(true);
+            messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).ReturnsAsync(true);
             var service = new WatchItemService(itemRepository, messageBox.Object);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
-            service.Add(addItem);
+            await service.AddAsync(addItem);
 
             // Act
             var actualItems = dbContext.WatchItem.ToList();
