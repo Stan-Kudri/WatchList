@@ -1,6 +1,7 @@
 ﻿@using Bromix.MudBlazor.MaterialDesignIcons
 @using WatchList.Core.Model.Filter.Components
 @using WatchList.Core.Model.ItemCinema
+@using WatchList.Core.Model.Sorting
 
 @page "/watchlist"
 
@@ -10,10 +11,20 @@
 
     <MudToolBar Style="place-items:end">
 
+
+        <div style="align-items:start">
+            <MudSelect T="SortField" Label="Sorting" AdornmentIcon="@Icons.Material.Filled.ShortText" @bind-Value="Sort.Type" OnClose="@LoadData" OnKeyUp="@LoadData">
+                @foreach (var item in Sort.Items.ToList())
+                {
+                    <MudSelectItem T="SortField" Value="@item" />
+                }
+            </MudSelect>
+        </div>
+
         <MudSpacer/>
 
         <div style="align-items:end">
-            <MudSelect T="TypeFilter" Label="Type" AdornmentIcon="@Icons.Material.Filled.ShortText" Class="mr-2" @bind-Value="Filter.Type">
+            <MudSelect T="TypeFilter" Label="Type cinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Class="mr-2" @bind-Value="Filter.Type">
                 @foreach (var item in Filter.TypeItem.ToList())
                 {
                     <MudSelectItem T="TypeFilter" Value="@item" />
@@ -22,7 +33,7 @@
         </div>
 
         <div style="align-items:end">
-            <MudSelect T="StatusFilter" Label="Type" AdornmentIcon="@Icons.Material.Filled.ShortText" Class="mr-1" @bind-Value="Filter.Status">
+            <MudSelect T="StatusFilter" Label="Status" AdornmentIcon="@Icons.Material.Filled.ShortText" Class="mr-1" @bind-Value="Filter.Status">
                 @foreach (var item in Filter.StatusItem.ToList())
                 {
                     <MudSelectItem T="StatusFilter" Value="@item" />
