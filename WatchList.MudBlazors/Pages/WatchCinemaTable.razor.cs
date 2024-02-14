@@ -30,6 +30,9 @@ namespace WatchList.MudBlazors.Pages
         private WatchItemSearchRequest _itemsSearchRequest = new WatchItemSearchRequest();
         private PagedList<WatchItem>? _pagedList = null;
 
+        private FilterModel Filter { get; set; } = new FilterModel();
+        private SortModel Sort { get; set; } = new SortModel();
+
         protected override void OnInitialized()
         {
             _itemsSearchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, _pageModel);
@@ -81,6 +84,8 @@ namespace WatchList.MudBlazors.Pages
 
         private void LoadData()
         {
+            _itemsSearchRequest.Filter = Filter.GetFilter();
+            _itemsSearchRequest.Sort = Sort.GetSortItem();
             _pagedList = WatchItemService.GetPage(_itemsSearchRequest);
             _items = _pagedList.Items;
             StateHasChanged();
@@ -90,6 +95,13 @@ namespace WatchList.MudBlazors.Pages
         {
             _selectedItems = items;
             _isSelectItems = _selectedItems.Count <= 0;
+        }
+
+        private void ClearFilter()
+        {
+            Filter.Clear();
+            Sort.Clear();
+            LoadData();
         }
     }
 }
