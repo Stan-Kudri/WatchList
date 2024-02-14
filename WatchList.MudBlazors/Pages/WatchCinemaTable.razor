@@ -5,7 +5,7 @@
 
 @page "/watchlist"
 
-<MudText Style="text-align:center; font-size:16px; color:navy" Class="mt-6">List Cinema</MudText>
+<MudText Style="text-align:center; font-size:16px; color:navy;" Class="mt-6">List Cinema</MudText>
 
 <MudPaper>
 
@@ -79,10 +79,10 @@
             <MudTh Style="text-align:center; font-size:12px" DataLabel="Type">@context.Type</MudTh>
             <MudTh Style="text-align:center">
                 <MudTooltip Text="Edit" Placement="Placement.Bottom">
-                    <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" Variant="Variant.Outlined" Size="Size.Medium" Class="ml-1" OnClick="@((e) => SaveItemDialog(context.Id))" />
+                     <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Pencil" Variant="Variant.Outlined" Size="Size.Large" Class="ml-1" OnClick="@((e) => SaveItemDialog(context.Id))" />
                 </MudTooltip>
                 <MudTooltip Text="Remove" Placement="Placement.Bottom">
-                    <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Size="Size.Medium" OnClick="@(() => RemoveItemDialog(context.Id))" />
+                        <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Delete" Variant="Variant.Outlined" Size="Size.Large" OnClick="@(() => RemoveItemDialog(context.Id))" />
                 </MudTooltip>
             </MudTh>
         </RowTemplate>
