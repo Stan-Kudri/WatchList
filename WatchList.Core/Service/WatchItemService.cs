@@ -21,6 +21,8 @@ namespace WatchList.Core.Service
 
         public PagedList<WatchItem> GetPage(WatchItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
 
+        public PagedList<WatchItem> GetPage(ItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
+
         public void Remove(Guid id) => _repository.Remove(id);
 
         public async Task AddAsync(WatchItem item)

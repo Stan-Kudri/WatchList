@@ -7,11 +7,11 @@ namespace WatchList.Core.PageItem
     public class WatchItemSearchRequest
     {
         public WatchItemSearchRequest()
-            : this(new FilterItem(), SortField.Title, new Page())
+            : this(new FilterItem(), WatchItemSortField.Title, new Page())
         {
         }
 
-        public WatchItemSearchRequest(FilterItem filter, SortField sort, Page page)
+        public WatchItemSearchRequest(FilterItem filter, WatchItemSortField sort, Page page)
         {
             Filter = filter;
             Sort = sort;
@@ -20,7 +20,7 @@ namespace WatchList.Core.PageItem
 
         public FilterItem Filter { get; set; }
 
-        public SortField Sort { get; set; }
+        public WatchItemSortField Sort { get; set; }
 
         public Page Page { get; set; }
 

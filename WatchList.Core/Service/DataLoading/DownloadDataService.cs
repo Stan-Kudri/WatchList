@@ -27,7 +27,7 @@ namespace WatchList.Core.Service.DataLoading
 
         public void Download(WatchItemRepository repository, ILoadRule loadRule)
         {
-            var searchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, new Page(1, NumberOfItemPerPage));
+            var searchRequest = new WatchItemSearchRequest(new FilterItem(), WatchItemSortField.Title, new Page(1, NumberOfItemPerPage));
             var pagedList = repository.GetPage(searchRequest);
 
             while (searchRequest.Page.Number <= pagedList.PageCount)

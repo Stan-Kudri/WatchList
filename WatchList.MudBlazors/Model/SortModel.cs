@@ -5,12 +5,12 @@ namespace WatchList.MudBlazors.Model
 {
     public class SortModel
     {
-        public ObservableCollection<SortField> Items { get; set; } = new ObservableCollection<SortField>(SortField.List);
+        public ObservableCollection<WatchItemSortField> Items { get; set; } = new ObservableCollection<WatchItemSortField>(WatchItemSortField.List);
 
-        public SortField Type { get; set; } = SortField.Title;
+        public WatchItemSortField Type { get; set; } = WatchItemSortField.Title;
 
-        public SortField GetSortItem() => Type;
+        public WatchItemSortField GetSortItem() => Type;
 
-        public void Clear() => Type = SortField.Title;
+        public void Clear() => Type = WatchItemSortField.Title;
     }
 }

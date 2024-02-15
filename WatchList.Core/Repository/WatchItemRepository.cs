@@ -25,6 +25,13 @@ namespace WatchList.Core.Repository
             return query.GetPagedList(searchRequest.Page);
         }
 
+        public PagedList<WatchItem> GetPage(ItemSearchRequest searchRequest)
+        {
+            var query = searchRequest.ApplyFilter(_db.WatchItem);
+            query = searchRequest.ApplyOrderBy(query);
+            return query.GetPagedList(searchRequest.Page);
+        }
+
         public void Add(WatchItem item)
         {
             item.Id = _db.ReplaceIdIsNotFree(item);

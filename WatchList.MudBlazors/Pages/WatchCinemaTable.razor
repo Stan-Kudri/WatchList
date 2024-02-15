@@ -1,6 +1,7 @@
 ﻿@using Bromix.MudBlazor.MaterialDesignIcons
 @using WatchList.Core.Model.Filter.Components
 @using WatchList.Core.Model.ItemCinema
+@using WatchList.Core.Model.Sortable
 @using WatchList.Core.Model.Sorting
 
 @page "/watchlist"
@@ -11,14 +12,21 @@
 
     <MudToolBar Style="place-items:end">
 
-
         <div style="align-items:start">
-            <MudSelect T="SortField" Label="Sorting" AdornmentIcon="@Icons.Material.Filled.ShortText" @bind-Value="Sort.Type" OnClose="@LoadData" OnKeyUp="@LoadData">
-                @foreach (var item in Sort.Items.ToList())
+            <MudSelect T="ISortableSmartEnum<WatchItem>" Style="align-items:end" Label="Sort" MultiSelection="true" @bind-Value="SortField.SortField" @bind-SelectedValues="SortField.SortFields"
+                       SelectAll="true" SelectAllText="All" OnClose="@LoadData">
+                @foreach (var item in SortField.Items)
                 {
-                    <MudSelectItem T="SortField" Value="@item" />
+                    <MudSelectItem T="ISortableSmartEnum<WatchItem>" Value="@item" />
                 }
             </MudSelect>
+        </div>
+        
+        <div style="align-items:start; place-items:flex-end">
+            <MudToggleIconButton Toggled="@_itemsSearchRequest.IsAscending" ToggledChanged="@OnToggledChanged" Class="mr-5"
+                                 Icon="@MaterialDesignIcons.Normal.SortAlphabeticalDescending" Color="@Color.Primary" Title="Descending" Size="Size.Large"
+                                 ToggledIcon="@MaterialDesignIcons.Normal.SortAlphabeticalAscending" ToggledColor="@Color.Primary" ToggledTitle="Ascending" ToggledSize="Size.Large" />
+            <MudSpacer />
         </div>
 
         <MudSpacer/>

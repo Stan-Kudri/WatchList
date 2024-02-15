@@ -5,16 +5,16 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
 {
     public class SortModel : ModelBase
     {
-        private SortField _type = SortField.Title;
+        private WatchItemSortField _type = WatchItemSortField.Title;
 
-        public ObservableCollection<SortField> Items { get; set; } = new ObservableCollection<SortField>(SortField.List);
+        public ObservableCollection<WatchItemSortField> Items { get; set; } = new ObservableCollection<WatchItemSortField>(WatchItemSortField.List);
 
-        public SortField Type
+        public WatchItemSortField Type
         {
             get => _type;
             set => SetField(ref _type, value);
         }
 
-        public SortField GetSortItem() => Type;
+        public WatchItemSortField GetSortItem() => Type;
     }
 }
