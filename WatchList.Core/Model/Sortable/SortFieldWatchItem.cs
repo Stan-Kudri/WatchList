@@ -14,8 +14,6 @@ namespace WatchList.Core.Model.Sortable
         public static readonly SortFieldWatchItem Grade = new SortType<int?>("Grade", 4, e => e.Grade);
         public static readonly SortFieldWatchItem Type = new SortType<TypeCinema>("Type", 5, e => e.Type);
 
-        private readonly Func<IQueryable<WatchItem>, IOrderedQueryable<WatchItem>> _orderByField;
-
         private SortFieldWatchItem(string name, int value)
             : base(name, value)
         {
