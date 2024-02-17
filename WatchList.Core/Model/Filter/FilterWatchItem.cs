@@ -22,15 +22,10 @@ namespace WatchList.Core.Model.Filter
         public ObservableCollection<StatusCinema> StatusItems { get; set; }
             = new ObservableCollection<StatusCinema>(StatusCinema.List.Where(e => e != StatusCinema.AllStatus));
 
-        public TypeCinema TypeFilter { get; set; }
-
-        public StatusCinema StatusFilter { get; set; }
-
         public IQueryable<WatchItem> Apply(IQueryable<WatchItem> items)
         {
             items = items.Where(x => FilterTypeField.Contains(x.Type));
             items = items.Where(x => FilterStatusField.Contains(x.Status));
-
             return items;
         }
 

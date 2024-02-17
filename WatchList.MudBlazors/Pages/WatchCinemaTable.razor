@@ -33,7 +33,7 @@
         <MudSpacer/>
 
         <div style="align-items:end; width:250px">
-            <MudSelect T="TypeCinema" Label="Type cinema" MultiSelection="true" @bind-Value="FilterWatchItem.TypeFilter" @bind-SelectedValues="FilterWatchItem.FilterTypeField"
+            <MudSelect T="TypeCinema" Label="Type cinema" MultiSelection="true"  @bind-SelectedValues="FilterWatchItem.FilterTypeField"
                        SelectAll="true" SelectAllText="All type" OnClose="@LoadData" Class="mr-1">
                 @foreach (var item in FilterWatchItem.TypeItems)
                 {
@@ -43,7 +43,7 @@
         </div>
 
         <div style="align-items:end; width:300px">
-            <MudSelect T="StatusCinema" Label="Status" MultiSelection="true" @bind-Value="FilterWatchItem.StatusFilter" @bind-SelectedValues="FilterWatchItem.FilterStatusField"
+            <MudSelect T="StatusCinema" Label="Status" MultiSelection="true"  @bind-SelectedValues="FilterWatchItem.FilterStatusField"
                        SelectAll="true" SelectAllText="All status" OnClose="@LoadData" Class="mr-1">
                 @foreach (var item in FilterWatchItem.StatusItems)
                 {
