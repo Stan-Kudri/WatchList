@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
-using WatchList.Core.Model.Sorting;
+using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
@@ -20,6 +20,8 @@ namespace WatchList.MudBlazors.Pages
         [Inject] WatchItemService WatchItemService { get; set; } = null!;
         [Inject] IDialogService DialogService { get; set; } = null!;
         [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
+        [Inject] SortWatchItem<WatchItem, SortFieldWatchItem> SortField { get; set; } = null!;
+        [Inject] FilterWatchItem FilterWatchItem { get; set; } = null!;
 
         private readonly PageModel _pageModel = new PageModel();
 
@@ -27,15 +29,12 @@ namespace WatchList.MudBlazors.Pages
         private HashSet<WatchItem> _selectedItems = new HashSet<WatchItem>();
         private bool _isSelectItems = true;
 
-        private WatchItemSearchRequest _itemsSearchRequest = new WatchItemSearchRequest();
+        private ItemSearchRequest _itemsSearchRequest = new ItemSearchRequest();
         private PagedList<WatchItem>? _pagedList = null;
-
-        private FilterModel Filter { get; set; } = new FilterModel();
-        private SortModel Sort { get; set; } = new SortModel();
 
         protected override void OnInitialized()
         {
-            _itemsSearchRequest = new WatchItemSearchRequest(new FilterItem(), SortField.Title, _pageModel);
+            _itemsSearchRequest = new ItemSearchRequest(FilterWatchItem, SortField, _pageModel);
             LoadData();
         }
 
@@ -84,8 +83,6 @@ namespace WatchList.MudBlazors.Pages
 
         private void LoadData()
         {
-            _itemsSearchRequest.Filter = Filter.GetFilter();
-            _itemsSearchRequest.Sort = Sort.GetSortItem();
             _pagedList = WatchItemService.GetPage(_itemsSearchRequest);
             _items = _pagedList.Items;
             StateHasChanged();
@@ -99,8 +96,15 @@ namespace WatchList.MudBlazors.Pages
 
         private void ClearFilter()
         {
-            Filter.Clear();
-            Sort.Clear();
+            _itemsSearchRequest.IsAscending = true;
+            FilterWatchItem.Clear();
+            SortField.Clear();
+            LoadData();
+        }
+
+        public void OnToggledChanged(bool toggled)
+        {
+            _itemsSearchRequest.IsAscending = toggled;
             LoadData();
         }
     }

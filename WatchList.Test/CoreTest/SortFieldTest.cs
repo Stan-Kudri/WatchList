@@ -168,7 +168,7 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Title(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Title, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Title, expectWatchItem);
         }
 
         [Theory]
@@ -176,7 +176,7 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Sequel(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Sequel, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Sequel, expectWatchItem);
         }
 
         [Theory]
@@ -184,7 +184,7 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Status(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Status, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Status, expectWatchItem);
         }
 
         [Theory]
@@ -192,7 +192,7 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Data(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Data, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Data, expectWatchItem);
         }
 
         [Theory]
@@ -200,7 +200,7 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Grade(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Grade, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Grade, expectWatchItem);
         }
 
         [Theory]
@@ -208,10 +208,10 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Type(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, SortField.Type, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Type, expectWatchItem);
         }
 
-        private void CheckListEqualAfterApplyOrderBy(List<WatchItem> watchItems, SortField sortField, List<WatchItem> expectWatchItem)
+        private void CheckListEqualAfterApplyOrderBy(List<WatchItem> watchItems, WatchItemSortField sortField, List<WatchItem> expectWatchItem)
         {
             // Arrange
             var appDbContext = new TestAppDbContextFactory().Create();

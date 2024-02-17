@@ -28,7 +28,7 @@ namespace WatchList.Test.CoreTest
 
                 new WatchItemSearchRequest(
                     new FilterItem(TypeFilter.Movie, StatusFilter.ViewedCinema),
-                    SortField.Grade,
+                    WatchItemSortField.Grade,
                     new Page(1, 5)),
 
                 new List<WatchItem>()
