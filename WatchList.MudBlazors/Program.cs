@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using MudBlazor.Services;
 using WatchList.Core.Logger;
+using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.Sortable;
 using WatchList.Core.Repository;
@@ -26,6 +27,7 @@ builder.Services.AddScoped(e => new WatchItemRepository(e.GetRequiredService<Wat
 builder.Services.AddScoped<IMessageBox, MessageBoxDialog>();
 builder.Services.AddScoped<WatchItemService>();
 builder.Services.AddScoped<SortWatchItem<WatchItem, SortFieldWatchItem>>();
+builder.Services.AddScoped<FilterWatchItem>();
 builder.Logging.AddConsole();
 
 var app = builder.Build();

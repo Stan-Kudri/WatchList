@@ -21,6 +21,7 @@ namespace WatchList.MudBlazors.Pages
         [Inject] IDialogService DialogService { get; set; } = null!;
         [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
         [Inject] SortWatchItem<WatchItem, SortFieldWatchItem> SortField { get; set; } = null!;
+        [Inject] FilterWatchItem FilterWatchItem { get; set; } = null!;
 
         private readonly PageModel _pageModel = new PageModel();
 
@@ -31,12 +32,9 @@ namespace WatchList.MudBlazors.Pages
         private ItemSearchRequest _itemsSearchRequest = new ItemSearchRequest();
         private PagedList<WatchItem>? _pagedList = null;
 
-        private FilterModel Filter { get; set; } = new FilterModel();
-        //private SortModel Sort { get; set; } = new SortModel();
-
         protected override void OnInitialized()
         {
-            _itemsSearchRequest = new ItemSearchRequest(new FilterItem(), SortField, _pageModel);
+            _itemsSearchRequest = new ItemSearchRequest(FilterWatchItem, SortField, _pageModel);
             LoadData();
         }
 
@@ -85,7 +83,6 @@ namespace WatchList.MudBlazors.Pages
 
         private void LoadData()
         {
-            _itemsSearchRequest.Filter = Filter.GetFilter();
             _pagedList = WatchItemService.GetPage(_itemsSearchRequest);
             _items = _pagedList.Items;
             StateHasChanged();
@@ -100,7 +97,7 @@ namespace WatchList.MudBlazors.Pages
         private void ClearFilter()
         {
             _itemsSearchRequest.IsAscending = true;
-            Filter.Clear();
+            FilterWatchItem.Clear();
             SortField.Clear();
             LoadData();
         }

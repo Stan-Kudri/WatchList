@@ -7,11 +7,11 @@ namespace WatchList.Core.PageItem
     public class ItemSearchRequest
     {
         public ItemSearchRequest()
-            : this(new FilterItem(), new SortWatchItem<WatchItem, SortFieldWatchItem>(), new Page(), true)
+            : this(new FilterWatchItem(), new SortWatchItem<WatchItem, SortFieldWatchItem>(), new Page(), true)
         {
         }
 
-        public ItemSearchRequest(FilterItem filter, SortWatchItem<WatchItem, SortFieldWatchItem> sort, Page page, bool isAscending = true)
+        public ItemSearchRequest(FilterWatchItem filter, SortWatchItem<WatchItem, SortFieldWatchItem> sort, Page page, bool isAscending = true)
         {
             Filter = filter;
             Sort = sort;
@@ -19,7 +19,7 @@ namespace WatchList.Core.PageItem
             IsAscending = isAscending;
         }
 
-        public FilterItem Filter { get; set; }
+        public FilterWatchItem Filter { get; set; }
 
         public SortWatchItem<WatchItem, SortFieldWatchItem> Sort { get; set; }
 

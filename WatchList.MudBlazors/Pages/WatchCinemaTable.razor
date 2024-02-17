@@ -1,6 +1,7 @@
 ﻿@using Bromix.MudBlazor.MaterialDesignIcons
 @using WatchList.Core.Model.Filter.Components
 @using WatchList.Core.Model.ItemCinema
+@using WatchList.Core.Model.ItemCinema.Components
 @using WatchList.Core.Model.Sortable
 @using WatchList.Core.Model.Sorting
 
@@ -31,27 +32,26 @@
 
         <MudSpacer/>
 
-        <div style="align-items:end">
-            <MudSelect T="TypeFilter" Label="Type cinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Class="mr-2" @bind-Value="Filter.Type">
-                @foreach (var item in Filter.TypeItem.ToList())
+        <div style="align-items:end; width:250px">
+            <MudSelect T="TypeCinema" Label="Type cinema" MultiSelection="true" @bind-Value="FilterWatchItem.TypeFilter" @bind-SelectedValues="FilterWatchItem.FilterTypeField"
+                       SelectAll="true" SelectAllText="All type" OnClose="@LoadData" Class="mr-1">
+                @foreach (var item in FilterWatchItem.TypeItems)
                 {
-                    <MudSelectItem T="TypeFilter" Value="@item" />
+                    <MudSelectItem T="TypeCinema" Value="@item" />
                 }
             </MudSelect>
         </div>
 
-        <div style="align-items:end">
-            <MudSelect T="StatusFilter" Label="Status" AdornmentIcon="@Icons.Material.Filled.ShortText" Class="mr-1" @bind-Value="Filter.Status">
-                @foreach (var item in Filter.StatusItem.ToList())
+        <div style="align-items:end; width:300px">
+            <MudSelect T="StatusCinema" Label="Status" MultiSelection="true" @bind-Value="FilterWatchItem.StatusFilter" @bind-SelectedValues="FilterWatchItem.FilterStatusField"
+                       SelectAll="true" SelectAllText="All status" OnClose="@LoadData" Class="mr-1">
+                @foreach (var item in FilterWatchItem.StatusItems)
                 {
-                    <MudSelectItem T="StatusFilter" Value="@item" />
+                    <MudSelectItem T="StatusCinema" Value="@item" />
                 }
             </MudSelect>
         </div>
 
-        <MudTooltip Text="Use Filter" Placement="Placement.Top">
-            <MudIconButton Icon="@MaterialDesignIcons.Normal.Filter" OnClick="@LoadData" Color="Color.Primary" Variant="Variant.Text" Size="Size.Medium" />
-        </MudTooltip>
         <MudTooltip Text="Off Filter" Placement="Placement.Top">
             <MudIconButton Icon="@MaterialDesignIcons.Normal.FilterOff" OnClick="@ClearFilter" Color="Color.Primary" Variant="Variant.Text" Size="Size.Medium" />
         </MudTooltip>
