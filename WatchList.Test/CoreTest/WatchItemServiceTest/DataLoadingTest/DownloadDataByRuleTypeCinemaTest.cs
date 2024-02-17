@@ -146,7 +146,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             dbContextDownloadItem.SaveChanges();
 
             // Act
-            service.Download(repositoryDataDownload, loadRule);
+            await service.Download(repositoryDataDownload, loadRule);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert

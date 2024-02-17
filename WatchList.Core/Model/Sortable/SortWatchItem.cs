@@ -6,7 +6,7 @@ namespace WatchList.Core.Model.Sortable
     public class SortWatchItem<T, TSortField>
         where TSortField : SmartEnum<TSortField>, ISortableSmartEnum<T>, ISortableSmartEnumOperation<T>
     {
-        public ISortableSmartEnum<T> SortField { get; set; }
+        public ISortableSmartEnum<T>? SortField { get; set; }
 
         public IEnumerable<ISortableSmartEnum<T>> SortFields { get; set; } = new HashSet<ISortableSmartEnum<T>>() { TSortField.DefaultValue };
 

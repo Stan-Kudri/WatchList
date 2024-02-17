@@ -19,9 +19,9 @@
                 {
                     components.Dispose();
                 }
-                if (dropDown != null)
+                if (_dropDown != null)
                 {
-                    dropDown.Dispose();
+                    _dropDown.Dispose();
                 }
             }
             base.Dispose(disposing);

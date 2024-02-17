@@ -25,7 +25,7 @@ namespace WatchList.Core.Service.DataLoading
 
         public int NumberOfItemPerPage { get; set; }
 
-        public void Download(WatchItemRepository repository, ILoadRule loadRule)
+        public async Task Download(WatchItemRepository repository, ILoadRule loadRule)
         {
             var searchRequest = new WatchItemSearchRequest(new FilterItem(), WatchItemSortField.Title, new Page(1, NumberOfItemPerPage));
             var pagedList = repository.GetPage(searchRequest);
@@ -37,7 +37,7 @@ namespace WatchList.Core.Service.DataLoading
 
                 _logger.LogInformation("Load items according to selected rules");
                 AddItems(watchItemCollection);
-                UpdateItems(watchItemCollection);
+                await UpdateItems(watchItemCollection);
 
                 searchRequest.Page.Number += 1;
                 pagedList = repository.GetPage(searchRequest);

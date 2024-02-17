@@ -1,5 +1,3 @@
-﻿using System.Drawing;
-
 namespace TestTask.Controls.CheckComboBox
 {
     internal struct GripBounds
@@ -7,11 +5,9 @@ namespace TestTask.Controls.CheckComboBox
         private const int GripSize = 6;
         private const int CornerGripSize = GripSize << 1;
 
-        public GripBounds(Rectangle clientRectangle) => this.clientRectangle = clientRectangle;
+        public GripBounds(Rectangle clientRectangle) => ClientRectangle = clientRectangle;
 
-        private Rectangle clientRectangle;
-
-        public Rectangle ClientRectangle => clientRectangle;
+        public Rectangle ClientRectangle { get; private set; }
 
         public Rectangle Bottom
         {

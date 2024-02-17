@@ -1,4 +1,4 @@
-﻿namespace TestTask.Controls.CheckComboBox
+namespace TestTask.Controls.CheckComboBox
 {
     partial class Popup
     {

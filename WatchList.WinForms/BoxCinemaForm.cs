@@ -155,7 +155,7 @@ namespace WatchList.WinForms
             await LoadDataAsync();
         }
 
-        private void BtnDownloadDataFile_Click(object sender, EventArgs e)
+        private async void BtnDownloadDataFile_Click(object sender, EventArgs e)
         {
             var dataLoadingForm = _serviceProvider.GetRequiredService<MergeDatabaseForm>();
             if (dataLoadingForm.ShowDialog() != DialogResult.OK)
@@ -182,8 +182,8 @@ namespace WatchList.WinForms
             var repositoryDataDownload = new WatchItemRepository(dbContext, _logger);
 
             var downloadDataService = _serviceProvider.GetRequiredService<DownloadDataService>();
-            downloadDataService.Download(repositoryDataDownload, aggregateRules);
-            UpdateGridData();
+            await downloadDataService.Download(repositoryDataDownload, aggregateRules);
+            await UpdateGridData();
         }
 
         private void BoxCinemaForm_FormClosing(object sender, FormClosingEventArgs e)
