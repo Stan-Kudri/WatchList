@@ -3,9 +3,16 @@ using Ardalis.SmartEnum;
 
 namespace WatchList.Core.Model.Sortable
 {
-    public class SortWatchItem<T, TSortField>
+    public class SortItem<T, TSortField> : ISortItem<T>
         where TSortField : SmartEnum<TSortField>, ISortableSmartEnum<T>, ISortableSmartEnumOperation<T>
     {
+        public SortItem()
+        {
+        }
+
+        public SortItem(ISortableSmartEnum<T>? sortField)
+            => SortField = sortField;
+
         public ISortableSmartEnum<T>? SortField { get; set; }
 
         public IEnumerable<ISortableSmartEnum<T>> SortFields { get; set; } = new HashSet<ISortableSmartEnum<T>>() { TSortField.DefaultValue };

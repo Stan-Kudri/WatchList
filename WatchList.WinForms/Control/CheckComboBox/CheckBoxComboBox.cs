@@ -204,6 +204,17 @@ namespace TestTask.Controls.CheckComboBox
         }
 
         /// <summary>
+        /// Chack all items.
+        /// </summary>
+        public void SelectAllItem()
+        {
+            foreach (CheckBoxComboBoxItem item in CheckBoxItems)
+            {
+                item.Checked = true;
+            }
+        }
+
+        /// <summary>
         /// Builds a CSV string of the items selected.
         /// </summary>
         /// <param name="skipFirstItem">Skip first item.</param>

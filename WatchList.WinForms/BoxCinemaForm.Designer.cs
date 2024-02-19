@@ -33,6 +33,9 @@ namespace WatchList.WinForms
             components = new System.ComponentModel.Container();
             var dataGridViewCellStyle1 = new DataGridViewCellStyle();
             var dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            var checkBoxProperties1 = new Control.CheckComboBox.Component.CheckBoxProperties();
+            var checkBoxProperties2 = new Control.CheckComboBox.Component.CheckBoxProperties();
+            var checkBoxProperties3 = new Control.CheckComboBox.Component.CheckBoxProperties();
             cinemaBindingSource = new BindingSource(components);
             openFileDialog = new OpenFileDialog();
             dgvCinema = new DataGridView();
@@ -49,9 +52,7 @@ namespace WatchList.WinForms
             btnAddData = new MaterialSkin.Controls.MaterialButton();
             btnUseFilter = new MaterialSkin.Controls.MaterialButton();
             btnClearFilter = new MaterialSkin.Controls.MaterialButton();
-            cmbFilterType = new MaterialSkin.Controls.MaterialComboBox();
             filterModelBindingSource = new BindingSource(components);
-            cmbFilterStatus = new MaterialSkin.Controls.MaterialComboBox();
             cmbPageSize = new ComboBox();
             pageModelBindingSource = new BindingSource(components);
             btnBackPage = new MaterialSkin.Controls.MaterialButton();
@@ -62,11 +63,14 @@ namespace WatchList.WinForms
             labelTotalPage = new MaterialSkin.Controls.MaterialLabel();
             labelTextSizePage = new MaterialSkin.Controls.MaterialLabel();
             labelSortType = new MaterialSkin.Controls.MaterialLabel();
-            cmbSortType = new ComboBox();
             sortModelBindingSource = new BindingSource(components);
             tlPanelActionsWithElements = new TableLayoutPanel();
             tlPanelPage = new TableLayoutPanel();
+            checkBoxCMBSort = new TestTask.Controls.CheckComboBox.CheckBoxComboBox();
             tlPanelFilter = new TableLayoutPanel();
+            TlpFilterBox = new TableLayoutPanel();
+            cbCMBTypeFilter = new TestTask.Controls.CheckComboBox.CheckBoxComboBox();
+            cbCMBStatusFilter = new TestTask.Controls.CheckComboBox.CheckBoxComboBox();
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).BeginInit();
             ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).BeginInit();
@@ -75,6 +79,7 @@ namespace WatchList.WinForms
             tlPanelActionsWithElements.SuspendLayout();
             tlPanelPage.SuspendLayout();
             tlPanelFilter.SuspendLayout();
+            TlpFilterBox.SuspendLayout();
             SuspendLayout();
             // 
             // openFileDialog
@@ -298,60 +303,9 @@ namespace WatchList.WinForms
             btnClearFilter.UseVisualStyleBackColor = true;
             btnClearFilter.Click += BtnCancelFilter_Click;
             // 
-            // cmbFilterType
-            // 
-            cmbFilterType.AutoResize = false;
-            cmbFilterType.BackColor = Color.FromArgb(255, 255, 255);
-            cmbFilterType.DataBindings.Add(new Binding("SelectedValue", filterModelBindingSource, "Type", true));
-            cmbFilterType.DataBindings.Add(new Binding("DataSource", filterModelBindingSource, "TypeItem", true));
-            cmbFilterType.Depth = 0;
-            cmbFilterType.DrawMode = DrawMode.OwnerDrawVariable;
-            cmbFilterType.DropDownHeight = 174;
-            cmbFilterType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbFilterType.DropDownWidth = 121;
-            cmbFilterType.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Pixel);
-            cmbFilterType.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            cmbFilterType.FormattingEnabled = true;
-            cmbFilterType.IntegralHeight = false;
-            cmbFilterType.ItemHeight = 43;
-            cmbFilterType.Location = new Point(5, 70);
-            cmbFilterType.MaxDropDownItems = 4;
-            cmbFilterType.MaximumSize = new Size(240, 0);
-            cmbFilterType.MinimumSize = new Size(240, 0);
-            cmbFilterType.MouseState = MaterialSkin.MouseState.OUT;
-            cmbFilterType.Name = "cmbFilterType";
-            cmbFilterType.Size = new Size(240, 49);
-            cmbFilterType.StartIndex = 0;
-            cmbFilterType.TabIndex = 41;
-            // 
             // filterModelBindingSource
             // 
             filterModelBindingSource.DataSource = typeof(FilterModel);
-            // 
-            // cmbFilterStatus
-            // 
-            cmbFilterStatus.AutoResize = false;
-            cmbFilterStatus.BackColor = Color.FromArgb(255, 255, 255);
-            cmbFilterStatus.DataBindings.Add(new Binding("SelectedValue", filterModelBindingSource, "Status", true));
-            cmbFilterStatus.DataBindings.Add(new Binding("DataSource", filterModelBindingSource, "StatusItem", true));
-            cmbFilterStatus.Depth = 0;
-            cmbFilterStatus.DrawMode = DrawMode.OwnerDrawVariable;
-            cmbFilterStatus.DropDownHeight = 174;
-            cmbFilterStatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbFilterStatus.DropDownWidth = 121;
-            cmbFilterStatus.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            cmbFilterStatus.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            cmbFilterStatus.IntegralHeight = false;
-            cmbFilterStatus.ItemHeight = 43;
-            cmbFilterStatus.Location = new Point(260, 70);
-            cmbFilterStatus.MaxDropDownItems = 4;
-            cmbFilterStatus.MaximumSize = new Size(240, 0);
-            cmbFilterStatus.MinimumSize = new Size(240, 0);
-            cmbFilterStatus.MouseState = MaterialSkin.MouseState.OUT;
-            cmbFilterStatus.Name = "cmbFilterStatus";
-            cmbFilterStatus.Size = new Size(240, 49);
-            cmbFilterStatus.StartIndex = 0;
-            cmbFilterStatus.TabIndex = 42;
             // 
             // cmbPageSize
             // 
@@ -512,18 +466,6 @@ namespace WatchList.WinForms
             labelSortType.Text = "Sort by";
             labelSortType.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // cmbSortType
-            // 
-            cmbSortType.DataBindings.Add(new Binding("SelectedValue", sortModelBindingSource, "Type", true));
-            cmbSortType.Dock = DockStyle.Fill;
-            cmbSortType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbSortType.FormattingEnabled = true;
-            cmbSortType.Location = new Point(498, 3);
-            cmbSortType.Name = "cmbSortType";
-            cmbSortType.Size = new Size(164, 23);
-            cmbSortType.TabIndex = 55;
-            cmbSortType.SelectedIndexChanged += CmbSort_ChangedItem;
-            // 
             // sortModelBindingSource
             // 
             sortModelBindingSource.DataSource = typeof(SortModel);
@@ -561,9 +503,9 @@ namespace WatchList.WinForms
             tlPanelPage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlPanelPage.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
             tlPanelPage.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 170F));
+            tlPanelPage.Controls.Add(checkBoxCMBSort, 9, 0);
             tlPanelPage.Controls.Add(labelTextSizePage, 0, 0);
             tlPanelPage.Controls.Add(cmbPageSize, 1, 0);
-            tlPanelPage.Controls.Add(cmbSortType, 9, 0);
             tlPanelPage.Controls.Add(btnStartPage, 2, 0);
             tlPanelPage.Controls.Add(btnBackPage, 3, 0);
             tlPanelPage.Controls.Add(btnEndPage, 7, 0);
@@ -577,6 +519,19 @@ namespace WatchList.WinForms
             tlPanelPage.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tlPanelPage.Size = new Size(665, 30);
             tlPanelPage.TabIndex = 57;
+            // 
+            // checkBoxCMBSort
+            // 
+            checkBoxProperties1.ForeColor = SystemColors.ControlText;
+            checkBoxCMBSort.CheckBoxProperties = checkBoxProperties1;
+            checkBoxCMBSort.DisplayMemberSingleItem = "";
+            checkBoxCMBSort.Dock = DockStyle.Fill;
+            checkBoxCMBSort.FormattingEnabled = true;
+            checkBoxCMBSort.Location = new Point(498, 3);
+            checkBoxCMBSort.Name = "checkBoxCMBSort";
+            checkBoxCMBSort.Size = new Size(164, 23);
+            checkBoxCMBSort.TabIndex = 59;
+            checkBoxCMBSort.SelectedValueChanged += CheckBoxCMBSort_ValueChang;
             // 
             // tlPanelFilter
             // 
@@ -593,17 +548,54 @@ namespace WatchList.WinForms
             tlPanelFilter.Size = new Size(160, 54);
             tlPanelFilter.TabIndex = 58;
             // 
+            // TlpFilterBox
+            // 
+            TlpFilterBox.ColumnCount = 2;
+            TlpFilterBox.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            TlpFilterBox.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            TlpFilterBox.Controls.Add(cbCMBTypeFilter, 0, 0);
+            TlpFilterBox.Controls.Add(cbCMBStatusFilter, 1, 0);
+            TlpFilterBox.Location = new Point(5, 67);
+            TlpFilterBox.Name = "TlpFilterBox";
+            TlpFilterBox.RowCount = 1;
+            TlpFilterBox.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            TlpFilterBox.Size = new Size(502, 52);
+            TlpFilterBox.TabIndex = 59;
+            // 
+            // cbCMBTypeFilter
+            // 
+            checkBoxProperties2.ForeColor = SystemColors.ControlText;
+            cbCMBTypeFilter.CheckBoxProperties = checkBoxProperties2;
+            cbCMBTypeFilter.DisplayMemberSingleItem = "";
+            cbCMBTypeFilter.Dock = DockStyle.Fill;
+            cbCMBTypeFilter.FormattingEnabled = true;
+            cbCMBTypeFilter.Location = new Point(3, 3);
+            cbCMBTypeFilter.Name = "cbCMBTypeFilter";
+            cbCMBTypeFilter.Size = new Size(245, 23);
+            cbCMBTypeFilter.TabIndex = 0;
+            // 
+            // cbCMBStatusFilter
+            // 
+            checkBoxProperties3.ForeColor = SystemColors.ControlText;
+            cbCMBStatusFilter.CheckBoxProperties = checkBoxProperties3;
+            cbCMBStatusFilter.DisplayMemberSingleItem = "";
+            cbCMBStatusFilter.Dock = DockStyle.Fill;
+            cbCMBStatusFilter.FormattingEnabled = true;
+            cbCMBStatusFilter.Location = new Point(254, 3);
+            cbCMBStatusFilter.Name = "cbCMBStatusFilter";
+            cbCMBStatusFilter.Size = new Size(245, 23);
+            cbCMBStatusFilter.TabIndex = 1;
+            // 
             // BoxCinemaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(680, 425);
+            Controls.Add(TlpFilterBox);
             Controls.Add(tlPanelFilter);
             Controls.Add(tlPanelPage);
             Controls.Add(tlPanelActionsWithElements);
-            Controls.Add(cmbFilterStatus);
-            Controls.Add(cmbFilterType);
             Controls.Add(dgvCinema);
             Margin = new Padding(3, 2, 3, 2);
             MinimumSize = new Size(680, 425);
@@ -622,6 +614,7 @@ namespace WatchList.WinForms
             tlPanelPage.PerformLayout();
             tlPanelFilter.ResumeLayout(false);
             tlPanelFilter.PerformLayout();
+            TlpFilterBox.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -635,8 +628,6 @@ namespace WatchList.WinForms
         private MaterialSkin.Controls.MaterialButton btnAddData;
         private MaterialSkin.Controls.MaterialButton btnUseFilter;
         private MaterialSkin.Controls.MaterialButton btnClearFilter;
-        private MaterialSkin.Controls.MaterialComboBox cmbFilterType;
-        private MaterialSkin.Controls.MaterialComboBox cmbFilterStatus;
         private ComboBox cmbPageSize;
         private MaterialSkin.Controls.MaterialButton btnBackPage;
         private MaterialSkin.Controls.MaterialButton btnNextPage;
@@ -647,7 +638,6 @@ namespace WatchList.WinForms
         private BindingSource pageModelBindingSource;
         private MaterialSkin.Controls.MaterialLabel labelTextSizePage;
         private MaterialSkin.Controls.MaterialLabel labelSortType;
-        private ComboBox cmbSortType;
         private BindingSource filterModelBindingSource;
         private BindingSource sortModelBindingSource;
         private DataGridViewTextBoxColumn NameCinema;
@@ -660,5 +650,9 @@ namespace WatchList.WinForms
         private TableLayoutPanel tlPanelActionsWithElements;
         private TableLayoutPanel tlPanelPage;
         private TableLayoutPanel tlPanelFilter;
+        private TestTask.Controls.CheckComboBox.CheckBoxComboBox checkBoxCMBSort;
+        private TableLayoutPanel TlpFilterBox;
+        private TestTask.Controls.CheckComboBox.CheckBoxComboBox cbCMBTypeFilter;
+        private TestTask.Controls.CheckComboBox.CheckBoxComboBox cbCMBStatusFilter;
     }
 }

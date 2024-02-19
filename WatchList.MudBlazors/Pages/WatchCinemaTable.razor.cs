@@ -20,8 +20,8 @@ namespace WatchList.MudBlazors.Pages
         [Inject] WatchItemService WatchItemService { get; set; } = null!;
         [Inject] IDialogService DialogService { get; set; } = null!;
         [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
-        [Inject] SortWatchItem<WatchItem, SortFieldWatchItem> SortField { get; set; } = null!;
-        [Inject] FilterWatchItem FilterWatchItem { get; set; } = null!;
+        [Inject] SortItem<WatchItem, SortFieldWatchItem> SortField { get; set; } = null!;
+        [Inject] IFilterItem FilterWatchItem { get; set; } = null!;
 
         private readonly PageModel _pageModel = new PageModel();
 

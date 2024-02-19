@@ -26,7 +26,7 @@ builder.Services.AddScoped(e => new AggregateLogging() { new ConsoleLogger(LogLe
 builder.Services.AddScoped(e => new WatchItemRepository(e.GetRequiredService<WatchCinemaDbContext>(), e.GetRequiredService<AggregateLogging>()));
 builder.Services.AddScoped<IMessageBox, MessageBoxDialog>();
 builder.Services.AddScoped<WatchItemService>();
-builder.Services.AddScoped<SortWatchItem<WatchItem, SortFieldWatchItem>>();
+builder.Services.AddScoped<SortItem<WatchItem, SortFieldWatchItem>>();
 builder.Services.AddScoped<FilterWatchItem>();
 builder.Logging.AddConsole();
 

@@ -1,13 +1,18 @@
 using System.Collections.ObjectModel;
-using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Core.Model.Filter
 {
-    public class FilterWatchItem : IEquatable<FilterWatchItem>
+    public class FilterWatchItem : IEquatable<FilterWatchItem>, IFilterItem
     {
         public FilterWatchItem()
         {
+        }
+
+        public FilterWatchItem(IEnumerable<TypeCinema> filterTypeField, IEnumerable<StatusCinema> filterStatusField)
+        {
+            FilterTypeField = filterTypeField;
+            FilterStatusField = filterStatusField;
         }
 
         public IEnumerable<TypeCinema> FilterTypeField { get; set; }
@@ -22,18 +27,7 @@ namespace WatchList.Core.Model.Filter
         public ObservableCollection<StatusCinema> StatusItems { get; set; }
             = new ObservableCollection<StatusCinema>(StatusCinema.List.Where(e => e != StatusCinema.AllStatus));
 
-        public IQueryable<WatchItem> Apply(IQueryable<WatchItem> items)
-        {
-            items = items.Where(x => FilterTypeField.Contains(x.Type));
-            items = items.Where(x => FilterStatusField.Contains(x.Status));
-            return items;
-        }
-
-        public void Clear()
-        {
-            FilterTypeField = new HashSet<TypeCinema>(TypeCinema.List.Where(e => e != TypeCinema.AllType));
-            FilterStatusField = new HashSet<StatusCinema>(StatusCinema.List.Where(e => e != StatusCinema.AllStatus));
-        }
+        public FilterWatchItem GetFilter() => this;
 
         public override int GetHashCode() => HashCode.Combine(FilterTypeField, FilterStatusField);
 
