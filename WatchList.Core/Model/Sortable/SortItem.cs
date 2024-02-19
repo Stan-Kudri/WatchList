@@ -10,8 +10,8 @@ namespace WatchList.Core.Model.Sortable
         {
         }
 
-        public SortItem(ISortableSmartEnum<T>? sortField)
-            => SortField = sortField;
+        public SortItem(IEnumerable<ISortableSmartEnum<T>> sortFields)
+            => SortFields = sortFields;
 
         public ISortableSmartEnum<T>? SortField { get; set; }
 

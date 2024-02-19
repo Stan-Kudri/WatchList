@@ -10,6 +10,6 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
         {
         }
 
-        public SortItem<WatchItem, SortFieldWatchItem> GetSortItem() => new SortItem<WatchItem, SortFieldWatchItem>();
+        public SortItem<WatchItem, SortFieldWatchItem> GetSortItem() => new SortItem<WatchItem, SortFieldWatchItem>(SortFields);
     }
 }
