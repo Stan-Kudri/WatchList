@@ -11,8 +11,6 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
         private IEnumerable<TypeCinema> _filterTypeField;
         private IEnumerable<StatusCinema> _filterStatusField;
 
-        private event PropertyChangedEventHandler PropertyChanged;
-
         public FilterItemModel()
         {
             SelectTypeField = TypeItems.Select(e => e.ToString()).ToArray();
@@ -20,6 +18,8 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
             _filterTypeField = TypeCinema.List.Where(e => e != TypeCinema.AllType).AsEnumerable();
             _filterStatusField = StatusCinema.List.Where(e => e != StatusCinema.AllStatus).AsEnumerable();
         }
+
+        private event PropertyChangedEventHandler PropertyChanged;
 
         public string[] SelectTypeField { get; }
 

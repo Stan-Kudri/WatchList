@@ -7,8 +7,6 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
 {
     public class SortItemsModel<T> : ISortItem<T>
     {
-        private event PropertyChangedEventHandler PropertyChanged;
-
         private readonly ISortItem<T> _sortType;
 
         public SortItemsModel(ISortItem<T> sortType)
@@ -23,13 +21,9 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
             SelectField = Items.Select(e => e.ToString()).ToArray();
         }
 
+        private event PropertyChangedEventHandler PropertyChanged;
+
         public string[] SelectField { get; }
-
-        public IQueryable<T> Apply(IQueryable<T> items, bool? ascending = true)
-            => _sortType.Apply(items, ascending);
-
-        public void Clear()
-            => SortFields = new HashSet<ISortableSmartEnum<T>>();
 
         public IEnumerable<ISortableSmartEnum<T>> SortFields
         {
@@ -62,6 +56,12 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
             get => _sortType.Items;
             set => _sortType.Items = value;
         }
+
+        public IQueryable<T> Apply(IQueryable<T> items, bool? ascending = true)
+            => _sortType.Apply(items, ascending);
+
+        public void Clear()
+            => SortFields = new HashSet<ISortableSmartEnum<T>>();
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
