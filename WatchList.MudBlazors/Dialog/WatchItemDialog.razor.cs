@@ -15,8 +15,9 @@ namespace WatchList.MudBlazors.Dialog
         [Inject] private WatchItemService WatchItemService { get; set; } = null!;
         [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
 
-        private WatchItemModel _watchItemModel { get; set; } = new WatchItemModel();
         private string[] _errors = { };
+
+        private WatchItemModel _watchItemModel { get; set; } = new WatchItemModel();
         private bool _isAddItem = true;
 
         private WatchItem? _oldWatchItem;

@@ -61,21 +61,25 @@ namespace WatchList.WinForms
             textBoxPage = new TextBox();
             labelTotalPage = new MaterialSkin.Controls.MaterialLabel();
             labelTextSizePage = new MaterialSkin.Controls.MaterialLabel();
-            labelSortType = new MaterialSkin.Controls.MaterialLabel();
             tlPanelActionsWithElements = new TableLayoutPanel();
             tlPanelPage = new TableLayoutPanel();
             checkBoxCMBSort = new TestTask.Controls.CheckComboBox.CheckBoxComboBox();
             tlPanelFilter = new TableLayoutPanel();
-            TlpFilterBox = new TableLayoutPanel();
+            tlpFilterBox = new TableLayoutPanel();
+            tlpFilter = new TableLayoutPanel();
             cbCMBTypeFilter = new TestTask.Controls.CheckComboBox.CheckBoxComboBox();
             cbCMBStatusFilter = new TestTask.Controls.CheckComboBox.CheckBoxComboBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            btnTypeSort = new MaterialSkin.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pageModelBindingSource).BeginInit();
             tlPanelActionsWithElements.SuspendLayout();
             tlPanelPage.SuspendLayout();
             tlPanelFilter.SuspendLayout();
-            TlpFilterBox.SuspendLayout();
+            tlpFilterBox.SuspendLayout();
+            tlpFilter.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // openFileDialog
@@ -105,12 +109,12 @@ namespace WatchList.WinForms
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvCinema.DefaultCellStyle = dataGridViewCellStyle2;
-            dgvCinema.Location = new Point(5, 120);
+            dgvCinema.Location = new Point(5, 130);
             dgvCinema.MinimumSize = new Size(665, 240);
             dgvCinema.Name = "dgvCinema";
             dgvCinema.ReadOnly = true;
             dgvCinema.RowTemplate.Height = 25;
-            dgvCinema.Size = new Size(665, 240);
+            dgvCinema.Size = new Size(665, 250);
             dgvCinema.TabIndex = 16;
             dgvCinema.Tag = "Cinema";
             // 
@@ -263,7 +267,7 @@ namespace WatchList.WinForms
             btnUseFilter.Dock = DockStyle.Fill;
             btnUseFilter.HighEmphasis = true;
             btnUseFilter.Icon = null;
-            btnUseFilter.Location = new Point(4, 33);
+            btnUseFilter.Location = new Point(4, 36);
             btnUseFilter.Margin = new Padding(4, 6, 4, 6);
             btnUseFilter.MinimumSize = new Size(155, 20);
             btnUseFilter.MouseState = MaterialSkin.MouseState.HOVER;
@@ -443,21 +447,6 @@ namespace WatchList.WinForms
             labelTextSizePage.Text = "Show on page";
             labelTextSizePage.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // labelSortType
-            // 
-            labelSortType.AutoSize = true;
-            labelSortType.BackColor = SystemColors.Control;
-            labelSortType.Depth = 0;
-            labelSortType.Dock = DockStyle.Fill;
-            labelSortType.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            labelSortType.Location = new Point(438, 0);
-            labelSortType.MouseState = MaterialSkin.MouseState.HOVER;
-            labelSortType.Name = "labelSortType";
-            labelSortType.Size = new Size(54, 30);
-            labelSortType.TabIndex = 54;
-            labelSortType.Text = "Sort by";
-            labelSortType.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // tlPanelActionsWithElements
             // 
             tlPanelActionsWithElements.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -470,7 +459,7 @@ namespace WatchList.WinForms
             tlPanelActionsWithElements.Controls.Add(btnEditCinema, 1, 0);
             tlPanelActionsWithElements.Controls.Add(btnDeleteMovie, 2, 0);
             tlPanelActionsWithElements.Controls.Add(btnAddData, 3, 0);
-            tlPanelActionsWithElements.Location = new Point(5, 395);
+            tlPanelActionsWithElements.Location = new Point(5, 400);
             tlPanelActionsWithElements.Name = "tlPanelActionsWithElements";
             tlPanelActionsWithElements.RowCount = 1;
             tlPanelActionsWithElements.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -491,7 +480,6 @@ namespace WatchList.WinForms
             tlPanelPage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlPanelPage.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
             tlPanelPage.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 170F));
-            tlPanelPage.Controls.Add(checkBoxCMBSort, 9, 0);
             tlPanelPage.Controls.Add(labelTextSizePage, 0, 0);
             tlPanelPage.Controls.Add(cmbPageSize, 1, 0);
             tlPanelPage.Controls.Add(btnStartPage, 2, 0);
@@ -500,8 +488,7 @@ namespace WatchList.WinForms
             tlPanelPage.Controls.Add(labelTotalPage, 5, 0);
             tlPanelPage.Controls.Add(btnNextPage, 6, 0);
             tlPanelPage.Controls.Add(textBoxPage, 4, 0);
-            tlPanelPage.Controls.Add(labelSortType, 8, 0);
-            tlPanelPage.Location = new Point(5, 362);
+            tlPanelPage.Location = new Point(5, 370);
             tlPanelPage.Name = "tlPanelPage";
             tlPanelPage.RowCount = 1;
             tlPanelPage.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -515,9 +502,9 @@ namespace WatchList.WinForms
             checkBoxCMBSort.DisplayMemberSingleItem = "";
             checkBoxCMBSort.Dock = DockStyle.Fill;
             checkBoxCMBSort.FormattingEnabled = true;
-            checkBoxCMBSort.Location = new Point(498, 3);
+            checkBoxCMBSort.Location = new Point(3, 13);
             checkBoxCMBSort.Name = "checkBoxCMBSort";
-            checkBoxCMBSort.Size = new Size(164, 23);
+            checkBoxCMBSort.Size = new Size(149, 23);
             checkBoxCMBSort.TabIndex = 59;
             checkBoxCMBSort.SelectedValueChanged += CheckBoxCMBSort_ValueChang;
             // 
@@ -533,22 +520,39 @@ namespace WatchList.WinForms
             tlPanelFilter.RowCount = 2;
             tlPanelFilter.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tlPanelFilter.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tlPanelFilter.Size = new Size(160, 54);
+            tlPanelFilter.Size = new Size(160, 60);
             tlPanelFilter.TabIndex = 58;
             // 
-            // TlpFilterBox
+            // tlpFilterBox
             // 
-            TlpFilterBox.ColumnCount = 2;
-            TlpFilterBox.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            TlpFilterBox.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            TlpFilterBox.Controls.Add(cbCMBTypeFilter, 0, 0);
-            TlpFilterBox.Controls.Add(cbCMBStatusFilter, 1, 0);
-            TlpFilterBox.Location = new Point(5, 67);
-            TlpFilterBox.Name = "TlpFilterBox";
-            TlpFilterBox.RowCount = 1;
-            TlpFilterBox.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            TlpFilterBox.Size = new Size(502, 52);
-            TlpFilterBox.TabIndex = 59;
+            tlpFilterBox.ColumnCount = 2;
+            tlpFilterBox.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tlpFilterBox.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
+            tlpFilterBox.Controls.Add(tlpFilter, 1, 0);
+            tlpFilterBox.Controls.Add(tableLayoutPanel1, 0, 0);
+            tlpFilterBox.Location = new Point(5, 67);
+            tlpFilterBox.Margin = new Padding(2);
+            tlpFilterBox.Name = "tlpFilterBox";
+            tlpFilterBox.RowCount = 1;
+            tlpFilterBox.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpFilterBox.Size = new Size(502, 60);
+            tlpFilterBox.TabIndex = 59;
+            // 
+            // tlpFilter
+            // 
+            tlpFilter.ColumnCount = 1;
+            tlpFilter.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlpFilter.Controls.Add(cbCMBTypeFilter, 0, 0);
+            tlpFilter.Controls.Add(cbCMBStatusFilter, 0, 1);
+            tlpFilter.Dock = DockStyle.Fill;
+            tlpFilter.Location = new Point(202, 2);
+            tlpFilter.Margin = new Padding(2);
+            tlpFilter.Name = "tlpFilter";
+            tlpFilter.RowCount = 2;
+            tlpFilter.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tlpFilter.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tlpFilter.Size = new Size(298, 56);
+            tlpFilter.TabIndex = 0;
             // 
             // cbCMBTypeFilter
             // 
@@ -559,7 +563,7 @@ namespace WatchList.WinForms
             cbCMBTypeFilter.FormattingEnabled = true;
             cbCMBTypeFilter.Location = new Point(3, 3);
             cbCMBTypeFilter.Name = "cbCMBTypeFilter";
-            cbCMBTypeFilter.Size = new Size(245, 23);
+            cbCMBTypeFilter.Size = new Size(292, 23);
             cbCMBTypeFilter.TabIndex = 0;
             // 
             // cbCMBStatusFilter
@@ -569,24 +573,61 @@ namespace WatchList.WinForms
             cbCMBStatusFilter.DisplayMemberSingleItem = "";
             cbCMBStatusFilter.Dock = DockStyle.Fill;
             cbCMBStatusFilter.FormattingEnabled = true;
-            cbCMBStatusFilter.Location = new Point(254, 3);
+            cbCMBStatusFilter.Location = new Point(3, 31);
             cbCMBStatusFilter.Name = "cbCMBStatusFilter";
-            cbCMBStatusFilter.Size = new Size(245, 23);
+            cbCMBStatusFilter.Size = new Size(292, 23);
             cbCMBStatusFilter.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.Controls.Add(checkBoxCMBSort, 0, 1);
+            tableLayoutPanel1.Controls.Add(btnTypeSort, 1, 1);
+            tableLayoutPanel1.Location = new Point(3, 3);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.Size = new Size(194, 54);
+            tableLayoutPanel1.TabIndex = 1;
+            // 
+            // btnTypeSort
+            // 
+            btnTypeSort.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnTypeSort.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnTypeSort.Depth = 0;
+            btnTypeSort.Dock = DockStyle.Fill;
+            btnTypeSort.HighEmphasis = true;
+            btnTypeSort.Icon = null;
+            btnTypeSort.Location = new Point(157, 12);
+            btnTypeSort.Margin = new Padding(2);
+            btnTypeSort.MouseState = MaterialSkin.MouseState.HOVER;
+            btnTypeSort.Name = "btnTypeSort";
+            btnTypeSort.NoAccentTextColor = Color.Empty;
+            btnTypeSort.Size = new Size(35, 28);
+            btnTypeSort.TabIndex = 60;
+            btnTypeSort.Text = "↑";
+            btnTypeSort.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnTypeSort.UseAccentColor = false;
+            btnTypeSort.UseVisualStyleBackColor = true;
+            btnTypeSort.Click += BtnTypeSort_Click;
             // 
             // BoxCinemaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(680, 425);
-            Controls.Add(TlpFilterBox);
+            ClientSize = new Size(680, 435);
+            Controls.Add(tlpFilterBox);
             Controls.Add(tlPanelFilter);
             Controls.Add(tlPanelPage);
             Controls.Add(tlPanelActionsWithElements);
             Controls.Add(dgvCinema);
             Margin = new Padding(3, 2, 3, 2);
-            MinimumSize = new Size(680, 425);
+            MinimumSize = new Size(680, 435);
             Name = "BoxCinemaForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "BoxCinema";
@@ -600,7 +641,10 @@ namespace WatchList.WinForms
             tlPanelPage.PerformLayout();
             tlPanelFilter.ResumeLayout(false);
             tlPanelFilter.PerformLayout();
-            TlpFilterBox.ResumeLayout(false);
+            tlpFilterBox.ResumeLayout(false);
+            tlpFilter.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -623,7 +667,6 @@ namespace WatchList.WinForms
         private MaterialSkin.Controls.MaterialLabel labelTotalPage;
         private BindingSource pageModelBindingSource;
         private MaterialSkin.Controls.MaterialLabel labelTextSizePage;
-        private MaterialSkin.Controls.MaterialLabel labelSortType;
         private DataGridViewTextBoxColumn NameCinema;
         private DataGridViewTextBoxColumn NumberCinema;
         private DataGridViewTextBoxColumn WatchedCinema;
@@ -635,8 +678,11 @@ namespace WatchList.WinForms
         private TableLayoutPanel tlPanelPage;
         private TableLayoutPanel tlPanelFilter;
         private TestTask.Controls.CheckComboBox.CheckBoxComboBox checkBoxCMBSort;
-        private TableLayoutPanel TlpFilterBox;
+        private TableLayoutPanel tlpFilterBox;
         private TestTask.Controls.CheckComboBox.CheckBoxComboBox cbCMBTypeFilter;
         private TestTask.Controls.CheckComboBox.CheckBoxComboBox cbCMBStatusFilter;
+        private TableLayoutPanel tlpFilter;
+        private TableLayoutPanel tableLayoutPanel1;
+        private MaterialSkin.Controls.MaterialButton btnTypeSort;
     }
 }

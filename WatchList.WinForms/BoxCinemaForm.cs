@@ -1,6 +1,7 @@
 using MaterialSkin.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TestTask.BindingItem.Pages;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sortable;
@@ -41,13 +42,12 @@ namespace WatchList.WinForms
         private readonly WatchItemRepository _itemRepository;
         private readonly ILogger _logger;
 
-        private readonly SortWatchItemModel _sortField = new SortWatchItemModel();
+        private readonly SortWatchItemModel _sortField;
+        private readonly FilterItemModel _filterItem;
 
-        private readonly FilterItemModel _filterItem = new FilterItemModel();
-
-        private ItemSearchRequest _searchRequests = new ItemSearchRequest();
-
+        private ItemSearchRequest _searchRequests;
         private PagedList<WatchItem> _pagedList;
+        private bool _isAscending = true;
 
         public BoxCinemaForm(IServiceProvider serviceProvider)
         {
@@ -56,7 +56,10 @@ namespace WatchList.WinForms
             _itemRepository = serviceProvider.GetRequiredService<WatchItemRepository>();
             _messageBox = serviceProvider.GetRequiredService<IMessageBox>();
             _itemService = serviceProvider.GetRequiredService<WatchItemService>();
+            _sortField = serviceProvider.GetRequiredService<SortWatchItemModel>();
+            _filterItem = serviceProvider.GetRequiredService<FilterItemModel>();
             _logger = serviceProvider.GetRequiredService<ILogger>();
+            _searchRequests = new ItemSearchRequest(_filterItem, _sortField.GetSortItem(), Page.GetPage(), _isAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
             Load += BoxCinemaForm_Load;
         }
@@ -69,17 +72,16 @@ namespace WatchList.WinForms
             checkBoxCMBSort.Items.AddRange(_sortField.SelectField);
             cbCMBTypeFilter.Items.AddRange(_filterItem.SelectTypeField);
             cbCMBStatusFilter.Items.AddRange(_filterItem.SelectStatusField);
+
+            checkBoxCMBSort.SelectItemsStr(_sortField.GetSortFieldArray());
             cbCMBTypeFilter.SelectAllItem();
             cbCMBStatusFilter.SelectAllItem();
         }
 
         private async void BtnUseFilter_Click(object sender, EventArgs e)
         {
-            if (!IsNotChangesFilter() || IsChangedSizePage())
-            {
-                Page.Number = 1;
-                await UpdateGridData();
-            }
+            Page.Number = 1;
+            await UpdateGridData();
         }
 
         private async void BtnCancelFilter_Click(object sender, EventArgs e)
@@ -228,6 +230,22 @@ namespace WatchList.WinForms
             }
         }
 
+        private async void BtnTypeSort_Click(object sender, EventArgs e)
+        {
+            if (_isAscending)
+            {
+                _isAscending = false;
+                btnTypeSort.Text = TypeSortFields.Descending.Name;
+            }
+            else
+            {
+                _isAscending = true;
+                btnTypeSort.Text = TypeSortFields.Ascending.Name;
+            }
+
+            await UpdateGridData();
+        }
+
         private async void CmbPageSize_Changed(object sender, EventArgs e)
         {
             var pageSizeCmb = SelectedPageSize();
@@ -307,9 +325,7 @@ namespace WatchList.WinForms
         {
             try
             {
-                _searchRequests.Page = Page.GetPage();
-                _searchRequests.Sort = _sortField.GetSortItem();
-                _searchRequests.Filter = _filterItem.GetFilter();
+                UpdataSearchRequests();
                 _pagedList = _itemService.GetPage(_searchRequests);
                 if (IsNotFirstPageEmpty())
                 {
@@ -333,26 +349,12 @@ namespace WatchList.WinForms
         }
 
         private void SelectSortField()
-        {
-            var selectField = new HashSet<SortFieldWatchItem>();
-
-            foreach (string item in checkBoxCMBSort.Items)
-            {
-                var checkBoxItem = checkBoxCMBSort.CheckBoxItems[item];
-
-                if (checkBoxItem.Checked && SortFieldWatchItem.TryFromName(item, out var sortField))
-                {
-                    selectField.Add(sortField);
-                }
-            }
-
-            _sortField.SortFields = selectField;
-        }
+            => _sortField.SortFields = checkBoxCMBSort.SelectFieldCheckBoxCMB<SortFieldWatchItem>();
 
         private void SelectFilterField()
         {
-            _filterItem.FilterTypeField = cbCMBTypeFilter.SelectFieldFilter<TypeCinema>();
-            _filterItem.FilterStatusField = cbCMBStatusFilter.SelectFieldFilter<StatusCinema>();
+            _filterItem.FilterTypeField = cbCMBTypeFilter.SelectFieldCheckBoxCMB<TypeCinema>();
+            _filterItem.FilterStatusField = cbCMBStatusFilter.SelectFieldCheckBoxCMB<StatusCinema>();
         }
 
         /// <summary>
@@ -367,7 +369,6 @@ namespace WatchList.WinForms
         {
             SelectSortField();
             SelectFilterField();
-            _searchRequests = new ItemSearchRequest(_filterItem.GetFilter(), _sortField.GetSortItem(), Page.GetPage());
             await LoadDataAsync();
         }
 
@@ -440,6 +441,14 @@ namespace WatchList.WinForms
             return result;
         }
 
+        private void UpdataSearchRequests()
+        {
+            _searchRequests.Page = Page.GetPage();
+            _searchRequests.Sort = _sortField.GetSortItem();
+            _searchRequests.Filter = _filterItem.GetFilter();
+            _searchRequests.IsAscending = _isAscending;
+        }
+
         /// <summary>
         /// Gets a string from a table cell, if there is null then an exception.
         /// </summary>
@@ -451,15 +460,8 @@ namespace WatchList.WinForms
         /// <exception cref="Exception">
         /// String is null.
         /// </exception>
-        private string CellElement(DataGridViewRow rowItem, int indexColumn) => rowItem.GetString(indexColumn) ?? throw new Exception("String cannot be null.");
-
-        /// <summary>
-        /// The method checks whether the element selection filter has been changed.
-        /// </summary>
-        /// <returns>
-        /// True - The filter has been changed. False - else.
-        /// </returns>
-        private bool IsNotChangesFilter() => _searchRequests.CompareFilter(_filterItem.GetFilter());
+        private string CellElement(DataGridViewRow rowItem, int indexColumn)
+            => rowItem.GetString(indexColumn) ?? throw new Exception("String cannot be null.");
 
         /// <summary>
         /// The method checks if the page is empty.
@@ -468,14 +470,6 @@ namespace WatchList.WinForms
         /// True - The page contains no elements and is not the first.
         /// </returns>
         private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
-
-        /// <summary>
-        /// The method checks if the size of the page data has changed.
-        /// </summary>
-        /// <returns>
-        /// True - The page size has been changed. False - else.
-        /// </returns>
-        private bool IsChangedSizePage() => _searchRequests.Page.Size != Page.Size;
 
         /// <summary>
         /// Get the size of the page data.

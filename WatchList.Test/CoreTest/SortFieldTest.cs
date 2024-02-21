@@ -231,7 +231,8 @@ namespace WatchList.Test.CoreTest
                 {
                     SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Grade),
                 },
-                expectWatchItem, false);
+                expectWatchItem,
+                false);
         }
 
         [Theory]
