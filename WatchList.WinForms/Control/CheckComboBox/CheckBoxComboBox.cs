@@ -206,8 +206,10 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// Check all items.
         /// </summary>
+        /// <param name="selectItems">Check items in ComboBox.</param>
         public void SelectItemsStr(string[] selectItems)
         {
+            ClearSelection();
             foreach (CheckBoxComboBoxItem item in CheckBoxItems)
             {
                 if (selectItems.Contains(item.Text))

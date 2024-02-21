@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bromix.MudBlazor.MaterialDesignIcons" Version="7.4.47.56" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="17.9.5" />
     <PackageReference Include="MudBlazor" Version="6.15.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />

@@ -60,7 +60,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
         public IQueryable<T> Apply(IQueryable<T> items, bool? ascending = true)
             => _sortType.Apply(items, ascending);
 
-        public void Clear()
+        public virtual void Clear()
             => SortFields = new HashSet<ISortableSmartEnum<T>>();
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

@@ -44,8 +44,8 @@ namespace WatchList.WinForms
 
         private readonly SortWatchItemModel _sortField;
         private readonly FilterItemModel _filterItem;
+        private readonly ItemSearchRequest _searchRequests;
 
-        private ItemSearchRequest _searchRequests;
         private PagedList<WatchItem> _pagedList;
         private bool _isAscending = true;
 
@@ -88,6 +88,7 @@ namespace WatchList.WinForms
         {
             _filterItem.Clear();
             _sortField.Clear();
+            checkBoxCMBSort.SelectItemsStr(_sortField.GetSortFieldArray());
             cbCMBTypeFilter.SelectAllItem();
             cbCMBStatusFilter.SelectAllItem();
             await UpdateGridData();
