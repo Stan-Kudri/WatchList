@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.QuestionResult;
-using WatchList.Core.Model.Sorting;
+using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.Component;
@@ -27,10 +27,10 @@ namespace WatchList.Core.Service.DataLoading
 
         public async Task Download(WatchItemRepository repository, ILoadRule loadRule)
         {
-            var searchRequest = new WatchItemSearchRequest(new FilterItem(), WatchItemSortField.Title, new Page(1, NumberOfItemPerPage));
-            var pagedList = repository.GetPage(searchRequest);
+            var itemSearchRequest = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), new Page(1, NumberOfItemPerPage));
+            var pagedList = repository.GetPage(itemSearchRequest);
 
-            while (searchRequest.Page.Number <= pagedList.PageCount)
+            while (itemSearchRequest.Page.Number <= pagedList.PageCount)
             {
                 var watchItemCollection = new WatchItemCollection(pagedList);
                 watchItemCollection = loadRule.Apply(watchItemCollection);
@@ -39,8 +39,8 @@ namespace WatchList.Core.Service.DataLoading
                 AddItems(watchItemCollection);
                 await UpdateItems(watchItemCollection);
 
-                searchRequest.Page.Number += 1;
-                pagedList = repository.GetPage(searchRequest);
+                itemSearchRequest.Page.Number += 1;
+                pagedList = repository.GetPage(itemSearchRequest);
             }
         }
 

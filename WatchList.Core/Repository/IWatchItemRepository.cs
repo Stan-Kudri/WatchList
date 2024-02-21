@@ -5,7 +5,7 @@ namespace WatchList.Core.Repository
 {
     public interface IWatchItemRepository
     {
-        public PagedList<WatchItem> GetPage(WatchItemSearchRequest searchRequest);
+        public PagedList<WatchItem> GetPage(ItemSearchRequest searchRequest);
 
         public void Add(WatchItem items);
 

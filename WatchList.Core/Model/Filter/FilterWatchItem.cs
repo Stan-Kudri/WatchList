@@ -16,10 +16,10 @@ namespace WatchList.Core.Model.Filter
         }
 
         public IEnumerable<TypeCinema> FilterTypeField { get; set; }
-            = new HashSet<TypeCinema>(TypeCinema.List.Where(e => e != TypeCinema.AllType));
+            = TypeCinema.List.Where(e => e != TypeCinema.AllType).ToList();
 
         public IEnumerable<StatusCinema> FilterStatusField { get; set; }
-            = new HashSet<StatusCinema>(StatusCinema.List.Where(e => e != StatusCinema.AllStatus));
+            = StatusCinema.List.Where(e => e != StatusCinema.AllStatus).ToList();
 
         public ObservableCollection<TypeCinema> TypeItems { get; set; }
             = new ObservableCollection<TypeCinema>(TypeCinema.List.Where(e => e != TypeCinema.AllType));

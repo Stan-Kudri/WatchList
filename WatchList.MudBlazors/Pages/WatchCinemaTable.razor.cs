@@ -20,7 +20,7 @@ namespace WatchList.MudBlazors.Pages
         [Inject] WatchItemService WatchItemService { get; set; } = null!;
         [Inject] IDialogService DialogService { get; set; } = null!;
         [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
-        [Inject] SortItem<WatchItem, SortFieldWatchItem> SortField { get; set; } = null!;
+        [Inject] SortWatchItem SortField { get; set; } = null!;
         [Inject] IFilterItem FilterWatchItem { get; set; } = null!;
 
         private readonly PageModel _pageModel = new PageModel();
@@ -29,11 +29,13 @@ namespace WatchList.MudBlazors.Pages
         private HashSet<WatchItem> _selectedItems = new HashSet<WatchItem>();
         private bool _isSelectItems = true;
 
-        private ItemSearchRequest _itemsSearchRequest = new ItemSearchRequest();
-        private PagedList<WatchItem>? _pagedList = null;
+        private ItemSearchRequest _itemsSearchRequest = null!;
+        private PagedList<WatchItem> _pagedList = null!;
 
         protected override void OnInitialized()
         {
+            SortField.Clear();
+            FilterWatchItem.Clear();
             _itemsSearchRequest = new ItemSearchRequest(FilterWatchItem, SortField, _pageModel);
             LoadData();
         }

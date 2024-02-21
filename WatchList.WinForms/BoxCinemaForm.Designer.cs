@@ -52,7 +52,6 @@ namespace WatchList.WinForms
             btnAddData = new MaterialSkin.Controls.MaterialButton();
             btnUseFilter = new MaterialSkin.Controls.MaterialButton();
             btnClearFilter = new MaterialSkin.Controls.MaterialButton();
-            filterModelBindingSource = new BindingSource(components);
             cmbPageSize = new ComboBox();
             pageModelBindingSource = new BindingSource(components);
             btnBackPage = new MaterialSkin.Controls.MaterialButton();
@@ -63,7 +62,6 @@ namespace WatchList.WinForms
             labelTotalPage = new MaterialSkin.Controls.MaterialLabel();
             labelTextSizePage = new MaterialSkin.Controls.MaterialLabel();
             labelSortType = new MaterialSkin.Controls.MaterialLabel();
-            sortModelBindingSource = new BindingSource(components);
             tlPanelActionsWithElements = new TableLayoutPanel();
             tlPanelPage = new TableLayoutPanel();
             checkBoxCMBSort = new TestTask.Controls.CheckComboBox.CheckBoxComboBox();
@@ -73,9 +71,7 @@ namespace WatchList.WinForms
             cbCMBStatusFilter = new TestTask.Controls.CheckComboBox.CheckBoxComboBox();
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pageModelBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)sortModelBindingSource).BeginInit();
             tlPanelActionsWithElements.SuspendLayout();
             tlPanelPage.SuspendLayout();
             tlPanelFilter.SuspendLayout();
@@ -303,10 +299,6 @@ namespace WatchList.WinForms
             btnClearFilter.UseVisualStyleBackColor = true;
             btnClearFilter.Click += BtnCancelFilter_Click;
             // 
-            // filterModelBindingSource
-            // 
-            filterModelBindingSource.DataSource = typeof(FilterModel);
-            // 
             // cmbPageSize
             // 
             cmbPageSize.DataBindings.Add(new Binding("SelectedValue", pageModelBindingSource, "Size", true));
@@ -466,10 +458,6 @@ namespace WatchList.WinForms
             labelSortType.Text = "Sort by";
             labelSortType.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // sortModelBindingSource
-            // 
-            sortModelBindingSource.DataSource = typeof(SortModel);
-            // 
             // tlPanelActionsWithElements
             // 
             tlPanelActionsWithElements.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -605,9 +593,7 @@ namespace WatchList.WinForms
             FormClosing += BoxCinemaForm_FormClosing;
             ((System.ComponentModel.ISupportInitialize)cinemaBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCinema).EndInit();
-            ((System.ComponentModel.ISupportInitialize)filterModelBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)pageModelBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)sortModelBindingSource).EndInit();
             tlPanelActionsWithElements.ResumeLayout(false);
             tlPanelActionsWithElements.PerformLayout();
             tlPanelPage.ResumeLayout(false);
@@ -638,8 +624,6 @@ namespace WatchList.WinForms
         private BindingSource pageModelBindingSource;
         private MaterialSkin.Controls.MaterialLabel labelTextSizePage;
         private MaterialSkin.Controls.MaterialLabel labelSortType;
-        private BindingSource filterModelBindingSource;
-        private BindingSource sortModelBindingSource;
         private DataGridViewTextBoxColumn NameCinema;
         private DataGridViewTextBoxColumn NumberCinema;
         private DataGridViewTextBoxColumn WatchedCinema;

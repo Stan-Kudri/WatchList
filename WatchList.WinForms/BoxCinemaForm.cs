@@ -61,8 +61,6 @@ namespace WatchList.WinForms
             Load += BoxCinemaForm_Load;
         }
 
-        private FilterModel Filter { get; set; } = new FilterModel();
-
         private PageModel Page { get; set; } = new PageModel();
 
         private void BoxCinemaForm_Load(object? sender, EventArgs e)
@@ -73,7 +71,6 @@ namespace WatchList.WinForms
             cbCMBStatusFilter.Items.AddRange(_filterItem.SelectStatusField);
             cbCMBTypeFilter.SelectAllItem();
             cbCMBStatusFilter.SelectAllItem();
-            filterModelBindingSource.DataSource = Filter;
         }
 
         private async void BtnUseFilter_Click(object sender, EventArgs e)
@@ -462,7 +459,7 @@ namespace WatchList.WinForms
         /// <returns>
         /// True - The filter has been changed. False - else.
         /// </returns>
-        private bool IsNotChangesFilter() => _searchRequests.CompareFilter(Filter.GetFilter());
+        private bool IsNotChangesFilter() => _searchRequests.CompareFilter(_filterItem.GetFilter());
 
         /// <summary>
         /// The method checks if the page is empty.

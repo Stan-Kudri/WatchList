@@ -18,13 +18,6 @@ namespace WatchList.Core.Repository
             _logger = logger;
         }
 
-        public PagedList<WatchItem> GetPage(WatchItemSearchRequest searchRequest)
-        {
-            var query = searchRequest.ApplyFilter(_db.WatchItem);
-            query = searchRequest.ApplyOrderBy(query);
-            return query.GetPagedList(searchRequest.Page);
-        }
-
         public PagedList<WatchItem> GetPage(ItemSearchRequest searchRequest)
         {
             var query = searchRequest.ApplyFilter(_db.WatchItem);
