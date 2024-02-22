@@ -1,9 +1,8 @@
 using FluentAssertions;
 using WatchList.Core.Model.Filter;
-using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Model.Sorting;
+using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
 using WatchList.Test.Components;
@@ -26,10 +25,15 @@ namespace WatchList.Test.CoreTest
                     new WatchItem("Джокер", 2, StatusCinema.Viewed, TypeCinema.Movie, Guid.Parse("68d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2020, 12, 10, 00, 00, 00), 10),
                 },
 
-                new WatchItemSearchRequest(
-                    new FilterItem(TypeFilter.Movie, StatusFilter.ViewedCinema),
-                    WatchItemSortField.Grade,
-                    new Page(1, 5)),
+                new ItemSearchRequest(
+                    new FilterWatchItem()
+                    {
+                        FilterTypeField = TypeCinema.List.Where(e => e == TypeCinema.Movie),
+                        FilterStatusField = StatusCinema.List.Where(e => e == StatusCinema.Viewed),
+                    },
+                    new SortWatchItem() { SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Grade) },
+                    new Page(1, 5),
+                    false),
 
                 new List<WatchItem>()
                 {
@@ -66,7 +70,7 @@ namespace WatchList.Test.CoreTest
         [MemberData(nameof(WatchListItemPage))]
         public void Verifying_The_Use_Of_The_Database_Page_Get_Method(
             List<WatchItem> watchItems,
-            WatchItemSearchRequest searchRequest,
+            ItemSearchRequest searchRequest,
             List<WatchItem> expectWatchItems)
         {
             // Arrange
@@ -93,7 +97,7 @@ namespace WatchList.Test.CoreTest
             // Arrange
             var appDbContext = new TestAppDbContextFactory().Create();
             var itemRepository = new WatchItemRepository(appDbContext, new TestLogger());
-            var searchRequest = new WatchItemSearchRequest();
+            var searchRequest = new ItemSearchRequest();
             appDbContext.AddRange(watchItems);
             appDbContext.SaveChanges();
 

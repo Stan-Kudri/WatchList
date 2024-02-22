@@ -8,6 +8,8 @@ using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
 using WatchList.Migrations.SQLite;
+using WatchList.WinForms.BindingItem.ModelBoxForm.Filter;
+using WatchList.WinForms.BindingItem.ModelBoxForm.Sorter;
 using WatchList.WinForms.ChildForms;
 using WatchList.WinForms.Message;
 
@@ -76,6 +78,8 @@ namespace WatchList.WinForms
                                       .AddScoped<WatchItemService>()
                                       .AddScoped<DownloadDataService>()
                                       .AddTransient<MergeDatabaseForm>()
+                                      .AddScoped<SortWatchItemModel>()
+                                      .AddScoped<FilterItemModel>()
                                       .AddTransient<BoxCinemaForm>();
 
         private static void ApplyThemeMatherialForm(MaterialForm form)

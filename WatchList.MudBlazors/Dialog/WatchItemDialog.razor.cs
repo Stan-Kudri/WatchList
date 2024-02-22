@@ -9,17 +9,20 @@ using WatchList.MudBlazors.Model;
 
 namespace WatchList.MudBlazors.Dialog
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0044:Make field readonly", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Private members is unused", Justification = "<Pending>")]
     public partial class WatchItemDialog
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
-        [Inject] private WatchItemService WatchItemService { get; set; } = null!;
-        [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
+        private string[] _errors = { };
 
         private WatchItemModel _watchItemModel { get; set; } = new WatchItemModel();
-        private string[] _errors = { };
+        private WatchItem? _oldWatchItem = null;
         private bool _isAddItem = true;
 
-        private WatchItem? _oldWatchItem;
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
+
+        [Inject] private WatchItemService WatchItemService { get; set; } = null!;
+        [Inject] private IMessageBox MessageBoxDialog { get; set; } = null!;
 
         [Parameter] public Guid? Id { get; set; } = null;
 
@@ -37,6 +40,7 @@ namespace WatchList.MudBlazors.Dialog
         }
 
         private void Close() => MudDialog.Cancel();
+        public void Closeeee() => MudDialog.Cancel();
 
         private async Task Add()
         {
@@ -73,7 +77,7 @@ namespace WatchList.MudBlazors.Dialog
             }
 
             var item = _watchItemModel.ToWatchItem();
-            if (!_oldWatchItem.Equals(item))
+            if (_oldWatchItem != null && !_oldWatchItem.Equals(item))
             {
                 await WatchItemService.UpdateAsync(_oldWatchItem, item);
             }
@@ -81,7 +85,16 @@ namespace WatchList.MudBlazors.Dialog
             MudDialog.Close();
         }
 
-        private void RecoverPastData() => _watchItemModel = _oldWatchItem.GetItemModel();
+        private async Task RecoverPastData()
+        {
+            if (_oldWatchItem == null)
+            {
+                await MessageBoxDialog.ShowWarning("Old item missing");
+                return;
+            }
+
+            _watchItemModel = _oldWatchItem.GetItemModel();
+        }
 
         private IEnumerable<string> ValidFormatText(string str)
         {
@@ -95,7 +108,7 @@ namespace WatchList.MudBlazors.Dialog
         {
             message = string.Empty;
 
-            if (_watchItemModel.Title == null || _watchItemModel.Title == string.Empty)
+            if (string.IsNullOrEmpty(_watchItemModel.Title))
             {
                 message = "Title is required.";
                 return false;

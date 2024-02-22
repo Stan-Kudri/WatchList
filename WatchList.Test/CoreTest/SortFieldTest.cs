@@ -2,7 +2,7 @@ using FluentAssertions;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Model.Sorting;
+using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Test.Components;
 
@@ -168,7 +168,13 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Title(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Title, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(
+                watchItems,
+                new SortWatchItem()
+                {
+                    SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Title),
+                },
+                expectWatchItem);
         }
 
         [Theory]
@@ -176,7 +182,13 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Sequel(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Sequel, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(
+                watchItems,
+                new SortWatchItem()
+                {
+                    SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Sequel),
+                },
+                expectWatchItem);
         }
 
         [Theory]
@@ -184,7 +196,13 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Status(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Status, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(
+                watchItems,
+                new SortWatchItem()
+                {
+                    SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Status),
+                },
+                expectWatchItem);
         }
 
         [Theory]
@@ -192,7 +210,14 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Data(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Data, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(
+                watchItems,
+                new SortWatchItem()
+                {
+                    SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Data),
+                },
+                expectWatchItem,
+                false);
         }
 
         [Theory]
@@ -200,27 +225,43 @@ namespace WatchList.Test.CoreTest
         public void Order_List_Items_By_Grade(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
             // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Grade, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(
+                watchItems,
+                new SortWatchItem()
+                {
+                    SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Grade),
+                },
+                expectWatchItem,
+                false);
         }
 
         [Theory]
         [MemberData(nameof(TypeOrderWatchListItem))]
         public void Order_List_Items_By_Type(List<WatchItem> watchItems, List<WatchItem> expectWatchItem)
         {
-            // Assert
-            CheckListEqualAfterApplyOrderBy(watchItems, WatchItemSortField.Type, expectWatchItem);
+            CheckListEqualAfterApplyOrderBy(
+                watchItems,
+                new SortWatchItem()
+                {
+                    SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Type),
+                },
+                expectWatchItem);
         }
 
-        private void CheckListEqualAfterApplyOrderBy(List<WatchItem> watchItems, WatchItemSortField sortField, List<WatchItem> expectWatchItem)
+        private void CheckListEqualAfterApplyOrderBy(List<WatchItem> watchItems, SortWatchItem sortField, List<WatchItem> expectWatchItem, bool isAscending = true)
         {
             // Arrange
             var appDbContext = new TestAppDbContextFactory().Create();
-            var watchItemSearchRequest = new WatchItemSearchRequest(new FilterItem(), sortField, new Page(NumberStartPage, StartPageSize));
+            var itemSearchRequest = new ItemSearchRequest(
+                    new FilterWatchItem(),
+                    sortField,
+                    new Page(NumberStartPage, StartPageSize),
+                    isAscending);
             appDbContext.AddRange(watchItems);
             appDbContext.SaveChanges();
 
             // Act
-            var item = watchItemSearchRequest.ApplyOrderBy(appDbContext.WatchItem);
+            var item = itemSearchRequest.ApplyOrderBy(appDbContext.WatchItem);
             var actualItemPage = item.ToList();
 
             // Assert

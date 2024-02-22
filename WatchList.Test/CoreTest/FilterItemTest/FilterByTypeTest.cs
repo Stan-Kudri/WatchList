@@ -1,9 +1,8 @@
 using FluentAssertions;
 using WatchList.Core.Model.Filter;
-using WatchList.Core.Model.Filter.Components;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Model.Sorting;
+using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Test.Components;
 
@@ -93,7 +92,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         public void List_0f_Filter_Items_By_Movies(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
             // Assert
-            CheckListEqualAfterApplyFilter(watchItems, TypeFilter.Movie, expectWatchItems);
+            CheckListEqualAfterApplyFilter(watchItems, TypeCinema.Movie, expectWatchItems);
         }
 
         [Theory]
@@ -101,7 +100,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         public void List_0f_Filter_Items_By_Cartoon(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
             // Assert
-            CheckListEqualAfterApplyFilter(watchItems, TypeFilter.Cartoon, expectWatchItems);
+            CheckListEqualAfterApplyFilter(watchItems, TypeCinema.Cartoon, expectWatchItems);
         }
 
         [Theory]
@@ -109,7 +108,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         public void List_0f_Filter_Items_By_Series(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
             // Assert
-            CheckListEqualAfterApplyFilter(watchItems, TypeFilter.Series, expectWatchItems);
+            CheckListEqualAfterApplyFilter(watchItems, TypeCinema.Series, expectWatchItems);
         }
 
         [Theory]
@@ -117,19 +116,26 @@ namespace WatchList.Test.CoreTest.FilterItemTest
         public void List_0f_Filter_Items_By_Anime(List<WatchItem> watchItems, List<WatchItem> expectWatchItems)
         {
             // Assert
-            CheckListEqualAfterApplyFilter(watchItems, TypeFilter.Anime, expectWatchItems);
+            CheckListEqualAfterApplyFilter(watchItems, TypeCinema.Anime, expectWatchItems);
         }
 
-        private void CheckListEqualAfterApplyFilter(List<WatchItem> watchItems, TypeFilter typeFilter, List<WatchItem> expectWatchItems)
+        private void CheckListEqualAfterApplyFilter(List<WatchItem> watchItems, TypeCinema typeCinema, List<WatchItem> expectWatchItems)
         {
             // Arrange
             var dbContext = new TestAppDbContextFactory().Create();
-            var watchItemSearchRequest = new WatchItemSearchRequest(new FilterItem(typeFilter, StatusFilter.AllCinema), WatchItemSortField.Title, new Page());
+            var itemSearchRequest = new ItemSearchRequest(
+                    new FilterWatchItem()
+                    {
+                        FilterTypeField = TypeCinema.List.Where(e => e == typeCinema),
+                        FilterStatusField = StatusCinema.List.Where(e => e != StatusCinema.AllStatus),
+                    },
+                    new SortWatchItem() { SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Title) },
+                    new Page());
             dbContext.AddRange(watchItems);
             dbContext.SaveChanges();
 
             // Act
-            var actualWatchItem = watchItemSearchRequest.ApplyFilter(dbContext.WatchItem).ToList();
+            var actualWatchItem = itemSearchRequest.ApplyFilter(dbContext.WatchItem).ToList();
 
             // Assert
             actualWatchItem.Should().Equal(expectWatchItems);

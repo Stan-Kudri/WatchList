@@ -51,7 +51,7 @@
         @if (_isAddItem)
         {
             <MudTooltip Text="Save" Placement="Placement.Bottom">
-                <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="Add">Save</MudButton>
+                <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="Add</MudButton>
             </MudTooltip>
             <MudTooltip Text="Clear" Placement="Placement.Bottom">
                 <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="ClearData">Clear</MudButton>
@@ -60,7 +60,7 @@
         else
         {
             <MudTooltip Text="Save" Placement="Placement.Bottom">
-                <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="Updata">Save</MudButton>
+                <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="@Updata">Save</MudButton>
             </MudTooltip>
             <MudTooltip Text="Replace" Placement="Placement.Bottom">
                 <MudButton Class="ml-1" Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="RecoverPastData">Recover</MudButton>
@@ -68,7 +68,7 @@
         }
 
         <MudTooltip Text="Close" Placement="Placement.Bottom">
-            <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="Close">Close</MudButton>
+            <MudButton Style="max-width: 100px; max-height : 40px;" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Outlined" OnClick="@Close">Close</MudButton>
         </MudTooltip>
 
     </MudToolBar>
