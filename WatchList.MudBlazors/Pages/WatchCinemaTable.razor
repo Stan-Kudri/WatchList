@@ -58,7 +58,10 @@
 
     <MudToolBar>
 
+        <MudButton StartIcon="@MaterialDesignIcons.Normal.FileImport" Variant="Variant.Outlined" Color="Color.Primary" Style="font-size:12px" Class="mr-3" OnClick="@((e) => UploadData())">Import Data</MudButton>
+
         <MudSpacer />
+
         <MudButton OnClick="@((e) => SaveItemDialog())" Color="Color.Tertiary" Variant="Variant.Outlined" Style="font-size:12px" Class="mr-3">Add Item</MudButton>
         <MudButton OnClick="@RemoveItemsDialog" Color="Color.Error" Variant="Variant.Outlined" Style="font-size:12px" Disabled="@_isSelectItems">Remove Items</MudButton>
 

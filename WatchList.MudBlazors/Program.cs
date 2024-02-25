@@ -7,6 +7,7 @@ using WatchList.Core.Repository;
 using WatchList.Core.Repository.Db;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
+using WatchList.Core.Service.DataLoading;
 using WatchList.Migrations.SQLite;
 using WatchList.MudBlazors.Message;
 
@@ -27,6 +28,8 @@ builder.Services.AddScoped<IMessageBox, MessageBoxDialog>();
 builder.Services.AddScoped<WatchItemService>();
 builder.Services.AddScoped<SortWatchItem>();
 builder.Services.AddScoped<IFilterItem, FilterWatchItem>();
+builder.Services.AddScoped<ILogger>(e => e.GetRequiredService<AggregateLogging>());
+builder.Services.AddScoped<DownloadDataService>();
 builder.Logging.AddConsole();
 
 var app = builder.Build();

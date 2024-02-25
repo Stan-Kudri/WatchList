@@ -1,0 +1,64 @@
+﻿@using WatchList.Core.Model.ItemCinema.Components
+@using WatchList.Core.Model.Load
+@using WatchList.Core.Model.Load.ItemActions
+
+<MudDialog>
+
+    <DialogContent>
+
+        <MudCheckBox T="bool" Value="_isDeleteGrade" Style="font-size:14px" Color="Color.Primary">
+            Delete existing grade (Set Status "Planned Watch")
+        </MudCheckBox>
+
+        <MudSpacer />
+
+        <div class="d-flex align-start justify-space-start">
+
+            <MudCheckBox T="bool" @bind-Value="_isConsiderDuplicates" Style="font-size:14px" Color="Color.Primary" Class="mr-3">
+                Consider duplicates
+            </MudCheckBox>
+
+            @if (_isConsiderDuplicates)
+            {
+                <MudToggleGroup T="DuplicateLoadingRules" SelectionMode="SelectionMode.MultiSelection" @bind-Values="_actionDuplicateItems" Color="Color.Primary" CheckMark Style="font-size:14px" FixedContent>
+                 <MudToggleItem Value=DuplicateLoadingRules.CaseSensitive UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                 <MudToggleItem Value=DuplicateLoadingRules.UpdateDuplicate UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+             </MudToggleGroup>
+            }
+
+        </div>
+
+
+        <div class="d-flex align-start">
+
+            <MudSelect T="TypeCinema" Label="Status" @bind-Value="_selectTypeCinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Style="width:200px" Class="mr-2">
+                @foreach (var item in TypeCinema.List.Where(x => x != TypeCinema.AllType).ToList())
+                {
+                    <MudSelectItem T="TypeCinema" Value="@item" />
+                }
+            </MudSelect>
+
+            <MudSelect T="Grade" Label="Status" @bind-Value="_selectGrade" AdornmentIcon="@Icons.Material.Filled.ShortText">
+                @foreach (var item in Grade.List)
+                {
+                    <MudSelectItem T="Grade" Value="@item" />
+                }
+            </MudSelect>
+
+        </div>
+    </DialogContent>
+
+    <DialogActions>
+
+        <MudContainer Style="align-items:center">
+            <MudFileUpload T="IBrowserFile" Accept=".db" FilesChanged="UploadData">
+                <ButtonTemplate>
+                    <MudButton HtmlTag="label" Style="max-width: 60px; max-height : 30px;" Variant="Variant.Filled" Class="mr-4" for="@context.Id" title="Import Data">Ok</MudButton>
+                    <MudButton OnClick="Close" Style="max-width: 60px; max-height : 30px;" Variant="Variant.Filled">Cancel</MudButton>
+                </ButtonTemplate>
+            </MudFileUpload>
+        </MudContainer>
+
+    </DialogActions>
+
+</MudDialog>

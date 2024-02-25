@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
@@ -17,11 +18,12 @@ namespace WatchList.MudBlazors.Pages
 
         private const string MessageNoSelectItems = "No items selected.";
 
-        [Inject] WatchItemService WatchItemService { get; set; } = null!;
-        [Inject] IDialogService DialogService { get; set; } = null!;
-        [Inject] IMessageBox MessageBoxDialog { get; set; } = null!;
-        [Inject] SortWatchItem SortField { get; set; } = null!;
-        [Inject] IFilterItem FilterWatchItem { get; set; } = null!;
+        [Inject] private WatchItemService WatchItemService { get; set; } = null!;
+        [Inject] private IDialogService DialogService { get; set; } = null!;
+        [Inject] private IMessageBox MessageBoxDialog { get; set; } = null!;
+        [Inject] private SortWatchItem SortField { get; set; } = null!;
+        [Inject] private IFilterItem FilterWatchItem { get; set; } = null!;
+        [Inject] private IJSRuntime JS { get; set; } = null!;
 
         private readonly PageModel _pageModel = new PageModel();
 
@@ -37,6 +39,16 @@ namespace WatchList.MudBlazors.Pages
             SortField.Clear();
             FilterWatchItem.Clear();
             _itemsSearchRequest = new ItemSearchRequest(FilterWatchItem, SortField, _pageModel);
+            LoadData();
+        }
+
+        private async Task UploadData()
+        {
+            var parameters = new DialogParameters<LoadRuleDialog>();
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
+
+            var dialog = await DialogService.ShowAsync<LoadRuleDialog>("Upload Data", parameters, options);
+            var result = await dialog.Result;
             LoadData();
         }
 

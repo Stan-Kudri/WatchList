@@ -40,7 +40,6 @@ namespace WatchList.MudBlazors.Dialog
         }
 
         private void Close() => MudDialog.Cancel();
-        public void Closeeee() => MudDialog.Cancel();
 
         private async Task Add()
         {
