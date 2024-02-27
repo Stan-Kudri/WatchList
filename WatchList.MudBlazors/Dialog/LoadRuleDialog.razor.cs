@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.JSInterop;
 using MudBlazor;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
@@ -13,14 +12,13 @@ using WatchList.MudBlazors.Model;
 
 namespace WatchList.MudBlazors.Dialog
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0044:Make field readonly", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Private members is unused", Justification = "<Pending>")]
     public partial class LoadRuleDialog
     {
-        private const string NameFileLoade = "ExportDb.db";
-
         [Inject] private WatchItemRepository WatchItemRepository { get; set; } = null!;
         [Inject] private ILogger Logger { get; set; } = null!;
         [Inject] private DownloadDataService DownloadDataService { get; set; } = null!;
-        [Inject] private IJSRuntime JS { get; set; } = null!;
 
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
 
