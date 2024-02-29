@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using MudBlazor;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
@@ -23,7 +22,6 @@ namespace WatchList.MudBlazors.Pages
         [Inject] private IMessageBox MessageBoxDialog { get; set; } = null!;
         [Inject] private SortWatchItem SortField { get; set; } = null!;
         [Inject] private IFilterItem FilterWatchItem { get; set; } = null!;
-        [Inject] private IJSRuntime JS { get; set; } = null!;
 
         private readonly PageModel _pageModel = new PageModel();
 

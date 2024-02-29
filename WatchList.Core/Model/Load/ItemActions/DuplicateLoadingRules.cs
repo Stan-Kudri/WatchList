@@ -4,9 +4,9 @@ namespace WatchList.Core.Model.Load.ItemActions
 {
     public class DuplicateLoadingRules : SmartEnum<DuplicateLoadingRules>
     {
-        public static readonly DuplicateLoadingRules UpdateDuplicate = new DuplicateLoadingRules("Update duplicate item", 0, null);
+        public static readonly DuplicateLoadingRules UpdateDuplicate = new DuplicateLoadingRules("Update duplicate item", 0, true);
 
-        public static readonly DuplicateLoadingRules CaseSensitive = new DuplicateLoadingRules("Case sensitive", 1, null);
+        public static readonly DuplicateLoadingRules CaseSensitive = new DuplicateLoadingRules("Case sensitive", 1, true);
 
         public DuplicateLoadingRules(DuplicateLoadingRules loadingRules, bool? checkAction)
             : this(loadingRules.Name, loadingRules.Value, checkAction)

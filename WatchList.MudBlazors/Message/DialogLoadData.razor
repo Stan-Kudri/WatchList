@@ -1,0 +1,31 @@
+﻿@using WatchList.Core.Model.QuestionResult
+
+<MudDialog DefaultFocus="DefaultFocus.LastChild">
+    <DialogContent>
+        @_messageReplaceItem
+    </DialogContent>
+    <DialogActions>
+        @foreach (var item in DialogReplaceItemQuestion.List.Where(e => e != DialogReplaceItemQuestion.Unknown))
+        {
+            <MudButton Variant="Variant.Filled" Class="ml-2" OnClick="@((e) => Submit(item))">@item</MudButton>
+        }
+    </DialogActions>
+</MudDialog>
+
+@code 
+{
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    private string _messageReplaceItem = "The append item is a duplicate. Updata element?";
+
+    [Parameter] public string TitleItem { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+        => _messageReplaceItem = $"The append item is a duplicate. Updata element {TitleItem} ?";
+
+    private void Submit(DialogReplaceItemQuestion result)
+        => MudDialog.Close<DialogReplaceItemQuestion>(result);
+
+    private void Cancel()
+    => MudDialog.Close<DialogReplaceItemQuestion>(DialogReplaceItemQuestion.No);
+}
