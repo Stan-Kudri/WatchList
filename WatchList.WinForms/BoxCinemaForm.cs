@@ -40,7 +40,7 @@ namespace WatchList.WinForms
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
         private readonly WatchItemRepository _itemRepository;
-        private readonly ILogger _logger;
+        private readonly ILogger<WatchItemRepository> _logger;
 
         private readonly SortWatchItemModel _sortField;
         private readonly FilterItemModel _filterItem;
@@ -58,7 +58,7 @@ namespace WatchList.WinForms
             _itemService = serviceProvider.GetRequiredService<WatchItemService>();
             _sortField = serviceProvider.GetRequiredService<SortWatchItemModel>();
             _filterItem = serviceProvider.GetRequiredService<FilterItemModel>();
-            _logger = serviceProvider.GetRequiredService<ILogger>();
+            _logger = serviceProvider.GetRequiredService<ILogger<WatchItemRepository>>();
             _searchRequests = new ItemSearchRequest(_filterItem, _sortField.GetSortItem(), Page.GetPage(), _isAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
             Load += BoxCinemaForm_Load;

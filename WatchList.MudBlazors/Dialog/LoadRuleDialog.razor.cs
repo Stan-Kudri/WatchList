@@ -17,7 +17,7 @@ namespace WatchList.MudBlazors.Dialog
     public partial class LoadRuleDialog
     {
         [Inject] private WatchItemRepository WatchItemRepository { get; set; } = null!;
-        [Inject] private ILogger Logger { get; set; } = null!;
+        [Inject] private ILogger<WatchItemRepository> Logger { get; set; } = null!;
         [Inject] private DownloadDataService DownloadDataService { get; set; } = null!;
 
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;

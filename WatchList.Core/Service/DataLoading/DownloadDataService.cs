@@ -13,9 +13,9 @@ namespace WatchList.Core.Service.DataLoading
     {
         private readonly WatchItemRepository _repository;
         private readonly IMessageBox _messageBox;
-        private readonly ILogger _logger;
+        private readonly ILogger<DownloadDataService> _logger;
 
-        public DownloadDataService(WatchItemRepository repository, IMessageBox messageBox, ILogger logger, int numberOfItemPerPage = 500)
+        public DownloadDataService(WatchItemRepository repository, IMessageBox messageBox, ILogger<DownloadDataService> logger, int numberOfItemPerPage = 500)
         {
             _repository = repository;
             _messageBox = messageBox;

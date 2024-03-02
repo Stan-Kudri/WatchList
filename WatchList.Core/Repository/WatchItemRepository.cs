@@ -10,9 +10,9 @@ namespace WatchList.Core.Repository
     public class WatchItemRepository : IWatchItemRepository
     {
         private readonly WatchCinemaDbContext _db;
-        private readonly ILogger _logger;
+        private readonly ILogger<WatchItemRepository> _logger;
 
-        public WatchItemRepository(WatchCinemaDbContext db, ILogger logger)
+        public WatchItemRepository(WatchCinemaDbContext db, ILogger<WatchItemRepository> logger)
         {
             _db = db;
             _logger = logger;
