@@ -2,13 +2,17 @@
 
 <MudDialog DefaultFocus="DefaultFocus.LastChild">
     <DialogContent>
-        @_messageReplaceItem
+        <MudText Style="font-size:12px">
+            @_messageReplaceItem
+        </MudText>
     </DialogContent>
     <DialogActions>
-        @foreach (var item in DialogReplaceItemQuestion.List.Where(e => e != DialogReplaceItemQuestion.Unknown))
-        {
-            <MudButton Variant="Variant.Filled" Class="ml-2" OnClick="@((e) => Submit(item))">@item</MudButton>
-        }
+        <MudContainer Class="align-center">
+            @foreach (var item in DialogReplaceItemQuestion.List.Where(e => e != DialogReplaceItemQuestion.Unknown))
+            {
+                <MudButton Variant="Variant.Filled" Class="ml-2" OnClick="@((e) => Submit(item))">@item</MudButton>
+            }
+        </MudContainer>  
     </DialogActions>
 </MudDialog>
 
