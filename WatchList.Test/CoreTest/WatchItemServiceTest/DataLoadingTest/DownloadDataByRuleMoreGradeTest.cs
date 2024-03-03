@@ -1,5 +1,8 @@
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using Serilog;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
@@ -128,19 +131,21 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, Grade moreGrade, List<WatchItem> expectItems)
         {
             // Arrange
-            var logger = new TestLogger();
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
+            ILogger<DownloadDataService> loggerDownload = new Logger<DownloadDataService>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, logger);
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext, logger);
+            var watchItemRepository = new WatchItemRepository(dbContext, loggerRepository);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
             var loadRuleConfig = new TestLoadRuleConfig() { MoreGrade = moreGrade };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
@@ -162,19 +167,22 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Load_Data_File_By_Rule_Type_CinemaAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, Grade moreGrade, List<WatchItem> expectItems)
         {
             // Arrange
-            var logger = new TestLogger();
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
+            ILogger<DownloadDataService> loggerDownload = new Logger<DownloadDataService>(nullLog);
+            var logger = new LoggerConfiguration().CreateLogger();
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, logger);
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext, logger);
+            var watchItemRepository = new WatchItemRepository(dbContext, loggerRepository);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
             var loadRuleConfig = new TestLoadRuleConfig() { MoreGrade = moreGrade };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);

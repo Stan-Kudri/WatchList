@@ -1,4 +1,6 @@
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -66,8 +68,10 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         public async Task Add_New_Item_In_Database(List<WatchItem> items, WatchItem addItem, List<WatchItem> expectItems)
         {
             // Arrange
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, new TestLogger());
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).ReturnsAsync(true);
             var service = new WatchItemService(itemRepository, messageBox.Object);
@@ -87,8 +91,10 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
         public async Task Update_Item_In_DatabaseAsync(List<WatchItem> items, WatchItem oldItem, WatchItem updateItem, List<WatchItem> expectItems)
         {
             // Arrange
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, new TestLogger());
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).ReturnsAsync(true);
             var service = new WatchItemService(itemRepository, messageBox.Object);

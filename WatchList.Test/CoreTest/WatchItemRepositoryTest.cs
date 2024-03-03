@@ -1,4 +1,6 @@
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -74,8 +76,10 @@ namespace WatchList.Test.CoreTest
             List<WatchItem> expectWatchItems)
         {
             // Arrange
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
             var appDbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(appDbContext, new TestLogger());
+            var itemRepository = new WatchItemRepository(appDbContext, loggerRepository);
             appDbContext.AddRange(watchItems);
             appDbContext.SaveChanges();
 
@@ -95,8 +99,10 @@ namespace WatchList.Test.CoreTest
             List<WatchItem> expectWatchItems)
         {
             // Arrange
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
             var appDbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(appDbContext, new TestLogger());
+            var itemRepository = new WatchItemRepository(appDbContext, loggerRepository);
             var searchRequest = new ItemSearchRequest();
             appDbContext.AddRange(watchItems);
             appDbContext.SaveChanges();

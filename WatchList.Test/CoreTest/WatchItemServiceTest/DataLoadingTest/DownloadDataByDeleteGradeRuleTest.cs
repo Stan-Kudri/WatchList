@@ -1,4 +1,6 @@
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -111,16 +113,18 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Add_Data_File_And_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, DialogReplaceItemQuestion dialogReplaceItem, List<WatchItem> expectItems)
         {
             // Arrange
-            var logger = new TestLogger();
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
+            ILogger<DownloadDataService> loggerDownload = new Logger<DownloadDataService>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, logger);
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext, logger);
+            var watchItemRepository = new WatchItemRepository(dbContext, loggerRepository);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(dialogReplaceItem);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
             var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
@@ -131,7 +135,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                         }),
             };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
@@ -152,16 +156,18 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Add_Data_File_And_Replace_Duplicate_ElementAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, DialogReplaceItemQuestion dialogReplaceItem, List<WatchItem> expectItems)
         {
             // Arrange
-            var logger = new TestLogger();
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
+            ILogger<DownloadDataService> loggerDownload = new Logger<DownloadDataService>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, logger);
-            var watchItemRepository = new WatchItemRepository(dbContext, logger);
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
+            var watchItemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(dialogReplaceItem);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
             var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
@@ -172,7 +178,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                         }),
             };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
@@ -192,11 +198,13 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Add_Data_File_And_One_Replace_And_Not_Replace_Duplicate_Element(List<WatchItem> items, List<WatchItem> addDownloadItem, Dictionary<string, DialogReplaceItemQuestion> dictionaryAddItem, List<WatchItem> expectItems)
         {
             // Arrange
-            var logger = new TestLogger();
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
+            ILogger<DownloadDataService> loggerDownload = new Logger<DownloadDataService>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, logger);
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext, logger);
+            var watchItemRepository = new WatchItemRepository(dbContext, loggerRepository);
 
             var messageBox = new Mock<IMessageBox>();
             foreach (var item in dictionaryAddItem)
@@ -204,7 +212,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                 messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).ReturnsAsync(item.Value);
             }
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
             var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
@@ -215,7 +223,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                         }),
             };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
@@ -235,11 +243,13 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Add_Data_File_And_One_Replace_And_Not_Replace_Duplicate_ElementAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, Dictionary<string, DialogReplaceItemQuestion> dictionaryAddItem, List<WatchItem> expectItems)
         {
             // Arrange
-            var logger = new TestLogger();
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
+            ILogger<DownloadDataService> loggerDownload = new Logger<DownloadDataService>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, logger);
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext, logger);
+            var watchItemRepository = new WatchItemRepository(dbContext, loggerRepository);
 
             var messageBox = new Mock<IMessageBox>();
             foreach (var item in dictionaryAddItem)
@@ -247,7 +257,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                 messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).ReturnsAsync(item.Value);
             }
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
             var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
@@ -258,7 +268,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                         }),
             };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);

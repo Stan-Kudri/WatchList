@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using MudBlazor.Services;
 using Serilog;
 using Serilog.Core;
+using WatchList.Core.Extension;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.Sortable;
 using WatchList.Core.Repository;
@@ -72,22 +73,15 @@ finally
     Log.CloseAndFlush();
 }
 
-static Logger CreateLogger()
+static Logger CreateLogger(string logDirectory = "log")
 {
-    var logDirectory = "log";
     try
     {
         Directory.CreateDirectory(logDirectory);
     }
-    catch { }
+    catch
+    {
+    }
 
-    return new LoggerConfiguration()
-        .WriteTo.Console()
-        .WriteTo.File(
-            Path.Combine(logDirectory, "log.txt"),
-            rollingInterval: RollingInterval.Day,
-            fileSizeLimitBytes: 5 * 1024 * 1024,
-            rollOnFileSizeLimit: true,
-            shared: true)
-        .CreateLogger();
+    return logDirectory.CreateLogger();
 }

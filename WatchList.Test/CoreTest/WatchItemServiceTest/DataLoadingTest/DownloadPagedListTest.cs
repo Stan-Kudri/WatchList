@@ -1,4 +1,6 @@
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -49,19 +51,21 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Add_Data_File(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
         {
             // Arrange
-            var logger = new TestLogger();
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
+            ILogger<DownloadDataService> loggerDownload = new Logger<DownloadDataService>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, logger);
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext, logger);
+            var watchItemRepository = new WatchItemRepository(dbContext, loggerRepository);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger) { NumberOfItemPerPage = PageSize };
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload) { NumberOfItemPerPage = PageSize };
             var loadRuleConfig = new TestLoadRuleConfig();
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);
@@ -81,19 +85,21 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         public async Task Add_Data_FileAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, List<WatchItem> expectItems)
         {
             // Arrange
-            var logger = new TestLogger();
+            var nullLog = new NullLoggerFactory();
+            ILogger<WatchItemRepository> loggerRepository = new Logger<WatchItemRepository>(nullLog);
+            ILogger<DownloadDataService> loggerDownload = new Logger<DownloadDataService>(nullLog);
             var dbContext = new TestAppDbContextFactory().Create();
-            var itemRepository = new WatchItemRepository(dbContext, logger);
+            var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var dbContextDownloadItem = new TestAppDbContextFactory().Create();
-            var watchItemRepository = new WatchItemRepository(dbContext, logger);
+            var watchItemRepository = new WatchItemRepository(dbContext, loggerRepository);
 
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, logger) { NumberOfItemPerPage = PageSize };
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload) { NumberOfItemPerPage = PageSize };
             var loadRuleConfig = new TestLoadRuleConfig();
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
-            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, logger);
+            var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
 
             dbContext.AddRange(items);
             dbContextDownloadItem.AddRange(addDownloadItem);

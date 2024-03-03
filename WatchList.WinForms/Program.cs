@@ -2,7 +2,9 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WatchList.Core.Logger;
+using Serilog;
+using Serilog.Core;
+using WatchList.Core.Extension;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
@@ -23,50 +25,39 @@ namespace WatchList.WinForms
         [STAThread]
         public static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-
-            var path = "logs";
-            CreatDirectoryIfNotExists(path);
-
-            var serviceCollection = AppServiceDI();
-
-            serviceCollection.AddSingleton<ILogger>(e => new AggregateLogging()
-            {
-                new ConsoleLogger(LogLevel.Trace),
-                new FileLogger(LogLevel.Trace, path),
-            });
-
-            using var contain = serviceCollection.BuildServiceProvider(new ServiceProviderOptions
-            {
-                ValidateOnBuild = true,
-                ValidateScopes = true,
-            });
-
-            using var scope = contain.CreateScope();
-
-            var form = scope.ServiceProvider.GetRequiredService<BoxCinemaForm>();
-            ApplyThemeMatherialForm(form);
-
-            var loger = scope.ServiceProvider.GetRequiredService<ILogger>();
+            Log.Logger = CreateLogger();
 
             try
             {
-                loger.LogTrace("Launch the application");
+                Log.Information("Starting WinForms applications");
+
+                // To customize application configuration such as set high DPI settings or default font,
+                // see https://aka.ms/applicationconfiguration.
+                ApplicationConfiguration.Initialize();
+
+                var serviceCollection = AppServiceDI();
+                serviceCollection.AddSerilog();
+
+                using var contain = serviceCollection.BuildServiceProvider(new ServiceProviderOptions
+                {
+                    ValidateOnBuild = true,
+                    ValidateScopes = true,
+                });
+
+                using var scope = contain.CreateScope();
+
+                var form = scope.ServiceProvider.GetRequiredService<BoxCinemaForm>();
+                ApplyThemeMatherialForm(form);
+
                 Application.Run(form);
             }
             catch (Exception ex)
             {
-                loger.LogError(ex, "Unhandled exception");
+                Log.Fatal(ex, "Application terminated unexpectedly");
             }
-        }
-
-        private static void CreatDirectoryIfNotExists(string path)
-        {
-            if (!Directory.Exists(path))
+            finally
             {
-                Directory.CreateDirectory(path);
+                Log.CloseAndFlush();
             }
         }
 
@@ -80,7 +71,8 @@ namespace WatchList.WinForms
                                       .AddTransient<MergeDatabaseForm>()
                                       .AddScoped<SortWatchItemModel>()
                                       .AddScoped<FilterItemModel>()
-                                      .AddTransient<BoxCinemaForm>();
+                                      .AddTransient<BoxCinemaForm>()
+                                      .AddLogging();
 
         private static void ApplyThemeMatherialForm(MaterialForm form)
         {
@@ -88,6 +80,19 @@ namespace WatchList.WinForms
             materialSkinManager.AddFormToManage(form);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Purple900, Primary.DeepPurple700, Primary.Purple50, Accent.LightBlue200, TextShade.WHITE);
+        }
+
+        private static Logger CreateLogger(string logDirectory = "log")
+        {
+            try
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+            catch
+            {
+            }
+
+            return logDirectory.CreateLogger();
         }
     }
 }
