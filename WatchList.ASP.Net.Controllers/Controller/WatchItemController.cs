@@ -23,8 +23,8 @@ namespace WatchList.ASP.Net.Controllers.Controller
         private readonly IFilterItem _filterItem;
 
         //private PagedList<WatchItem> _pagedList;
-        private Page _page;
-        private bool _isAscending = true;
+        private readonly Page _page;
+        private readonly bool _isAscending = true;
 
         public WatchItemController(WatchItemService itemService,
                                     //IMessageBox messageBox,
@@ -38,7 +38,7 @@ namespace WatchList.ASP.Net.Controllers.Controller
             _itemService = itemService;
             //_messageBox = messageBox;
             //_itemRepository = itemRepository;
-            //_logger = logger;              8
+            //_logger = logger;
             //_pagedList = pagedList;
             _page = page;
             _sortField = sortWatchItem;
