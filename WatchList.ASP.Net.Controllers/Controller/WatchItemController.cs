@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using WatchList.ASP.Net.Controllers.Enums;
+using WatchList.ASP.Net.Controllers.Model;
 using WatchList.Core.Model.Filter;
-using WatchList.Core.Model.ItemCinema;
-using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Service;
@@ -48,64 +46,18 @@ namespace WatchList.ASP.Net.Controllers.Controller
         }
 
         [HttpPost("addItem")]
-        public async Task<IActionResult> AddItem(string title,
-                                                    int sequel,
-                                                    Status status,
-                                                    Types type,
-                                                    string? id,
-                                                    DateTime? dateWatch = null,
-                                                    int? grade = null)
+        public async Task<IActionResult> AddItem([FromBody] WatchItemModel watchItem)
         {
-            if (!Guid.TryParse(id, out var guidId))
-            {
-                return BadRequest();
-            }
-
             try
             {
-                var statusCinema = GetSmartEnumStatus(status);
-                var typeCinema = GetSmartEnumTypeCinema(type);
-
-                if (statusCinema == StatusCinema.Viewed)
-                {
-                    dateWatch ??= DateTime.UtcNow;
-                    grade ??= 5;
-                }
-
-                var item = new WatchItem(title, sequel, statusCinema, typeCinema, guidId, dateWatch, grade);
+                var item = watchItem.GetWatchItem();
                 await _itemService.AddAsync(item);
-                return Ok(item);
+                return Ok(watchItem);
             }
             catch
             {
-                return NoContent();
+                return BadRequest();
             }
-        }
-
-        private StatusCinema GetSmartEnumStatus(Status status)
-        {
-            return status switch
-            {
-                Status.AllStatus => StatusCinema.AllStatus,
-                Status.Viewed => StatusCinema.Viewed,
-                Status.Planned => StatusCinema.Planned,
-                Status.Look => StatusCinema.Look,
-                Status.Thrown => StatusCinema.Thrown,
-                _ => StatusCinema.AllStatus,
-            };
-        }
-
-        private TypeCinema GetSmartEnumTypeCinema(Types type)
-        {
-            return type switch
-            {
-                Types.AllType => TypeCinema.AllType,
-                Types.Movie => TypeCinema.Movie,
-                Types.Series => TypeCinema.Series,
-                Types.Anime => TypeCinema.Anime,
-                Types.Cartoon => TypeCinema.Cartoon,
-                _ => TypeCinema.AllType,
-            };
         }
     }
 }

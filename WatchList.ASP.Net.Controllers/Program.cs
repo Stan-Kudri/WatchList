@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Serilog;
 using Serilog.Core;
 using WatchList.ASP.Net.Controllers.Controller;
@@ -31,7 +32,10 @@ try
     builder.Services.AddScoped<Page>();
     builder.Services.AddSerilog();
     builder.Services.AddScoped<WatchItemController>();
-    builder.Services.AddControllers();
+    builder.Services.AddControllers().AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
     var app = builder.Build();
 
