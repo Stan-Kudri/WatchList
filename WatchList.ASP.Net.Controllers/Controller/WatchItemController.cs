@@ -51,11 +51,26 @@ namespace WatchList.ASP.Net.Controllers.Controller
             {
                 var item = watchItem.GetWatchItem(updateId);
                 await _itemService.UpdateByIdAsync(updateId, item);
-                return Ok($"Update element by ID:{updateId}");
+                return Ok($"Update item by ID:{updateId}");
             }
             catch
             {
-                return BadRequest("The element was not update.");
+                return BadRequest("The item was not update.");
+            }
+        }
+
+        [HttpGet("pageItems")]
+        public async Task<IActionResult> GetPageItems([FromBody] ItemSearchRequestModel itemSearchRequestModel)
+        {
+            try
+            {
+                var itemSearchRequest = itemSearchRequestModel.GetItemSearchRequest();
+                var itemsPage = _itemService.GetPage(itemSearchRequest);
+                return Ok(itemsPage);
+            }
+            catch
+            {
+                return BadRequest("The request contains invalid data.");
             }
         }
     }

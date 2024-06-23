@@ -18,6 +18,7 @@ namespace WatchList.ASP.Net.Controllers.Model
         public Task<bool> ShowQuestion(string message)
             => Task.FromResult(true);
 
+        //When you try to add a duplicate, it will be updated.
         public Task<bool> ShowQuestionSaveItem(string message)
             => Task.FromResult(true);
 
