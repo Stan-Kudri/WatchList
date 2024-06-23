@@ -6,8 +6,6 @@ namespace WatchList.ASP.Net.Controllers.Model
 {
     public class WatchItemModel
     {
-        public string? Id { get; set; }
-
         public string? Title { get; set; }
 
         public Types Type { get; set; }
@@ -20,7 +18,7 @@ namespace WatchList.ASP.Net.Controllers.Model
 
         public int? Grade { get; set; } = null;
 
-        public WatchItem GetWatchItem()
+        public WatchItem GetWatchItem(string? oldId = null)
         {
             if (Status == Status.AllStatus)
             {
@@ -29,7 +27,7 @@ namespace WatchList.ASP.Net.Controllers.Model
 
             var title = Title ?? throw new ArgumentException("Invalid title format.", nameof(Title));
             var sequel = Sequel > 0 ? Sequel : throw new ArgumentException("The sequel number is greater than zero.", nameof(Sequel));
-            var id = !Guid.TryParse(Id, out var resultId) ? resultId : Guid.NewGuid();
+            var id = Guid.TryParse(oldId, out var itemId) ? itemId : Guid.NewGuid();
             var typeCinema = GetEnumTypeCinema;
             var statusCinema = GetEnumStatus;
 
