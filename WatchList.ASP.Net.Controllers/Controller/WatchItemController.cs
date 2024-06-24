@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using WatchList.ASP.Net.Controllers.Enums;
 using WatchList.ASP.Net.Controllers.Model;
 using WatchList.Core.Service;
 
@@ -60,10 +61,15 @@ namespace WatchList.ASP.Net.Controllers.Controller
         }
 
         [HttpGet("pageItems")]
-        public async Task<IActionResult> GetPageItems([FromBody] ItemSearchRequestModel itemSearchRequestModel)
+        public async Task<IActionResult> GetPageItems([FromQuery] List<Types> filterByTypes,
+                                                      [FromQuery] List<Status> filterByStatus,
+                                                      [FromQuery] List<SortFields> sortFields,
+                                                      [FromQuery] int page = 1,
+                                                      [FromQuery] bool isAscending = true)
         {
             try
             {
+                var itemSearchRequestModel = new ItemSearchRequestModel(filterByTypes, filterByStatus, sortFields, page, isAscending);
                 var itemSearchRequest = itemSearchRequestModel.GetItemSearchRequest();
                 var itemsPage = _itemService.GetPage(itemSearchRequest);
                 return Ok(itemsPage);

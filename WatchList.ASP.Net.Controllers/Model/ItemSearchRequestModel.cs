@@ -8,6 +8,22 @@ namespace WatchList.ASP.Net.Controllers.Model
 {
     public class ItemSearchRequestModel
     {
+        public ItemSearchRequestModel()
+            : this(new List<Types> { Types.Movie, Types.Anime, Types.Series, Types.Cartoon },
+                   new List<Status> { Status.Viewed, Status.Look, Status.Planned, Status.Thrown },
+                   new List<SortFields> { SortFields.Data, SortFields.Status, SortFields.Grade, SortFields.Sequel, SortFields.Title })
+        {
+        }
+
+        public ItemSearchRequestModel(List<Types> filterByType, List<Status> filterByStatus, List<SortFields> sortField, int pageNumber = 1, bool isAscending = true)
+        {
+            FilterByType = filterByType;
+            FilterByStatus = filterByStatus;
+            SortField = sortField;
+            PageNumber = pageNumber;
+            IsAscending = isAscending;
+        }
+
         public List<Types> FilterByType { get; set; }
 
         public List<Status> FilterByStatus { get; set; }
@@ -47,7 +63,9 @@ namespace WatchList.ASP.Net.Controllers.Model
                 }
             }
 
-            return filterByTypes;
+            return !filterByTypes.Any()
+                    ? TypeCinema.List.Where(e => e != TypeCinema.AllType)
+                    : filterByTypes;
         }
 
         private IEnumerable<StatusCinema> GetFilterByStatusCinema(List<Status> statusFilter)
@@ -73,39 +91,43 @@ namespace WatchList.ASP.Net.Controllers.Model
                 }
             }
 
-            return filterByStatus;
+            return !filterByStatus.Any()
+                    ? StatusCinema.List.Where(e => e != StatusCinema.AllStatus)
+                    : filterByStatus;
         }
 
         private IEnumerable<SortFieldWatchItem> GetSortFields(List<SortFields> sortFields)
         {
-            var filterByStatus = new HashSet<SortFieldWatchItem>();
+            var fields = new HashSet<SortFieldWatchItem>();
 
-            foreach (var fields in sortFields)
+            foreach (var field in sortFields)
             {
-                switch (fields)
+                switch (field)
                 {
                     case SortFields.Title:
-                        filterByStatus.Add(SortFieldWatchItem.Title);
+                        fields.Add(SortFieldWatchItem.Title);
                         break;
                     case SortFields.Sequel:
-                        filterByStatus.Add(SortFieldWatchItem.Sequel);
+                        fields.Add(SortFieldWatchItem.Sequel);
                         break;
                     case SortFields.Type:
-                        filterByStatus.Add(SortFieldWatchItem.Type);
+                        fields.Add(SortFieldWatchItem.Type);
                         break;
                     case SortFields.Status:
-                        filterByStatus.Add(SortFieldWatchItem.Status);
+                        fields.Add(SortFieldWatchItem.Status);
                         break;
                     case SortFields.Grade:
-                        filterByStatus.Add(SortFieldWatchItem.Grade);
+                        fields.Add(SortFieldWatchItem.Grade);
                         break;
                     case SortFields.Data:
-                        filterByStatus.Add(SortFieldWatchItem.Data);
+                        fields.Add(SortFieldWatchItem.Data);
                         break;
                 }
             }
 
-            return filterByStatus;
+            return !fields.Any()
+                    ? SortFieldWatchItem.List
+                    : fields;
         }
     }
 }
