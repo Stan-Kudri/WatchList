@@ -4,8 +4,6 @@ using Serilog.Core;
 using WatchList.ASP.Net.Controllers.Controller;
 using WatchList.ASP.Net.Controllers.Model;
 using WatchList.Core.Extension;
-using WatchList.Core.Model.Filter;
-using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
@@ -26,11 +24,9 @@ try
     builder.Services.AddScoped<WatchItemRepository>();
     builder.Services.AddScoped<IMessageBox, MessageBoxStub>();
     builder.Services.AddScoped<WatchItemService>();
-    builder.Services.AddScoped<SortWatchItem>();
-    builder.Services.AddScoped<IFilterItem, FilterWatchItem>();
     builder.Services.AddScoped<DownloadDataService>();
     builder.Services.AddScoped<Page>();
-    builder.Services.AddSerilog();
+    builder.Services.AddLogging();
     builder.Services.AddScoped<WatchItemController>();
     builder.Services.AddControllers().AddJsonOptions(options =>
     {

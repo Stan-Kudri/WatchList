@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using WatchList.ASP.Net.Controllers.Enums;
+using WatchList.ASP.Net.Controllers.Extension;
 using WatchList.ASP.Net.Controllers.Model;
+using WatchList.ASP.Net.Controllers.Model.DuplicateModel;
+using WatchList.Core.Repository;
 using WatchList.Core.Service;
+using WatchList.Core.Service.DataLoading;
+using WatchList.Migrations.SQLite;
 
 namespace WatchList.ASP.Net.Controllers.Controller
 {
@@ -9,11 +14,16 @@ namespace WatchList.ASP.Net.Controllers.Controller
     [Route("[controller]")]
     public class WatchItemController : ControllerBase
     {
+        private readonly WatchItemRepository _watchItemRepository;
         private readonly WatchItemService _itemService;
+        private readonly DownloadDataService _downloadDataService;
+        private readonly ILogger<WatchItemRepository> _logger;
 
-        public WatchItemController(WatchItemService itemService)
+        public WatchItemController(WatchItemService itemService, WatchItemRepository watchItemRepository, DownloadDataService downloadDataService)
         {
             _itemService = itemService;
+            _watchItemRepository = watchItemRepository;
+            _downloadDataService = downloadDataService;
         }
 
         [HttpPost("addItem")]
@@ -78,6 +88,46 @@ namespace WatchList.ASP.Net.Controllers.Controller
             {
                 return BadRequest("The request contains invalid data.");
             }
+        }
+
+        [HttpPost("addDateFromFile")]
+        public async Task<IActionResult> DownloadDateFromFile(IFormFile file /*, [FromBody] LoadRulesModel loadRulesModel*/)
+        {
+            try
+            {
+                var loadRulesModel = new LoadRulesModel();
+
+                var pathFile = await DownloadFile(file);
+                var dbContext = new DbContextFactoryMigrator(pathFile).Create();
+
+                var loadRuleConfig = loadRulesModel.GetLoadRulesConfigModel();
+                var aggregateRules = loadRuleConfig.GetAggregateRules(_watchItemRepository);
+
+                var repositoryDataDownload = new WatchItemRepository(dbContext, _logger);
+
+                await _downloadDataService.Download(repositoryDataDownload, aggregateRules);
+
+                return Ok("Add data in DB.");
+            }
+            catch
+            {
+                return BadRequest("Failed to unload data from file.");
+            }
+        }
+
+        private async Task<string> DownloadFile(IFormFile dataFile)
+        {
+            var pathFile = Path.GetTempFileName();
+
+            using (var stream = System.IO.File.OpenWrite(pathFile))
+            {
+                using (var loadStream = dataFile.OpenReadStream())
+                {
+                    await loadStream.CopyToAsync(stream);
+                }
+            }
+
+            return pathFile;
         }
     }
 }
