@@ -29,38 +29,11 @@ namespace WatchList.ASP.Net.Controllers.Model.DuplicateModel
 
         public Types Types { get; set; } = Types.AllType;
 
-        public LoadRulesConfigModel GetLoadRulesConfigModel()
+        public BaseLoadRulesConfigModel GetLoadRulesConfigModel()
         {
             var duplicateLoadRulesModel = new DuplicateLoadRulesModel(IsUpdateDuplicateItems, IsCaseSensitive).GetDuplicateLoadRules();
             var actionsWithDuplicate = new ActionDuplicateItems(true, duplicateLoadRulesModel);
-            return new LoadRulesConfigModel(DeleteGrade, actionsWithDuplicate, GetTypeCinema, GetGrade);
+            return new BaseLoadRulesConfigModel(DeleteGrade, actionsWithDuplicate, TypeCinema.FromValue((int)Types), Grade.FromValue((int)Grades));
         }
-
-        private TypeCinema GetTypeCinema
-            => Types switch
-            {
-                Types.AllType => TypeCinema.AllType,
-                Types.Movie => TypeCinema.Movie,
-                Types.Series => TypeCinema.Series,
-                Types.Anime => TypeCinema.Anime,
-                Types.Cartoon => TypeCinema.Cartoon,
-                _ => TypeCinema.AllType,
-            };
-
-        private Grade GetGrade
-            => Grades switch
-            {
-                Grades.One => Grade.One,
-                Grades.Two => Grade.Two,
-                Grades.Three => Grade.Three,
-                Grades.Four => Grade.Four,
-                Grades.Five => Grade.Five,
-                Grades.Six => Grade.Six,
-                Grades.Seven => Grade.Seven,
-                Grades.Eight => Grade.Eight,
-                Grades.Nine => Grade.Nine,
-                Grades.Ten => Grade.Ten,
-                _ => Grade.AnyGrade,
-            };
     }
 }

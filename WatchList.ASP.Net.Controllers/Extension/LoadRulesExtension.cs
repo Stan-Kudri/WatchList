@@ -1,4 +1,4 @@
-using WatchList.ASP.Net.Controllers.Model.DuplicateModel;
+using WatchList.Core.Model.Load;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.DataLoading.Rules;
 
@@ -6,7 +6,7 @@ namespace WatchList.ASP.Net.Controllers.Extension
 {
     public static class LoadRulesExtension
     {
-        public static AggregateLoadRule GetAggregateRules(this LoadRulesConfigModel loadRulesConfig, WatchItemRepository watchItemRepository)
+        public static AggregateLoadRule GetAggregateRules(this BaseLoadRulesConfigModel loadRulesConfig, WatchItemRepository watchItemRepository)
         {
             var loadRuleHasGrade = new DeleteGradeRule(loadRulesConfig);
             var loadRuleType = new FilterByTypeCinemaLoadRule(loadRulesConfig);

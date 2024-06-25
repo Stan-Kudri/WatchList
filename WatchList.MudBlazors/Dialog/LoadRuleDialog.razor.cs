@@ -8,7 +8,6 @@ using WatchList.Core.Repository;
 using WatchList.Core.Service.DataLoading;
 using WatchList.Core.Service.DataLoading.Rules;
 using WatchList.Migrations.SQLite;
-using WatchList.MudBlazors.Model;
 
 namespace WatchList.MudBlazors.Dialog
 {
@@ -69,7 +68,7 @@ namespace WatchList.MudBlazors.Dialog
                 ? new ActionDuplicateItems(_isConsiderDuplicates, _actionDuplicateItems.ToList())
                 : new ActionDuplicateItems();
 
-            return new LoadRulesConfigModel(_isDeleteGrade, actionDuplicateItems, _selectTypeCinema, _selectGrade);
+            return new BaseLoadRulesConfigModel(_isDeleteGrade, actionDuplicateItems, _selectTypeCinema, _selectGrade);
         }
 
         private async Task<string> DownloadFile(IBrowserFile fileload)
