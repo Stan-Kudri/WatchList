@@ -1,4 +1,4 @@
-using WatchList.ASP.Net.Controllers.Enums;
+using WatchList.Core.Enums;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sortable;
@@ -11,7 +11,7 @@ namespace WatchList.ASP.Net.Controllers.Model
         public ItemSearchRequestModel()
             : this(new List<Types> { Types.Movie, Types.Anime, Types.Series, Types.Cartoon },
                    new List<Status> { Status.Viewed, Status.Look, Status.Planned, Status.Thrown },
-                   new List<SortFields> { SortFields.Data, SortFields.Status, SortFields.Grade, SortFields.Sequel, SortFields.Title })
+                   new List<SortFields> { SortFields.Date, SortFields.Status, SortFields.Grade, SortFields.Sequel, SortFields.Title })
         {
         }
 
@@ -44,86 +44,29 @@ namespace WatchList.ASP.Net.Controllers.Model
         {
             var filterByTypes = new HashSet<TypeCinema>();
 
-            foreach (var type in typesFilter)
-            {
-                switch (type)
-                {
-                    case Types.Movie:
-                        filterByTypes.Add(TypeCinema.Movie);
-                        break;
-                    case Types.Series:
-                        filterByTypes.Add(TypeCinema.Series);
-                        break;
-                    case Types.Anime:
-                        filterByTypes.Add(TypeCinema.Anime);
-                        break;
-                    case Types.Cartoon:
-                        filterByTypes.Add(TypeCinema.Cartoon);
-                        break;
-                }
-            }
+            typesFilter.ForEach(e => filterByTypes.Add(TypeCinema.FromValue((int)e)));
 
             return !filterByTypes.Any()
                     ? TypeCinema.List.Where(e => e != TypeCinema.AllType)
-                    : filterByTypes;
+                    : filterByTypes.Where(e => e != TypeCinema.AllType);
         }
 
         private IEnumerable<StatusCinema> GetFilterByStatusCinema(List<Status> statusFilter)
         {
             var filterByStatus = new HashSet<StatusCinema>();
 
-            foreach (var status in statusFilter)
-            {
-                switch (status)
-                {
-                    case Status.Viewed:
-                        filterByStatus.Add(StatusCinema.Thrown);
-                        break;
-                    case Status.Planned:
-                        filterByStatus.Add(StatusCinema.Planned);
-                        break;
-                    case Status.Look:
-                        filterByStatus.Add(StatusCinema.Look);
-                        break;
-                    case Status.Thrown:
-                        filterByStatus.Add(StatusCinema.Thrown);
-                        break;
-                }
-            }
+            statusFilter.ForEach(e => filterByStatus.Add(StatusCinema.FromValue((int)e)));
 
             return !filterByStatus.Any()
                     ? StatusCinema.List.Where(e => e != StatusCinema.AllStatus)
-                    : filterByStatus;
+                    : filterByStatus.Where(e => e != StatusCinema.AllStatus);
         }
 
         private IEnumerable<SortFieldWatchItem> GetSortFields(List<SortFields> sortFields)
         {
             var fields = new HashSet<SortFieldWatchItem>();
 
-            foreach (var field in sortFields)
-            {
-                switch (field)
-                {
-                    case SortFields.Title:
-                        fields.Add(SortFieldWatchItem.Title);
-                        break;
-                    case SortFields.Sequel:
-                        fields.Add(SortFieldWatchItem.Sequel);
-                        break;
-                    case SortFields.Type:
-                        fields.Add(SortFieldWatchItem.Type);
-                        break;
-                    case SortFields.Status:
-                        fields.Add(SortFieldWatchItem.Status);
-                        break;
-                    case SortFields.Grade:
-                        fields.Add(SortFieldWatchItem.Grade);
-                        break;
-                    case SortFields.Data:
-                        fields.Add(SortFieldWatchItem.Data);
-                        break;
-                }
-            }
+            sortFields.ForEach(e => fields.Add(SortFieldWatchItem.FromValue((int)e)));
 
             return !fields.Any()
                     ? SortFieldWatchItem.List

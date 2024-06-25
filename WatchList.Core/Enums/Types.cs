@@ -1,8 +1,7 @@
-using System.ComponentModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace WatchList.ASP.Net.Controllers.Enums
+namespace WatchList.Core.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum Types

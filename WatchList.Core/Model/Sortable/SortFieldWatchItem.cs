@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Ardalis.SmartEnum;
+using WatchList.Core.Enums;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 
@@ -7,12 +8,17 @@ namespace WatchList.Core.Model.Sortable
 {
     public abstract class SortFieldWatchItem : SmartEnum<SortFieldWatchItem>, ISortableSmartEnum<WatchItem>, ISortableSmartEnumOperation<WatchItem>
     {
-        public static readonly SortFieldWatchItem Title = new SortType<string>("Title", 0, e => e.Title);
-        public static readonly SortFieldWatchItem Sequel = new SortType<int>("Sequel", 1, e => e.Sequel);
-        public static readonly SortFieldWatchItem Status = new SortType<StatusCinema>("Status", 2, e => e.Status);
-        public static readonly SortFieldWatchItem Data = new SortType<DateTime?>("Data", 3, e => e.Date);
-        public static readonly SortFieldWatchItem Grade = new SortType<int?>("Grade", 4, e => e.Grade);
-        public static readonly SortFieldWatchItem Type = new SortType<TypeCinema>("Type", 5, e => e.Type);
+        public static readonly SortFieldWatchItem Title = new SortType<string>("Title", SortFields.Title, e => e.Title);
+        public static readonly SortFieldWatchItem Sequel = new SortType<int>("Sequel", SortFields.Sequel, e => e.Sequel);
+        public static readonly SortFieldWatchItem Status = new SortType<StatusCinema>("Status", SortFields.Status, e => e.Status);
+        public static readonly SortFieldWatchItem Data = new SortType<DateTime?>("Data", SortFields.Date, e => e.Date);
+        public static readonly SortFieldWatchItem Grade = new SortType<int?>("Grade", SortFields.Grade, e => e.Grade);
+        public static readonly SortFieldWatchItem Type = new SortType<TypeCinema>("Type", SortFields.Type, e => e.Type);
+
+        private SortFieldWatchItem(string name, SortFields fields)
+            : this(name, (int)fields)
+        {
+        }
 
         private SortFieldWatchItem(string name, int value)
             : base(name, value)
@@ -33,7 +39,7 @@ namespace WatchList.Core.Model.Sortable
         {
             private readonly Expression<Func<WatchItem, TKey>> _expression;
 
-            public SortType(string name, int value, Expression<Func<WatchItem, TKey>> expression)
+            public SortType(string name, SortFields value, Expression<Func<WatchItem, TKey>> expression)
                 : base(name, value)
             {
                 _expression = expression;

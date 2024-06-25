@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using WatchList.ASP.Net.Controllers.Enums;
 using WatchList.ASP.Net.Controllers.Extension;
 using WatchList.ASP.Net.Controllers.Model;
 using WatchList.ASP.Net.Controllers.Model.DuplicateModel;
+using WatchList.Core.Enums;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.DataLoading;
@@ -91,11 +91,16 @@ namespace WatchList.ASP.Net.Controllers.Controller
         }
 
         [HttpPost("addDateFromFile")]
-        public async Task<IActionResult> DownloadDateFromFile(IFormFile file /*, [FromBody] LoadRulesModel loadRulesModel*/)
+        public async Task<IActionResult> DownloadDateFromFile(IFormFile file,
+                                                              bool deleteGrade = false,
+                                                              bool isUpdateDuplicateItems = true,
+                                                              bool isCaseSensitive = true,
+                                                              Grades grades = Grades.AnyGrade,
+                                                              Types types = Types.AllType)
         {
             try
             {
-                var loadRulesModel = new LoadRulesModel();
+                var loadRulesModel = new LoadRulesModel(deleteGrade, isUpdateDuplicateItems, isCaseSensitive, grades, types);
 
                 var pathFile = await DownloadFile(file);
                 var dbContext = new DbContextFactoryMigrator(pathFile).Create();

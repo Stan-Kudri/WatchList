@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace WatchList.ASP.Net.Controllers.Enums
+namespace WatchList.Core.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SortFields
@@ -9,7 +9,7 @@ namespace WatchList.ASP.Net.Controllers.Enums
         Title,
         Sequel,
         Status,
-        Data,
+        Date,
         Grade,
         Type
     }

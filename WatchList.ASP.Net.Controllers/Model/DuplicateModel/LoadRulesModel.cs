@@ -1,4 +1,4 @@
-using WatchList.ASP.Net.Controllers.Enums;
+using WatchList.Core.Enums;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
 
@@ -6,6 +6,19 @@ namespace WatchList.ASP.Net.Controllers.Model.DuplicateModel
 {
     public class LoadRulesModel
     {
+        public LoadRulesModel(bool deleteGrade,
+                              bool isUpdateDuplicateItems,
+                              bool isCaseSensitive,
+                              Grades grades,
+                              Types types)
+        {
+            DeleteGrade = deleteGrade;
+            IsUpdateDuplicateItems = isUpdateDuplicateItems;
+            IsCaseSensitive = isCaseSensitive;
+            Grades = grades;
+            Types = types;
+        }
+
         public bool DeleteGrade { get; private set; } = false;
 
         public bool IsUpdateDuplicateItems { get; set; } = true;

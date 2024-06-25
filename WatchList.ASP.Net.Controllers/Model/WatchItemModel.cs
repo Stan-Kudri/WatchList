@@ -1,4 +1,4 @@
-using WatchList.ASP.Net.Controllers.Enums;
+using WatchList.Core.Enums;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 
@@ -28,8 +28,8 @@ namespace WatchList.ASP.Net.Controllers.Model
             var title = Title ?? throw new ArgumentException("Invalid title format.", nameof(Title));
             var sequel = Sequel > 0 ? Sequel : throw new ArgumentException("The sequel number is greater than zero.", nameof(Sequel));
             var id = Guid.TryParse(oldId, out var itemId) ? itemId : Guid.NewGuid();
-            var typeCinema = GetEnumTypeCinema;
-            var statusCinema = GetEnumStatus;
+            var typeCinema = TypeCinema.FromValue((int)Type);
+            var statusCinema = StatusCinema.FromValue((int)Status);
 
             if (statusCinema == StatusCinema.Viewed)
             {
@@ -42,25 +42,5 @@ namespace WatchList.ASP.Net.Controllers.Model
 
             return new WatchItem(title, sequel, statusCinema, typeCinema, id, Date, Grade);
         }
-
-        private StatusCinema GetEnumStatus => Status switch
-        {
-            Status.AllStatus => StatusCinema.AllStatus,
-            Status.Viewed => StatusCinema.Viewed,
-            Status.Planned => StatusCinema.Planned,
-            Status.Look => StatusCinema.Look,
-            Status.Thrown => StatusCinema.Thrown,
-            _ => StatusCinema.AllStatus,
-        };
-
-        private TypeCinema GetEnumTypeCinema => Type switch
-        {
-            Types.AllType => TypeCinema.AllType,
-            Types.Movie => TypeCinema.Movie,
-            Types.Series => TypeCinema.Series,
-            Types.Anime => TypeCinema.Anime,
-            Types.Cartoon => TypeCinema.Cartoon,
-            _ => TypeCinema.AllType,
-        };
     }
 }
