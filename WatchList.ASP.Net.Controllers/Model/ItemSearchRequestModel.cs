@@ -46,7 +46,7 @@ namespace WatchList.ASP.Net.Controllers.Model
 
             typesFilter.ForEach(e => filterByTypes.Add(TypeCinema.FromValue(e)));
 
-            return !filterByTypes.Any()
+            return filterByTypes.Count == 0
                     ? TypeCinema.List.Where(e => e != TypeCinema.AllType)
                     : filterByTypes.Where(e => e != TypeCinema.AllType);
         }
@@ -57,7 +57,7 @@ namespace WatchList.ASP.Net.Controllers.Model
 
             statusFilter.ForEach(e => filterByStatus.Add(StatusCinema.FromValue(e)));
 
-            return !filterByStatus.Any()
+            return filterByStatus.Count == 0
                     ? StatusCinema.List.Where(e => e != StatusCinema.AllStatus)
                     : filterByStatus.Where(e => e != StatusCinema.AllStatus);
         }
@@ -68,7 +68,7 @@ namespace WatchList.ASP.Net.Controllers.Model
 
             sortFields.ForEach(e => fields.Add(SortFieldWatchItem.FromValue(e)));
 
-            return !fields.Any()
+            return fields.Count == 0
                     ? SortFieldWatchItem.List
                     : fields;
         }

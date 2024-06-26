@@ -90,8 +90,8 @@ namespace WatchList.ASP.Net.Controllers.Controller
             }
         }
 
-        [HttpPost("addDateFromFile")]
-        public async Task<IActionResult> DownloadDateFromFile(IFormFile file,
+        [HttpPost("addDataFromDB")]
+        public async Task<IActionResult> DownloadDataFromDB(IFormFile file,
                                                               [FromForm] bool deleteGrade = false,
                                                               [FromForm] bool isUpdateDuplicateItems = true,
                                                               [FromForm] bool isCaseSensitive = true,
