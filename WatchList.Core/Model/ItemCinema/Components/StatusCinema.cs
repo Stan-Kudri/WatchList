@@ -15,5 +15,7 @@ namespace WatchList.Core.Model.ItemCinema.Components
             : base(name, (int)status)
         {
         }
+
+        public static StatusCinema FromValue(Status status) => FromValue((int)status);
     }
 }

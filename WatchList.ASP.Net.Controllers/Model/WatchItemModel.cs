@@ -28,8 +28,8 @@ namespace WatchList.ASP.Net.Controllers.Model
             var title = Title ?? throw new ArgumentException("Invalid title format.", nameof(Title));
             var sequel = Sequel > 0 ? Sequel : throw new ArgumentException("The sequel number is greater than zero.", nameof(Sequel));
             var id = Guid.TryParse(oldId, out var itemId) ? itemId : Guid.NewGuid();
-            var typeCinema = TypeCinema.FromValue((int)Type);
-            var statusCinema = StatusCinema.FromValue((int)Status);
+            var typeCinema = TypeCinema.FromValue(Type);
+            var statusCinema = StatusCinema.FromValue(Status);
 
             if (statusCinema == StatusCinema.Viewed)
             {

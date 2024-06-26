@@ -25,6 +25,8 @@ namespace WatchList.Core.Model.Sortable
         {
         }
 
+        public static SortFieldWatchItem FromValue(SortFields fields) => FromValue((int)fields);
+
         static ISortableSmartEnum<WatchItem> ISortableSmartEnumOperation<WatchItem>.DefaultValue => Title;
 
         static IReadOnlyCollection<ISortableSmartEnum<WatchItem>> ISortableSmartEnumOperation<WatchItem>.List => List;

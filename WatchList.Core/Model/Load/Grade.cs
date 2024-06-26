@@ -21,5 +21,7 @@ namespace WatchList.Core.Model.Load
             : base(name, (int)grade)
         {
         }
+
+        public static Grade FromValue(Grades grade) => FromValue((int)grade);
     }
 }

@@ -33,7 +33,7 @@ namespace WatchList.ASP.Net.Controllers.Model.DuplicateModel
         {
             var duplicateLoadRulesModel = new DuplicateLoadRulesModel(IsUpdateDuplicateItems, IsCaseSensitive).GetDuplicateLoadRules();
             var actionsWithDuplicate = new ActionDuplicateItems(true, duplicateLoadRulesModel);
-            return new BaseLoadRulesConfigModel(DeleteGrade, actionsWithDuplicate, TypeCinema.FromValue((int)Types), Grade.FromValue((int)Grades));
+            return new BaseLoadRulesConfigModel(DeleteGrade, actionsWithDuplicate, TypeCinema.FromValue(Types), Grade.FromValue(Grades));
         }
     }
 }

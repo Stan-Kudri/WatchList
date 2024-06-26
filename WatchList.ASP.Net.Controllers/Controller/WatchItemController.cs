@@ -92,11 +92,11 @@ namespace WatchList.ASP.Net.Controllers.Controller
 
         [HttpPost("addDateFromFile")]
         public async Task<IActionResult> DownloadDateFromFile(IFormFile file,
-                                                              bool deleteGrade = false,
-                                                              bool isUpdateDuplicateItems = true,
-                                                              bool isCaseSensitive = true,
-                                                              Grades grades = Grades.AnyGrade,
-                                                              Types types = Types.AllType)
+                                                              [FromForm] bool deleteGrade = false,
+                                                              [FromForm] bool isUpdateDuplicateItems = true,
+                                                              [FromForm] bool isCaseSensitive = true,
+                                                              [FromForm] Grades grades = Grades.AnyGrade,
+                                                              [FromForm] Types types = Types.AllType)
         {
             try
             {
@@ -126,10 +126,8 @@ namespace WatchList.ASP.Net.Controllers.Controller
 
             using (var stream = System.IO.File.OpenWrite(pathFile))
             {
-                using (var loadStream = dataFile.OpenReadStream())
-                {
-                    await loadStream.CopyToAsync(stream);
-                }
+                using var loadStream = dataFile.OpenReadStream();
+                await loadStream.CopyToAsync(stream);
             }
 
             return pathFile;

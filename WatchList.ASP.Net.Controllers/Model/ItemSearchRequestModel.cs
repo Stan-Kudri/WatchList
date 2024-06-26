@@ -44,7 +44,7 @@ namespace WatchList.ASP.Net.Controllers.Model
         {
             var filterByTypes = new HashSet<TypeCinema>();
 
-            typesFilter.ForEach(e => filterByTypes.Add(TypeCinema.FromValue((int)e)));
+            typesFilter.ForEach(e => filterByTypes.Add(TypeCinema.FromValue(e)));
 
             return !filterByTypes.Any()
                     ? TypeCinema.List.Where(e => e != TypeCinema.AllType)
@@ -55,7 +55,7 @@ namespace WatchList.ASP.Net.Controllers.Model
         {
             var filterByStatus = new HashSet<StatusCinema>();
 
-            statusFilter.ForEach(e => filterByStatus.Add(StatusCinema.FromValue((int)e)));
+            statusFilter.ForEach(e => filterByStatus.Add(StatusCinema.FromValue(e)));
 
             return !filterByStatus.Any()
                     ? StatusCinema.List.Where(e => e != StatusCinema.AllStatus)
@@ -66,7 +66,7 @@ namespace WatchList.ASP.Net.Controllers.Model
         {
             var fields = new HashSet<SortFieldWatchItem>();
 
-            sortFields.ForEach(e => fields.Add(SortFieldWatchItem.FromValue((int)e)));
+            sortFields.ForEach(e => fields.Add(SortFieldWatchItem.FromValue(e)));
 
             return !fields.Any()
                     ? SortFieldWatchItem.List

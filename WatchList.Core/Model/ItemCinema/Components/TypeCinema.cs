@@ -19,6 +19,6 @@ namespace WatchList.Core.Model.ItemCinema.Components
         [JsonPropertyName("TypeSequel")]
         public string TypeSequel { get; }
 
-        public Types EnumValue => (Types)Value;
+        public static TypeCinema FromValue(Types types) => FromValue((int)types);
     }
 }
