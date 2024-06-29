@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using WatchList.ASP.Net.Controllers.Extension;
 using WatchList.ASP.Net.Controllers.Model;
 using WatchList.ASP.Net.Controllers.Model.DuplicateModel;
-using WatchList.Core.Enums;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.DataLoading;
@@ -71,15 +70,10 @@ namespace WatchList.ASP.Net.Controllers.Controller
         }
 
         [HttpGet("pageItems")]
-        public async Task<IActionResult> GetPageItems([FromQuery] List<Types> filterByTypes,
-                                                      [FromQuery] List<Status> filterByStatus,
-                                                      [FromQuery] List<SortFields> sortFields,
-                                                      [FromQuery] int page = 1,
-                                                      [FromQuery] bool isAscending = true)
+        public async Task<IActionResult> GetPageItems([FromQuery] ItemSearchRequestModel itemSearchRequestModel)
         {
             try
             {
-                var itemSearchRequestModel = new ItemSearchRequestModel(filterByTypes, filterByStatus, sortFields, page, isAscending);
                 var itemSearchRequest = itemSearchRequestModel.GetItemSearchRequest();
                 var itemsPage = _itemService.GetPage(itemSearchRequest);
                 return Ok(itemsPage);
@@ -91,17 +85,10 @@ namespace WatchList.ASP.Net.Controllers.Controller
         }
 
         [HttpPost("addDataFromDB")]
-        public async Task<IActionResult> DownloadDataFromDB(IFormFile file,
-                                                              [FromForm] bool deleteGrade = false,
-                                                              [FromForm] bool isUpdateDuplicateItems = true,
-                                                              [FromForm] bool isCaseSensitive = true,
-                                                              [FromForm] Grades grades = Grades.AnyGrade,
-                                                              [FromForm] Types types = Types.AllType)
+        public async Task<IActionResult> DownloadDataFromDB(IFormFile file, [FromForm] LoadRulesModel loadRulesModel)
         {
             try
             {
-                var loadRulesModel = new LoadRulesModel(deleteGrade, isUpdateDuplicateItems, isCaseSensitive, grades, types);
-
                 var pathFile = await DownloadFile(file);
                 var dbContext = new DbContextFactoryMigrator(pathFile).Create();
 

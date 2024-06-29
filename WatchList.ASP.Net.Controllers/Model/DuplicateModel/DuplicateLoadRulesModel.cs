@@ -21,12 +21,10 @@ namespace WatchList.ASP.Net.Controllers.Model.DuplicateModel
         public List<DuplicateLoadingRules> GetDuplicateLoadRules()
             => new List<DuplicateLoadingRules>() { GetUpdateDuplicateRules, GetCaseSensitiveDuplicateRules };
 
-        private DuplicateLoadingRules GetUpdateDuplicateRules => !IsUpdateDuplicateItems
-                ? new DuplicateLoadingRules(DuplicateLoadingRules.UpdateDuplicate, false)
-                : new DuplicateLoadingRules(DuplicateLoadingRules.UpdateDuplicate, true);
+        private DuplicateLoadingRules GetUpdateDuplicateRules =>
+            new DuplicateLoadingRules(DuplicateLoadingRules.UpdateDuplicate, IsUpdateDuplicateItems);
 
-        private DuplicateLoadingRules GetCaseSensitiveDuplicateRules => !IsCaseSensitive
-                ? new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, false)
-                : new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, true);
+        private DuplicateLoadingRules GetCaseSensitiveDuplicateRules =>
+            new DuplicateLoadingRules(DuplicateLoadingRules.CaseSensitive, IsCaseSensitive);
     }
 }

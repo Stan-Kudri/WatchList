@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using WatchList.Core.Enums;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
@@ -6,27 +7,19 @@ namespace WatchList.ASP.Net.Controllers.Model.DuplicateModel
 {
     public class LoadRulesModel
     {
-        public LoadRulesModel(bool deleteGrade,
-                              bool isUpdateDuplicateItems,
-                              bool isCaseSensitive,
-                              Grades grades,
-                              Types types)
-        {
-            DeleteGrade = deleteGrade;
-            IsUpdateDuplicateItems = isUpdateDuplicateItems;
-            IsCaseSensitive = isCaseSensitive;
-            Grades = grades;
-            Types = types;
-        }
+        [Required]
+        public bool DeleteGrade { get; set; } = false;
 
-        public bool DeleteGrade { get; private set; } = false;
-
+        [Required]
         public bool IsUpdateDuplicateItems { get; set; } = true;
 
+        [Required]
         public bool IsCaseSensitive { get; set; } = true;
 
+        [Required]
         public Grades Grades { get; set; } = Grades.AnyGrade;
 
+        [Required]
         public Types Types { get; set; } = Types.AllType;
 
         public BaseLoadRulesConfigModel GetLoadRulesConfigModel()

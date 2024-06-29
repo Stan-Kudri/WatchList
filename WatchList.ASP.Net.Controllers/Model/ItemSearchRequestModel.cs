@@ -10,8 +10,8 @@ namespace WatchList.ASP.Net.Controllers.Model
     {
         public ItemSearchRequestModel()
             : this(new List<Types> { Types.Movie, Types.Anime, Types.Series, Types.Cartoon },
-                   new List<Status> { Status.Viewed, Status.Look, Status.Planned, Status.Thrown },
-                   new List<SortFields> { SortFields.Date, SortFields.Status, SortFields.Grade, SortFields.Sequel, SortFields.Title })
+                    new List<Status> { Status.Viewed, Status.Look, Status.Planned, Status.Thrown },
+                    new List<SortFields> { SortFields.Date, SortFields.Status, SortFields.Grade, SortFields.Sequel, SortFields.Title })
         {
         }
 

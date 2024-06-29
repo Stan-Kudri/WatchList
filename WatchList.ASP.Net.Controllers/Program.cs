@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using Serilog;
 using Serilog.Core;
-using WatchList.ASP.Net.Controllers.Controller;
 using WatchList.ASP.Net.Controllers.Model;
 using WatchList.Core.Extension;
 using WatchList.Core.PageItem;
@@ -27,7 +26,6 @@ try
     builder.Services.AddScoped<DownloadDataService>();
     builder.Services.AddScoped<Page>();
     builder.Services.AddLogging();
-    builder.Services.AddScoped<WatchItemController>();
     builder.Services.AddControllers().AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
