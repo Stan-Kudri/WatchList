@@ -41,7 +41,7 @@ namespace WatchList.ASP.Net.Controllers.Controller
         }
 
         [HttpDelete("delete")]
-        public IActionResult DeleteItem(string id)
+        public IActionResult DeleteItem(Guid id)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace WatchList.ASP.Net.Controllers.Controller
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] WatchItemModel watchItem, string updateId)
+        public async Task<IActionResult> Update([FromBody] WatchItemModel watchItem, Guid updateId)
         {
             try
             {

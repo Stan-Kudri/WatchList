@@ -18,7 +18,7 @@ namespace WatchList.ASP.Net.Controllers.Model
 
         public int? Grade { get; set; } = null;
 
-        public WatchItem GetWatchItem(string? oldId = null)
+        public WatchItem GetWatchItem(Guid? oldId = null)
         {
             if (Status == Status.AllStatus)
             {
@@ -27,20 +27,19 @@ namespace WatchList.ASP.Net.Controllers.Model
 
             var title = Title ?? throw new ArgumentException("Invalid title format.", nameof(Title));
             var sequel = Sequel > 0 ? Sequel : throw new ArgumentException("The sequel number is greater than zero.", nameof(Sequel));
-            var id = Guid.TryParse(oldId, out var itemId) ? itemId : Guid.NewGuid();
             var typeCinema = TypeCinema.FromValue(Type);
             var statusCinema = StatusCinema.FromValue(Status);
 
             if (statusCinema == StatusCinema.Viewed)
             {
-                return new WatchItem(title, sequel, statusCinema, typeCinema, id, Date ?? DateTime.UtcNow, Grade ?? 5);
+                return new WatchItem(title, sequel, statusCinema, typeCinema, oldId, Date ?? DateTime.UtcNow, Grade ?? 5);
             }
             else if (statusCinema == StatusCinema.Look || statusCinema == StatusCinema.Planned)
             {
-                return new WatchItem(title, sequel, statusCinema, typeCinema, id, null, null);
+                return new WatchItem(title, sequel, statusCinema, typeCinema, oldId, null, null);
             }
 
-            return new WatchItem(title, sequel, statusCinema, typeCinema, id, Date, Grade);
+            return new WatchItem(title, sequel, statusCinema, typeCinema, oldId, Date, Grade);
         }
     }
 }

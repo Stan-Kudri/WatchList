@@ -23,16 +23,6 @@ namespace WatchList.Core.Service
 
         public void Remove(Guid id) => _repository.Remove(id);
 
-        public void Remove(string id)
-        {
-            if (!Guid.TryParse(id, out var itemId))
-            {
-                throw new ArgumentException("Invalid user ID.");
-            }
-
-            _repository.Remove(itemId);
-        }
-
         public async Task AddAsync(WatchItem item)
         {
             var selectItem = _repository.SelectDuplicateItems(item);
@@ -72,23 +62,13 @@ namespace WatchList.Core.Service
             Update(modifiedItem);
         }
 
-        public async Task UpdateByIdAsync(string oldId, WatchItem modifiedItem)
+        public async Task UpdateByIdAsync(Guid oldId, WatchItem modifiedItem)
         {
             var oldItem = GetItemById(oldId);
             await UpdateAsync(oldItem, modifiedItem);
         }
 
         public WatchItem GetItemById(Guid id) => _repository.GetItemById(id);
-
-        private WatchItem GetItemById(string id)
-        {
-            if (!Guid.TryParse(id, out var itemId))
-            {
-                throw new ArgumentException("Invalid user ID.");
-            }
-
-            return _repository.GetItemById(itemId);
-        }
 
         private void Update(WatchItem item) => _repository.Update(item);
     }
