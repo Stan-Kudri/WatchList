@@ -1,16 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using WatchList.Core.Model.ItemCinema.Components;
-using WatchList.Core.Model.Load;
 
-namespace WatchList.MudBlazors.Model
+namespace WatchList.Core.Model.Load
 {
-    public class LoadRulesConfigModel : ILoadRulesConfig
+    public class BaseLoadRulesConfigModel : ILoadRulesConfig
     {
-        public LoadRulesConfigModel()
+        public BaseLoadRulesConfigModel()
             : this(false, new ActionDuplicateItems(), TypeCinema.AllType, Grade.AnyGrade)
         {
         }
 
-        public LoadRulesConfigModel(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema typeCinema, Grade moreGrade)
+        public BaseLoadRulesConfigModel(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema typeCinema, Grade moreGrade)
         {
             DeleteGrade = deleteGrade;
             ActionsWithDuplicates = actionsWithDuplicates;

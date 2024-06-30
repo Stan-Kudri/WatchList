@@ -20,7 +20,7 @@
 
             @if (_isConsiderDuplicates)
             {
-                <MudToggleGroup T="DuplicateLoadingRules" SelectionMode="SelectionMode.MultiSelection" @bind-Values="_actionDuplicateItems" Color="Color.Surface" CheckMark Style="font-size:14px" FixedContent>
+                 <MudToggleGroup T="DuplicateLoadingRules" SelectionMode="SelectionMode.MultiSelection" @bind-Values="_actionDuplicateItems" Color="Color.Surface" CheckMark Style="font-size:14px" FixedContent>
                  <MudToggleItem Value=DuplicateLoadingRules.CaseSensitive UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox"/>
                  <MudToggleItem Value=DuplicateLoadingRules.UpdateDuplicate UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
              </MudToggleGroup>
@@ -31,14 +31,14 @@
 
         <div class="d-flex align-start">
 
-            <MudSelect T="TypeCinema" Label="Status" @bind-Value="_selectTypeCinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Style="width:200px" Class="mr-2">
+            <MudSelect T="TypeCinema" Label="Type" @bind-Value="_selectTypeCinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Style="width:200px" Class="mr-2">
                 @foreach (var item in TypeCinema.List.Where(x => x != TypeCinema.AllType).ToList())
                 {
                     <MudSelectItem T="TypeCinema" Value="@item" />
                 }
             </MudSelect>
 
-            <MudSelect T="Grade" Label="Status" @bind-Value="_selectGrade" AdornmentIcon="@Icons.Material.Filled.ShortText">
+            <MudSelect T="Grade" Label="Grade" @bind-Value="_selectGrade" AdornmentIcon="@Icons.Material.Filled.ShortText">
                 @foreach (var item in Grade.List)
                 {
                     <MudSelectItem T="Grade" Value="@item" />
