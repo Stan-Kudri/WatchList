@@ -58,8 +58,8 @@ namespace WatchList.ASP.Net.Controllers.Model
             statusFilter.ForEach(e => filterByStatus.Add(StatusCinema.FromValue(e)));
 
             return filterByStatus.Count == 0
-                    ? StatusCinema.List.Where(e => e != StatusCinema.AllStatus)
-                    : filterByStatus.Where(e => e != StatusCinema.AllStatus);
+                    ? StatusCinema.List
+                    : filterByStatus;
         }
 
         private IEnumerable<SortFieldWatchItem> GetSortFields(List<SortFields> sortFields)

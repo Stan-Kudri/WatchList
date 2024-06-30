@@ -18,7 +18,7 @@
         </MudSelect>
 
         <MudSelect T="StatusCinema" Label="Status" @bind-Value="_watchItemModel.Status" AdornmentIcon="@Icons.Material.Filled.ShortText">
-            @foreach (var item in StatusCinema.List.Where(x => x != StatusCinema.AllStatus).ToList())
+            @foreach (var item in StatusCinema.List.ToList())
             {
                 <MudSelectItem T="StatusCinema" Value="@item" />
             }

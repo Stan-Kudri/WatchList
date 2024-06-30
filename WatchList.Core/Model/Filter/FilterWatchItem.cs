@@ -19,13 +19,13 @@ namespace WatchList.Core.Model.Filter
             = TypeCinema.List.Where(e => e != TypeCinema.AllType).ToList();
 
         public IEnumerable<StatusCinema> FilterStatusField { get; set; }
-            = StatusCinema.List.Where(e => e != StatusCinema.AllStatus).ToList();
+            = StatusCinema.List.ToList();
 
         public ObservableCollection<TypeCinema> TypeItems { get; set; }
             = new ObservableCollection<TypeCinema>(TypeCinema.List.Where(e => e != TypeCinema.AllType));
 
         public ObservableCollection<StatusCinema> StatusItems { get; set; }
-            = new ObservableCollection<StatusCinema>(StatusCinema.List.Where(e => e != StatusCinema.AllStatus));
+            = new ObservableCollection<StatusCinema>(StatusCinema.List);
 
         public FilterWatchItem GetFilter() => this;
 

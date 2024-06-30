@@ -20,7 +20,7 @@ namespace WatchList.MudBlazors.Model
         {
         }
 
-        public WatchItemModel(string title, int sequel, DateTime? date, int? grade, StatusCinema status, TypeCinema type, Guid? id = null)
+        public WatchItemModel(string title, int sequel, DateTime? date, int? grade, StatusCinema? status, TypeCinema type, Guid? id = null)
         {
             _id = id ?? Guid.NewGuid();
             _title = title ?? throw new ArgumentNullException(nameof(title));
@@ -53,7 +53,7 @@ namespace WatchList.MudBlazors.Model
         }
 
         [Parameter]
-        public StatusCinema Status
+        public StatusCinema? Status
         {
             get => _status;
             set => _status = value;
@@ -118,6 +118,6 @@ namespace WatchList.MudBlazors.Model
             return false;
         }
 
-        public bool HasGrade() => _status != StatusCinema.Planned && _status != StatusCinema.AllStatus;
+        public bool HasGrade() => _status != StatusCinema.Planned;
     }
 }
