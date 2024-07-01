@@ -15,7 +15,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
         {
             SelectTypeField = TypeItems.Select(e => e.ToString()).ToArray();
             SelectStatusField = StatusItems.Select(e => e.ToString()).ToArray();
-            _filterTypeField = TypeCinema.List.Where(e => e != TypeCinema.AllType).AsEnumerable();
+            _filterTypeField = TypeCinema.List.AsEnumerable();
             _filterStatusField = StatusCinema.List.AsEnumerable();
         }
 
@@ -66,7 +66,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
         }
 
         public ObservableCollection<TypeCinema> TypeItems { get; set; }
-            = new ObservableCollection<TypeCinema>(TypeCinema.List.Where(e => e != TypeCinema.AllType));
+            = new ObservableCollection<TypeCinema>(TypeCinema.List);
 
         public ObservableCollection<StatusCinema> StatusItems { get; set; }
             = new ObservableCollection<StatusCinema>(StatusCinema.List);
@@ -75,7 +75,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
 
         public void Clear()
         {
-            FilterTypeField = new HashSet<TypeCinema>(TypeCinema.List.Where(e => e != TypeCinema.AllType));
+            FilterTypeField = new HashSet<TypeCinema>(TypeCinema.List);
             FilterStatusField = new HashSet<StatusCinema>(StatusCinema.List);
         }
 

@@ -6,7 +6,6 @@ namespace WatchList.Core.Model.ItemCinema.Components
 {
     public class TypeCinema : SmartEnum<TypeCinema>
     {
-        public static readonly TypeCinema AllType = new TypeCinema("All Type", Types.AllType, "Unknown");
         public static readonly TypeCinema Movie = new TypeCinema("Movie", Types.Movie, "Part");
         public static readonly TypeCinema Series = new TypeCinema("Series", Types.Series, "Season");
         public static readonly TypeCinema Anime = new TypeCinema("Anime", Types.Anime, "Season");

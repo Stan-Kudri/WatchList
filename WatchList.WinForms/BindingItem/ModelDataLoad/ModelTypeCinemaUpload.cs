@@ -1,24 +1,24 @@
 using System.Collections.ObjectModel;
-using WatchList.Core.Model.ItemCinema.Components;
+using WatchList.Core.Model.Load.Components;
 
 namespace WatchList.WinForms.BindingItem.ModelDataLoad
 {
     public class ModelTypeCinemaUpload : ModelBase
     {
-        private TypeCinema _type = TypeCinema.AllType;
+        private TypeLoadingCinema _type = new TypeLoadingCinema();
 
         public ModelTypeCinemaUpload()
-            : this(TypeCinema.AllType)
+            : this(new TypeLoadingCinema())
         {
         }
 
-        public ModelTypeCinemaUpload(TypeCinema type)
+        public ModelTypeCinemaUpload(TypeLoadingCinema type)
             => SelectedValue = type;
 
-        public ObservableCollection<TypeCinema> Items { get; set; }
-            = new ObservableCollection<TypeCinema>(TypeCinema.List);
+        public ObservableCollection<TypeLoadingCinema> Items { get; set; }
+            = TypeLoadingCinema.Items;
 
-        public TypeCinema SelectedValue
+        public TypeLoadingCinema SelectedValue
         {
             get => _type;
             set => SetField(ref _type, value);

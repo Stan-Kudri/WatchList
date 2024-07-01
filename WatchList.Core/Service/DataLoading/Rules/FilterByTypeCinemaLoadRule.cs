@@ -7,11 +7,11 @@ namespace WatchList.Core.Service.DataLoading.Rules
     {
         public FilterByTypeCinemaLoadRule(ILoadRulesConfig config) => TypeCinemaDataLoad = config.TypeCinemaLoad;
 
-        public TypeCinema TypeCinemaDataLoad { get; private set; }
+        public TypeCinema? TypeCinemaDataLoad { get; private set; } = null;
 
         public WatchItemCollection Apply(WatchItemCollection items)
         {
-            if (TypeCinemaDataLoad == TypeCinema.AllType)
+            if (TypeCinemaDataLoad == null)
             {
                 return items;
             }

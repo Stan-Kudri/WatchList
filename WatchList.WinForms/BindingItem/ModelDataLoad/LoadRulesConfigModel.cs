@@ -6,11 +6,11 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
     public class LoadRulesConfigModel : ModelBase, ILoadRulesConfig
     {
         public LoadRulesConfigModel()
-            : this(false, new ActionDuplicateItems(), TypeCinema.AllType, Grade.AnyGrade)
+            : this(false, new ActionDuplicateItems(), null, Grade.AnyGrade)
         {
         }
 
-        public LoadRulesConfigModel(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema typeCinema, Grade moreGrade)
+        public LoadRulesConfigModel(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema? typeCinema, Grade moreGrade)
         {
             DeleteGrade = deleteGrade;
             ActionsWithDuplicates = actionsWithDuplicates;
@@ -22,7 +22,7 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
 
         public ActionDuplicateItems ActionsWithDuplicates { get; private set; } = new ActionDuplicateItems();
 
-        public TypeCinema TypeCinemaLoad { get; private set; } = TypeCinema.AllType;
+        public TypeCinema? TypeCinemaLoad { get; private set; } = null;
 
         public Grade MoreGrade { get; private set; } = Grade.AnyGrade;
     }

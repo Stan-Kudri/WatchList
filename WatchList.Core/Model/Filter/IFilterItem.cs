@@ -23,7 +23,7 @@ namespace WatchList.Core.Model.Filter
 
         void Clear()
         {
-            FilterTypeField = new HashSet<TypeCinema>(TypeCinema.List.Where(e => e != TypeCinema.AllType));
+            FilterTypeField = new HashSet<TypeCinema>(TypeCinema.List);
             FilterStatusField = new HashSet<StatusCinema>(StatusCinema.List);
         }
 

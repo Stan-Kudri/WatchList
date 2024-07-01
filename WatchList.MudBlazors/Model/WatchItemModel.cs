@@ -10,9 +10,9 @@ namespace WatchList.MudBlazors.Model
 
         private Guid _id = Guid.NewGuid();
         private string _title = string.Empty;
-        private TypeCinema _type = TypeCinema.Movie;
+        private TypeCinema? _type = TypeCinema.Movie;
         private int _sequel = FirstValue;
-        private StatusCinema _status = StatusCinema.Planned;
+        private StatusCinema? _status = StatusCinema.Planned;
         private DateTime? _date = null;
         private int? _grade = null;
 
@@ -20,7 +20,7 @@ namespace WatchList.MudBlazors.Model
         {
         }
 
-        public WatchItemModel(string title, int sequel, DateTime? date, int? grade, StatusCinema? status, TypeCinema type, Guid? id = null)
+        public WatchItemModel(string title, int sequel, DateTime? date, int? grade, StatusCinema? status, TypeCinema? type, Guid? id = null)
         {
             _id = id ?? Guid.NewGuid();
             _title = title ?? throw new ArgumentNullException(nameof(title));
@@ -46,7 +46,7 @@ namespace WatchList.MudBlazors.Model
         }
 
         [Parameter]
-        public TypeCinema Type
+        public TypeCinema? Type
         {
             get => _type;
             set => _type = value;

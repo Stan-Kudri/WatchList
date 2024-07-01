@@ -11,7 +11,7 @@
                       Validation="@(new Func<string, IEnumerable<string>>(ValidFormatText))" />
 
         <MudSelect T="TypeCinema" Label="Type" @bind-Value="_watchItemModel.Type" AdornmentIcon="@Icons.Material.Filled.ShortText">
-            @foreach (var item in TypeCinema.List.Where(x => x != TypeCinema.AllType).ToList())
+            @foreach (var item in TypeCinema.List.ToList())
             {
                 <MudSelectItem T="TypeCinema" Value="@item" />
             }

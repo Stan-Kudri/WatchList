@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
-using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
+using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.DataLoading;
@@ -26,7 +26,7 @@ namespace WatchList.MudBlazors.Dialog
 
         private IEnumerable<DuplicateLoadingRules> _actionDuplicateItems = new[] { DuplicateLoadingRules.UpdateDuplicate, DuplicateLoadingRules.CaseSensitive };
 
-        private TypeCinema _selectTypeCinema = TypeCinema.AllType;
+        private TypeLoadingCinema _selectTypeCinema = new TypeLoadingCinema();
         private Grade _selectGrade = Grade.AnyGrade;
 
         private void Close() => MudDialog.Cancel();
@@ -68,7 +68,7 @@ namespace WatchList.MudBlazors.Dialog
                 ? new ActionDuplicateItems(_isConsiderDuplicates, _actionDuplicateItems.ToList())
                 : new ActionDuplicateItems();
 
-            return new BaseLoadRulesConfigModel(_isDeleteGrade, actionDuplicateItems, _selectTypeCinema, _selectGrade);
+            return new BaseLoadRulesConfigModel(_isDeleteGrade, actionDuplicateItems, _selectTypeCinema.Value, _selectGrade);
         }
 
         private async Task<string> DownloadFile(IBrowserFile fileload)

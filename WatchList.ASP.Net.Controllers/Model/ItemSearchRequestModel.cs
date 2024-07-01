@@ -47,8 +47,8 @@ namespace WatchList.ASP.Net.Controllers.Model
             typesFilter.ForEach(e => filterByTypes.Add(TypeCinema.FromValue(e)));
 
             return filterByTypes.Count == 0
-                    ? TypeCinema.List.Where(e => e != TypeCinema.AllType)
-                    : filterByTypes.Where(e => e != TypeCinema.AllType);
+                    ? TypeCinema.List
+                    : filterByTypes;
         }
 
         private IEnumerable<StatusCinema> GetFilterByStatusCinema(List<Status> statusFilter)

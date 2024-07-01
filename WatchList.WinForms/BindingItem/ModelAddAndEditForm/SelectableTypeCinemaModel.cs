@@ -15,7 +15,7 @@ namespace WatchList.WinForms.BindingItem.ModelAddAndEditForm
         public SelectableTypeCinemaModel(TypeCinema type) => SelectedValue = type;
 
         public ObservableCollection<TypeCinema> Items { get; set; }
-            = new ObservableCollection<TypeCinema>(TypeCinema.List.Where(x => x != TypeCinema.AllType));
+            = new ObservableCollection<TypeCinema>(TypeCinema.List);
 
         public TypeCinema SelectedValue
         {
