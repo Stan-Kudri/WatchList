@@ -16,7 +16,7 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
             => SelectedValue = type;
 
         public ObservableCollection<TypeLoadingCinema> Items { get; set; }
-            = TypeLoadingCinema.Items;
+            = TypeLoadingCinema.GetItemsType;
 
         public TypeLoadingCinema SelectedValue
         {
