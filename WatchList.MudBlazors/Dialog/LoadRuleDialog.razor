@@ -41,7 +41,7 @@
             </MudSelect>
 
             <MudSelect T="Grade" Label="Grade" @bind-Value="_selectGrade" AdornmentIcon="@Icons.Material.Filled.ShortText">
-                @foreach (var item in Grade.List)
+                @foreach (var item in Grade.List.OrderBy(x => x.Value))
                 {
                     <MudSelectItem T="Grade" Value="@item" />
                 }

@@ -4,6 +4,6 @@ namespace WatchList.Core.Model
     {
         public T? Value { get; set; }
 
-        public virtual string Name { get; } = string.Empty;
+        public virtual string Name => string.Empty;
     }
 }

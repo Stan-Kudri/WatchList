@@ -15,8 +15,8 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
         {
             SelectTypeField = TypeItems.Select(e => e.ToString()).ToArray();
             SelectStatusField = StatusItems.Select(e => e.ToString()).ToArray();
-            _filterTypeField = TypeCinema.List.AsEnumerable();
-            _filterStatusField = StatusCinema.List.AsEnumerable();
+            _filterTypeField = TypeCinema.List;
+            _filterStatusField = StatusCinema.List;
         }
 
         private event PropertyChangedEventHandler PropertyChanged;
