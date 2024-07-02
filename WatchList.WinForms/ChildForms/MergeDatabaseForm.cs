@@ -1,6 +1,7 @@
 using MaterialSkin.Controls;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
+using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelDataLoad;
@@ -20,8 +21,8 @@ namespace WatchList.WinForms.ChildForms
             InitializeComponent();
         }
 
-        private TypeCinema SelectTypeCinema =>
-            cmbTypeCinema.SelectedValue != null ? (TypeCinema)cmbTypeCinema.SelectedValue : throw new Exception("Wrong combo box format");
+        private TypeLoadingCinema SelectTypeCinema =>
+            cmbTypeCinema.SelectedValue != null ? (TypeLoadingCinema)cmbTypeCinema.SelectedValue : throw new Exception("Wrong combo box format");
 
         private Grade SelectGrade =>
             cmbGrade.SelectedValue != null ? (Grade)cmbGrade.SelectedValue : throw new Exception("Wrong combo box format");
@@ -33,13 +34,13 @@ namespace WatchList.WinForms.ChildForms
 
             if (!considerDuplicates)
             {
-                return new LoadRulesConfigModel(isDeleteGrade, new ActionDuplicateItems(), SelectTypeCinema, SelectGrade);
+                return new LoadRulesConfigModel(isDeleteGrade, new ActionDuplicateItems(), SelectTypeCinema.Value, SelectGrade);
             }
 
             var listDuplicateLoadRule = clbActionsWithDuplicates.Items.Select(e => new DuplicateLoadingRules(
                 e.Tag as DuplicateLoadingRules ?? throw new NullReferenceException("Null reference argument for parameter"),
                 checkAction: e.Checked)).ToList();
-            return new LoadRulesConfigModel(isDeleteGrade, new ActionDuplicateItems(considerDuplicates, listDuplicateLoadRule), SelectTypeCinema, SelectGrade);
+            return new LoadRulesConfigModel(isDeleteGrade, new ActionDuplicateItems(considerDuplicates, listDuplicateLoadRule), SelectTypeCinema.Value, SelectGrade);
         }
 
         private void BtnClear_Click(object sender, EventArgs e) => SetupDefaultValues();
@@ -48,7 +49,7 @@ namespace WatchList.WinForms.ChildForms
         {
             cbExistGrade.Checked = false;
             cbConsiderDuplicates.Checked = false;
-            cmbTypeCinema.SelectedItem = TypeCinema.AllType;
+            cmbTypeCinema.SelectedItem = TypeCinema.Movie;
             cmbGrade.SelectedItem = Grade.AnyGrade;
         }
 
@@ -69,7 +70,7 @@ namespace WatchList.WinForms.ChildForms
             InitializeComboListBox();
             typeUploadBindingSource.DataSource = new ModelTypeCinemaUpload();
             moreGradeBindingSource.DataSource = new ModelDownloadMoreGrade();
-            cmbTypeCinema.SelectedItem = TypeCinema.AllType;
+            cmbTypeCinema.SelectedItem = TypeCinema.Movie;
             cmbGrade.SelectedItem = Grade.AnyGrade;
             cbExistGrade.Checked = false;
             cbConsiderDuplicates.Checked = false;

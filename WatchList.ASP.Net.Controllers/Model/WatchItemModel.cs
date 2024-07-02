@@ -20,11 +20,6 @@ namespace WatchList.ASP.Net.Controllers.Model
 
         public WatchItem GetWatchItem(Guid? oldId = null)
         {
-            if (Status == Status.AllStatus)
-            {
-                throw new ArgumentException("This status is not possible for the item.", nameof(Status));
-            }
-
             var title = Title ?? throw new ArgumentException("Invalid title format.", nameof(Title));
             var sequel = Sequel > 0 ? Sequel : throw new ArgumentException("The sequel number is greater than zero.", nameof(Sequel));
             var typeCinema = TypeCinema.FromValue(Type);

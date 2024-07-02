@@ -127,7 +127,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
                     new FilterWatchItem()
                     {
                         FilterTypeField = TypeCinema.List.Where(e => e == typeCinema),
-                        FilterStatusField = StatusCinema.List.Where(e => e != StatusCinema.AllStatus),
+                        FilterStatusField = StatusCinema.List,
                     },
                     new SortWatchItem() { SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Title) },
                     new Page());

@@ -11,14 +11,14 @@
                       Validation="@(new Func<string, IEnumerable<string>>(ValidFormatText))" />
 
         <MudSelect T="TypeCinema" Label="Type" @bind-Value="_watchItemModel.Type" AdornmentIcon="@Icons.Material.Filled.ShortText">
-            @foreach (var item in TypeCinema.List.Where(x => x != TypeCinema.AllType).ToList())
+            @foreach (var item in TypeCinema.List.ToList())
             {
                 <MudSelectItem T="TypeCinema" Value="@item" />
             }
         </MudSelect>
 
         <MudSelect T="StatusCinema" Label="Status" @bind-Value="_watchItemModel.Status" AdornmentIcon="@Icons.Material.Filled.ShortText">
-            @foreach (var item in StatusCinema.List.Where(x => x != StatusCinema.AllStatus).ToList())
+            @foreach (var item in StatusCinema.List.ToList())
             {
                 <MudSelectItem T="StatusCinema" Value="@item" />
             }

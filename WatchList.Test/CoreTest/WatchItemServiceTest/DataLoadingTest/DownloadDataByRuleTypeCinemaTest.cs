@@ -55,7 +55,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                     new WatchItem("Хэнкок", 2, StatusCinema.Look, TypeCinema.Movie, Guid.Parse("28d4a999-ca7a-4b24-a78a-65733ba419a7"), new DateTime(2010, 04, 12, 00, 00, 00), 6),
                     new WatchItem("Человек-паук", 2, StatusCinema.Planned, TypeCinema.Series, Guid.Parse("38d4a999-ca7a-4b24-a78a-65733ba419a7")),
                 },
-                TypeCinema.AllType,
+                null,
                 new List<WatchItem>()
                 {
                     new WatchItem("Драйв", 2, StatusCinema.Planned, TypeCinema.Movie, Guid.Parse("48d4a999-ca7a-4b24-a78a-65733ba419a7")),
@@ -125,7 +125,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         [MemberData(nameof(ListsAddOneItemByTypeCinema))]
         [MemberData(nameof(ListsAddItemsByAllTypeCinema))]
         [MemberData(nameof(ListsNotAddItemsByTypeCinema))]
-        public async Task Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema typeCinema, List<WatchItem> expectItems)
+        public async Task Load_Data_File_By_Rule_Type_Cinema(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema? typeCinema, List<WatchItem> expectItems)
         {
             // Arrange
             var nullLog = new NullLoggerFactory();
@@ -161,7 +161,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
         [MemberData(nameof(ListsAddOneItemByTypeCinema))]
         [MemberData(nameof(ListsAddItemsByAllTypeCinema))]
         [MemberData(nameof(ListsNotAddItemsByTypeCinema))]
-        public async Task Load_Data_File_By_Rule_Type_CinemaAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema typeCinema, List<WatchItem> expectItems)
+        public async Task Load_Data_File_By_Rule_Type_CinemaAsync(List<WatchItem> items, List<WatchItem> addDownloadItem, TypeCinema? typeCinema, List<WatchItem> expectItems)
         {
             // Arrange
             var nullLog = new NullLoggerFactory();

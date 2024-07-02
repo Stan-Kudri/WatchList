@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Core.Model.Load
@@ -10,11 +5,11 @@ namespace WatchList.Core.Model.Load
     public class BaseLoadRulesConfigModel : ILoadRulesConfig
     {
         public BaseLoadRulesConfigModel()
-            : this(false, new ActionDuplicateItems(), TypeCinema.AllType, Grade.AnyGrade)
+            : this(false, new ActionDuplicateItems(), null, Grade.AnyGrade)
         {
         }
 
-        public BaseLoadRulesConfigModel(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema typeCinema, Grade moreGrade)
+        public BaseLoadRulesConfigModel(bool deleteGrade, ActionDuplicateItems actionsWithDuplicates, TypeCinema? typeCinema, Grade moreGrade)
         {
             DeleteGrade = deleteGrade;
             ActionsWithDuplicates = actionsWithDuplicates;
@@ -26,7 +21,7 @@ namespace WatchList.Core.Model.Load
 
         public ActionDuplicateItems ActionsWithDuplicates { get; private set; } = new ActionDuplicateItems();
 
-        public TypeCinema TypeCinemaLoad { get; private set; } = TypeCinema.AllType;
+        public TypeCinema? TypeCinemaLoad { get; private set; } = null;
 
         public Grade MoreGrade { get; private set; } = Grade.AnyGrade;
     }

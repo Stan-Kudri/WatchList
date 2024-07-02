@@ -19,14 +19,13 @@ namespace WatchList.ASP.Net.Controllers.Model.DuplicateModel
         [Required]
         public Grades Grades { get; set; } = Grades.AnyGrade;
 
-        [Required]
-        public Types Types { get; set; } = Types.AllType;
+        public Types? Types { get; set; } = null;
 
         public BaseLoadRulesConfigModel GetLoadRulesConfigModel()
         {
             var duplicateLoadRulesModel = new DuplicateLoadRulesModel(IsUpdateDuplicateItems, IsCaseSensitive).GetDuplicateLoadRules();
             var actionsWithDuplicate = new ActionDuplicateItems(true, duplicateLoadRulesModel);
-            return new BaseLoadRulesConfigModel(DeleteGrade, actionsWithDuplicate, TypeCinema.FromValue(Types), Grade.FromValue(Grades));
+            return new BaseLoadRulesConfigModel(DeleteGrade, actionsWithDuplicate, Types != null ? TypeCinema.FromValue((Types)Types) : null, Grade.FromValue(Grades));
         }
     }
 }

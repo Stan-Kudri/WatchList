@@ -3,11 +3,6 @@ namespace WatchList.Core.Enums
     public enum Status
     {
         /// <summary>
-        /// Any cinema status.
-        /// </summary>
-        AllStatus,
-
-        /// <summary>
         /// Status => Viewed.
         /// </summary>
         Viewed,

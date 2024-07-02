@@ -1,6 +1,8 @@
-﻿@using WatchList.Core.Model.ItemCinema.Components
+﻿@using WatchList.Core.Model
+@using WatchList.Core.Model.ItemCinema.Components
 @using WatchList.Core.Model.Load
 @using WatchList.Core.Model.Load.ItemActions
+@using WatchList.Core.Model.Load.Components
 
 <MudDialog>
 
@@ -31,15 +33,15 @@
 
         <div class="d-flex align-start">
 
-            <MudSelect T="TypeCinema" Label="Type" @bind-Value="_selectTypeCinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Style="width:200px" Class="mr-2">
-                @foreach (var item in TypeCinema.List.Where(x => x != TypeCinema.AllType).ToList())
+            <MudSelect T="TypeLoadingCinema" Label="Type" @bind-Value="_selectTypeCinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Style="width:200px" Class="mr-2">
+                @foreach (var item in TypeLoadingCinema.GetItemsType)
                 {
-                    <MudSelectItem T="TypeCinema" Value="@item" />
+                    <MudSelectItem T="TypeLoadingCinema" Value="@item" />
                 }
             </MudSelect>
 
             <MudSelect T="Grade" Label="Grade" @bind-Value="_selectGrade" AdornmentIcon="@Icons.Material.Filled.ShortText">
-                @foreach (var item in Grade.List)
+                @foreach (var item in Grade.List.OrderBy(x => x.Value))
                 {
                     <MudSelectItem T="Grade" Value="@item" />
                 }

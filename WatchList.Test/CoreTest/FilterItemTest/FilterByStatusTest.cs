@@ -126,7 +126,7 @@ namespace WatchList.Test.CoreTest.FilterItemTest
             var itemSearchRequest = new ItemSearchRequest(
                     new FilterWatchItem()
                     {
-                        FilterTypeField = TypeCinema.List.Where(e => e != TypeCinema.AllType),
+                        FilterTypeField = TypeCinema.List,
                         FilterStatusField = StatusCinema.List.Where(e => e == statusCinema),
                     },
                     new SortWatchItem() { SortFields = SortFieldWatchItem.List.Where(e => e == SortFieldWatchItem.Title) },

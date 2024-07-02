@@ -93,6 +93,6 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
             return false;
         }
 
-        public bool HasGrade() => _status != StatusCinema.Planned && _status != StatusCinema.AllStatus;
+        public bool HasGrade() => _status != StatusCinema.Planned;
     }
 }

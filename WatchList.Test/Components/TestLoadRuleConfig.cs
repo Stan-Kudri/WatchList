@@ -9,7 +9,7 @@ namespace WatchList.Test.Components
         {
         }
 
-        public TestLoadRuleConfig(bool deleteGrade, TypeCinema typeCinema, Grade grade, ActionDuplicateItems actionDuplicateItems)
+        public TestLoadRuleConfig(bool deleteGrade, TypeCinema? typeCinema, Grade grade, ActionDuplicateItems actionDuplicateItems)
         {
             DeleteGrade = deleteGrade;
             TypeCinemaLoad = typeCinema;
@@ -19,7 +19,7 @@ namespace WatchList.Test.Components
 
         public bool DeleteGrade { get; set; } = false;
 
-        public TypeCinema TypeCinemaLoad { get; set; } = TypeCinema.AllType;
+        public TypeCinema? TypeCinemaLoad { get; set; } = null;
 
         public Grade MoreGrade { get; set; } = Grade.AnyGrade;
 
