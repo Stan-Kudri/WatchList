@@ -17,6 +17,7 @@ using WatchList.WinForms.BindingItem.ModelBoxForm.Filter;
 using WatchList.WinForms.BindingItem.ModelBoxForm.Sorter;
 using WatchList.WinForms.ChildForms;
 using WatchList.WinForms.ChildForms.Extension;
+using WatchList.WinForms.Exceptions;
 using WatchList.WinForms.Extension;
 
 namespace WatchList.WinForms
@@ -462,7 +463,7 @@ namespace WatchList.WinForms
         /// String is null.
         /// </exception>
         private string CellElement(DataGridViewRow rowItem, int indexColumn)
-            => rowItem.GetString(indexColumn) ?? throw new Exception("String cannot be null.");
+            => rowItem.GetString(indexColumn) ?? throw new ControlException("String cannot be null.");
 
         /// <summary>
         /// The method checks if the page is empty.

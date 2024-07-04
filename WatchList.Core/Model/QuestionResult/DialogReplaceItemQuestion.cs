@@ -30,7 +30,7 @@ namespace WatchList.Core.Model.QuestionResult
                 }
                 else
                 {
-                    throw new Exception("The answer is unknown.");
+                    throw new InvalidOperationException("The answer is unknown.");
                 }
             }
         }

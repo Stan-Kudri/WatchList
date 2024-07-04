@@ -5,6 +5,7 @@ using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelDataLoad;
+using WatchList.WinForms.Exceptions;
 
 namespace WatchList.WinForms.ChildForms
 {
@@ -22,10 +23,10 @@ namespace WatchList.WinForms.ChildForms
         }
 
         private TypeLoadingCinema SelectTypeCinema =>
-            cmbTypeCinema.SelectedValue != null ? (TypeLoadingCinema)cmbTypeCinema.SelectedValue : throw new Exception("Wrong combo box format");
+            cmbTypeCinema.SelectedValue != null ? (TypeLoadingCinema)cmbTypeCinema.SelectedValue : throw new ControlException("Wrong combo box format");
 
         private Grade SelectGrade =>
-            cmbGrade.SelectedValue != null ? (Grade)cmbGrade.SelectedValue : throw new Exception("Wrong combo box format");
+            cmbGrade.SelectedValue != null ? (Grade)cmbGrade.SelectedValue : throw new ControlException("Wrong combo box format");
 
         public ILoadRulesConfig GetLoadRuleConfig()
         {

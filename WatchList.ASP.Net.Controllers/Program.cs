@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Serilog;
 using Serilog.Core;
+using WatchList.ASP.Net.Controllers;
 using WatchList.ASP.Net.Controllers.Model;
 using WatchList.Core.Extension;
 using WatchList.Core.PageItem;
@@ -32,6 +33,8 @@ try
     });
 
     var app = builder.Build();
+
+    app.UseMiddleware<ExceptionMiddleware>();
 
     app.UseRouting();
 

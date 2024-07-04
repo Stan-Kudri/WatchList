@@ -9,7 +9,11 @@ namespace WatchList.Core.Service.DataLoading
         {
         }
 
-        public WatchItemCollection(IReadOnlyCollection<WatchItem> watchItems, IReadOnlyCollection<Guid> idAddItems, IReadOnlyCollection<Guid> idDuplicateItems, Dictionary<Guid, Guid> idDuplicate)
+        public WatchItemCollection(
+            IReadOnlyCollection<WatchItem> watchItems,
+            IReadOnlyCollection<Guid> idAddItems,
+            IReadOnlyCollection<Guid> idDuplicateItems,
+            Dictionary<Guid, Guid> idDuplicate)
         {
             Items = watchItems;
             NewItems = Items.Where(e => idAddItems.Where(x => x == e.Id).Any()).Select(e => e).ToList();
@@ -17,7 +21,11 @@ namespace WatchList.Core.Service.DataLoading
             IdDuplicateFromDatabase = idDuplicate;
         }
 
-        public WatchItemCollection(IReadOnlyCollection<WatchItem> watchItems, IReadOnlyCollection<WatchItem> itemsAdd, IReadOnlyCollection<WatchItem> itemsDuplicate, Dictionary<Guid, Guid> idDuplicate)
+        public WatchItemCollection(
+            IReadOnlyCollection<WatchItem> watchItems,
+            IReadOnlyCollection<WatchItem> itemsAdd,
+            IReadOnlyCollection<WatchItem> itemsDuplicate,
+            Dictionary<Guid, Guid> idDuplicate)
         {
             Items = watchItems;
             DuplicateItems = itemsDuplicate;

@@ -11,7 +11,7 @@ namespace WatchList.Core.Model.ItemCinema
 
         public WatchItem(string title, int sequel, StatusCinema? status, TypeCinema? type, Guid? id, DateTime? dateWatch = null, int? grade = null)
         {
-            Title = title ?? throw new ArgumentException("Invalid title format.", nameof(title));
+            Title = string.IsNullOrEmpty(title) ? throw new ArgumentException("Invalid title format.", nameof(title)) : title;
             Sequel = sequel > 0 ? sequel : throw new ArgumentException("The sequel number is greater than zero.", nameof(sequel));
             Type = type;
             Status = status;

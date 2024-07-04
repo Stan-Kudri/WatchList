@@ -4,6 +4,7 @@ using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelAddAndEditForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.ChildForms.Extension;
+using WatchList.WinForms.Exceptions;
 
 namespace WatchList.WinForms.ChildForms
 {
@@ -23,10 +24,10 @@ namespace WatchList.WinForms.ChildForms
         }
 
         private TypeCinema SelectedTypeCinema =>
-            cmbTypeCinema.SelectedValue != null ? (TypeCinema)cmbTypeCinema.SelectedValue : throw new Exception("Wrong combo box format");
+            cmbTypeCinema.SelectedValue != null ? (TypeCinema)cmbTypeCinema.SelectedValue : throw new ControlException("Wrong combo box format");
 
         private StatusCinema SelectedStatusCinema =>
-            cmbStatusCinema.SelectedValue != null ? (StatusCinema)cmbStatusCinema.SelectedValue : throw new Exception("Wrong combo box format");
+            cmbStatusCinema.SelectedValue != null ? (StatusCinema)cmbStatusCinema.SelectedValue : throw new ControlException("Wrong combo box format");
 
         public CinemaModel GetCinema()
         {
