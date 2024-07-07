@@ -5,7 +5,6 @@ using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
 using WatchList.WinForms.BindingItem.ModelDataLoad;
-using WatchList.WinForms.Exceptions;
 
 namespace WatchList.WinForms.ChildForms
 {
@@ -23,10 +22,10 @@ namespace WatchList.WinForms.ChildForms
         }
 
         private TypeLoadingCinema SelectTypeCinema =>
-            cmbTypeCinema.SelectedValue != null ? (TypeLoadingCinema)cmbTypeCinema.SelectedValue : throw new ControlException("Wrong combo box format");
+            cmbTypeCinema.SelectedValue != null ? (TypeLoadingCinema)cmbTypeCinema.SelectedValue : throw new ArgumentNullException("Wrong combo box format");
 
         private Grade SelectGrade =>
-            cmbGrade.SelectedValue != null ? (Grade)cmbGrade.SelectedValue : throw new ControlException("Wrong combo box format");
+            cmbGrade.SelectedValue != null ? (Grade)cmbGrade.SelectedValue : throw new ArgumentNullException("Wrong combo box format");
 
         public ILoadRulesConfig GetLoadRuleConfig()
         {
@@ -39,7 +38,7 @@ namespace WatchList.WinForms.ChildForms
             }
 
             var listDuplicateLoadRule = clbActionsWithDuplicates.Items.Select(e => new DuplicateLoadingRules(
-                e.Tag as DuplicateLoadingRules ?? throw new NullReferenceException("Null reference argument for parameter"),
+                e.Tag as DuplicateLoadingRules ?? throw new ArgumentNullException("Null reference argument for parameter"),
                 checkAction: e.Checked)).ToList();
             return new LoadRulesConfigModel(isDeleteGrade, new ActionDuplicateItems(considerDuplicates, listDuplicateLoadRule), SelectTypeCinema.Value, SelectGrade);
         }

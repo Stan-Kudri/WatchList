@@ -2,6 +2,7 @@ using MaterialSkin.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TestTask.BindingItem.Pages;
+using WatchList.Core.Extension;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sortable;
@@ -10,14 +11,12 @@ using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
-using WatchList.Core.Service.DataLoading.Rules;
 using WatchList.Migrations.SQLite;
 using WatchList.WinForms.BindingItem.ModelBoxForm;
 using WatchList.WinForms.BindingItem.ModelBoxForm.Filter;
 using WatchList.WinForms.BindingItem.ModelBoxForm.Sorter;
 using WatchList.WinForms.ChildForms;
 using WatchList.WinForms.ChildForms.Extension;
-using WatchList.WinForms.Exceptions;
 using WatchList.WinForms.Extension;
 
 namespace WatchList.WinForms
@@ -42,6 +41,7 @@ namespace WatchList.WinForms
         private readonly IMessageBox _messageBox;
         private readonly WatchItemRepository _itemRepository;
         private readonly ILogger<WatchItemRepository> _logger;
+        private readonly DownloadDataService _downloadDataService;
 
         private readonly SortWatchItemModel _sortField;
         private readonly FilterItemModel _filterItem;
@@ -60,6 +60,7 @@ namespace WatchList.WinForms
             _sortField = serviceProvider.GetRequiredService<SortWatchItemModel>();
             _filterItem = serviceProvider.GetRequiredService<FilterItemModel>();
             _logger = serviceProvider.GetRequiredService<ILogger<WatchItemRepository>>();
+            _downloadDataService = serviceProvider.GetRequiredService<DownloadDataService>();
             _searchRequests = new ItemSearchRequest(_filterItem, _sortField.GetSortItem(), Page.GetPage(), _isAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
             Load += BoxCinemaForm_Load;
@@ -180,16 +181,11 @@ namespace WatchList.WinForms
 
             var dbContext = new DbContextFactoryMigrator(openReplaceDataFromFile.FileName).Create();
             var loadRuleConfig = dataLoadingForm.GetLoadRuleConfig();
-            var loadRuleHasGrade = new DeleteGradeRule(loadRuleConfig);
-            var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
-            var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRuleConfig);
-            var loadDuplicateItem = new DuplicateLoadRule(_itemRepository, loadRuleConfig);
-            var aggregateRules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
+            var aggregateRules = loadRuleConfig.GetAggregateRules(_itemRepository);
 
             var repositoryDataDownload = new WatchItemRepository(dbContext, _logger);
 
-            var downloadDataService = _serviceProvider.GetRequiredService<DownloadDataService>();
-            await downloadDataService.Download(repositoryDataDownload, aggregateRules);
+            await _downloadDataService.Download(repositoryDataDownload, aggregateRules);
             await UpdateGridData();
         }
 
@@ -463,7 +459,7 @@ namespace WatchList.WinForms
         /// String is null.
         /// </exception>
         private string CellElement(DataGridViewRow rowItem, int indexColumn)
-            => rowItem.GetString(indexColumn) ?? throw new ControlException("String cannot be null.");
+            => rowItem.GetString(indexColumn) ?? throw new ArgumentException("A string was not retrieved for this cell.");
 
         /// <summary>
         /// The method checks if the page is empty.

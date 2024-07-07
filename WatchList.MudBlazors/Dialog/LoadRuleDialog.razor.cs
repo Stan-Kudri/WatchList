@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
+using WatchList.Core.Extension;
 using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.DataLoading;
-using WatchList.Core.Service.DataLoading.Rules;
 using WatchList.Migrations.SQLite;
 
 namespace WatchList.MudBlazors.Dialog
@@ -42,11 +42,7 @@ namespace WatchList.MudBlazors.Dialog
                 var dbContext = new DbContextFactoryMigrator(pathFile).Create();
 
                 var loadRuleConfig = GetLoadRuleConfig();
-                var loadRuleHasGrade = new DeleteGradeRule(loadRuleConfig);
-                var loadRuleType = new FilterByTypeCinemaLoadRule(loadRuleConfig);
-                var loadRuleMoreGrade = new FilterByMoreGradeLoadRule(loadRuleConfig);
-                var loadDuplicateItem = new DuplicateLoadRule(WatchItemRepository, loadRuleConfig);
-                var aggregateRules = new AggregateLoadRule { loadRuleHasGrade, loadRuleType, loadRuleMoreGrade, loadDuplicateItem };
+                var aggregateRules = loadRuleConfig.GetAggregateRules(WatchItemRepository);
 
                 var repositoryDataDownload = new WatchItemRepository(dbContext, Logger);
 

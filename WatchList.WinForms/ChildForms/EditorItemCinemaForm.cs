@@ -23,10 +23,10 @@ namespace WatchList.WinForms.ChildForms
         }
 
         private TypeCinema SelectedTypeCinema =>
-            cmbTypeCinema.SelectedValue != null ? (TypeCinema)cmbTypeCinema.SelectedValue : throw new NullReferenceException("Wrong combo box format");
+            cmbTypeCinema.SelectedValue != null ? (TypeCinema)cmbTypeCinema.SelectedValue : throw new ArgumentNullException("Wrong combo box format");
 
         private StatusCinema SelectedStatusCinema =>
-            cmbStatusCinema.SelectedValue != null ? (StatusCinema)cmbStatusCinema.SelectedValue : throw new NullReferenceException("Wrong combo box format");
+            cmbStatusCinema.SelectedValue != null ? (StatusCinema)cmbStatusCinema.SelectedValue : throw new ArgumentNullException("Wrong combo box format");
 
         public CinemaModel GetEditItemCinema()
         {

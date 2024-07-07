@@ -13,9 +13,9 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
         {
             _sortType = sortType;
 
-            if (Items == null || Items.Count == decimal.Zero)
+            if (sortType == null || sortType.Items.Count == decimal.Zero)
             {
-                throw new InvalidOperationException("Error loading sort fields.");
+                throw new ArgumentNullException("Error loading sort fields.");
             }
 
             SelectField = Items.Select(e => e.ToString()).ToArray();
