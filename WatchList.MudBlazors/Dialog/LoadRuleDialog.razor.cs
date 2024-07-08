@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
-using WatchList.Core.Extension;
 using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
@@ -38,15 +37,9 @@ namespace WatchList.MudBlazors.Dialog
             try
             {
                 pathFile = await DownloadFile(fileload);
-
                 var dbContext = new DbContextFactoryMigrator(pathFile).Create();
-
                 var loadRuleConfig = GetLoadRuleConfig();
-                var aggregateRules = loadRuleConfig.GetAggregateRules(WatchItemRepository);
-
-                var repositoryDataDownload = new WatchItemRepository(dbContext, Logger);
-
-                await DownloadDataService.Download(repositoryDataDownload, aggregateRules);
+                await DownloadDataService.DownloadDataByDB(dbContext, loadRuleConfig);
                 MudDialog.Cancel();
             }
             finally

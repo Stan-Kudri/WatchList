@@ -2,7 +2,6 @@ using MaterialSkin.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TestTask.BindingItem.Pages;
-using WatchList.Core.Extension;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sortable;
@@ -177,15 +176,12 @@ namespace WatchList.WinForms
                 return;
             }
 
-            _logger.LogInformation("Add item from the selected file <{0}>", openReplaceDataFromFile.FileName);
+            var pathFile = openReplaceDataFromFile.FileName;
+            _logger.LogInformation("Add item from the selected file <{0}>", pathFile);
 
-            var dbContext = new DbContextFactoryMigrator(openReplaceDataFromFile.FileName).Create();
+            var dbContext = new DbContextFactoryMigrator(pathFile).Create();
             var loadRuleConfig = dataLoadingForm.GetLoadRuleConfig();
-            var aggregateRules = loadRuleConfig.GetAggregateRules(_itemRepository);
-
-            var repositoryDataDownload = new WatchItemRepository(dbContext, _logger);
-
-            await _downloadDataService.Download(repositoryDataDownload, aggregateRules);
+            await _downloadDataService.DownloadDataByDB(dbContext, loadRuleConfig);
             await UpdateGridData();
         }
 

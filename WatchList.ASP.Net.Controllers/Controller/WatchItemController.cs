@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WatchList.ASP.Net.Controllers.Model;
 using WatchList.ASP.Net.Controllers.Model.DuplicateModel;
-using WatchList.Core.Extension;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.DataLoading;
@@ -64,15 +63,9 @@ namespace WatchList.ASP.Net.Controllers.Controller
         public async Task<IActionResult> DownloadDataFromDB(IFormFile file, [FromForm] LoadRulesModel loadRulesModel)
         {
             var pathFile = await DownloadFile(file);
-
             var dbContext = new DbContextFactoryMigrator(pathFile).Create();
             var loadRuleConfig = loadRulesModel.GetLoadRulesConfigModel();
-            var aggregateRules = loadRuleConfig.GetAggregateRules(_watchItemRepository);
-
-            var repositoryDataDownload = new WatchItemRepository(dbContext, _logger);
-
-            await _downloadDataService.Download(repositoryDataDownload, aggregateRules);
-
+            await _downloadDataService.DownloadDataByDB(dbContext, loadRuleConfig);
             return Ok("Add data in DB.");
         }
 

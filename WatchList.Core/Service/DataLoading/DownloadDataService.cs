@@ -1,9 +1,12 @@
 using Microsoft.Extensions.Logging;
+using WatchList.Core.Extension;
 using WatchList.Core.Model.Filter;
+using WatchList.Core.Model.Load;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
+using WatchList.Core.Repository.Db;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading.Rules;
 
@@ -13,21 +16,38 @@ namespace WatchList.Core.Service.DataLoading
     {
         private readonly WatchItemRepository _repository;
         private readonly IMessageBox _messageBox;
-        private readonly ILogger<DownloadDataService> _logger;
+        private readonly ILogger<DownloadDataService> _loggerDownloadDataService;
+        private readonly ILogger<WatchItemRepository> _loggerWatchItemRepository;
 
-        public DownloadDataService(WatchItemRepository repository, IMessageBox messageBox, ILogger<DownloadDataService> logger, int numberOfItemPerPage = 500)
+        public DownloadDataService(
+                                    WatchItemRepository repository,
+                                    IMessageBox messageBox,
+                                    ILogger<DownloadDataService> loggerDownloadDataService,
+                                    ILogger<WatchItemRepository> loggerWatchItemRepository,
+                                    int numberOfItemPerPage = 500)
         {
             _repository = repository;
             _messageBox = messageBox;
-            _logger = logger;
+            _loggerDownloadDataService = loggerDownloadDataService;
+            _loggerWatchItemRepository = loggerWatchItemRepository;
             NumberOfItemPerPage = numberOfItemPerPage;
         }
 
         public int NumberOfItemPerPage { get; set; }
 
+        public async Task DownloadDataByDB(WatchCinemaDbContext dbContext, ILoadRulesConfig loadRuleConfig)
+        {
+            var aggregateRules = loadRuleConfig.GetAggregateRules(_repository);
+            var repositoryDataDownload = new WatchItemRepository(dbContext, _loggerWatchItemRepository);
+            await Download(repositoryDataDownload, aggregateRules);
+        }
+
         public async Task Download(WatchItemRepository repository, ILoadRule loadRule)
         {
-            var itemSearchRequest = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), new Page(1, NumberOfItemPerPage));
+            var itemSearchRequest = new ItemSearchRequest(
+                                                            new FilterWatchItem(),
+                                                            new SortWatchItem(),
+                                                            new Page(1, NumberOfItemPerPage));
             var pagedList = repository.GetPage(itemSearchRequest);
 
             while (itemSearchRequest.Page.Number <= pagedList.PageCount)
@@ -35,7 +55,7 @@ namespace WatchList.Core.Service.DataLoading
                 var watchItemCollection = new WatchItemCollection(pagedList);
                 watchItemCollection = loadRule.Apply(watchItemCollection);
 
-                _logger.LogInformation("Load items according to selected rules");
+                _loggerDownloadDataService.LogInformation("Load items according to selected rules");
                 AddItems(watchItemCollection);
                 await UpdateItems(watchItemCollection);
 
