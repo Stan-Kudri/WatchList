@@ -36,7 +36,7 @@ namespace WatchList.MudBlazors.Pages
         {
             SortField.Clear();
             FilterWatchItem.Clear();
-            _itemsSearchRequest = new ItemSearchRequest(FilterWatchItem, SortField, _pageModel.GetPage());
+            _itemsSearchRequest = new ItemSearchRequest(FilterWatchItem, SortField, _pageModel);
             LoadData();
         }
 
@@ -111,6 +111,12 @@ namespace WatchList.MudBlazors.Pages
             _itemsSearchRequest.IsAscending = true;
             FilterWatchItem.Clear();
             SortField.Clear();
+            LoadData();
+        }
+
+        private void PageChanged(int i)
+        {
+            _pageModel.Number = i;
             LoadData();
         }
 

@@ -2,11 +2,11 @@ namespace WatchList.Core.PageItem
 {
     public class Page
     {
+        protected const int StartPageSize = 10;
+        protected const int NumberStartPage = 1;
+
         protected int _number;
         protected int _size;
-
-        private const int StartPageSize = 10;
-        private const int NumberStartPage = 1;
 
         public Page(int number = NumberStartPage, int size = StartPageSize)
         {

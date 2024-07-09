@@ -67,7 +67,7 @@
 
     </MudToolBar>
 
-    <MudTable Items="@_items" Hover="true" SortLabel="Sort By" Elevation="0" Bordered="true" MultiSelection="true" Dense="true" T="WatchItem" SelectedItemsChanged="OnSelectItems">
+    <MudTable Items="@_items" RowsPerPage="_pageModel.Size" Hover="true" SortLabel="Sort By" Elevation="0" Bordered="true" MultiSelection="true" Dense="true" T="WatchItem" SelectedItemsChanged="OnSelectItems">
 
         <HeaderContent>
             <MudTd Style="text-align:center; font-size:14px; ">Title</MudTd>
@@ -95,10 +95,16 @@
                 </MudTooltip>
             </MudTh>
         </RowTemplate>
-
         <PagerContent>
-            <MudTablePager HorizontalAlignment="HorizontalAlignment.Center" PageSizeOptions="_pageModel.Items"/>
+            <div class="d-flex flex-column align-center">
+                <MudPagination SelectedChanged="PageChanged" Count="_pagedList.PageCount" Class="pa-4" />
+            </div>
         </PagerContent>
+            @*
+        <PagerContent>
+        <MudTablePager HorizontalAlignment="HorizontalAlignment.Center" PageSizeOptions="@_pageModel.Items" onchange=""/>
+        </PagerContent>
+        *@
 
     </MudTable>
 
