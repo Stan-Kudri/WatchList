@@ -124,7 +124,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(dialogReplaceItem);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload, loggerRepository);
             var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
@@ -167,7 +167,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(dialogReplaceItem);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload, loggerRepository);
             var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
@@ -212,7 +212,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                 messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).ReturnsAsync(item.Value);
             }
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload, loggerRepository);
             var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,
@@ -257,7 +257,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
                 messageBox.Setup(foo => foo.ShowDataReplaceQuestion(item.Key)).ReturnsAsync(item.Value);
             }
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload, loggerRepository);
             var loadRuleConfig = new TestLoadRuleConfig()
             {
                 DeleteGrade = false,

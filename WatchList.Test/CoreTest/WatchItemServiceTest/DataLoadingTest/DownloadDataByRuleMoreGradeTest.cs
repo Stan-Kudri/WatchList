@@ -142,7 +142,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload, loggerRepository);
             var loadRuleConfig = new TestLoadRuleConfig() { MoreGrade = moreGrade };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
@@ -179,7 +179,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload, loggerRepository);
             var loadRuleConfig = new TestLoadRuleConfig() { MoreGrade = moreGrade };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);

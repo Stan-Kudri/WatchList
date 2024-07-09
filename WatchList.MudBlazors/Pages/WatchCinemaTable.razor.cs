@@ -36,7 +36,7 @@ namespace WatchList.MudBlazors.Pages
         {
             SortField.Clear();
             FilterWatchItem.Clear();
-            _itemsSearchRequest = new ItemSearchRequest(FilterWatchItem, SortField, _pageModel);
+            _itemsSearchRequest = new ItemSearchRequest(FilterWatchItem, SortField, _pageModel.GetPage());
             LoadData();
         }
 
