@@ -22,13 +22,13 @@ namespace WatchList.Core.Service.DataLoading
         public DownloadDataService(
                                     WatchItemRepository repository,
                                     IMessageBox messageBox,
-                                    ILogger<DownloadDataService> loggerDownloadDataService,
+                                    ILogger<DownloadDataService> logger,
                                     ILogger<WatchItemRepository> loggerWatchItemRepository,
                                     int numberOfItemPerPage = 500)
         {
             _repository = repository;
             _messageBox = messageBox;
-            _loggerDownloadDataService = loggerDownloadDataService;
+            _loggerDownloadDataService = logger;
             _loggerWatchItemRepository = loggerWatchItemRepository;
             NumberOfItemPerPage = numberOfItemPerPage;
         }

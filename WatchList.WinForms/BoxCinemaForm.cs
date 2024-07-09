@@ -16,6 +16,7 @@ using WatchList.WinForms.BindingItem.ModelBoxForm.Filter;
 using WatchList.WinForms.BindingItem.ModelBoxForm.Sorter;
 using WatchList.WinForms.ChildForms;
 using WatchList.WinForms.ChildForms.Extension;
+using WatchList.WinForms.Exceptions;
 using WatchList.WinForms.Extension;
 
 namespace WatchList.WinForms
@@ -393,7 +394,7 @@ namespace WatchList.WinForms
         private CinemaModel GetItem(int indexRow)
         {
             var rowItems = dgvCinema.Rows[indexRow];
-            var title = CellElement(rowItems, IndexColumnName) ?? throw new ArgumentException("Name cannot be null.");
+            var title = CellElement(rowItems, IndexColumnName);
 
             var sequel = CellElement(rowItems, IndexColumnSequel).ParseInt();
             var id = CellElement(rowItems, IndexColumnId).ParseGuid();
@@ -455,7 +456,8 @@ namespace WatchList.WinForms
         /// String is null.
         /// </exception>
         private string CellElement(DataGridViewRow rowItem, int indexColumn)
-            => rowItem.GetString(indexColumn) ?? throw new ArgumentException("A string was not retrieved for this cell.");
+            => rowItem.GetString(indexColumn)
+            ?? throw new ExceptionIncorrectCellData(rowItem, indexColumn);
 
         /// <summary>
         /// The method checks if the page is empty.

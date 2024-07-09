@@ -66,7 +66,7 @@ namespace WatchList.ASP.Net.Controllers.Controller
             var dbContext = new DbContextFactoryMigrator(pathFile).Create();
             var loadRuleConfig = loadRulesModel.GetLoadRulesConfigModel();
             await _downloadDataService.DownloadDataByDB(dbContext, loadRuleConfig);
-            return Ok("Add data in DB.");
+            return Ok("The data has been added to the database.");
         }
 
         private async Task<string> DownloadFile(IFormFile dataFile)

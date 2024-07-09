@@ -13,11 +13,6 @@ namespace WatchList.MudBlazors.Model
         {
         }
 
-        public PageModel(int pageNumber = 1, int pageSize = FirstSizePage)
-            : base(pageNumber, pageSize)
-        {
-        }
-
         public Page GetPage() => new Page(_number, _size);
 
         public bool ChangedPage(int pageSize) => pageSize != _size;
