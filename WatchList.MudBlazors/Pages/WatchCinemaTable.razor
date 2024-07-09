@@ -95,16 +95,18 @@
                 </MudTooltip>
             </MudTh>
         </RowTemplate>
+
         <PagerContent>
-            <div class="d-flex flex-column align-center">
-                <MudPagination SelectedChanged="PageChanged" Count="_pagedList.PageCount" Class="pa-4" />
+            <div class="d-flex flex-row align-center">
+                    <MudSelect T="int" Label="Show on page" @bind-Value="_pageModel.Size" SelectedValuesChanged="LoadData" >
+                        @foreach (var sizePage in _pageModel.Items)
+                        {
+                            <MudSelectItem T="int" Value="@sizePage" />
+                        }
+                    </MudSelect>
+                    <MudPagination SelectedChanged="PageChanged" Count="_pagedList.PageCount" Class="pa-4" />
             </div>
         </PagerContent>
-            @*
-        <PagerContent>
-        <MudTablePager HorizontalAlignment="HorizontalAlignment.Center" PageSizeOptions="@_pageModel.Items" onchange=""/>
-        </PagerContent>
-        *@
 
     </MudTable>
 
