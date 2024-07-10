@@ -45,7 +45,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
             }
         }
 
-        public ISortableSmartEnum<T> SortField
+        public ISortableSmartEnum<T>? SortField
         {
             get => _sortType.SortField;
             set => _sortType.SortField = value;

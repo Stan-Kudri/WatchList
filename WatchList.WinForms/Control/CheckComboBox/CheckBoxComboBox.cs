@@ -86,6 +86,7 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// Gets or sets the DataSource of the combobox. Refreshes the CheckBox wrappers when this is set.
         /// </summary>
+        [Obsolete]
         public new object DataSource
         {
             get => base.DataSource;
@@ -104,6 +105,7 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// Gets or sets the ValueMember of the combobox. Refreshes the CheckBox wrappers when this is set.
         /// </summary>
+        [Obsolete]
         public new string ValueMember
         {
             get => base.ValueMember;
@@ -207,6 +209,7 @@ namespace TestTask.Controls.CheckComboBox
         /// Check all items.
         /// </summary>
         /// <param name="selectItems">Check items in ComboBox.</param>
+        [Obsolete]
         public void SelectItemsStr(string[] selectItems)
         {
             ClearSelection();
@@ -222,6 +225,7 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// Check all items.
         /// </summary>
+        [Obsolete]
         public void SelectAllItem()
         {
             foreach (CheckBoxComboBoxItem item in CheckBoxItems)
@@ -347,6 +351,7 @@ namespace TestTask.Controls.CheckComboBox
         /// </summary>
         /// <param name="sender">Sender.</param>
         /// <param name="e">Event.</param>
+        [Obsolete]
         private void CheckBoxProperties_Changed(object sender, EventArgs e)
         {
             foreach (CheckBoxComboBoxItem item in CheckBoxItems)

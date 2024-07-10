@@ -8,7 +8,7 @@ namespace WatchList.Core.Model.Load
 
         ActionDuplicateItems ActionsWithDuplicates { get; }
 
-        TypeCinema TypeCinemaLoad { get; }
+        TypeCinema? TypeCinemaLoad { get; }
 
         Grade MoreGrade { get; }
     }

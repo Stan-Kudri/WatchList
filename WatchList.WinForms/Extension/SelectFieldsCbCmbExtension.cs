@@ -6,6 +6,7 @@ namespace WatchList.WinForms.Extension
 {
     public static class SelectFieldsCbCmbExtension
     {
+        [Obsolete]
         public static HashSet<T> SelectFieldCheckBoxCMB<T>(this CheckBoxComboBox checkBoxCMB)
             where T : SmartEnum<T>
         {
@@ -24,7 +25,6 @@ namespace WatchList.WinForms.Extension
             return selectField;
         }
 
-        public static string[] GetSortFieldArray(this SortWatchItemModel sortField)
-            => sortField.SortFields.Select(e => e.ToString()).ToArray();
+        public static string[] GetSortFieldArray(this SortWatchItemModel sortField) => sortField.SortFields.Select(e => e.ToString()).ToArray();
     }
 }

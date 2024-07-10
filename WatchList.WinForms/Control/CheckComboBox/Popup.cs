@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Windows.Forms.VisualStyles;
 using VS = System.Windows.Forms.VisualStyles;
 
@@ -9,7 +8,6 @@ namespace TestTask.Controls.CheckComboBox
     /// <summary>
     /// Popup.
     /// </summary>
-    [CLSCompliant(true)]
     [ToolboxItem(false)]
     public partial class Popup : ToolStripDropDown
     {
@@ -144,7 +142,6 @@ namespace TestTask.Controls.CheckComboBox
         /// <returns>An object of type <see cref="T:System.Windows.Forms.CreateParams" /> used when creating a new window.</returns>
         protected override CreateParams CreateParams
         {
-            [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
             get
             {
                 CreateParams cp = base.CreateParams;
@@ -241,7 +238,6 @@ namespace TestTask.Controls.CheckComboBox
         /// </summary>
         /// <param name="m">The message.</param>
         /// <returns>true, if the WndProc method from the base class shouldn't be invoked.</returns>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public bool ProcessResizing(ref Message m) => InternalProcessResizing(ref m);
 
         /// <summary>
@@ -374,7 +370,6 @@ namespace TestTask.Controls.CheckComboBox
         /// Processes Windows messages.
         /// </summary>
         /// <param name="m">The Windows <see cref="T:System.Windows.Forms.Message" /> to process.</param>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m)
         {
             if (InternalProcessResizing(ref m, false))
@@ -407,7 +402,6 @@ namespace TestTask.Controls.CheckComboBox
             }
         }
 
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         private bool InternalProcessResizing(ref Message m, bool contentControl = true)
         {
             if (m.Msg == NativeMethods.WM_NCACTIVATE && m.WParam != IntPtr.Zero && ChildPopup != null && ChildPopup.Visible)
@@ -432,12 +426,11 @@ namespace TestTask.Controls.CheckComboBox
             return false;
         }
 
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         private bool OnGetMinMaxInfo(ref Message m)
         {
             NativeMethods.MINMAXINFO minmax = (NativeMethods.MINMAXINFO)Marshal.PtrToStructure(m.LParam, typeof(NativeMethods.MINMAXINFO));
-            minmax.maxTrackSize = this.MaxSize;
-            minmax.minTrackSize = this.MinSize;
+            minmax.maxTrackSize = MaxSize;
+            minmax.minTrackSize = MinSize;
             Marshal.StructureToPtr(minmax, m.LParam, false);
             return true;
         }
