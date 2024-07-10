@@ -114,6 +114,12 @@ namespace WatchList.MudBlazors.Pages
             LoadData();
         }
 
+        private void PageChanged(int i)
+        {
+            _pageModel.Number = i;
+            LoadData();
+        }
+
         public void OnToggledChanged(bool toggled)
         {
             _itemsSearchRequest.IsAscending = toggled;

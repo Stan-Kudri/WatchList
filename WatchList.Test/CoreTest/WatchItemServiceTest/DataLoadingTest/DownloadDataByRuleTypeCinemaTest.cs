@@ -139,7 +139,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload, loggerRepository);
             var loadRuleConfig = new TestLoadRuleConfig() { TypeCinemaLoad = typeCinema };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
@@ -175,7 +175,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowDataReplaceQuestion(It.IsAny<string>())).ReturnsAsync(DialogReplaceItemQuestion.AllYes);
 
-            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload);
+            var service = new DownloadDataService(watchItemRepository, messageBox.Object, loggerDownload, loggerRepository);
             var loadRuleConfig = new TestLoadRuleConfig() { TypeCinemaLoad = typeCinema };
             var loadRule = new TestAggregateLoadRule(itemRepository, loadRuleConfig);
             var repositoryDataDownload = new WatchItemRepository(dbContextDownloadItem, loggerRepository);
@@ -186,7 +186,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest.DataLoadingTest
             await dbContextDownloadItem.SaveChangesAsync();
 
             // Act
-            service.Download(repositoryDataDownload, loadRule);
+            await service.Download(repositoryDataDownload, loadRule);
             var actualItems = dbContext.WatchItem.ToList();
 
             // Assert

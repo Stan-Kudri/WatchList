@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Security.Permissions;
 using WatchList.WinForms.Control.CheckComboBox.Component;
 
 namespace TestTask.Controls.CheckComboBox
@@ -119,7 +118,7 @@ namespace TestTask.Controls.CheckComboBox
         /// Processes Windows messages.
         /// </summary>
         /// <param name="m">The Windows <see cref="T:System.Windows.Forms.Message" /> to process.</param>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
+        /// </summary>
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == (NativeMethods.WM_REFLECT + NativeMethods.WM_COMMAND)

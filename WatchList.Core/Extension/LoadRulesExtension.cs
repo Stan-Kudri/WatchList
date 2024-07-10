@@ -2,11 +2,11 @@ using WatchList.Core.Model.Load;
 using WatchList.Core.Repository;
 using WatchList.Core.Service.DataLoading.Rules;
 
-namespace WatchList.ASP.Net.Controllers.Extension
+namespace WatchList.Core.Extension
 {
     public static class LoadRulesExtension
     {
-        public static AggregateLoadRule GetAggregateRules(this BaseLoadRulesConfigModel loadRulesConfig, WatchItemRepository watchItemRepository)
+        public static AggregateLoadRule GetAggregateRules(this ILoadRulesConfig loadRulesConfig, WatchItemRepository watchItemRepository)
         {
             var loadRuleHasGrade = new DeleteGradeRule(loadRulesConfig);
             var loadRuleType = new FilterByTypeCinemaLoadRule(loadRulesConfig);

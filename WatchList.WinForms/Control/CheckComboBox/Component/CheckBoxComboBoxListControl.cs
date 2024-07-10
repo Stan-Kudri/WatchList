@@ -114,6 +114,7 @@ namespace WatchList.WinForms.Control.CheckComboBox.Component
             }
         }
 
+        [Obsolete]
         private void ChangeItemsByIndex(CheckBoxComboBoxItemList newList)
         {
             var hasHiddenItem = _checkBoxComboBox.DropDownStyle == ComboBoxStyle.DropDownList

@@ -10,10 +10,10 @@ namespace WatchList.Core.Model.Sortable
     {
         public static readonly SortFieldWatchItem Title = new SortType<string>("Title", SortFields.Title, e => e.Title);
         public static readonly SortFieldWatchItem Sequel = new SortType<int>("Sequel", SortFields.Sequel, e => e.Sequel);
-        public static readonly SortFieldWatchItem Status = new SortType<StatusCinema>("Status", SortFields.Status, e => e.Status);
+        public static readonly SortFieldWatchItem Status = new SortType<StatusCinema?>("Status", SortFields.Status, e => e.Status);
         public static readonly SortFieldWatchItem Data = new SortType<DateTime?>("Data", SortFields.Date, e => e.Date);
         public static readonly SortFieldWatchItem Grade = new SortType<int?>("Grade", SortFields.Grade, e => e.Grade);
-        public static readonly SortFieldWatchItem Type = new SortType<TypeCinema>("Type", SortFields.Type, e => e.Type);
+        public static readonly SortFieldWatchItem Type = new SortType<TypeCinema?>("Type", SortFields.Type, e => e.Type);
 
         private SortFieldWatchItem(string name, SortFields fields)
             : this(name, (int)fields)

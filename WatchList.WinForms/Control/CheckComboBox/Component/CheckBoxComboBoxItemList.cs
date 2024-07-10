@@ -16,9 +16,7 @@ namespace WatchList.WinForms.Control.CheckComboBox.Component
         private readonly CheckBoxComboBox _checkBoxComboBox;
 
         public CheckBoxComboBoxItemList(CheckBoxComboBox checkBoxComboBox)
-        {
-            _checkBoxComboBox = checkBoxComboBox;
-        }
+            => _checkBoxComboBox = checkBoxComboBox;
 
         public event EventHandler CheckBoxCheckedChanged;
 
