@@ -97,23 +97,23 @@
         </RowTemplate>
 
 
-            <PagerContent >
-                <MudGrid>
-                    <MudItem xs="12" sm="4">
-                        <MudSelect T="int" Label="Show on page" @bind-Value="_pageModel.Size" SelectedValuesChanged="LoadData" Style="max-width:200px;">
-                            @foreach (var sizePage in _pageModel.Items)
-                            {
-                                <MudSelectItem T="int" Value="@sizePage" />
-                            }
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs="12" sm="4" Style="align-self:center">
-                        <div style="text-align:center;">
-                            <MudPagination SelectedChanged="PageChanged" BoundaryCount="1"  MiddleCount="3" Count="_pagedList.PageCount" Class="align-self-center" />
-                        </div>
-                    </MudItem>
-                </MudGrid>
-            </PagerContent>
+        <PagerContent >
+            <MudGrid>
+                <MudItem xs="12" sm="4">
+                        <MudSelect T="int" Label="Show on page" @bind-Value="_pageModel.Size" SelectedValuesChanged="LoadData" Style="max-width:200px;" Class="ml-4">
+                        @foreach (var sizePage in _pageModel.Items)
+                        {
+                            <MudSelectItem T="int" Value="@sizePage" />
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="4" Style="align-self:center">
+                    <div style="text-align:center;">
+                        <MudPagination SelectedChanged="PageChanged" BoundaryCount="1"  MiddleCount="3" Count="_pagedList.PageCount" Class="align-self-center" />
+                    </div>
+                </MudItem>
+            </MudGrid>
+        </PagerContent>
 
     </MudTable>
 
