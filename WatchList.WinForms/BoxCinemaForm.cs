@@ -39,7 +39,6 @@ namespace WatchList.WinForms
         private readonly IServiceProvider _serviceProvider;
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
-        private readonly WatchItemRepository _itemRepository;
         private readonly ILogger<WatchItemRepository> _logger;
         private readonly DownloadDataService _downloadDataService;
 
@@ -54,7 +53,6 @@ namespace WatchList.WinForms
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _itemRepository = serviceProvider.GetRequiredService<WatchItemRepository>();
             _messageBox = serviceProvider.GetRequiredService<IMessageBox>();
             _itemService = serviceProvider.GetRequiredService<WatchItemService>();
             _sortField = serviceProvider.GetRequiredService<SortWatchItemModel>();
