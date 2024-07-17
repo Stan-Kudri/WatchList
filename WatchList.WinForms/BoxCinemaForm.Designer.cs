@@ -114,7 +114,7 @@ namespace WatchList.WinForms
             dgvCinema.Name = "dgvCinema";
             dgvCinema.ReadOnly = true;
             dgvCinema.RowTemplate.Height = 25;
-            dgvCinema.Size = new Size(665, 250);
+            dgvCinema.Size = new Size(665, 240);
             dgvCinema.TabIndex = 16;
             dgvCinema.Tag = "Cinema";
             // 
@@ -179,13 +179,13 @@ namespace WatchList.WinForms
             btnAddCinema.Dock = DockStyle.Fill;
             btnAddCinema.HighEmphasis = true;
             btnAddCinema.Icon = null;
-            btnAddCinema.Location = new Point(4, 6);
-            btnAddCinema.Margin = new Padding(4, 6, 4, 6);
-            btnAddCinema.MinimumSize = new Size(155, 20);
+            btnAddCinema.Location = new Point(2, 3);
+            btnAddCinema.Margin = new Padding(2, 3, 2, 3);
+            btnAddCinema.MinimumSize = new Size(135, 20);
             btnAddCinema.MouseState = MaterialSkin.MouseState.HOVER;
             btnAddCinema.Name = "btnAddCinema";
             btnAddCinema.NoAccentTextColor = Color.Empty;
-            btnAddCinema.Size = new Size(158, 20);
+            btnAddCinema.Size = new Size(161, 22);
             btnAddCinema.TabIndex = 32;
             btnAddCinema.Text = "Add Cinema";
             btnAddCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -201,13 +201,13 @@ namespace WatchList.WinForms
             btnEditCinema.Dock = DockStyle.Fill;
             btnEditCinema.HighEmphasis = true;
             btnEditCinema.Icon = null;
-            btnEditCinema.Location = new Point(170, 6);
-            btnEditCinema.Margin = new Padding(4, 6, 4, 6);
-            btnEditCinema.MinimumSize = new Size(155, 20);
+            btnEditCinema.Location = new Point(167, 3);
+            btnEditCinema.Margin = new Padding(2, 3, 2, 3);
+            btnEditCinema.MinimumSize = new Size(135, 20);
             btnEditCinema.MouseState = MaterialSkin.MouseState.HOVER;
             btnEditCinema.Name = "btnEditCinema";
             btnEditCinema.NoAccentTextColor = Color.Empty;
-            btnEditCinema.Size = new Size(158, 20);
+            btnEditCinema.Size = new Size(161, 22);
             btnEditCinema.TabIndex = 36;
             btnEditCinema.Text = "Edit";
             btnEditCinema.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -223,13 +223,13 @@ namespace WatchList.WinForms
             btnDeleteMovie.Dock = DockStyle.Fill;
             btnDeleteMovie.HighEmphasis = true;
             btnDeleteMovie.Icon = null;
-            btnDeleteMovie.Location = new Point(336, 6);
-            btnDeleteMovie.Margin = new Padding(4, 6, 4, 6);
-            btnDeleteMovie.MinimumSize = new Size(155, 20);
+            btnDeleteMovie.Location = new Point(332, 3);
+            btnDeleteMovie.Margin = new Padding(2, 3, 2, 3);
+            btnDeleteMovie.MinimumSize = new Size(135, 20);
             btnDeleteMovie.MouseState = MaterialSkin.MouseState.HOVER;
             btnDeleteMovie.Name = "btnDeleteMovie";
             btnDeleteMovie.NoAccentTextColor = Color.Empty;
-            btnDeleteMovie.Size = new Size(158, 20);
+            btnDeleteMovie.Size = new Size(161, 22);
             btnDeleteMovie.TabIndex = 37;
             btnDeleteMovie.Text = "Delete";
             btnDeleteMovie.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -245,13 +245,13 @@ namespace WatchList.WinForms
             btnAddData.Dock = DockStyle.Fill;
             btnAddData.HighEmphasis = true;
             btnAddData.Icon = null;
-            btnAddData.Location = new Point(502, 6);
-            btnAddData.Margin = new Padding(4, 6, 4, 6);
-            btnAddData.MinimumSize = new Size(155, 20);
+            btnAddData.Location = new Point(497, 3);
+            btnAddData.Margin = new Padding(2, 3, 2, 3);
+            btnAddData.MinimumSize = new Size(135, 20);
             btnAddData.MouseState = MaterialSkin.MouseState.HOVER;
             btnAddData.Name = "btnAddData";
             btnAddData.NoAccentTextColor = Color.Empty;
-            btnAddData.Size = new Size(159, 20);
+            btnAddData.Size = new Size(164, 22);
             btnAddData.TabIndex = 38;
             btnAddData.Text = "Add data";
             btnAddData.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -264,11 +264,12 @@ namespace WatchList.WinForms
             btnUseFilter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnUseFilter.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnUseFilter.Depth = 0;
-            btnUseFilter.Dock = DockStyle.Fill;
+            btnUseFilter.Dock = DockStyle.Left;
             btnUseFilter.HighEmphasis = true;
             btnUseFilter.Icon = null;
             btnUseFilter.Location = new Point(4, 36);
             btnUseFilter.Margin = new Padding(4, 6, 4, 6);
+            btnUseFilter.MaximumSize = new Size(250, 30);
             btnUseFilter.MinimumSize = new Size(155, 20);
             btnUseFilter.MouseState = MaterialSkin.MouseState.HOVER;
             btnUseFilter.Name = "btnUseFilter";
@@ -286,11 +287,12 @@ namespace WatchList.WinForms
             btnClearFilter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnClearFilter.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnClearFilter.Depth = 0;
-            btnClearFilter.Dock = DockStyle.Fill;
+            btnClearFilter.Dock = DockStyle.Left;
             btnClearFilter.HighEmphasis = true;
             btnClearFilter.Icon = null;
             btnClearFilter.Location = new Point(4, 6);
             btnClearFilter.Margin = new Padding(4, 6, 4, 6);
+            btnClearFilter.MaximumSize = new Size(250, 30);
             btnClearFilter.MinimumSize = new Size(155, 20);
             btnClearFilter.MouseState = MaterialSkin.MouseState.HOVER;
             btnClearFilter.Name = "btnClearFilter";
@@ -450,20 +452,24 @@ namespace WatchList.WinForms
             // tlPanelActionsWithElements
             // 
             tlPanelActionsWithElements.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tlPanelActionsWithElements.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tlPanelActionsWithElements.ColumnCount = 4;
             tlPanelActionsWithElements.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlPanelActionsWithElements.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlPanelActionsWithElements.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlPanelActionsWithElements.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlPanelActionsWithElements.Controls.Add(btnAddCinema, 0, 0);
+            tlPanelActionsWithElements.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tlPanelActionsWithElements.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             tlPanelActionsWithElements.Controls.Add(btnEditCinema, 1, 0);
             tlPanelActionsWithElements.Controls.Add(btnDeleteMovie, 2, 0);
             tlPanelActionsWithElements.Controls.Add(btnAddData, 3, 0);
-            tlPanelActionsWithElements.Location = new Point(5, 400);
+            tlPanelActionsWithElements.Controls.Add(btnAddCinema, 0, 0);
+            tlPanelActionsWithElements.Location = new Point(6, 404);
+            tlPanelActionsWithElements.Margin = new Padding(1);
             tlPanelActionsWithElements.Name = "tlPanelActionsWithElements";
             tlPanelActionsWithElements.RowCount = 1;
             tlPanelActionsWithElements.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlPanelActionsWithElements.Size = new Size(665, 30);
+            tlPanelActionsWithElements.Size = new Size(663, 28);
             tlPanelActionsWithElements.TabIndex = 56;
             // 
             // tlPanelPage
@@ -621,10 +627,10 @@ namespace WatchList.WinForms
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(680, 435);
+            Controls.Add(tlPanelActionsWithElements);
             Controls.Add(tlpFilterBox);
             Controls.Add(tlPanelFilter);
             Controls.Add(tlPanelPage);
-            Controls.Add(tlPanelActionsWithElements);
             Controls.Add(dgvCinema);
             Margin = new Padding(3, 2, 3, 2);
             MinimumSize = new Size(680, 435);
