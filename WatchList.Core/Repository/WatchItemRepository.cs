@@ -75,6 +75,8 @@ namespace WatchList.Core.Repository
                     Where(x => x.TitleNormalized == item.TitleNormalized && x.Sequel == item.Sequel && x.Type == item.Type).
                     Take(2).Select(x => x.Id).ToList();
 
-        public WatchItem GetItemById(Guid id) => _db.WatchItem.FirstOrDefault(e => e.Id == id) ?? throw new ArgumentException("Interaction element not found.");
+        public WatchItem GetItemById(Guid id)
+            => _db.WatchItem.FirstOrDefault(e => e.Id == id)
+            ?? throw new ArgumentException("Interaction element not found.");
     }
 }

@@ -29,8 +29,10 @@ namespace WatchList.Core.PageItem
 
         public bool CompareFilter(FilterWatchItem filter) => Filter.Equals(filter);
 
-        public IQueryable<WatchItem> ApplyFilter(IQueryable<WatchItem> items) => Filter.Apply(items);
+        public IQueryable<WatchItem> ApplyFilter(IQueryable<WatchItem> items)
+            => Filter.Apply(items);
 
-        public IQueryable<WatchItem> ApplyOrderBy(IQueryable<WatchItem> items) => Sort.Apply(items, IsAscending);
+        public IQueryable<WatchItem> ApplyOrderBy(IQueryable<WatchItem> items)
+            => Sort.Apply(items, IsAscending);
     }
 }

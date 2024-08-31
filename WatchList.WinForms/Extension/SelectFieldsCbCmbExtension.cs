@@ -25,6 +25,7 @@ namespace WatchList.WinForms.Extension
             return selectField;
         }
 
-        public static string[] GetSortFieldArray(this SortWatchItemModel sortField) => sortField.SortFields.Select(e => e.ToString()).ToArray();
+        public static string[] GetSortFieldArray(this SortWatchItemModel sortField)
+            => sortField.SortFields.Select(e => e.ToString()).ToArray();
     }
 }

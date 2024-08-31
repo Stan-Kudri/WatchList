@@ -5,7 +5,8 @@ namespace WatchList.Core.Service.DataLoading.Rules
 {
     public class FilterByTypeCinemaLoadRule : ILoadRule
     {
-        public FilterByTypeCinemaLoadRule(ILoadRulesConfig config) => TypeCinemaDataLoad = config.TypeCinemaLoad;
+        public FilterByTypeCinemaLoadRule(ILoadRulesConfig config)
+            => TypeCinemaDataLoad = config.TypeCinemaLoad;
 
         public TypeCinema? TypeCinemaDataLoad { get; private set; } = null;
 

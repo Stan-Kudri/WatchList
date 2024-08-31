@@ -12,8 +12,9 @@
     <MudToolBar Style="place-items:end">
 
         <div style="align-items:start">
-            <MudSelect T="ISortableSmartEnum<WatchItem>" Style="align-items:end" Label="Sort" MultiSelection="true" @bind-Value="SortField.SortField" @bind-SelectedValues="SortField.SortFields"
-                       SelectAll="true" SelectAllText="All" OnClose="@LoadData">
+            <MudSelect T="ISortableSmartEnum<WatchItem>" Style="align-items:end" Label="Sort" MultiSelection="true" 
+                        @bind-Value="SortField.SortField" @bind-SelectedValues="SortField.SortFields"
+                        SelectAll="true" SelectAllText="All" OnClose="@LoadData">
                 @foreach (var item in SortField.Items)
                 {
                     <MudSelectItem T="ISortableSmartEnum<WatchItem>" Value="@item" />
@@ -23,8 +24,9 @@
         
         <div style="align-items:start; place-items:flex-end">
             <MudToggleIconButton Toggled="@_itemsSearchRequest.IsAscending" ToggledChanged="@OnToggledChanged" Class="mr-5"
-                                 Icon="@MaterialDesignIcons.Normal.SortAlphabeticalDescending" Color="@Color.Primary" Title="Descending" Size="Size.Large"
-                                 ToggledIcon="@MaterialDesignIcons.Normal.SortAlphabeticalAscending" ToggledColor="@Color.Primary" ToggledTitle="Ascending" ToggledSize="Size.Large" />
+                                 Icon="@MaterialDesignIcons.Normal.SortAlphabeticalDescending" Color="@Color.Primary" 
+                                 Title="Descending" Size="Size.Large" ToggledIcon="@MaterialDesignIcons.Normal.SortAlphabeticalAscending" 
+                                 ToggledColor="@Color.Primary" ToggledTitle="Ascending" ToggledSize="Size.Large" />
             <MudSpacer />
         </div>
 
@@ -51,14 +53,16 @@
         </div>
 
         <MudTooltip Text="Off Filter" Placement="Placement.Top">
-            <MudIconButton Icon="@MaterialDesignIcons.Normal.FilterOff" OnClick="@ClearFilter" Color="Color.Primary" Variant="Variant.Text" Size="Size.Medium" />
+            <MudIconButton Icon="@MaterialDesignIcons.Normal.FilterOff" OnClick="@ClearFilter" 
+                            Color="Color.Primary" Variant="Variant.Text" Size="Size.Medium" />
         </MudTooltip>
 
     </MudToolBar>
 
     <MudToolBar>
 
-        <MudButton StartIcon="@MaterialDesignIcons.Normal.FileImport" Variant="Variant.Outlined" Color="Color.Primary" Style="font-size:12px" Class="mr-3" OnClick="@((e) => UploadData())">Import Data</MudButton>
+        <MudButton StartIcon="@MaterialDesignIcons.Normal.FileImport" Variant="Variant.Outlined" Color="Color.Primary" 
+                    Style="font-size:12px" Class="mr-3" OnClick="@((e) => UploadData())">Import Data</MudButton>
 
         <MudSpacer />
 
@@ -67,7 +71,8 @@
 
     </MudToolBar>
 
-    <MudTable Items="@_items" RowsPerPage="_pageModel.Size" Hover="true" SortLabel="Sort By" Elevation="0" Bordered="true" MultiSelection="true" Dense="true" T="WatchItem" SelectedItemsChanged="OnSelectItems">
+    <MudTable Items="@_items" RowsPerPage="_pageModel.Size" Hover="true" SortLabel="Sort By" Elevation="0" 
+                Bordered="true" MultiSelection="true" Dense="true" T="WatchItem" SelectedItemsChanged="OnSelectItems">
 
         <HeaderContent>
             <MudTd Style="text-align:center; font-size:14px; ">Title</MudTd>
@@ -88,10 +93,12 @@
             <MudTh Style="text-align:center; font-size:12px" DataLabel="Type">@context.Type</MudTh>
             <MudTh Style="text-align:center">
                 <MudTooltip Text="Edit" Placement="Placement.Bottom">
-                     <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Pencil" Variant="Variant.Outlined" Size="Size.Large" Class="ml-1" OnClick="@((e) => SaveItemDialog(context.Id))" />
+                    <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Pencil" Variant="Variant.Outlined"
+                                    Size="Size.Large" Class="ml-1" OnClick="@((e) => SaveItemDialog(context.Id))" />
                 </MudTooltip>
                 <MudTooltip Text="Remove" Placement="Placement.Bottom">
-                        <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Delete" Variant="Variant.Outlined" Size="Size.Large" OnClick="@(() => RemoveItemDialog(context.Id))" />
+                    <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Delete" Variant="Variant.Outlined"
+                                    Size="Size.Large" OnClick="@(() => RemoveItemDialog(context.Id))" />
                 </MudTooltip>
             </MudTh>
         </RowTemplate>

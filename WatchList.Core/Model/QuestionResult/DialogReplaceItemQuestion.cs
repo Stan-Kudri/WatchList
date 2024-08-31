@@ -20,17 +20,16 @@ namespace WatchList.Core.Model.QuestionResult
         {
             get
             {
-                if (QuestionResult == QuestionResultEnum.Yes || QuestionResult == QuestionResultEnum.AllYes)
+                switch (QuestionResult)
                 {
-                    return true;
-                }
-                else if (QuestionResult == QuestionResultEnum.No || QuestionResult == QuestionResultEnum.AllNo)
-                {
-                    return false;
-                }
-                else
-                {
-                    throw new ApplicationException($"The answer is unknown. The response to the request was sent by the user incorrectly. Property => {nameof(QuestionResult)}");
+                    case QuestionResultEnum.Yes:
+                    case QuestionResultEnum.AllYes:
+                        return true;
+                    case QuestionResultEnum.No:
+                    case QuestionResultEnum.AllNo:
+                        return false;
+                    default:
+                        throw new ApplicationException($"The answer is unknown. The response to the request was sent by the user incorrectly. Property => {nameof(QuestionResult)}");
                 }
             }
         }

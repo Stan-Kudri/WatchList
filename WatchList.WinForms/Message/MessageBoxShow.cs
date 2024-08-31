@@ -27,7 +27,8 @@ namespace WatchList.WinForms.Message
         public Task<bool> ShowQuestion(string message)
             => Task.FromResult(MessageBox.Show(message, "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
 
-        public Task<bool> ShowQuestionSaveItem(string message) => Task.FromResult(MessageBox.Show(message, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK);
+        public Task<bool> ShowQuestionSaveItem(string message)
+            => Task.FromResult(MessageBox.Show(message, "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK);
 
         public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem)
         {

@@ -7,10 +7,8 @@ namespace WatchList.Core.Repository.Extension
     {
         public static void SmartEnumConversion<T>(this PropertyBuilder<T> type)
             where T : SmartEnum<T>
-        {
-            type.HasConversion(
+            => type.HasConversion(
                 x => x.Name,
                 x => SmartEnum<T>.FromName(x, false));
-        }
     }
 }

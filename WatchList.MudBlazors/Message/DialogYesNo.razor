@@ -13,7 +13,8 @@
 
     [Parameter] public string Content { get; set; } = string.Empty;
 
-    [Parameter] public Dictionary<bool, string> SelectButtonDialog { get; set; } = new Dictionary<bool, string> { { true, "Yes" }, { false, "No" } };
+    [Parameter] public Dictionary<bool, string> SelectButtonDialog { get; set; }
+        = new Dictionary<bool, string> { { true, "Yes" }, { false, "No" } };
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
 

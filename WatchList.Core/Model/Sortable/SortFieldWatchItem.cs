@@ -43,12 +43,10 @@ namespace WatchList.Core.Model.Sortable
 
             public SortType(string name, SortFields value, Expression<Func<WatchItem, TKey>> expression)
                 : base(name, value)
-            {
-                _expression = expression;
-            }
+                => _expression = expression;
 
             public override IOrderedQueryable<WatchItem> OrderBy(IQueryable<WatchItem> query, bool asc)
-            => asc ? query.OrderBy(_expression) : query.OrderByDescending(_expression);
+                => asc ? query.OrderBy(_expression) : query.OrderByDescending(_expression);
 
             public override IOrderedQueryable<WatchItem> ThenBy(IOrderedQueryable<WatchItem> query, bool asc)
                 => asc ? query.ThenBy(_expression) : query.ThenByDescending(_expression);

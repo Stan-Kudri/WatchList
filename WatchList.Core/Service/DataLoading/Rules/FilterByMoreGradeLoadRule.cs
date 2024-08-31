@@ -4,7 +4,8 @@ namespace WatchList.Core.Service.DataLoading.Rules
 {
     public class FilterByMoreGradeLoadRule : ILoadRule
     {
-        public FilterByMoreGradeLoadRule(ILoadRulesConfig config) => MoreGrade = config.MoreGrade;
+        public FilterByMoreGradeLoadRule(ILoadRulesConfig config)
+            => MoreGrade = config.MoreGrade;
 
         public Grade MoreGrade { get; private set; }
 

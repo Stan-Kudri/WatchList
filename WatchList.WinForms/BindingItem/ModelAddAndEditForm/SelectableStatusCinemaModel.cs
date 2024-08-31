@@ -11,7 +11,8 @@ namespace WatchList.WinForms.BindingItem.ModelAddAndEditForm
         {
         }
 
-        public SelectableStatusCinemaModel(StatusCinema status) => ValueStatus = status;
+        public SelectableStatusCinemaModel(StatusCinema status)
+            => ValueStatus = status;
 
         public ObservableCollection<StatusCinema> Items { get; set; } =
             new ObservableCollection<StatusCinema>(StatusCinema.List);
