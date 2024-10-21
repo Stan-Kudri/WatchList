@@ -7,6 +7,18 @@
 
 <MudText Style="text-align:center; font-size:16px; color:navy;" Class="mt-6">List Cinema</MudText>
 
+<style>
+    .mud-table-header {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .mud-table-cell {
+        text-align: center;
+        font-size: 12px;
+    }
+</style>
+
 <MudPaper>
 
     <MudToolBar Style="place-items:end">
@@ -71,50 +83,68 @@
 
     </MudToolBar>
 
-    <MudTable Items="@_items" RowsPerPage="_pageModel.Size" Hover="true" SortLabel="Sort By" Elevation="0" 
-                Bordered="true" MultiSelection="true" Dense="true" T="WatchItem" SelectedItemsChanged="OnSelectItems">
+    <MudTable Items="@_items" RowsPerPage="_pageModel.Size" Hover="true" SortLabel="Sort By" Elevation="2" 
+              Bordered="true" MultiSelection="true"  T="WatchItem" SelectedItemsChanged="OnSelectItems">
 
-        <HeaderContent>
-            <MudTd Style="text-align:center; font-size:14px; ">Title</MudTd>
-            <MudTd Style="text-align:center; font-size:14px; ">Season/Part</MudTd>
-            <MudTd Style="text-align:center; font-size:14px; ">Status</MudTd>
-            <MudTd Style="text-align:center; font-size:14px; ">Data</MudTd>
-            <MudTd Style="text-align:center; font-size:14px; ">Grade</MudTd>
-            <MudTd Style="text-align:center; font-size:14px; ">Type</MudTd>
+        <ColGroup>
+
+            <MudItem xs="8" Class="mt-2">
+                <col />
+                <col />
+                <col />
+                <col />
+                <col />
+                <col />
+            </MudItem>
+            <MudItem xs="4">
+                <col style="width: 40px;" />
+            </MudItem>
+
+        </ColGroup>
+
+        <HeaderContent >            
+            <MudTh Class="mud-table-header">Title</MudTh>
+            <MudTh Class="mud-table-header">Season/Part</MudTh>
+            <MudTh Class="mud-table-header">Status</MudTh>
+            <MudTh Class="mud-table-header">Data</MudTh>
+            <MudTh Class="mud-table-header">Grade</MudTh>
+            <MudTh Class="mud-table-header">Type</MudTh>
             <MudTh></MudTh>
         </HeaderContent>
 
         <RowTemplate>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Title">@context.Title</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Season/Part">@context.Sequel</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Status">@context.Status</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Data">@context.Date?.ToString("d")</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Grade">@context.Grade</MudTh>
-            <MudTh Style="text-align:center; font-size:12px" DataLabel="Type">@context.Type</MudTh>
-            <MudTh Style="text-align:center">
-                <MudTooltip Text="Edit" Placement="Placement.Bottom">
-                    <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Pencil" Variant="Variant.Outlined"
-                                    Size="Size.Large" Class="ml-1" OnClick="@((e) => SaveItemDialog(context.Id))" />
-                </MudTooltip>
-                <MudTooltip Text="Remove" Placement="Placement.Bottom">
-                    <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Delete" Variant="Variant.Outlined"
-                                    Size="Size.Large" OnClick="@(() => RemoveItemDialog(context.Id))" />
-                </MudTooltip>
-            </MudTh>
+            <MudTd Class="mud-table-cell" DataLabel="Title">@context.Title</MudTd>
+            <MudTd Class="mud-table-cell" DataLabel="Season/Part">@context.Sequel</MudTd>
+            <MudTd Class="mud-table-cell" DataLabel="Status">@context.Status</MudTd>
+            <MudTd Class="mud-table-cell" DataLabel="Data">@context.Date?.ToString("d")</MudTd>
+            <MudTd Class="mud-table-cell" DataLabel="Grade">@context.Grade</MudTd>
+            <MudTd Class="mud-table-cell" DataLabel="Type">@context.Type</MudTd>
+            <MudTd Class="d-flex justify-center">
+                <div>
+                    <MudTooltip Text="Edit" Placement="Placement.Bottom">
+                        <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Pencil" Variant="Variant.Outlined"
+                                       Size="Size.Large" Class="ml-1" OnClick="@((e) => SaveItemDialog(context.Id))" />
+                    </MudTooltip>
+                    <MudTooltip Text="Remove" Placement="Placement.Bottom">
+                        <MudIconButton Color="Color.Primary" Icon="@MaterialDesignIcons.Normal.Delete" Variant="Variant.Outlined"
+                                       Size="Size.Large" Class="ml-1" OnClick="@(() => RemoveItemDialog(context.Id))" />
+                    </MudTooltip>
+                </div>
+            </MudTd>
         </RowTemplate>
 
 
         <PagerContent >
             <MudGrid>
-                <MudItem xs="12" sm="4">
-                        <MudSelect T="int" Label="Show on page" @bind-Value="_pageModel.Size" SelectedValuesChanged="LoadData" Style="max-width:200px;" Class="ml-4">
+                <MudItem xs="6" sm="4" Style="align-self:center">
+                        <MudSelect T="int" Label="Show on page" @bind-Value="_pageModel.Size" SelectedValuesChanged="LoadData" Style="max-width:100px; margin-left:10px; text-align:center">
                         @foreach (var sizePage in _pageModel.Items)
                         {
                             <MudSelectItem T="int" Value="@sizePage" />
                         }
-                    </MudSelect>
+                </MudSelect>
                 </MudItem>
-                <MudItem xs="12" sm="4" Style="align-self:center">
+                <MudItem xs="6" sm="4" Style="align-self:center">
                     <div style="text-align:center;">
                         <MudPagination SelectedChanged="PageChanged" BoundaryCount="1"  MiddleCount="3" Count="_pagedList.PageCount" Class="align-self-center" />
                     </div>

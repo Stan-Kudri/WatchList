@@ -23,7 +23,11 @@ namespace WatchList.MudBlazors.Dialog
         private readonly bool _isDeleteGrade = false;
         private bool _isConsiderDuplicates = false;
 
-        private IEnumerable<DuplicateLoadingRules> _actionDuplicateItems = new[] { DuplicateLoadingRules.UpdateDuplicate, DuplicateLoadingRules.CaseSensitive };
+        private IEnumerable<DuplicateLoadingRules> _actionDuplicateItems = new[]
+        {
+            DuplicateLoadingRules.UpdateDuplicate,
+            DuplicateLoadingRules.CaseSensitive
+        };
 
         private TypeLoadingCinema _selectTypeCinema = new TypeLoadingCinema();
         private Grade _selectGrade = Grade.AnyGrade;
