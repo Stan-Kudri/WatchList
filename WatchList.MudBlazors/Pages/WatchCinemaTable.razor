@@ -3,7 +3,7 @@
 @using WatchList.Core.Model.ItemCinema.Components
 @using WatchList.Core.Model.Sortable
 
-@page "/watchlist"
+@page "/"
 
 <MudText Style="text-align:center; font-size:16px; color:navy;" Class="mt-6">List Cinema</MudText>
 
@@ -46,7 +46,7 @@
 
         <div style="align-items:end; width:250px">
             <MudSelect T="TypeCinema" Label="Type cinema" MultiSelection="true"  @bind-SelectedValues="FilterWatchItem.FilterTypeField"
-                       SelectAll="true" SelectAllText="All type" OnClose="@LoadData" Class="mr-1">
+                       SelectAll="true" SelectAllText="All type" OnClose="@LoadData" Class="mr-1" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionTypeCinema))">
                 @foreach (var item in FilterWatchItem.TypeItems)
                 {
                     <MudSelectItem T="TypeCinema" Value="@item" />
@@ -56,7 +56,7 @@
 
         <div style="align-items:end; width:300px">
             <MudSelect T="StatusCinema" Label="Status" MultiSelection="true"  @bind-SelectedValues="FilterWatchItem.FilterStatusField"
-                       SelectAll="true" SelectAllText="All status" OnClose="@LoadData" Class="mr-1">
+                       SelectAll="true" SelectAllText="All status" OnClose="@LoadData" Class="mr-1" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionStatusCinema))">
                 @foreach (var item in FilterWatchItem.StatusItems)
                 {
                     <MudSelectItem T="StatusCinema" Value="@item" />

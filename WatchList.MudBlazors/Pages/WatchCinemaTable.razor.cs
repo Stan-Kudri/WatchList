@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
+using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Service;
@@ -119,6 +120,16 @@ namespace WatchList.MudBlazors.Pages
             _pageModel.Number = i;
             LoadData();
         }
+
+        private string GetMultiSelectionTypeCinema(List<string> selectedValues)
+            => selectedValues.Count == TypeCinema.List.Count
+            ? "All type"
+            : string.Join(',', selectedValues);
+
+        private string GetMultiSelectionStatusCinema(List<string> selectedValues)
+            => selectedValues.Count == StatusCinema.List.Count
+            ? "All status"
+            : string.Join(',', selectedValues);
 
         public void OnToggledChanged(bool toggled)
         {
