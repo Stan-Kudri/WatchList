@@ -7,18 +7,16 @@ namespace WatchList.WPF
     /// </summary>
     public partial class CinemaWindow : Window
     {
-        IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
         public CinemaWindow(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }
