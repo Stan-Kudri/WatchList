@@ -1,0 +1,31 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WatchList.WPF"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Class="WatchList.WPF.CinemaWindow"
+        mc:Ignorable="d"
+        Title="CinemaWindow" Height="450" Width="800">
+    <Grid Background="#FFBAFDC1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ui:Button Grid.Column="6" Content="Add Data" HorizontalAlignment="Stretch" 
+                   Grid.Row="3" VerticalAlignment="Stretch" Margin="5 5 5 5"
+                   FontSize="14" RenderTransformOrigin="10,10" AutomationProperties.Name="Btn_Add_Data" 
+                   Background="#FFECFBC7" Appearance="Dark" Click="Button_Click"/>
+    </Grid>
+</Window>
