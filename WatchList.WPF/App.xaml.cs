@@ -24,7 +24,7 @@ namespace WatchList.WPF
 
             try
             {
-                Log.Information("Starting WinForms applications");
+                Log.Information("Starting WPF applications");
                 var serviceCollection = AppServiceDI();
                 serviceCollection.AddSerilog();
 
@@ -39,7 +39,7 @@ namespace WatchList.WPF
                 var serviceProvider = scope.ServiceProvider;
 
                 // Create the startup window
-                CinemaWindow cinemaWindow = new CinemaWindow(serviceProvider);
+                var cinemaWindow = serviceProvider.GetRequiredService<CinemaWindow>();
                 // Show the window
                 cinemaWindow.Show();
             }
@@ -60,6 +60,8 @@ namespace WatchList.WPF
                                       .AddScoped<IMessageBox, MessageBoxPage>()
                                       .AddScoped<WatchItemService>()
                                       .AddScoped<DownloadDataService>()
+                                      .AddTransient<CinemaWindow>()
+                                      .AddTransient<MergeDatabaseWindow>()
                                       .AddLogging();
 
         private static Logger CreateLogger(string logDirectory = "log")

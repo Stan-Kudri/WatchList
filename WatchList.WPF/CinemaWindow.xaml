@@ -5,9 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WatchList.WPF"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Class="WatchList.WPF.CinemaWindow"
+        Style="{StaticResource MaterialDesignWindow}"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
         Title="CinemaWindow" Height="450" Width="800">
-    <Grid Background="#FFBAFDC1">
+    <Grid x:Name="MainWindow" Background="#FFBAFDC1">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition/>
@@ -27,5 +34,17 @@
                    Grid.Row="3" VerticalAlignment="Stretch" Margin="5 5 5 5"
                    FontSize="14" RenderTransformOrigin="10,10" AutomationProperties.Name="Btn_Add_Data" 
                    Background="#FFECFBC7" Appearance="Dark" Click="Button_Click"/>
+        <ui:DataGrid x:Name="Data_Grid_Items" Grid.Row="1" ColumnWidth="Auto"
+                     Grid.ColumnSpan="7" AutoGenerateColumns="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" Width="Auto" />
+                <DataGridTextColumn Header="Season/Part" Binding="{Binding Path=Sequel}" Width="Auto" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}" Width="Auto" />
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}" Width="Auto" />
+                <DataGridTextColumn Header="Grade" Binding="{Binding Path=Grade}" Width="Auto" />
+                <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" Width="Auto" />
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="Auto" />
+            </DataGrid.Columns>
+        </ui:DataGrid>
     </Grid>
 </Window>
