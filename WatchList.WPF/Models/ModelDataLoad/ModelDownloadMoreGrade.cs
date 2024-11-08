@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
 using WatchList.Core.Model.Load;
 
-namespace WatchList.WPF.BindingItem.ModelDataLoad
+namespace WatchList.WPF.Models.ModelDataLoad
 {
-    public class ModelDownloadMoreGrade : ModelBase
+    public class ModelDownloadMoreGrade : BindingBaseModel
     {
         private Grade _value = Grade.AnyGrade;
 
@@ -21,7 +21,11 @@ namespace WatchList.WPF.BindingItem.ModelDataLoad
         public Grade Value
         {
             get => _value;
-            set => SetField(ref _value, value);
+            set
+            {
+                _value = value;
+                OnPropertyChanged("Grade");
+            }
         }
     }
 }

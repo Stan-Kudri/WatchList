@@ -4,42 +4,36 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
 using WatchList.Core.Extension;
-using WatchList.Core.Repository;
-using WatchList.Core.Service;
-using WatchList.Core.Service.Component;
-using WatchList.Core.Service.DataLoading;
-using WatchList.Migrations.SQLite;
-using WatchList.WPF.WindowBox;
+using WatchList.WPF.Data;
+using WatchList.WPF.Extension;
 
 namespace WatchList.WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : System.Windows.Application
+    public partial class App
     {
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private readonly ServiceProvider _serviceProvider;
+
+        public App()
         {
             Log.Logger = CreateLogger();
+            Log.Information("Starting WPF applications");
+            var serviceCollection = new ServiceCollection();
+            ViewModelLocator.AddViewModels(serviceCollection)
+                            .AppServiceContainer()
+                            .AppServicePageContainer();
+            _serviceProvider = serviceCollection.BuildServiceProvider();
+        }
 
+        private void OnStartup(object sender, StartupEventArgs e)
+        {
             try
             {
-                Log.Information("Starting WPF applications");
-                var serviceCollection = AppServiceDI();
-                serviceCollection.AddSerilog();
-
-                using var contain = serviceCollection.BuildServiceProvider(
-                    new ServiceProviderOptions
-                    {
-                        ValidateOnBuild = true,
-                        ValidateScopes = true,
-                    });
-
-                using var scope = contain.CreateScope();
-                var serviceProvider = scope.ServiceProvider;
-
+                ViewModelLocator.Init(_serviceProvider);
                 // Create the startup window
-                var cinemaWindow = serviceProvider.GetRequiredService<CinemaWindow>();
+                var cinemaWindow = _serviceProvider.GetRequiredService<CinemaWindow>();
                 // Show the window
                 cinemaWindow.Show();
             }
@@ -52,17 +46,8 @@ namespace WatchList.WPF
                 Log.CloseAndFlush();
             }
         }
-
-        private static IServiceCollection AppServiceDI()
-            => new ServiceCollection().AddSingleton(new DbContextFactoryMigrator("app.db"))
-                                      .AddScoped(e => e.GetRequiredService<DbContextFactoryMigrator>().Create())
-                                      .AddScoped<WatchItemRepository>()
-                                      .AddScoped<IMessageBox, MessageBoxPage>()
-                                      .AddScoped<WatchItemService>()
-                                      .AddScoped<DownloadDataService>()
-                                      .AddTransient<CinemaWindow>()
-                                      .AddTransient<MergeDatabaseWindow>()
-                                      .AddLogging();
+        private void OnExit(object sender, ExitEventArgs e)
+            => _serviceProvider.Dispose();
 
         private static Logger CreateLogger(string logDirectory = "log")
         {

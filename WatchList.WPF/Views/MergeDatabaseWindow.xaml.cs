@@ -1,12 +1,11 @@
 using System.Windows;
-using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
-using WatchList.WPF.BindingItem.ModelDataLoad;
+using WatchList.WPF.Models.ModelDataLoad;
 
-namespace WatchList.WPF.WindowBox
+namespace WatchList.WPF.Views
 {
     /// <summary>
     /// Interaction logic for MergeDatabasePage.xaml
@@ -69,7 +68,7 @@ namespace WatchList.WPF.WindowBox
         {
             ComboBoxType.ItemsSource = _modelTypeCinemaUpload.Items;
             ComboBoxMoreGrade.ItemsSource = _modelDownloadMoreGrade.Items;
-            ComboBoxType.SelectedItem = TypeCinema.Movie;
+            ComboBoxType.SelectedItem = _modelTypeCinemaUpload.SelectedValue;
             ComboBoxMoreGrade.SelectedItem = Grade.AnyGrade;
             CheckBoxExistGrade.IsChecked = false;
             CheckBoxConsiderDuplicates.IsChecked = false;
@@ -87,10 +86,13 @@ namespace WatchList.WPF.WindowBox
 
         private void SetupDefaultValues()
         {
-            ComboBoxType.SelectedItem = TypeCinema.Movie;
+            ComboBoxType.SelectedItem = _modelTypeCinemaUpload.SelectedValue;
             ComboBoxMoreGrade.SelectedItem = Grade.AnyGrade;
-            CheckBoxExistGrade.IsChecked = false;
-            CheckBoxConsiderDuplicates.IsChecked = false;
+            CheckBoxExistGrade.IsChecked =
+                CheckBoxConsiderDuplicates.IsChecked =
+                    CheckBoxCaseSensitive.IsChecked =
+                        CheckBoxUpdateDuplicateItem.IsChecked =
+                            false;
         }
 
         private List<DuplicateLoadingRules> GetListDuplicateLoadingRules()

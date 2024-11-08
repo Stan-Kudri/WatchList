@@ -1,15 +1,14 @@
 using System.Collections.ObjectModel;
 using WatchList.Core.PageItem;
 
-namespace WatchList.WinForms.BindingItem.ModelBoxForm
+namespace WatchList.WPF.Models
 {
-    public class PageModel : ModelBase
+    public class PageModel : BindingBaseModel
     {
         private const int StartPageSize = 10;
         private const int NumberStartPage = 1;
 
         private int _size;
-
         private int _number;
 
         public PageModel(int pageNumber = NumberStartPage, int pageSize = StartPageSize)
@@ -23,13 +22,21 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm
         public int Number
         {
             get => _number;
-            set => SetField(ref _number, value);
+            set
+            {
+                _number = value;
+                OnPropertyChanged("Number");
+            }
         }
 
         public int Size
         {
             get => _size;
-            set => SetField(ref _size, value);
+            set
+            {
+                _size = value;
+                OnPropertyChanged("Size");
+            }
         }
 
         public Page GetPage() => new Page(_number, _size);

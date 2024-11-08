@@ -3,17 +3,17 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WatchList.WPF.WindowBox"
+      xmlns:local="clr-namespace:WatchList.WPF.Views"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Name="LoadingDBWindow" x:Class="WatchList.WPF.WindowBox.MergeDatabaseWindow"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Name="LoadingDBWindow" x:Class="WatchList.WPF.Views.MergeDatabaseWindow"
       Style="{StaticResource MaterialDesignWindow}"
       TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
       Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}"
       TextElement.FontWeight="Normal"
-      TextElement.FontSize="14"
+      TextElement.FontSize="16"
       FontFamily="{materialDesign:MaterialDesignFont}"
-      mc:Ignorable="d" Height="200" Width="360" ResizeMode="NoResize" 
-      d:DesignHeight="200" d:DesignWidth="360"
+      mc:Ignorable="d" Height="240" Width="400" ResizeMode="NoResize" 
+      d:DesignHeight="240" d:DesignWidth="400"
       Title="Loading data" Foreground="Black" Loaded="LoadingDBWindow_Loaded">
 
     <Grid x:Name="MergeDBPage" Background="#FFD7FFFC">
@@ -37,12 +37,12 @@
         <CheckBox x:Name="CheckBoxConsiderDuplicates" Content="Consider duplicates" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="4" Checked="CheckBoxConsiderDuplicates_Checked" Unchecked="CheckBoxConsiderDuplicates_Unchecked"/>
         <CheckBox x:Name="CheckBoxUpdateDuplicateItem" Grid.Column="4" Content="Update duplicate item" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4" Margin="0 3 0 0" IsEnabled="False"/>
         <CheckBox x:Name="CheckBoxCaseSensitive" Grid.Column="4" Content="Case sensitive" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Bottom" Grid.ColumnSpan="4" Margin="0 0 0 3" IsEnabled="False"/>
-        <ComboBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" Width="85" Name="ComboBoxType" HorizontalContentAlignment="Center"/>
+        <ComboBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" Width="85" Name="ComboBoxType" HorizontalContentAlignment="Center" SelectedItem=""/>
         <Label Grid.Column="2" Content="Type" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Name="LabelType"/>
         <ComboBox Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="3" Width="130" Name="ComboBoxMoreGrade" HorizontalContentAlignment="Center"/>
         <Label Grid.Column="6" Content="Score more" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="2" Name="LabelMoreGrade"/>
-        <ui:Button Grid.Column="0" Content="OK" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Grid.ColumnSpan="3" Width="80" Name="BtnOK" Click="BtnOK_Click"/>
-        <ui:Button Grid.Column="3" Content="Clear" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Grid.ColumnSpan="2" Width="80" Name="BtnClear" Click="BtnClear_Click"/>
-        <ui:Button Grid.Column="5" Content="Close" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Grid.ColumnSpan="3" Width="80" Name="BtnClose" Click="BtnClose_Click"/>
+        <ui:Button Grid.Column="0" Content="OK" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Grid.ColumnSpan="3" Width="90" Name="BtnOK" Click="BtnOK_Click"/>
+        <ui:Button Grid.Column="3" Content="Clear" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Grid.ColumnSpan="2" Width="90" Name="BtnClear" Click="BtnClear_Click"/>
+        <ui:Button Grid.Column="5" Content="Close" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Grid.ColumnSpan="3" Width="90" Name="BtnClose" Click="BtnClose_Click"/>
     </Grid>
 </Window>

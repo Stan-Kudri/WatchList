@@ -1,0 +1,53 @@
+﻿<Page x:Class="WatchList.WPF.Views.CinemaPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
+      mc:Ignorable="d"
+      xmlns:local="clr-namespace:WatchList.WPF.Views"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="CinemaPage"
+      DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}">
+    <Grid Background="#FF1B3F40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ui:Button Grid.Column="6" Content="Add Data" HorizontalAlignment="Stretch" 
+               Grid.Row="3" VerticalAlignment="Stretch" Margin="5 5 5 5"
+               FontSize="14" RenderTransformOrigin="10,10" AutomationProperties.Name="Btn_Add_Data" 
+               Background="#FFECFBC7" Appearance="Dark" Command="{Binding CanLoadDataFromDB}"/>
+        <ui:DataGrid Grid.Row="1" ColumnWidth="Auto" ItemsSource="{Binding GetPageWatchItems}"
+                 Grid.ColumnSpan="7"  FontSize="12" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" Width="Auto" />
+                <DataGridTextColumn Header="Season/Part" Binding="{Binding Path=Sequel}" Width="Auto" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}" Width="Auto" />
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=yyyy.mm.dd}" Width="Auto" />
+                <DataGridTextColumn Header="Grade" Binding="{Binding Path=Grade}" Width="Auto" />
+                <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" Width="Auto" />
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="Auto" />
+            </DataGrid.Columns>
+        </ui:DataGrid>
+        <Grid Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}">
+                <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&lt;&lt;</Button>
+                <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&lt;</Button>
+                <Label Content="{Binding PageDisplayText}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Aqua"/>
+                <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&gt;</Button>
+                <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&gt;&gt;</Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

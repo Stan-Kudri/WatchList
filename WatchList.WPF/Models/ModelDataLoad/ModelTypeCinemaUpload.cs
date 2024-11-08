@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
 using WatchList.Core.Model.Load.Components;
 
-namespace WatchList.WPF.BindingItem.ModelDataLoad
+namespace WatchList.WPF.Models.ModelDataLoad
 {
-    public class ModelTypeCinemaUpload : ModelBase
+    public class ModelTypeCinemaUpload : BindingBaseModel
     {
         private TypeLoadingCinema _type = new TypeLoadingCinema();
 
@@ -21,7 +21,11 @@ namespace WatchList.WPF.BindingItem.ModelDataLoad
         public TypeLoadingCinema SelectedValue
         {
             get => _type;
-            set => SetField(ref _type, value);
+            set
+            {
+                _type = value;
+                OnPropertyChanged("SelectedValue");
+            }
         }
     }
 }

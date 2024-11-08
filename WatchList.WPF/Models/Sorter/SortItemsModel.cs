@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
 using WatchList.Core.Model.Sortable;
 
-namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
+namespace WatchList.WPF.Models.Sorter
 {
-    public class SortItemsModel<T> : ModelBase, ISortItem<T>
+    public class SortItemsModel<T> : BindingBaseModel, ISortItem<T>
     {
         private readonly ISortItem<T> _sortType;
 

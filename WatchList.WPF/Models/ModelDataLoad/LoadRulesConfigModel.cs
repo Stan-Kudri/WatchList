@@ -1,7 +1,7 @@
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
 
-namespace WatchList.WPF.BindingItem.ModelDataLoad
+namespace WatchList.WPF.Models.ModelDataLoad
 {
     public class LoadRulesConfigModel : ILoadRulesConfig
     {
