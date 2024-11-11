@@ -3,7 +3,7 @@ using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
-using WatchList.WPF.Models.ModelDataLoad;
+using WatchList.WPF.Models.ModelDataLoad.LoadModel;
 
 namespace WatchList.WPF.Views
 {

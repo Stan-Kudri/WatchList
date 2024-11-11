@@ -24,10 +24,6 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ui:Button Grid.Column="6" Content="Add Data" HorizontalAlignment="Stretch" 
-               Grid.Row="3" VerticalAlignment="Stretch" Margin="5 5 5 5"
-               FontSize="14" RenderTransformOrigin="10,10" AutomationProperties.Name="Btn_Add_Data" 
-               Background="#FFECFBC7" Appearance="Dark" Command="{Binding CanLoadDataFromDB}"/>
         <ui:DataGrid Grid.Row="1" ColumnWidth="Auto" ItemsSource="{Binding GetPageWatchItems}"
                  Grid.ColumnSpan="7"  FontSize="12" AutoGenerateColumns="False">
             <DataGrid.Columns>
@@ -49,5 +45,9 @@
                 <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&gt;&gt;</Button>
             </StackPanel>
         </Grid>
+        <ui:Button Grid.Column="6" Content="Add Data" HorizontalAlignment="Stretch" 
+               Grid.Row="3" VerticalAlignment="Stretch" Margin="5 5 5 5"
+               FontSize="14" RenderTransformOrigin="10,10" AutomationProperties.Name="Btn_Add_Data" 
+               Background="#FFECFBC7" Appearance="Dark" Command="{Binding MoveAddDataDB}"/>
     </Grid>
 </Page>

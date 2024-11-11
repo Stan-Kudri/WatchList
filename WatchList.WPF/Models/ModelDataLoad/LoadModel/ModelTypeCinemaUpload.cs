@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using WatchList.Core.Model.Load.Components;
 
-namespace WatchList.WPF.Models.ModelDataLoad
+namespace WatchList.WPF.Models.ModelDataLoad.LoadModel
 {
     public class ModelTypeCinemaUpload : BindingBaseModel
     {

@@ -6,12 +6,12 @@ using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
-using WatchList.Migrations.SQLite;
+using WatchList.WPF.Commands;
 using WatchList.WPF.Data;
 using WatchList.WPF.Models;
 using WatchList.WPF.Models.Filter;
+using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.Models.Sorter;
-using WatchList.WPF.Views;
 
 namespace WatchList.WPF.ViewModel
 {
@@ -27,6 +27,8 @@ namespace WatchList.WPF.ViewModel
         private readonly FilterItemModel _filterItem;
         private readonly ItemSearchRequest _searchRequests;
 
+        private readonly ModelLoadDataDB _modelLoadDataDB;
+
         private PagedList<WatchItem> _pagedList;
         private bool _isAscending = true;
 
@@ -36,7 +38,8 @@ namespace WatchList.WPF.ViewModel
                             WatchItemService watchItemService,
                             SortWatchItemModel sortField,
                             FilterItemModel filterItem,
-                            PageService pageService)
+                            PageService pageService,
+                            ModelLoadDataDB modelLoadDataDB)
         {
             _messageBox = messageBox;
             _downloadDataService = downloadDataService;
@@ -47,40 +50,17 @@ namespace WatchList.WPF.ViewModel
             _pageService = pageService;
             _searchRequests = new ItemSearchRequest(_filterItem, _sortField.GetSortItem(), Page.GetPage(), _isAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
+            _modelLoadDataDB = modelLoadDataDB;
         }
+
+        private PageModel Page { get; set; } = new PageModel();
 
         public string PageDisplayText => $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
 
         public List<WatchItem> GetPageWatchItems => _pagedList.Items;
 
-        private PageModel Page { get; set; } = new PageModel();
-
-        private async void CanLoadDataFromDB(object? obj)
-        {
-            var dataLoadingWindow = new MergeDatabaseWindow(_messageBox);
-            var showResult = dataLoadingWindow.ShowDialog() ?? false;
-
-            if (!showResult)
-            {
-                return;
-            }
-
-            using OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.DefaultExt = ".db"; // Required file extension 
-            fileDialog.Filter = "Text documents (.db)|*.db"; // Optional file extensions
-
-            if (fileDialog.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-
-            var pathFile = fileDialog.FileName;
-            _logger.LogInformation($"Add item from the selected file <{0}>", pathFile);
-
-            var dbContext = new DbContextFactoryMigrator(pathFile).Create();
-            var loadRuleConfig = dataLoadingWindow.GetLoadRuleConfig();
-            await _downloadDataService.DownloadDataByDB(dbContext, loadRuleConfig);
-        }
+        public RelayCommand MoveAddDataDB
+            => new RelayCommand(_ => _modelLoadDataDB.CanLoadDataFromDB());
 
         /// <summary>
         /// Load data in table.

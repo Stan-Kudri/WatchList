@@ -7,6 +7,7 @@ using WatchList.Core.Service.DataLoading;
 using WatchList.Migrations.SQLite;
 using WatchList.WPF.Data;
 using WatchList.WPF.Models.Filter;
+using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.Models.Sorter;
 using WatchList.WPF.Views;
 
@@ -25,6 +26,7 @@ namespace WatchList.WPF.Extension
                                       .AddScoped<FilterItemModel>()
                                       .AddSingleton<PageService>()
                                       .AddScoped<ViewModelLocator>()
+                                      .AddScoped<ModelLoadDataDB>()
                                       .AddLogging()
                                       .AddSerilog();
 
