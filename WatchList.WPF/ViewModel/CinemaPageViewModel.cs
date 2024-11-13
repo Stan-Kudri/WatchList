@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Windows;
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.ItemCinema;
@@ -5,9 +6,9 @@ using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
-using WatchList.Core.Service.DataLoading;
 using WatchList.WPF.Commands;
 using WatchList.WPF.Data;
+using WatchList.WPF.Extension;
 using WatchList.WPF.Models;
 using WatchList.WPF.Models.Filter;
 using WatchList.WPF.Models.ModelDataLoad;
@@ -15,11 +16,10 @@ using WatchList.WPF.Models.Sorter;
 
 namespace WatchList.WPF.ViewModel
 {
-    public class CinemaPageViewModel
+    public class CinemaPageViewModel : BindingBaseModel
     {
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
-        private readonly DownloadDataService _downloadDataService;
         private readonly ILogger<WatchItemRepository> _logger;
         private readonly PageService _pageService;
 
@@ -29,11 +29,24 @@ namespace WatchList.WPF.ViewModel
 
         private readonly ModelLoadDataDB _modelLoadDataDB;
 
+        private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
+
         private PagedList<WatchItem> _pagedList;
         private bool _isAscending = true;
 
+        private int _curPage;
+
+        private int CurPage
+        {
+            get => _curPage;
+            set
+            {
+                _curPage = value;
+                OnPropertyChanged(nameof(PageDisplayText));
+            }
+        }
+
         public CinemaPageViewModel(IMessageBox messageBox,
-                            DownloadDataService downloadDataService,
                             ILogger<WatchItemRepository> logger,
                             WatchItemService watchItemService,
                             SortWatchItemModel sortField,
@@ -42,7 +55,6 @@ namespace WatchList.WPF.ViewModel
                             ModelLoadDataDB modelLoadDataDB)
         {
             _messageBox = messageBox;
-            _downloadDataService = downloadDataService;
             _logger = logger;
             _itemService = watchItemService;
             _sortField = sortField;
@@ -51,13 +63,40 @@ namespace WatchList.WPF.ViewModel
             _searchRequests = new ItemSearchRequest(_filterItem, _sortField.GetSortItem(), Page.GetPage(), _isAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
             _modelLoadDataDB = modelLoadDataDB;
+            CurPage = Page.Number;
+            LoadDataAsync();
+        }
+
+        public ObservableCollection<WatchItem> WatchItems
+        {
+            get => _watchItems;
+            private set
+            {
+                if (value == _watchItems)
+                {
+                    return;
+                }
+
+                _watchItems = value;
+                OnPropertyChanged(nameof(_watchItems));
+            }
         }
 
         private PageModel Page { get; set; } = new PageModel();
 
-        public string PageDisplayText => $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
+        public string PageDisplayText => $"Page {CurPage} of {_pagedList.PageCount}";
 
-        public List<WatchItem> GetPageWatchItems => _pagedList.Items;
+        public List<CinemaModel> PageWatchItems { get; set; }
+
+        public RelayCommand MoveToPreviousPage
+            => new RelayCommand(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
+        public RelayCommand MoveToFirstPage
+            => new RelayCommand(async _ => await LoadDataAsyncPage(1), _ => _pagedList.HasPreviousPage);
+
+        public RelayCommand MoveToNextPage
+            => new RelayCommand(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
+        public RelayCommand MoveToLastPage
+            => new RelayCommand(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
         public RelayCommand MoveAddDataDB
             => new RelayCommand(_ => _modelLoadDataDB.CanLoadDataFromDB());
@@ -71,6 +110,9 @@ namespace WatchList.WPF.ViewModel
             {
                 UpdataSearchRequests();
                 _pagedList = _itemService.GetPage(_searchRequests);
+
+                WatchItems.UppdataItems(_pagedList.Items);
+
                 if (IsNotFirstPageEmpty())
                 {
                     Page.Number -= 1;
@@ -81,6 +123,15 @@ namespace WatchList.WPF.ViewModel
             {
                 await _messageBox.ShowError(error.Message);
             }
+        }
+
+        /// <summary>
+        /// Load data in table.
+        /// </summary>
+        private async Task LoadDataAsyncPage(int pageNumber)
+        {
+            Page.Number = CurPage = pageNumber;
+            await LoadDataAsync();
         }
 
         /// <summary>
@@ -100,10 +151,8 @@ namespace WatchList.WPF.ViewModel
         /// <returns>
         /// True - The page contains no elements and is not the first.
         /// </returns>
-        private bool IsNotFirstPageEmpty()
-            => _pagedList.Count == 0 && Page.Number != 1;
+        private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-            => await LoadDataAsync();
+        private async void Window_Loaded(object sender, RoutedEventArgs e) => await LoadDataAsync();
     }
 }

@@ -9,7 +9,9 @@
         BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
         BorderThickness="1"
         WindowStartupLocation="CenterScreen"
-        Title="CinemaWindow" Height="400" Width="800" 
+        Title="CinemaWindow" 
+        Height="400" Width="800" 
+        MinHeight="350" MinWidth="650"
         DataContext="{Binding CinemaWindowViewModel, Source={StaticResource ViewModelLocator}}">
     <Grid>
         <Frame Content="{Binding CurrentPage, Mode=OneWay}" NavigationUIVisibility="Hidden"></Frame>

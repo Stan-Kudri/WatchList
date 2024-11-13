@@ -7,7 +7,8 @@
       xmlns:local="clr-namespace:WatchList.WPF.Views"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       Title="CinemaPage"
-      DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}">
+      DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}"
+      MinHeight="300" MinWidth="300">
     <Grid Background="#FF1B3F40">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -23,31 +24,107 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ui:DataGrid Grid.Row="1" ColumnWidth="Auto" ItemsSource="{Binding GetPageWatchItems}"
-                 Grid.ColumnSpan="7"  FontSize="12" AutoGenerateColumns="False">
+        <ui:DataGrid Grid.Row="1" ColumnWidth="Auto" ItemsSource="{Binding WatchItems, Mode=OneWay}"
+                 Grid.ColumnSpan="8"  FontSize="12" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" Width="Auto" />
                 <DataGridTextColumn Header="Season/Part" Binding="{Binding Path=Sequel}" Width="Auto" />
                 <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}" Width="Auto" />
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=yyyy.mm.dd}" Width="Auto" />
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=dd MMMM yyyy}" Width="Auto"/>
                 <DataGridTextColumn Header="Grade" Binding="{Binding Path=Grade}" Width="Auto" />
                 <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" Width="Auto" />
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="Auto" />
             </DataGrid.Columns>
         </ui:DataGrid>
-        <Grid Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3">
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}">
-                <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&lt;&lt;</Button>
-                <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&lt;</Button>
-                <Label Content="{Binding PageDisplayText}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Aqua"/>
-                <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&gt;</Button>
-                <Button Margin="2 2 2 2" Background="Transparent" BorderBrush="Azure" >&gt;&gt;</Button>
+        <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="6">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Margin="2 2 2 2" 
+                        Background="Transparent" 
+                        BorderBrush="Azure" 
+                        Command="{Binding MoveToFirstPage}" 
+                        MinWidth="50" MinHeight="25"
+                        MaxWidth="70" MaxHeight="45" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        >&lt;&lt;</Button>
+                <Button Margin="2 2 2 2" 
+                        Background="Transparent" 
+                        BorderBrush="Azure" 
+                        Command="{Binding MoveToPreviousPage}"  
+                        MinWidth="50" MinHeight="25"
+                        MaxWidth="70" MaxHeight="45" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        >&lt;</Button>
+                <Label Content="{Binding PageDisplayText}" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Foreground="Aqua"/>
+                <Button Margin="2 2 2 2" 
+                        Background="Transparent" 
+                        BorderBrush="Azure" 
+                        Command="{Binding MoveToNextPage}"  
+                        MinWidth="50" MinHeight="25"
+                        MaxWidth="70" MaxHeight="45" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        >&gt;</Button>
+                <Button Margin="2 2 2 2" 
+                        Background="Transparent" 
+                        BorderBrush="Azure" 
+                        Command="{Binding MoveToLastPage}" 
+                        MinWidth="50" MinHeight="25"
+                        MaxWidth="70" MaxHeight="45" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        >&gt;&gt;</Button>
             </StackPanel>
         </Grid>
-        <ui:Button Grid.Column="6" Content="Add Data" HorizontalAlignment="Stretch" 
-               Grid.Row="3" VerticalAlignment="Stretch" Margin="5 5 5 5"
-               FontSize="14" RenderTransformOrigin="10,10" AutomationProperties.Name="Btn_Add_Data" 
-               Background="#FFECFBC7" Appearance="Dark" Command="{Binding MoveAddDataDB}"/>
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="8" Orientation="Horizontal" HorizontalAlignment="Center">
+            <ui:Button
+                       Content="Add" 
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Stretch"
+                       Margin="5 5 5 5"    
+                       Height="30" Width="80"
+                       FontSize="14" FontWeight="DemiBold" 
+                       AutomationProperties.Name="Btn_Add_Item" 
+                       Background="AliceBlue" 
+                       Appearance="Dark" />
+            <ui:Button
+                       Content="Edit" 
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Stretch"   
+                       Margin="5 5 5 5"    
+                       Height="30" Width="80"
+                       FontSize="14" FontWeight="DemiBold" 
+                       AutomationProperties.Name="Btn_Edit_Item" 
+                       Background="AliceBlue" 
+                       Appearance="Dark" />
+            <ui:Button
+                       Content="Delete" 
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Stretch"
+                       Margin="5 5 5 5"       
+                       Height="30" Width="80"
+                       FontSize="14" FontWeight="DemiBold" 
+                       AutomationProperties.Name="Btn_Delete_Cinema" 
+                       Background="AliceBlue" 
+                       Appearance="Dark" />
+            <ui:Button
+                       Content="Add Data" 
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Stretch"        
+                       Margin="5 5 5 5"    
+                       Height="30" Width="80"
+                       FontSize="14" FontWeight="DemiBold" 
+                       AutomationProperties.Name="Btn_Add_Data" 
+                       Background="AliceBlue" 
+                       Appearance="Dark" 
+                       Command="{Binding MoveAddDataDB}"/>
+        </StackPanel>
+        
     </Grid>
 </Page>

@@ -7,7 +7,7 @@ namespace WatchList.Core.Model.ItemCinema
 {
     public class WatchItem : IEquatable<WatchItem>
     {
-        private const string FormatDate = "dd.MM.yyyy";
+        protected const string FormatDate = "dd.MM.yyyy";
 
         public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch = null, int? grade = null)
         {
@@ -21,7 +21,7 @@ namespace WatchList.Core.Model.ItemCinema
         }
 
         // EF core
-        private WatchItem()
+        protected WatchItem()
         {
             Title = string.Empty;
             Sequel = 1;
