@@ -11,6 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
     <PackageReference Include="WPF-UI" Version="3.0.5" />
     <PackageReference Include="WPF-UI.Tray" Version="3.0.5" />
   </ItemGroup>
@@ -18,10 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\WatchList.Core\WatchList.Core.csproj" />
     <ProjectReference Include="..\WatchList.Migrations.SQLite\WatchList.Migrations.SQLite.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extension\" />
   </ItemGroup>
 
 </Project>

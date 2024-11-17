@@ -1,6 +1,6 @@
 using Ardalis.SmartEnum;
 
-namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
+namespace WatchList.WPF.Models.Sorter
 {
     public class TypeSortFields : SmartEnum<TypeSortFields>
     {

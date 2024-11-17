@@ -1,7 +1,6 @@
 using MaterialSkin.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using TestTask.BindingItem.Pages;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Sortable;

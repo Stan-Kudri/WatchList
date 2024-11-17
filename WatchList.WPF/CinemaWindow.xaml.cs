@@ -1,22 +1,13 @@
-using System.Windows;
-
 namespace WatchList.WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class CinemaWindow : Window
+    public partial class CinemaWindow
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public CinemaWindow(IServiceProvider serviceProvider)
+        public CinemaWindow()
         {
-            _serviceProvider = serviceProvider;
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
         }
     }
 }

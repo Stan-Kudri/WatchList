@@ -14,8 +14,7 @@ namespace WatchList.Core.Model.Load.ItemActions
         }
 
         public DuplicateLoadingRules(string name, int value, bool? checkAction)
-            : base(name, value)
-             => CheckAction = checkAction;
+            : base(name, value) => CheckAction = checkAction;
 
         public bool? CheckAction { get; private set; }
     }

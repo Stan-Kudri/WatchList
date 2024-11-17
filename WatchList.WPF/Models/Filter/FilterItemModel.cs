@@ -2,9 +2,9 @@ using System.Collections.ObjectModel;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema.Components;
 
-namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
+namespace WatchList.WPF.Models.Filter
 {
-    public class FilterItemModel : ModelBase, IFilterItem
+    public class FilterItemModel : BindingBaseModel, IFilterItem
     {
         private IEnumerable<TypeCinema> _filterTypeField;
         private IEnumerable<StatusCinema> _filterStatusField;
