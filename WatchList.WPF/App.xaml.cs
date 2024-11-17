@@ -46,6 +46,7 @@ namespace WatchList.WPF
                 Log.CloseAndFlush();
             }
         }
+
         private void OnExit(object sender, ExitEventArgs e)
             => _serviceProvider.Dispose();
 

@@ -32,7 +32,7 @@ namespace WatchList.WPF.ViewModel
         private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
         private PagedList<WatchItem> _pagedList;
-        private bool _isAscending = true;
+        private readonly bool _isAscending = true;
 
         private int _curPage;
 
