@@ -2,7 +2,7 @@ using System.Windows.Input;
 
 namespace WatchList.WPF.Commands
 {
-    public class RelayCommand : ICommand
+    public class RelayCommandApp : ICommand
     {
         private readonly Action<object?>? _execute;
         private readonly Predicate<object?>? _canExecute;
@@ -13,10 +13,10 @@ namespace WatchList.WPF.Commands
             remove => CommandManager.RequerySuggested -= value;
         }
 
-        public RelayCommand(Action<object?> execute)
+        public RelayCommandApp(Action<object?> execute)
             : this(execute, null) => _execute = execute;
 
-        public RelayCommand(Action<object?> execute, Predicate<object?>? canExecute)
+        public RelayCommandApp(Action<object?> execute, Predicate<object?>? canExecute)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;

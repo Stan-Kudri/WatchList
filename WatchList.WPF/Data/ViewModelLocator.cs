@@ -13,10 +13,14 @@ namespace WatchList.WPF.Data
         public CinemaPageViewModel CinemaPageViewModel
             => _provider!.GetRequiredService<CinemaPageViewModel>();
 
+        public MergeDatabaseViewModel MergeDatabaseViewModel
+            => _provider!.GetRequiredService<MergeDatabaseViewModel>();
+
         public static IServiceCollection AddViewModels(ServiceCollection serviceCollection)
             => serviceCollection
                 .AddTransient<CinemaWindowViewModel>()
-                .AddTransient<CinemaPageViewModel>();
+                .AddTransient<CinemaPageViewModel>()
+                .AddTransient<MergeDatabaseViewModel>();
 
         public static void Init(ServiceProvider provider) => _provider = provider;
     }

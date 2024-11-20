@@ -26,7 +26,7 @@ namespace WatchList.WPF.Extension
                                       .AddScoped<FilterItemModel>()
                                       .AddSingleton<PageService>()
                                       .AddScoped<ViewModelLocator>()
-                                      .AddScoped<ModelLoadDataDB>()
+                                      .AddScoped<FiileLoaderDB>()
                                       .AddLogging()
                                       .AddSerilog();
 
