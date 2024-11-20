@@ -17,7 +17,7 @@ namespace WatchList.WPF.Views
 
         public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(DialogReplaceItemQuestion.AllYes);
         }
 
         public Task ShowError(string message)

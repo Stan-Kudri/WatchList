@@ -11,8 +11,8 @@ using WatchList.WPF.Data;
 using WatchList.WPF.Extension;
 using WatchList.WPF.Models;
 using WatchList.WPF.Models.Filter;
-using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.Models.Sorter;
+using WatchList.WPF.Views;
 
 namespace WatchList.WPF.ViewModel
 {
@@ -26,8 +26,6 @@ namespace WatchList.WPF.ViewModel
         private readonly SortWatchItemModel _sortField;
         private readonly FilterItemModel _filterItem;
         private readonly ItemSearchRequest _searchRequests;
-
-        private readonly ModelLoadDataDB _modelLoadDataDB;
 
         private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
@@ -51,8 +49,7 @@ namespace WatchList.WPF.ViewModel
                             WatchItemService watchItemService,
                             SortWatchItemModel sortField,
                             FilterItemModel filterItem,
-                            PageService pageService,
-                            ModelLoadDataDB modelLoadDataDB)
+                            PageService pageService)
         {
             _messageBox = messageBox;
             _logger = logger;
@@ -62,7 +59,6 @@ namespace WatchList.WPF.ViewModel
             _pageService = pageService;
             _searchRequests = new ItemSearchRequest(_filterItem, _sortField.GetSortItem(), Page.GetPage(), _isAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
-            _modelLoadDataDB = modelLoadDataDB;
             CurPage = Page.Number;
             LoadDataAsync();
         }
@@ -88,18 +84,18 @@ namespace WatchList.WPF.ViewModel
 
         public List<CinemaModel> PageWatchItems { get; set; }
 
-        public RelayCommand MoveToPreviousPage
-            => new RelayCommand(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
-        public RelayCommand MoveToFirstPage
-            => new RelayCommand(async _ => await LoadDataAsyncPage(1), _ => _pagedList.HasPreviousPage);
+        public RelayCommandApp MoveToPreviousPage
+            => new RelayCommandApp(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
+        public RelayCommandApp MoveToFirstPage
+            => new RelayCommandApp(async _ => await LoadDataAsyncPage(1), _ => _pagedList.HasPreviousPage);
 
-        public RelayCommand MoveToNextPage
-            => new RelayCommand(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
-        public RelayCommand MoveToLastPage
-            => new RelayCommand(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
+        public RelayCommandApp MoveToNextPage
+            => new RelayCommandApp(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
+        public RelayCommandApp MoveToLastPage
+            => new RelayCommandApp(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
-        public RelayCommand MoveAddDataDB
-            => new RelayCommand(_ => _modelLoadDataDB.CanLoadDataFromDB());
+        public RelayCommandApp MoveAddDataDB
+            => new RelayCommandApp(_ => new MergeDatabaseWindow().Show());
 
         /// <summary>
         /// Load data in table.
