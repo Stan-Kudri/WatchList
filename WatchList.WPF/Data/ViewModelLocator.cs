@@ -16,11 +16,15 @@ namespace WatchList.WPF.Data
         public MergeDatabaseViewModel MergeDatabaseViewModel
             => _provider!.GetRequiredService<MergeDatabaseViewModel>();
 
+        public DataReplaceMessageViewModel DataReplaceMessageViewModel
+            => _provider!.GetRequiredService<DataReplaceMessageViewModel>();
+
         public static IServiceCollection AddViewModels(ServiceCollection serviceCollection)
             => serviceCollection
                 .AddTransient<CinemaWindowViewModel>()
                 .AddTransient<CinemaPageViewModel>()
-                .AddTransient<MergeDatabaseViewModel>();
+                .AddTransient<MergeDatabaseViewModel>()
+                .AddTransient<DataReplaceMessageViewModel>();
 
         public static void Init(ServiceProvider provider) => _provider = provider;
     }

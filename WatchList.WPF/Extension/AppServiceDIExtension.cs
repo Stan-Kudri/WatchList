@@ -10,6 +10,7 @@ using WatchList.WPF.Models.Filter;
 using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.Models.Sorter;
 using WatchList.WPF.Views;
+using WatchList.WPF.Views.Message;
 
 namespace WatchList.WPF.Extension
 {
