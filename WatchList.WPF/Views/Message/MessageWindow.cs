@@ -1,23 +1,21 @@
 using System.Windows;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Service.Component;
+using WatchList.WPF.Models.ModelDataLoad;
 using MessageBoxWindow = System.Windows.MessageBox;
 
-namespace WatchList.WPF.Views
+namespace WatchList.WPF.Views.Message
 {
-    /// <summary>
-    /// Interaction logic for MessageWindow.xaml
-    /// </summary>
-    public partial class MessageWindow : Window, IMessageBox
+    public class MessageWindow : Window, IMessageBox
     {
-        public MessageWindow()
-        {
-            InitializeComponent();
-        }
-
         public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem)
         {
-            return Task.FromResult(DialogReplaceItemQuestion.AllYes);
+            var replaceQuestionManager = new DialogReplaceQuestionManager();
+            var windowDataReplaceItem = new DataReplaceMessageWindow(titleItem, replaceQuestionManager);
+
+            return windowDataReplaceItem.ShowDialog() == true
+                ? Task.FromResult(replaceQuestionManager.DialogReplaceItemQuestion)
+                : Task.FromResult(DialogReplaceItemQuestion.Unknown);
         }
 
         public Task ShowError(string message)

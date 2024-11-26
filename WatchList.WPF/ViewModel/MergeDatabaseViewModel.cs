@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using WatchList.Core.Model.ItemCinema.Components;
@@ -8,12 +6,13 @@ using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
 using WatchList.WPF.Commands;
+using WatchList.WPF.Models;
 using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.Models.ModelDataLoad.LoadModel;
 
 namespace WatchList.WPF.ViewModel
 {
-    public class MergeDatabaseViewModel : INotifyPropertyChanged
+    public class MergeDatabaseViewModel : BindingBaseModel
     {
         private readonly FiileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;
@@ -157,12 +156,5 @@ namespace WatchList.WPF.ViewModel
         }
 
         private void CloseWindow(Window window) => window?.Close();
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
     }
 }

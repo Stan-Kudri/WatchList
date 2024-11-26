@@ -9,7 +9,7 @@
       Title="CinemaPage"
       DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}"
       MinHeight="300" MinWidth="300">
-    <Grid Background="#FF1B3F40">
+    <Grid Background="SteelBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
