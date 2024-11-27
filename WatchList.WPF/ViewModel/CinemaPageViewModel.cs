@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
+using DevExpress.Mvvm;
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
@@ -16,7 +17,7 @@ using WatchList.WPF.Views;
 
 namespace WatchList.WPF.ViewModel
 {
-    public class CinemaPageViewModel : BindingBaseModel
+    public class CinemaPageViewModel : BindableBase
     {
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
@@ -37,11 +38,7 @@ namespace WatchList.WPF.ViewModel
         private int CurPage
         {
             get => _curPage;
-            set
-            {
-                _curPage = value;
-                OnPropertyChanged(nameof(PageDisplayText));
-            }
+            set => SetValue(ref _curPage, value);
         }
 
         public CinemaPageViewModel(IMessageBox messageBox,
@@ -66,16 +63,7 @@ namespace WatchList.WPF.ViewModel
         public ObservableCollection<WatchItem> WatchItems
         {
             get => _watchItems;
-            private set
-            {
-                if (value == _watchItems)
-                {
-                    return;
-                }
-
-                _watchItems = value;
-                OnPropertyChanged(nameof(_watchItems));
-            }
+            private set => SetValue(ref _watchItems, value);
         }
 
         private PageModel Page { get; set; } = new PageModel();

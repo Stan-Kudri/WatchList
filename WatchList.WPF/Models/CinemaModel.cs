@@ -1,9 +1,10 @@
+using DevExpress.Mvvm;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.WPF.Models
 {
-    public class CinemaModel : BindingBaseModel
+    public class CinemaModel : BindableBase
     {
         private Guid _id;
         private string _title;
@@ -27,71 +28,43 @@ namespace WatchList.WPF.Models
         public Guid Id
         {
             get => _id;
-            set
-            {
-                _id = value;
-                OnPropertyChanged("Id");
-            }
+            set => SetValue(ref _id, value);
         }
 
         public string Title
         {
             get => _title;
-            set
-            {
-                _title = value;
-                OnPropertyChanged("Title");
-            }
+            set => SetValue(ref _title, value);
         }
 
         public TypeCinema Type
         {
             get => _type;
-            set
-            {
-                _type = value;
-                OnPropertyChanged("Type");
-            }
+            set => SetValue(ref _type, value);
         }
 
         public StatusCinema Status
         {
             get => _status;
-            set
-            {
-                _status = value;
-                OnPropertyChanged("Status");
-            }
+            set => SetValue(ref _status, value);
         }
 
         public int Sequel
         {
             get => _sequel;
-            set
-            {
-                _sequel = value;
-                OnPropertyChanged("Sequel");
-            }
+            set => SetValue(ref _sequel, value);
         }
 
         public DateTime? Date
         {
             get => _date;
-            set
-            {
-                _date = value;
-                OnPropertyChanged("Date");
-            }
+            set => SetValue(ref _date, value);
         }
 
         public int? Grade
         {
             get => _grade;
-            set
-            {
-                _grade = value;
-                OnPropertyChanged("Grade");
-            }
+            set => SetValue(ref _grade, value);
         }
 
         public static CinemaModel CreateNonPlanned(

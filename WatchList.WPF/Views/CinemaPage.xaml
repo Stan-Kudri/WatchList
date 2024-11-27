@@ -9,7 +9,7 @@
       Title="CinemaPage"
       DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}"
       MinHeight="300" MinWidth="300">
-    <Grid Background="SteelBlue">
+    <Grid Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
@@ -26,8 +26,13 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ui:DataGrid Grid.Row="1" ColumnWidth="Auto" ItemsSource="{Binding WatchItems, Mode=OneWay}"
-                 Grid.ColumnSpan="8"  FontSize="12" AutoGenerateColumns="False">
+        <ui:DataGrid Grid.Row="1" 
+                     ColumnWidth="Auto"
+                     Grid.ColumnSpan="8"
+                     FontSize="12"
+                     AutoGenerateColumns="False"
+                     FontStretch="ExtraCondensed"
+                     ItemsSource="{Binding WatchItems, Mode=OneWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" Width="Auto" />
                 <DataGridTextColumn Header="Season/Part" Binding="{Binding Path=Sequel}" Width="Auto" />
@@ -42,7 +47,8 @@
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="2 2 2 2" 
                         Background="Transparent" 
-                        BorderBrush="Azure" 
+                        BorderBrush="Aquamarine"
+                        BorderThickness="2"
                         Command="{Binding MoveToFirstPage}" 
                         MinWidth="50" MinHeight="25"
                         MaxWidth="70" MaxHeight="45" 
@@ -51,7 +57,8 @@
                         >&lt;&lt;</Button>
                 <Button Margin="2 2 2 2" 
                         Background="Transparent" 
-                        BorderBrush="Azure" 
+                        BorderBrush="Aquamarine"
+                        BorderThickness="2"
                         Command="{Binding MoveToPreviousPage}"  
                         MinWidth="50" MinHeight="25"
                         MaxWidth="70" MaxHeight="45" 
@@ -61,10 +68,11 @@
                 <Label Content="{Binding PageDisplayText}" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
-                       Foreground="Aqua"/>
+                       Foreground="Black"/>
                 <Button Margin="2 2 2 2" 
                         Background="Transparent" 
-                        BorderBrush="Azure" 
+                        BorderBrush="Aquamarine"
+                        BorderThickness="2"
                         Command="{Binding MoveToNextPage}"  
                         MinWidth="50" MinHeight="25"
                         MaxWidth="70" MaxHeight="45" 
@@ -72,8 +80,9 @@
                         VerticalAlignment="Center"
                         >&gt;</Button>
                 <Button Margin="2 2 2 2" 
-                        Background="Transparent" 
-                        BorderBrush="Azure" 
+                        Background="Transparent"  
+                        BorderBrush="Aquamarine"
+                        BorderThickness="2"
                         Command="{Binding MoveToLastPage}" 
                         MinWidth="50" MinHeight="25"
                         MaxWidth="70" MaxHeight="45" 
@@ -125,6 +134,6 @@
                        Appearance="Dark" 
                        Command="{Binding MoveAddDataDB}"/>
         </StackPanel>
-        
+
     </Grid>
 </Page>

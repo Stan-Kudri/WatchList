@@ -1,18 +1,18 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using DevExpress.Mvvm;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
 using WatchList.WPF.Commands;
-using WatchList.WPF.Models;
 using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.Models.ModelDataLoad.LoadModel;
 
 namespace WatchList.WPF.ViewModel
 {
-    public class MergeDatabaseViewModel : BindingBaseModel
+    public class MergeDatabaseViewModel : BindableBase
     {
         private readonly FiileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;
@@ -40,60 +40,37 @@ namespace WatchList.WPF.ViewModel
         public TypeLoadingCinema SelectTypeLoadCinema
         {
             get => _modelTypeCinemaUpload.SelectedValue;
-            set
-            {
-                _modelTypeCinemaUpload.SelectedValue = value;
-                OnPropertyChanged(nameof(SelectTypeLoadCinema));
-            }
+            set => SetValue(_modelTypeCinemaUpload.SelectedValue);
         }
+
         public Grade SelectGradeLoadCinema
         {
             get => _modelDownloadMoreGrade.Value;
-            set
-            {
-                _modelDownloadMoreGrade.Value = value;
-                OnPropertyChanged(nameof(SelectGradeLoadCinema));
-            }
+            set => SetValue(_modelDownloadMoreGrade.Value);
         }
 
         public bool IsExistGrade
         {
             get => _isExistGrade;
-            set
-            {
-                _isExistGrade = value;
-                OnPropertyChanged(nameof(IsExistGrade));
-            }
+            set => SetValue(ref _isExistGrade, value);
         }
 
         public bool IsConsiderDuplicate
         {
             get => _isConsiderDuplicate;
-            set
-            {
-                _isConsiderDuplicate = value;
-                OnPropertyChanged(nameof(IsConsiderDuplicate));
-            }
+            set => SetValue(ref _isConsiderDuplicate, value);
         }
 
         public bool IsUpdateDuplicateItem
         {
             get => _isUpdateDuplicateItem;
-            set
-            {
-                _isUpdateDuplicateItem = value;
-                OnPropertyChanged(nameof(IsUpdateDuplicateItem));
-            }
+            set => SetValue(ref _isUpdateDuplicateItem, value);
         }
 
         public bool IsCaseSensitive
         {
             get => _isCaseSensitive;
-            set
-            {
-                _isCaseSensitive = value;
-                OnPropertyChanged(nameof(IsCaseSensitive));
-            }
+            set => SetValue(ref _isCaseSensitive, value);
         }
 
         public IEnumerable<TypeLoadingCinema> TypeLoadingCinemas => _modelTypeCinemaUpload.Items;

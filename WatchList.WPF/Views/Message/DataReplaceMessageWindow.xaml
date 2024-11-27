@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:WatchList.WPF.Views.Message"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Class="WatchList.WPF.Views.Message.DataReplaceMessageWindow"
         mc:Ignorable="d"
-        Title="DataReplaceMessageWindow" Height="200" Width="600"
+        Title="DataReplaceMessageWindow" Height="130" Width="400"
         ResizeMode="NoResize"
         DataContext="{Binding DataReplaceMessageViewModel, Source={StaticResource ViewModelLocator}}">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
