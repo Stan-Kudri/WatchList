@@ -68,7 +68,7 @@
                 <Label Content="{Binding PageDisplayText}" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
-                       Foreground="Aqua"/>
+                       Foreground="Black"/>
                 <Button Margin="2 2 2 2" 
                         Background="Transparent" 
                         BorderBrush="Aquamarine"
