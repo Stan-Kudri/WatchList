@@ -1,10 +1,11 @@
 using System.Collections.ObjectModel;
+using DevExpress.Mvvm;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.WPF.Models.Filter
 {
-    public class FilterItemModel : BindingBaseModel, IFilterItem
+    public class FilterItemModel : BindableBase, IFilterItem
     {
         private IEnumerable<TypeCinema> _filterTypeField;
         private IEnumerable<StatusCinema> _filterStatusField;
@@ -36,8 +37,7 @@ namespace WatchList.WPF.Models.Filter
                     return;
                 }
 
-                _filterTypeField = value;
-                OnPropertyChanged(nameof(_filterTypeField));
+                SetValue(ref _filterTypeField, value);
             }
         }
 
@@ -56,8 +56,7 @@ namespace WatchList.WPF.Models.Filter
                     return;
                 }
 
-                _filterStatusField = value;
-                OnPropertyChanged(nameof(_filterStatusField));
+                SetValue(ref _filterStatusField, value);
             }
         }
 

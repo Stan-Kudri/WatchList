@@ -1,9 +1,10 @@
 using System.Collections.ObjectModel;
+using DevExpress.Mvvm;
 using WatchList.Core.PageItem;
 
 namespace WatchList.WPF.Models
 {
-    public class PageModel : BindingBaseModel
+    public class PageModel : BindableBase
     {
         private const int StartPageSize = 10;
         private const int NumberStartPage = 1;
@@ -22,21 +23,13 @@ namespace WatchList.WPF.Models
         public int Number
         {
             get => _number;
-            set
-            {
-                _number = value;
-                OnPropertyChanged("Number");
-            }
+            set => SetValue(ref _number, value);
         }
 
         public int Size
         {
             get => _size;
-            set
-            {
-                _size = value;
-                OnPropertyChanged("Size");
-            }
+            set => SetValue(ref _size, value);
         }
 
         public Page GetPage() => new Page(_number, _size);
