@@ -14,6 +14,7 @@ using WatchList.WPF.Models;
 using WatchList.WPF.Models.Filter;
 using WatchList.WPF.Models.Sorter;
 using WatchList.WPF.Views;
+using WatchList.WPF.Views.CinemaView;
 
 namespace WatchList.WPF.ViewModel
 {
@@ -81,6 +82,9 @@ namespace WatchList.WPF.ViewModel
             => new RelayCommandApp(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
         public RelayCommandApp MoveToLastPage
             => new RelayCommandApp(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
+
+        public RelayCommandApp MoveAddItem
+            => new RelayCommandApp(_ => new AddCinemaWindow().Show());
 
         public RelayCommandApp MoveAddDataDB
             => new RelayCommandApp(_ => new MergeDatabaseWindow().Show());

@@ -22,7 +22,7 @@ namespace WatchList.WPF.Models.ModelDataLoad.LoadModel
         public Grade Value
         {
             get => _value;
-            set => SetValue(ref _value, value);
+            set => SetValue(ref _value, value, nameof(Value));
         }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using WatchList.WPF.ViewModel;
+using WatchList.WPF.ViewModel.ItemsView;
 
 namespace WatchList.WPF.Data
 {
@@ -16,15 +17,18 @@ namespace WatchList.WPF.Data
         public MergeDatabaseViewModel MergeDatabaseViewModel
             => _provider!.GetRequiredService<MergeDatabaseViewModel>();
 
-        public DataReplaceMessageViewModel DataReplaceMessageViewModel
-            => _provider!.GetRequiredService<DataReplaceMessageViewModel>();
+        public DataReplaceMessageVM DataReplaceMessageVM
+            => _provider!.GetRequiredService<DataReplaceMessageVM>();
+        public AddCinemaViewModel AddCinemaViewModel
+            => _provider!.GetRequiredService<AddCinemaViewModel>();
 
         public static IServiceCollection AddViewModels(ServiceCollection serviceCollection)
             => serviceCollection
                 .AddTransient<CinemaWindowViewModel>()
                 .AddTransient<CinemaPageViewModel>()
                 .AddTransient<MergeDatabaseViewModel>()
-                .AddTransient<DataReplaceMessageViewModel>();
+                .AddTransient<DataReplaceMessageVM>()
+                .AddTransient<AddCinemaViewModel>();
 
         public static void Init(ServiceProvider provider) => _provider = provider;
     }

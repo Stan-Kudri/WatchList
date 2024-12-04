@@ -101,7 +101,8 @@
                        FontSize="14" FontWeight="DemiBold" 
                        AutomationProperties.Name="Btn_Add_Item" 
                        Background="AliceBlue" 
-                       Appearance="Dark" />
+                       Appearance="Dark"
+                       Command="{Binding MoveAddItem}"/>
             <ui:Button
                        Content="Edit" 
                        HorizontalAlignment="Stretch" 

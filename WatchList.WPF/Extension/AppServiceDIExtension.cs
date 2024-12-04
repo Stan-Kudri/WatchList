@@ -1,3 +1,4 @@
+using DevExpress.Mvvm.POCO;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using WatchList.Core.Repository;
@@ -27,9 +28,8 @@ namespace WatchList.WPF.Extension
                                       .AddScoped<FilterItemModel>()
                                       .AddSingleton<PageService>()
                                       .AddScoped<ViewModelLocator>()
-                                      .AddScoped<FiileLoaderDB>()
-                                      .AddLogging()
-                                      .AddSerilog();
+                                      .AddScoped<FileLoaderDB>()
+                                      .AddLogging();
 
         public static IServiceCollection AppServicePageContainer(this IServiceCollection serviceCollection)
             => serviceCollection.AddTransient<CinemaWindow>()

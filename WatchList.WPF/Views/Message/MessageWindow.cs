@@ -6,7 +6,7 @@ using MessageBoxWindow = System.Windows.MessageBox;
 
 namespace WatchList.WPF.Views.Message
 {
-    public class MessageWindow : Window, IMessageBox
+    public class MessageWindow : IMessageBox
     {
         public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem)
         {

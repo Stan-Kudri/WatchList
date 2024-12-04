@@ -6,12 +6,12 @@ using WatchList.Migrations.SQLite;
 
 namespace WatchList.WPF.Models.ModelDataLoad
 {
-    public class FiileLoaderDB
+    public class FileLoaderDB
     {
         private readonly DownloadDataService _downloadDataService;
         private readonly ILogger<WatchItemRepository> _logger;
 
-        public FiileLoaderDB(DownloadDataService downloadDataService, ILogger<WatchItemRepository> logger)
+        public FileLoaderDB(DownloadDataService downloadDataService, ILogger<WatchItemRepository> logger)
         {
             _downloadDataService = downloadDataService;
             _logger = logger;

@@ -1,7 +1,6 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using DevExpress.Mvvm;
-using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
@@ -14,7 +13,7 @@ namespace WatchList.WPF.ViewModel
 {
     public class MergeDatabaseViewModel : BindableBase
     {
-        private readonly FiileLoaderDB _fiileLoader;
+        private readonly FileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;
 
         private readonly ModelTypeCinemaUpload _modelTypeCinemaUpload = new ModelTypeCinemaUpload();
@@ -26,12 +25,12 @@ namespace WatchList.WPF.ViewModel
         private bool _isUpdateDuplicateItem;
         private bool _isCaseSensitive;
 
-        public MergeDatabaseViewModel(IMessageBox messageBox, FiileLoaderDB fiileLoader)
+        public MergeDatabaseViewModel(IMessageBox messageBox, FileLoaderDB fiileLoader)
         {
             _messageBox = messageBox;
             _fiileLoader = fiileLoader;
-            SelectGradeLoadCinema = Grade.AnyGrade;
-            SelectTypeLoadCinema = new TypeLoadingCinema();
+            SelectGradeLoadCinema = _modelDownloadMoreGrade.Value;
+            SelectTypeLoadCinema = _modelTypeCinemaUpload.SelectedValue;
             MergeDateFromDB = new RelayCommand<Window>(MoveLoadDB);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SetDefoultValueWindow = new RelayCommandApp(_ => SetupDefaultValues());
@@ -40,13 +39,13 @@ namespace WatchList.WPF.ViewModel
         public TypeLoadingCinema SelectTypeLoadCinema
         {
             get => _modelTypeCinemaUpload.SelectedValue;
-            set => SetValue(_modelTypeCinemaUpload.SelectedValue);
+            set => _modelTypeCinemaUpload.SelectedValue = value;
         }
 
         public Grade SelectGradeLoadCinema
         {
             get => _modelDownloadMoreGrade.Value;
-            set => SetValue(_modelDownloadMoreGrade.Value);
+            set => _modelDownloadMoreGrade.Value = value;
         }
 
         public bool IsExistGrade
@@ -73,8 +72,8 @@ namespace WatchList.WPF.ViewModel
             set => SetValue(ref _isCaseSensitive, value);
         }
 
-        public IEnumerable<TypeLoadingCinema> TypeLoadingCinemas => _modelTypeCinemaUpload.Items;
-        public IEnumerable<Grade> GradeLoadingCinemas => _modelDownloadMoreGrade.Items;
+        public IEnumerable<TypeLoadingCinema> TypeLoadingCinema => _modelTypeCinemaUpload.Items;
+        public IEnumerable<Grade> GradeLoadingCinema => _modelDownloadMoreGrade.Items;
 
         public RelayCommand<Window> MergeDateFromDB { get; private set; }
         public RelayCommand<Window> CloseWindowCommand { get; private set; }
@@ -93,7 +92,7 @@ namespace WatchList.WPF.ViewModel
 
         private void SetupDefaultValues()
         {
-            SelectTypeLoadCinema = new TypeLoadingCinema(TypeCinema.Movie);
+            SelectTypeLoadCinema = new TypeLoadingCinema(null);
             SelectGradeLoadCinema = Grade.AnyGrade;
             IsExistGrade = IsConsiderDuplicate =
                 IsCaseSensitive = IsUpdateDuplicateItem = false;

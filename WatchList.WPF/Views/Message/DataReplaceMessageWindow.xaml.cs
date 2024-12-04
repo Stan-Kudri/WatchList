@@ -11,7 +11,7 @@ namespace WatchList.WPF.Views.Message
         public DataReplaceMessageWindow(string titleName, DialogReplaceQuestionManager replaceQuestionManager)
         {
             InitializeComponent();
-            DataContext = new DataReplaceMessageViewModel(titleName, replaceQuestionManager);
+            DataContext = new DataReplaceMessageVM(titleName, replaceQuestionManager);
         }
     }
 }

@@ -5,13 +5,13 @@ using WatchList.WPF.Models.ModelDataLoad;
 
 namespace WatchList.WPF.ViewModel
 {
-    public class DataReplaceMessageViewModel
+    public class DataReplaceMessageVM
     {
         public const string Question = "The append item is a duplicate.Replace element?";
 
         private readonly string _titleLabel;
 
-        public DataReplaceMessageViewModel(string titleItem, DialogReplaceQuestionManager questionResult)
+        public DataReplaceMessageVM(string titleItem, DialogReplaceQuestionManager questionResult)
         {
             _titleLabel = titleItem;
             ResultQuestion = questionResult;

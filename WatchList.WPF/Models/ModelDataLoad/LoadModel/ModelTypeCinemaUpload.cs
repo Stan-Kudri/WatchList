@@ -22,7 +22,7 @@ namespace WatchList.WPF.Models.ModelDataLoad.LoadModel
         public TypeLoadingCinema SelectedValue
         {
             get => _type;
-            set => SetValue(ref _type, value);
+            set => SetValue(ref _type, value, nameof(SelectedValue));
         }
     }
 }
