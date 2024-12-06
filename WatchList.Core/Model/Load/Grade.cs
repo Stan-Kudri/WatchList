@@ -25,7 +25,7 @@ namespace WatchList.Core.Model.Load
 
         public static Grade FromValue(Grades grade) => FromValue((int)grade);
 
-        public static ObservableCollection<Grade> Items { get; set; }
-            = new ObservableCollection<Grade>(List.OrderBy(x => x.Value));
+        public static ObservableCollection<Grade> GetItems()
+            => new ObservableCollection<Grade>(List.OrderBy(x => x.Value));
     }
 }

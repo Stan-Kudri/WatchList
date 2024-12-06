@@ -43,7 +43,7 @@
                         HorizontalAlignment="Center"
                         Width="360"
                         Height="35"
-                        Text="{Binding SetTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=SetTitle}"/>
+                        Text="{Binding SetTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Name" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"

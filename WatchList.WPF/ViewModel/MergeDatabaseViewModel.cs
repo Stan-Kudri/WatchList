@@ -72,7 +72,7 @@ namespace WatchList.WPF.ViewModel
         }
 
         public IEnumerable<TypeLoadingCinema> ListTypeLoadingCinema => TypeLoadingCinema.GetItemsType;
-        public IEnumerable<Grade> GradeLoadingCinema => Grade.Items;
+        public IEnumerable<Grade> GradeLoadingCinema => Grade.GetItems();
 
         public RelayCommand<Window> MergeDateFromDB { get; private set; }
         public RelayCommand<Window> CloseWindowCommand { get; private set; }

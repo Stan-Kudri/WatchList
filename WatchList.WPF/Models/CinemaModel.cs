@@ -69,7 +69,7 @@ namespace WatchList.WPF.Models
         public int? Grade
         {
             get => _grade;
-            set => SetValue(ref _grade, value, nameof(Grade));
+            set => SetValue(ref _grade, value);
         }
 
         public static CinemaModel GetCinemaFromWatchItem(WatchItem? item)

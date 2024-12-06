@@ -11,8 +11,6 @@ namespace WatchList.WPF.ViewModel.ItemsView
 {
     public class AddCinemaViewModel : BindableBase
     {
-        //private readonly CinemaModel _defaultCinemaModel;
-        private readonly CinemaModel _cinemaModel;
         private readonly IMessageBox _messageBox;
         private readonly WatchItemRepository _watchItemRepository;
 
@@ -21,6 +19,14 @@ namespace WatchList.WPF.ViewModel.ItemsView
         private DateTime _maxDateWatched;
         private DateTime _minDateWatched;
         private string _labelSequelType;
+
+        private Guid _id;
+        private string _title;
+        private TypeCinema _type;
+        private int _sequel;
+        private StatusCinema _status;
+        private DateTime? _date;
+        private int? _grade;
 
         public AddCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository)
             : this(messageBox, watchItemRepository, null)
@@ -31,7 +37,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
         {
             _messageBox = messageBox;
             _watchItemRepository = watchItemRepository;
-            _cinemaModel = CinemaModel.GetCinemaFromWatchItem(watchItem);
+            SetValueCinema(watchItem);
             MaxDateWatched = DateTime.Now;
             MinDateWatched = new DateTime(1945, 1, 1);
             LabelSequelType = SelectedTypeCinema.TypeSequel;
@@ -76,45 +82,51 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         public TypeCinema SelectedTypeCinema
         {
-            get => _cinemaModel.Type;
+            get => _type;
             set
             {
                 LabelSequelType = value.TypeSequel;
-                _cinemaModel.Type = value;
+                SetValue(ref _type, value);
             }
         }
 
         public StatusCinema SelectedStatusCinema
         {
-            get => _cinemaModel.Status;
+            get => _status;
             set
             {
                 IsWatch = value != StatusCinema.Planned ? true : false;
-                _cinemaModel.Status = value;
+                SetValue(ref _status, value);
             }
         }
         public string SetTitle
         {
-            get => _cinemaModel.Title;
-            set => _cinemaModel.Title = value;
+            get => _title;
+            set => SetValue(ref _title, value);
         }
 
         public int? SetGrade
         {
-            get => _cinemaModel.Grade;
-            set => _cinemaModel.Grade = value;
+            get => _grade;
+            set => SetValue(ref _grade, value);
         }
 
         public DateTime? SetDateTime
         {
-            get => _cinemaModel.Date;
-            set => _cinemaModel.Date = value;
+            get => _date;
+            set => SetValue(ref _date, value);
         }
 
         public int SetSequel
         {
-            get => _cinemaModel.Sequel;
-            set => _cinemaModel.Sequel = value;
+            get => _sequel;
+            set => SetValue(ref _sequel, value);
+        }
+
+        public Guid SetId
+        {
+            get => _id;
+            set => SetValue(ref _id, value);
         }
 
         private async void MoveAddCinema(Window currentWindowAdd)
@@ -125,7 +137,8 @@ namespace WatchList.WPF.ViewModel.ItemsView
             }
             else
             {
-                _watchItemRepository.Add(_cinemaModel.ToWatchItem());
+                var cinemaModel = new CinemaModel(SetTitle, SetSequel, SetDateTime, SetGrade, SelectedStatusCinema, SelectedTypeCinema, SetId);
+                _watchItemRepository.Add(cinemaModel.ToWatchItem());
                 currentWindowAdd.Close();
             }
         }
@@ -143,17 +156,17 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         private bool ValidateFields(out string errorMessage)
         {
-            if (_cinemaModel.Title.Length <= 0)
+            if (SetTitle.Length <= 0)
             {
                 errorMessage = $"Enter {SelectedTypeCinema.Name} title";
                 return false;
             }
-            else if (_cinemaModel.Sequel == 0)
+            else if (SetSequel == 0)
             {
                 errorMessage = $"Enter number {SelectedTypeCinema.Name}";
                 return false;
             }
-            else if (_cinemaModel.Grade == 0)
+            else if (SetGrade == 0)
             {
                 errorMessage = "Grade cinema above in zero";
                 return false;
@@ -161,6 +174,22 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
             errorMessage = string.Empty;
             return true;
+        }
+
+        private void SetValueCinema(WatchItem? watchItem)
+        {
+            if (watchItem == null)
+            {
+                SetDefaultValues();
+                return;
+            }
+
+            SetId = watchItem.Id;
+            SetTitle = watchItem.Title;
+            SetGrade = watchItem.Grade;
+            SetDateTime = watchItem.Date;
+            SelectedStatusCinema = watchItem.Status;
+            SelectedTypeCinema = watchItem.Type;
         }
     }
 }
