@@ -93,7 +93,6 @@ namespace WatchList.WPF.ViewModel.ItemsView
                 _cinemaModel.Status = value;
             }
         }
-
         public string SetTitle
         {
             get => _cinemaModel.Title;
@@ -118,15 +117,6 @@ namespace WatchList.WPF.ViewModel.ItemsView
             set => _cinemaModel.Sequel = value;
         }
 
-        /*
-        public CinemaModel GetCinema()
-        {
-            decimal? grade = numericGradeCinema.Enabled == true ? numericGradeCinema.Value : null;
-            DateTime? dateViewed = dateTimePickerCinema.Enabled == true ? dateTimePickerCinema.Value : null;
-
-            return CinemaModel.CreateNonPlanned(txtAddCinema.Text, numericSequel.Value, dateViewed, grade, _status, SelectedTypeCinema);
-        }                         */
-
         private async void MoveAddCinema(Window currentWindowAdd)
         {
             if (!ValidateFields(out var errorMessage))
@@ -149,10 +139,6 @@ namespace WatchList.WPF.ViewModel.ItemsView
             SelectedTypeCinema = TypeCinema.Movie;
             SelectedStatusCinema = StatusCinema.Planned;
             _isWatch = false;
-            RaisePropertyChanged(nameof(SelectedTypeCinema));
-            RaisePropertyChanged(nameof(SelectedStatusCinema));
-            RaisePropertyChanged(nameof(SetDateTime));
-
         }
 
         private bool ValidateFields(out string errorMessage)

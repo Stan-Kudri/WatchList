@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Ardalis.SmartEnum;
 using WatchList.Core.Enums;
 
@@ -23,5 +24,8 @@ namespace WatchList.Core.Model.Load
         }
 
         public static Grade FromValue(Grades grade) => FromValue((int)grade);
+
+        public static ObservableCollection<Grade> Items { get; set; }
+            = new ObservableCollection<Grade>(List.OrderBy(x => x.Value));
     }
 }

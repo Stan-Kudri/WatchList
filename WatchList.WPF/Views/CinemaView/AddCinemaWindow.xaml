@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:WatchList.WPF.Views.CinemaView"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"    
+        Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}"
         x:Class="WatchList.WPF.Views.CinemaView.AddCinemaWindow"
         x:Name="AddItem"
         mc:Ignorable="d"
@@ -41,8 +42,8 @@
             <ui:TextBox VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Width="360"
-                        Height="30"
-                        DataContext="{Binding SetTitle, Mode=TwoWay}"/>
+                        Height="35"
+                        Text="{Binding SetTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=SetTitle}"/>
             <Label Content="Name" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
@@ -123,21 +124,24 @@
                     VerticalAlignment="Center"
                     Grid.Row="3"
                     Grid.ColumnSpan="8">
-            <ui:Button Width="90" Height="30"
-                       Content="Add"
+            <Button Width="90" Height="30"
+                       Content="Add"    
+                       Focusable="False"
                        Margin="5 5 5 5">                
-            </ui:Button>
-            <ui:Button Width="90" Height="30"
+            </Button>
+            <Button Width="90" Height="30"
                        Content="Clear"
                        Margin="5 5 5 5"
+                       Focusable="False"
                        Command="{Binding SetDefoultValueCommand}">
-            </ui:Button>
-            <ui:Button Width="90" Height="30"
+            </Button>
+            <Button Width="90" Height="30"
                        Content="Close"
-                       Margin="5 5 5 5"
+                       Margin="5 5 5 5" 
+                       Focusable="False"
                        Command="{Binding CloseWindowCommand}"
                        CommandParameter="{Binding ElementName=AddItem}">
-            </ui:Button>
+            </Button>
         </StackPanel>
         
     </Grid>    

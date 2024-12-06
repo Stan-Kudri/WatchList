@@ -16,8 +16,8 @@ namespace WatchList.WPF.ViewModel
         private readonly FileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;
 
-        private readonly ModelTypeCinemaUpload _modelTypeCinemaUpload = new ModelTypeCinemaUpload();
-        private readonly ModelDownloadMoreGrade _modelDownloadMoreGrade = new ModelDownloadMoreGrade();
+        private TypeLoadingCinema _selectTypeLoadCinema;
+        private Grade _selectGradeLoadCinema;
 
         private bool _isExistGrade;
 
@@ -29,23 +29,22 @@ namespace WatchList.WPF.ViewModel
         {
             _messageBox = messageBox;
             _fiileLoader = fiileLoader;
-            SelectGradeLoadCinema = _modelDownloadMoreGrade.Value;
-            SelectTypeLoadCinema = _modelTypeCinemaUpload.SelectedValue;
             MergeDateFromDB = new RelayCommand<Window>(MoveLoadDB);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SetDefoultValueWindow = new RelayCommandApp(_ => SetupDefaultValues());
+            SetupDefaultValues();
         }
 
         public TypeLoadingCinema SelectTypeLoadCinema
         {
-            get => _modelTypeCinemaUpload.SelectedValue;
-            set => _modelTypeCinemaUpload.SelectedValue = value;
+            get => _selectTypeLoadCinema;
+            set => SetValue(ref _selectTypeLoadCinema, value);
         }
 
         public Grade SelectGradeLoadCinema
         {
-            get => _modelDownloadMoreGrade.Value;
-            set => _modelDownloadMoreGrade.Value = value;
+            get => _selectGradeLoadCinema;
+            set => SetValue(ref _selectGradeLoadCinema, value);
         }
 
         public bool IsExistGrade
@@ -72,8 +71,8 @@ namespace WatchList.WPF.ViewModel
             set => SetValue(ref _isCaseSensitive, value);
         }
 
-        public IEnumerable<TypeLoadingCinema> TypeLoadingCinema => _modelTypeCinemaUpload.Items;
-        public IEnumerable<Grade> GradeLoadingCinema => _modelDownloadMoreGrade.Items;
+        public IEnumerable<TypeLoadingCinema> ListTypeLoadingCinema => TypeLoadingCinema.GetItemsType;
+        public IEnumerable<Grade> GradeLoadingCinema => Grade.Items;
 
         public RelayCommand<Window> MergeDateFromDB { get; private set; }
         public RelayCommand<Window> CloseWindowCommand { get; private set; }
