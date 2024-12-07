@@ -106,7 +106,7 @@
                        AutomationProperties.Name="Btn_Add_Item" 
                        Background="AliceBlue" 
                        Focusable="False"
-                       Command="{Binding MoveAddItem}"/>
+                       Command="{Binding AddItemCommand}"/>
             <Button
                        Content="Edit" 
                        HorizontalAlignment="Stretch" 

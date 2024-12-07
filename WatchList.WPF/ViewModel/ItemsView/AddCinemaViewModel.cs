@@ -13,6 +13,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
     {
         private readonly IMessageBox _messageBox;
         private readonly WatchItemRepository _watchItemRepository;
+        private readonly WatchItemCreator _watchItemCreator;
 
         private bool _isWatch;
 
@@ -28,19 +29,21 @@ namespace WatchList.WPF.ViewModel.ItemsView
         private DateTime? _date;
         private int? _grade;
 
-        public AddCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository)
-            : this(messageBox, watchItemRepository, null)
+        public AddCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItemCreator watchItemCreator)
+            : this(messageBox, watchItemRepository, watchItemCreator, null)
         {
         }
 
-        public AddCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItem? watchItem = null)
+        public AddCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItemCreator watchItemCreator, WatchItem? watchItem = null)
         {
             _messageBox = messageBox;
             _watchItemRepository = watchItemRepository;
+            _watchItemCreator = watchItemCreator;
             SetValueCinema(watchItem);
             MaxDateWatched = DateTime.Now;
             MinDateWatched = new DateTime(1945, 1, 1);
             LabelSequelType = SelectedTypeCinema.TypeSequel;
+            AddItemCommand = new RelayCommand<Window>(MoveAddCinema);
             SetDefoultValueCommand = new RelayCommand(SetDefaultValues);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
@@ -77,6 +80,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
         public IEnumerable<StatusCinema> ListStatus => StatusCinema.List;
         public IEnumerable<TypeCinema> ListType => TypeCinema.List;
 
+        public RelayCommand<Window> AddItemCommand { get; private set; }
         public RelayCommand SetDefoultValueCommand { get; private set; }
         public RelayCommand<Window> CloseWindowCommand { get; private set; }
 
@@ -134,13 +138,12 @@ namespace WatchList.WPF.ViewModel.ItemsView
             if (!ValidateFields(out var errorMessage))
             {
                 await _messageBox.ShowWarning(errorMessage);
+                return;
             }
-            else
-            {
-                var cinemaModel = new CinemaModel(SetTitle, SetSequel, SetDateTime, SetGrade, SelectedStatusCinema, SelectedTypeCinema, SetId);
-                _watchItemRepository.Add(cinemaModel.ToWatchItem());
-                currentWindowAdd.Close();
-            }
+
+            currentWindowAdd.DialogResult = true;
+            _watchItemRepository.Add(GetCinema());
+            currentWindowAdd.Close();
         }
 
         private void CloseWindow(Window window) => window?.Close();
@@ -151,7 +154,6 @@ namespace WatchList.WPF.ViewModel.ItemsView
             SetSequel = 1;
             SelectedTypeCinema = TypeCinema.Movie;
             SelectedStatusCinema = StatusCinema.Planned;
-            _isWatch = false;
         }
 
         private bool ValidateFields(out string errorMessage)
@@ -191,5 +193,10 @@ namespace WatchList.WPF.ViewModel.ItemsView
             SelectedStatusCinema = watchItem.Status;
             SelectedTypeCinema = watchItem.Type;
         }
+
+        public WatchItem GetCinema()
+            => SelectedStatusCinema == StatusCinema.Planned
+            ? _watchItemCreator.CreatePlanned(SetTitle, SetSequel, SelectedStatusCinema, SelectedTypeCinema, SetId)
+            : _watchItemCreator.CreateNonPlanned(SetTitle, SetSequel, SelectedStatusCinema, SelectedTypeCinema, SetDateTime, SetGrade, SetId);
     }
 }

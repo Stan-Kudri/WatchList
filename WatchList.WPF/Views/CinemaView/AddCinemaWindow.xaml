@@ -125,22 +125,24 @@
                     Grid.Row="3"
                     Grid.ColumnSpan="8">
             <Button Width="90" Height="30"
-                       Content="Add"    
-                       Focusable="False"
-                       Margin="5 5 5 5">                
+                    Content="Add"    
+                    Focusable="False"
+                    Margin="5 5 5 5"
+                    Command="{Binding AddItemCommand}"
+                    CommandParameter="{Binding ElementName=AddItem}">
             </Button>
             <Button Width="90" Height="30"
-                       Content="Clear"
-                       Margin="5 5 5 5"
-                       Focusable="False"
-                       Command="{Binding SetDefoultValueCommand}">
+                    Content="Clear"
+                    Margin="5 5 5 5"
+                    Focusable="False"
+                    Command="{Binding SetDefoultValueCommand}">
             </Button>
             <Button Width="90" Height="30"
-                       Content="Close"
-                       Margin="5 5 5 5" 
-                       Focusable="False"
-                       Command="{Binding CloseWindowCommand}"
-                       CommandParameter="{Binding ElementName=AddItem}">
+                    Content="Close"
+                    Margin="5 5 5 5" 
+                    Focusable="False"
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=AddItem}">
             </Button>
         </StackPanel>
         

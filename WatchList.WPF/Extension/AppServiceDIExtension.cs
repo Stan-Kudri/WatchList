@@ -1,12 +1,12 @@
 using DevExpress.Mvvm.POCO;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.Core.Service.DataLoading;
 using WatchList.Migrations.SQLite;
 using WatchList.WPF.Data;
+using WatchList.WPF.Models;
 using WatchList.WPF.Models.Filter;
 using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.Models.Sorter;
@@ -22,6 +22,7 @@ namespace WatchList.WPF.Extension
                                       .AddScoped(e => e.GetRequiredService<DbContextFactoryMigrator>().Create())
                                       .AddScoped<WatchItemRepository>()
                                       .AddScoped<IMessageBox, MessageWindow>()
+                                      .AddScoped<WatchItemCreator>()
                                       .AddScoped<WatchItemService>()
                                       .AddScoped<DownloadDataService>()
                                       .AddScoped<SortWatchItemModel>()
