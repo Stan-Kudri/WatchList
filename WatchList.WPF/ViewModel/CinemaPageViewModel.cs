@@ -86,13 +86,24 @@ namespace WatchList.WPF.ViewModel
         public RelayCommandApp AddItemCommand
             => new RelayCommandApp(async async => await MoveAddItem());
 
-        public RelayCommandApp MoveAddDataDB
-            => new RelayCommandApp(_ => new MergeDatabaseWindow().Show());
+        public RelayCommandApp AddDataDBCommand
+            => new RelayCommandApp(async async => await MoveAddData());
 
         private async Task MoveAddItem()
         {
             var addWindow = new AddCinemaWindow();
             if (addWindow.ShowDialog() != true)
+            {
+                return;
+            }
+
+            await LoadDataAsync();
+        }
+
+        private async Task MoveAddData()
+        {
+            var addDataWindow = new MergeDatabaseWindow();
+            if (addDataWindow.ShowDialog() != true)
             {
                 return;
             }

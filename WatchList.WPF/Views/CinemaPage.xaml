@@ -32,6 +32,7 @@
                      FontSize="12"
                      AutoGenerateColumns="False"
                      FontStretch="ExtraCondensed"
+                     IsReadOnly="True"
                      ItemsSource="{Binding WatchItems, Mode=OneWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" Width="Auto" />
@@ -137,7 +138,7 @@
                        AutomationProperties.Name="Btn_Add_Data" 
                        Background="AliceBlue"
                        Focusable="False"
-                       Command="{Binding MoveAddDataDB}"/>
+                       Command="{Binding AddDataDBCommand}"/>
         </StackPanel>
 
     </Grid>

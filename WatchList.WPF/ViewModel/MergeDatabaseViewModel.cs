@@ -29,9 +29,9 @@ namespace WatchList.WPF.ViewModel
         {
             _messageBox = messageBox;
             _fiileLoader = fiileLoader;
-            MergeDateFromDB = new RelayCommand<Window>(MoveLoadDB);
+            MergeDateFromDBCommand = new RelayCommand<Window>(MoveLoadDB);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
-            SetDefoultValueWindow = new RelayCommandApp(_ => SetupDefaultValues());
+            SetDefoultValueCommand = new RelayCommandApp(_ => SetupDefaultValues());
             SetupDefaultValues();
         }
 
@@ -72,11 +72,11 @@ namespace WatchList.WPF.ViewModel
         }
 
         public IEnumerable<TypeLoadingCinema> ListTypeLoadingCinema => TypeLoadingCinema.GetItemsType;
-        public IEnumerable<Grade> GradeLoadingCinema => Grade.GetItems();
+        public IEnumerable<Grade> GradeLoadingCinema => Grade.List;
 
-        public RelayCommand<Window> MergeDateFromDB { get; private set; }
+        public RelayCommand<Window> MergeDateFromDBCommand { get; private set; }
         public RelayCommand<Window> CloseWindowCommand { get; private set; }
-        public RelayCommandApp SetDefoultValueWindow { get; private set; }
+        public RelayCommandApp SetDefoultValueCommand { get; private set; }
 
         private async void MoveLoadDB(Window window)
         {
@@ -84,6 +84,7 @@ namespace WatchList.WPF.ViewModel
             {
                 var loadRuleConfig = GetLoadRuleConfig();
                 _fiileLoader.DownloadDataToDB(loadRuleConfig);
+                window.DialogResult = true;
             }
 
             window?.Close();
@@ -91,11 +92,13 @@ namespace WatchList.WPF.ViewModel
 
         private void SetupDefaultValues()
         {
-            SelectTypeLoadCinema = new TypeLoadingCinema(null);
+            SelectTypeLoadCinema = TypeLoadingCinema.AllType;
             SelectGradeLoadCinema = Grade.AnyGrade;
             IsExistGrade = IsConsiderDuplicate =
                 IsCaseSensitive = IsUpdateDuplicateItem = false;
         }
+
+        private void CloseWindow(Window window) => window?.Close();
 
         private ILoadRulesConfig GetLoadRuleConfig()
         {
@@ -129,7 +132,5 @@ namespace WatchList.WPF.ViewModel
 
             return listConsiderDuplicates;
         }
-
-        private void CloseWindow(Window window) => window?.Close();
     }
 }

@@ -10,6 +10,9 @@ namespace WatchList.Core.Model.Load.Components
         public TypeLoadingCinema(TypeCinema? value = null)
             => Value = value;
 
+        public static TypeLoadingCinema AllType
+            => new TypeLoadingCinema(null);
+
         public override string Name
             => Value != null ? Value.Name : "All Type";
 
