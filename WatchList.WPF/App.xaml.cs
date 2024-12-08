@@ -23,7 +23,8 @@ namespace WatchList.WPF
             var serviceCollection = new ServiceCollection();
             ViewModelLocator.AddViewModels(serviceCollection)
                             .AppServiceContainer()
-                            .AppServicePageContainer();
+                            .AppServicePageContainer()
+                            .AddSerilog(Log.Logger);
             _serviceProvider = serviceCollection.BuildServiceProvider();
         }
 
@@ -41,14 +42,13 @@ namespace WatchList.WPF
             {
                 Log.Fatal(ex, "Application terminated unexpectedly");
             }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
         }
 
         private void OnExit(object sender, ExitEventArgs e)
-            => _serviceProvider.Dispose();
+        {
+            _serviceProvider.Dispose();
+            Log.CloseAndFlush();
+        }
 
         private static Logger CreateLogger(string logDirectory = "log")
         {

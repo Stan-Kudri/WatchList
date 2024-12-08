@@ -14,6 +14,7 @@ using WatchList.WPF.Models;
 using WatchList.WPF.Models.Filter;
 using WatchList.WPF.Models.Sorter;
 using WatchList.WPF.Views;
+using WatchList.WPF.Views.CinemaView;
 
 namespace WatchList.WPF.ViewModel
 {
@@ -70,7 +71,7 @@ namespace WatchList.WPF.ViewModel
 
         public string PageDisplayText => $"Page {CurPage} of {_pagedList.PageCount}";
 
-        public List<CinemaModel> PageWatchItems { get; set; }
+        public List<WatchItemCreator> PageWatchItems { get; set; }
 
         public RelayCommandApp MoveToPreviousPage
             => new RelayCommandApp(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
@@ -82,8 +83,22 @@ namespace WatchList.WPF.ViewModel
         public RelayCommandApp MoveToLastPage
             => new RelayCommandApp(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
+        public RelayCommandApp AddItemCommand
+            => new RelayCommandApp(async async => await MoveAddItem());
+
         public RelayCommandApp MoveAddDataDB
             => new RelayCommandApp(_ => new MergeDatabaseWindow().Show());
+
+        private async Task MoveAddItem()
+        {
+            var addWindow = new AddCinemaWindow();
+            if (addWindow.ShowDialog() != true)
+            {
+                return;
+            }
+
+            await LoadDataAsync();
+        }
 
         /// <summary>
         /// Load data in table.

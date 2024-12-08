@@ -18,7 +18,7 @@
       d:DesignHeight="240" d:DesignWidth="420"
       Title="Loading data" Foreground="Black"
       DataContext="{Binding MergeDatabaseViewModel, Source={StaticResource ViewModelLocator}}">
-    <Grid x:Name="MergeDBPage" Background="LightGray">
+    <Grid x:Name="MergeDBPage">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -41,6 +41,7 @@
             HorizontalAlignment="Left" 
             VerticalAlignment="Center" 
             Grid.ColumnSpan="8"
+            Margin="15"
             IsChecked="{Binding IsExistGrade, Mode=TwoWay}"/>
         <CheckBox 
             x:Name="CheckBoxConsiderDuplicates" 
@@ -49,6 +50,7 @@
             Grid.Row="1" 
             VerticalAlignment="Center" 
             Grid.ColumnSpan="4" 
+            Margin="15"
             IsChecked="{Binding IsConsiderDuplicate, Mode=TwoWay}"/>
         <CheckBox 
             x:Name="CheckBoxUpdateDuplicateItem" 
@@ -81,8 +83,8 @@
             Width="140" 
             Name="ComboBoxType" 
             HorizontalContentAlignment="Center"
-            ItemsSource="{Binding GradeLoadingCinemas}"
-            SelectedValue="{Binding SelectGradeLoadCinema}"/>
+            ItemsSource="{Binding GradeLoadingCinema}"
+            SelectedValue="{Binding SelectGradeLoadCinema, Mode=TwoWay}"/>
         <Label 
             Grid.Column="3" 
             Content="Type" 
@@ -96,12 +98,11 @@
             VerticalAlignment="Center" 
             Grid.Row="2" 
             Grid.ColumnSpan="2" 
-            Width="130" 
+            Width="110" 
             Name="ComboBoxMoreGrade" 
             HorizontalContentAlignment="Center"
-            ItemsSource="{Binding TypeLoadingCinemas}"
-            DisplayMemberPath="Name"
-            SelectedValue="{Binding SelectTypeLoadCinema}"/>
+            ItemsSource="{Binding ListTypeLoadingCinema}"
+            SelectedValue="{Binding SelectTypeLoadCinema, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Label 
             Grid.Column="6" 
             Content="Score more" 
@@ -110,7 +111,7 @@
             VerticalAlignment="Center" 
             Grid.ColumnSpan="2" 
             Name="LabelMoreGrade"/>
-        <ui:Button 
+        <Button 
             Grid.Column="0" 
             Content="OK" 
             HorizontalAlignment="Center" 
@@ -121,7 +122,7 @@
             Name="BtnOK" 
             Command="{Binding MergeDateFromDB}"
             CommandParameter="{Binding ElementName = LoadingDBWindow}"/>
-        <ui:Button 
+        <Button 
             Grid.Column="3" 
             Content="Clear" 
             HorizontalAlignment="Center" 
@@ -131,7 +132,7 @@
             Width="90" 
             Name="BtnClear" 
             Command="{Binding SetDefoultValueWindow}"/>
-        <ui:Button 
+        <Button 
             Grid.Column="5" 
             Content="Close" 
             HorizontalAlignment="Center" 

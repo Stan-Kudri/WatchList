@@ -54,6 +54,7 @@
                         MaxWidth="70" MaxHeight="45" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
+                        Focusable="False"
                         >&lt;&lt;</Button>
                 <Button Margin="2 2 2 2" 
                         Background="Transparent" 
@@ -64,6 +65,7 @@
                         MaxWidth="70" MaxHeight="45" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
+                        Focusable="False"
                         >&lt;</Button>
                 <Label Content="{Binding PageDisplayText}" 
                        HorizontalAlignment="Center" 
@@ -77,7 +79,8 @@
                         MinWidth="50" MinHeight="25"
                         MaxWidth="70" MaxHeight="45" 
                         HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Center"    
+                        Focusable="False"
                         >&gt;</Button>
                 <Button Margin="2 2 2 2" 
                         Background="Transparent"  
@@ -87,51 +90,53 @@
                         MinWidth="50" MinHeight="25"
                         MaxWidth="70" MaxHeight="45" 
                         HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Center" 
+                        Focusable="False"
                         >&gt;&gt;</Button>
             </StackPanel>
         </Grid>
         <StackPanel Grid.Row="3" Grid.ColumnSpan="8" Orientation="Horizontal" HorizontalAlignment="Center">
-            <ui:Button
+            <Button
                        Content="Add" 
                        HorizontalAlignment="Stretch" 
                        VerticalAlignment="Stretch"
                        Margin="5 5 5 5"    
                        Height="30" Width="80"
-                       FontSize="14" FontWeight="DemiBold" 
+                       FontSize="12" FontWeight="DemiBold" 
                        AutomationProperties.Name="Btn_Add_Item" 
                        Background="AliceBlue" 
-                       Appearance="Dark" />
-            <ui:Button
+                       Focusable="False"
+                       Command="{Binding AddItemCommand}"/>
+            <Button
                        Content="Edit" 
                        HorizontalAlignment="Stretch" 
                        VerticalAlignment="Stretch"   
                        Margin="5 5 5 5"    
                        Height="30" Width="80"
-                       FontSize="14" FontWeight="DemiBold" 
+                       FontSize="12" FontWeight="DemiBold" 
                        AutomationProperties.Name="Btn_Edit_Item" 
                        Background="AliceBlue" 
-                       Appearance="Dark" />
-            <ui:Button
+                       Focusable="False" />
+            <Button
                        Content="Delete" 
                        HorizontalAlignment="Stretch" 
                        VerticalAlignment="Stretch"
                        Margin="5 5 5 5"       
                        Height="30" Width="80"
-                       FontSize="14" FontWeight="DemiBold" 
+                       FontSize="12" FontWeight="DemiBold" 
                        AutomationProperties.Name="Btn_Delete_Cinema" 
-                       Background="AliceBlue" 
-                       Appearance="Dark" />
-            <ui:Button
+                       Background="AliceBlue"
+                       Focusable="False" />
+            <Button
                        Content="Add Data" 
                        HorizontalAlignment="Stretch" 
                        VerticalAlignment="Stretch"        
                        Margin="5 5 5 5"    
                        Height="30" Width="80"
-                       FontSize="14" FontWeight="DemiBold" 
+                       FontSize="12" FontWeight="DemiBold" 
                        AutomationProperties.Name="Btn_Add_Data" 
-                       Background="AliceBlue" 
-                       Appearance="Dark" 
+                       Background="AliceBlue"
+                       Focusable="False"
                        Command="{Binding MoveAddDataDB}"/>
         </StackPanel>
 

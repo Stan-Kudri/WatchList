@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="DataReplaceMessageWindow" Height="130" Width="400"
         ResizeMode="NoResize"
-        DataContext="{Binding DataReplaceMessageViewModel, Source={StaticResource ViewModelLocator}}">
+        DataContext="{Binding DataReplaceMessageVM, Source={StaticResource ViewModelLocator}}">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
