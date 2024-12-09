@@ -1,7 +1,7 @@
 using System.Windows;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Service.Component;
-using WatchList.WPF.Models.ModelDataLoad;
+using WatchList.WPF.ViewModel;
 using MessageBoxWindow = System.Windows.MessageBox;
 
 namespace WatchList.WPF.Views.Message
@@ -10,11 +10,11 @@ namespace WatchList.WPF.Views.Message
     {
         public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem)
         {
-            var replaceQuestionManager = new DialogReplaceQuestionManager();
-            var windowDataReplaceItem = new DataReplaceMessageWindow(titleItem, replaceQuestionManager);
+            var dataReplaceMessageVM = new DataReplaceMessageVM(titleItem);
+            var windowDataReplaceItem = new DataReplaceMessageWindow(dataReplaceMessageVM);
 
             return windowDataReplaceItem.ShowDialog() == true
-                ? Task.FromResult(replaceQuestionManager.DialogReplaceItemQuestion)
+                ? Task.FromResult(dataReplaceMessageVM.ResultQuestion)
                 : Task.FromResult(DialogReplaceItemQuestion.Unknown);
         }
 

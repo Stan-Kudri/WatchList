@@ -1,4 +1,3 @@
-using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.ViewModel;
 
 namespace WatchList.WPF.Views.Message
@@ -8,10 +7,10 @@ namespace WatchList.WPF.Views.Message
     /// </summary>
     public partial class DataReplaceMessageWindow
     {
-        public DataReplaceMessageWindow(string titleName, DialogReplaceQuestionManager replaceQuestionManager)
+        public DataReplaceMessageWindow(DataReplaceMessageVM viewModel)
         {
             InitializeComponent();
-            DataContext = new DataReplaceMessageVM(titleName, replaceQuestionManager);
+            DataContext = viewModel;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows;
 using DevExpress.Mvvm;
@@ -20,6 +21,8 @@ namespace WatchList.WPF.ViewModel
 {
     public class CinemaPageViewModel : BindableBase
     {
+        private const string HighlightTheDesiredLine = "No items selected.";
+
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
         private readonly ILogger<WatchItemRepository> _logger;
@@ -29,11 +32,13 @@ namespace WatchList.WPF.ViewModel
         private readonly FilterItemModel _filterItem;
         private readonly ItemSearchRequest _searchRequests;
 
+        private readonly bool _isAscending = true;
+
         private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
         private PagedList<WatchItem> _pagedList;
-        private readonly bool _isAscending = true;
 
+        private IList _selectItems = new ArrayList();
         private int _curPage;
 
         private int CurPage
@@ -61,6 +66,12 @@ namespace WatchList.WPF.ViewModel
             LoadDataAsync();
         }
 
+        public IList SelectItems
+        {
+            get => _selectItems;
+            set => SetValue(ref _selectItems, value);
+        }
+
         public ObservableCollection<WatchItem> WatchItems
         {
             get => _watchItems;
@@ -85,7 +96,8 @@ namespace WatchList.WPF.ViewModel
 
         public RelayCommandApp AddItemCommand
             => new RelayCommandApp(async async => await MoveAddItem());
-
+        public RelayCommandApp DeleteItemsCommand
+            => new RelayCommandApp(async async => await DeleteItems());
         public RelayCommandApp AddDataDBCommand
             => new RelayCommandApp(async async => await MoveAddData());
 
@@ -95,6 +107,31 @@ namespace WatchList.WPF.ViewModel
             if (addWindow.ShowDialog() != true)
             {
                 return;
+            }
+
+            await LoadDataAsync();
+        }
+
+        private async Task DeleteItems()
+        {
+            if (SelectItems.Count == 0)
+            {
+                await _messageBox.ShowInfo(HighlightTheDesiredLine);
+                return;
+            }
+
+            if (!await _messageBox.ShowQuestion("Delete select items?"))
+            {
+                return;
+            }
+
+            foreach (var item in SelectItems)
+            {
+                var isWatchItem = item as WatchItem;
+                if (isWatchItem != null)
+                {
+                    _itemService.Remove(isWatchItem.Id);
+                }
             }
 
             await LoadDataAsync();
