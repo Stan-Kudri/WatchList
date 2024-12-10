@@ -9,7 +9,7 @@ namespace WatchList.Core.Model.ItemCinema
     {
         protected const string FormatDate = "dd.MM.yyyy";
 
-        public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id, DateTime? dateWatch = null, int? grade = null)
+        public WatchItem(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id = null, DateTime? dateWatch = null, int? grade = null)
         {
             Title = string.IsNullOrEmpty(title) ? throw new ArgumentException("Invalid title format.", nameof(title)) : title;
             Sequel = sequel > 0 ? sequel : throw new ArgumentException("The sequel number is greater than zero.", nameof(sequel));
@@ -26,7 +26,7 @@ namespace WatchList.Core.Model.ItemCinema
             Title = string.Empty;
             Sequel = 1;
             Type = TypeCinema.Movie;
-            Status = StatusCinema.Look;
+            Status = StatusCinema.Planned;
             Date = null;
             Grade = null;
             Id = Guid.NewGuid();

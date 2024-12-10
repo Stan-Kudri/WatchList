@@ -35,6 +35,7 @@
                   SelectionMode="Extended" 
                   SelectionUnit="FullRow" 
                   SnapsToDevicePixels="True"
+                  SelectedItem="{Binding SelectItem, Mode=TwoWay}"
                   SelectedItemsList="{Binding SelectItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding WatchItems}">
             <local:CustomDataGrid.Columns>
@@ -120,7 +121,8 @@
                        FontSize="12" FontWeight="DemiBold" 
                        AutomationProperties.Name="Btn_Edit_Item" 
                        Background="AliceBlue" 
-                       Focusable="False" />
+                       Focusable="False" 
+                       Command="{Binding EditItemCommand}"/>
             <Button
                        Content="Delete" 
                        HorizontalAlignment="Stretch" 

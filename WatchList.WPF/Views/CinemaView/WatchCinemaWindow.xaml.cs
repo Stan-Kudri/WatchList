@@ -1,15 +1,17 @@
 using System.Windows;
+using WatchList.WPF.ViewModel.ItemsView;
 
 namespace WatchList.WPF.Views.CinemaView
 {
     /// <summary>
     /// Interaction logic for AddCinemaWindow.xaml
     /// </summary>
-    public partial class AddCinemaWindow : Window
+    public partial class WatchCinemaWindow : Window
     {
-        public AddCinemaWindow()
+        public WatchCinemaWindow(CinemaViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }

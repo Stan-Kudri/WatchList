@@ -8,10 +8,10 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"    
         Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}"
-        x:Class="WatchList.WPF.Views.CinemaView.AddCinemaWindow"
-        x:Name="AddItem"
+        x:Class="WatchList.WPF.Views.CinemaView.WatchCinemaWindow"
+        x:Name="WatchWindow"
         mc:Ignorable="d"
-        Title="Add Item" 
+        Title="{Binding TitleWindow}" 
         FontSize="14"
         Height="200" Width="460"
         ResizeMode="NoResize"
@@ -74,7 +74,7 @@
                    Margin="5 5 5 5"/>
             <mah:NumericUpDown Width="85"
                                Height="35"
-                               Minimum="0"
+                               Minimum="1"
                                Maximum="50"
                                IsEnabled="True"
                                Value="{Binding SetSequel, Mode=TwoWay}"/>
@@ -125,11 +125,11 @@
                     Grid.Row="3"
                     Grid.ColumnSpan="8">
             <Button Width="90" Height="30"
-                    Content="Add"    
+                    Content="Save"    
                     Focusable="False"
                     Margin="5 5 5 5"
-                    Command="{Binding AddItemCommand}"
-                    CommandParameter="{Binding ElementName=AddItem}">
+                    Command="{Binding MoveItemCommand}"
+                    CommandParameter="{Binding ElementName=WatchWindow}">
             </Button>
             <Button Width="90" Height="30"
                     Content="Clear"
@@ -142,7 +142,7 @@
                     Margin="5 5 5 5" 
                     Focusable="False"
                     Command="{Binding CloseWindowCommand}"
-                    CommandParameter="{Binding ElementName=AddItem}">
+                    CommandParameter="{Binding ElementName=WatchWindow}">
             </Button>
         </StackPanel>
         

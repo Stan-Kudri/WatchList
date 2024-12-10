@@ -19,8 +19,12 @@ namespace WatchList.WPF.Data
 
         public DataReplaceMessageVM DataReplaceMessageVM
             => _provider!.GetRequiredService<DataReplaceMessageVM>();
+
         public AddCinemaViewModel AddCinemaViewModel
             => _provider!.GetRequiredService<AddCinemaViewModel>();
+
+        public EditCinemaViewModel EditCinemaViewModel
+            => _provider!.GetRequiredService<EditCinemaViewModel>();
 
         public static IServiceCollection AddViewModels(ServiceCollection serviceCollection)
             => serviceCollection
@@ -28,7 +32,8 @@ namespace WatchList.WPF.Data
                 .AddTransient<CinemaPageViewModel>()
                 .AddTransient<MergeDatabaseViewModel>()
                 .AddTransient<DataReplaceMessageVM>()
-                .AddTransient<AddCinemaViewModel>();
+                .AddTransient<AddCinemaViewModel>()
+                .AddTransient<EditCinemaViewModel>();
 
         public static void Init(ServiceProvider provider) => _provider = provider;
     }
