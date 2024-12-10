@@ -4,8 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
       mc:Ignorable="d"
-      xmlns:local="clr-namespace:WatchList.WPF.Views"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:WatchList.WPF.Component"
       Title="CinemaPage"
       DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}"
       MinHeight="300" MinWidth="300">
@@ -26,24 +25,29 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ui:DataGrid Grid.Row="1" 
-                     ColumnWidth="Auto"
-                     Grid.ColumnSpan="8"
-                     FontSize="12"
-                     AutoGenerateColumns="False"
-                     FontStretch="ExtraCondensed"
-                     IsReadOnly="True"
-                     ItemsSource="{Binding WatchItems, Mode=OneWay}">
-            <DataGrid.Columns>
+        <local:CustomDataGrid Grid.Row="1" 
+                  Grid.ColumnSpan="8"
+                  ColumnWidth="Auto"
+                  FontSize="12"
+                  AutoGenerateColumns="False"   
+                  FontStretch="ExtraCondensed"
+                  IsReadOnly="True"
+                  SelectionMode="Extended" 
+                  SelectionUnit="FullRow" 
+                  SnapsToDevicePixels="True"
+                  SelectedItem="{Binding SelectItem, Mode=TwoWay}"
+                  SelectedItemsList="{Binding SelectItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding WatchItems}">
+            <local:CustomDataGrid.Columns>
                 <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" Width="Auto" />
                 <DataGridTextColumn Header="Season/Part" Binding="{Binding Path=Sequel}" Width="Auto" />
                 <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}" Width="Auto" />
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=dd MMMM yyyy}" Width="Auto"/>
                 <DataGridTextColumn Header="Grade" Binding="{Binding Path=Grade}" Width="Auto" />
                 <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" Width="Auto" />
-                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="Auto" />
-            </DataGrid.Columns>
-        </ui:DataGrid>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="Auto"/>
+            </local:CustomDataGrid.Columns>
+        </local:CustomDataGrid>
         <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="6">
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="2 2 2 2" 
@@ -117,7 +121,8 @@
                        FontSize="12" FontWeight="DemiBold" 
                        AutomationProperties.Name="Btn_Edit_Item" 
                        Background="AliceBlue" 
-                       Focusable="False" />
+                       Focusable="False" 
+                       Command="{Binding EditItemCommand}"/>
             <Button
                        Content="Delete" 
                        HorizontalAlignment="Stretch" 
@@ -127,7 +132,8 @@
                        FontSize="12" FontWeight="DemiBold" 
                        AutomationProperties.Name="Btn_Delete_Cinema" 
                        Background="AliceBlue"
-                       Focusable="False" />
+                       Focusable="False" 
+                       Command="{Binding DeleteItemsCommand}"/>
             <Button
                        Content="Add Data" 
                        HorizontalAlignment="Stretch" 

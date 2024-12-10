@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows;
 using DevExpress.Mvvm;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
@@ -13,6 +15,7 @@ using WatchList.WPF.Extension;
 using WatchList.WPF.Models;
 using WatchList.WPF.Models.Filter;
 using WatchList.WPF.Models.Sorter;
+using WatchList.WPF.ViewModel.ItemsView;
 using WatchList.WPF.Views;
 using WatchList.WPF.Views.CinemaView;
 
@@ -20,8 +23,12 @@ namespace WatchList.WPF.ViewModel
 {
     public class CinemaPageViewModel : BindableBase
     {
+        private const string HighlightTheDesiredLine = "No items selected.";
+        private const string NotSelectSingleItemLine = "Select one item.";
+
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<WatchItemRepository> _logger;
         private readonly PageService _pageService;
 
@@ -29,11 +36,14 @@ namespace WatchList.WPF.ViewModel
         private readonly FilterItemModel _filterItem;
         private readonly ItemSearchRequest _searchRequests;
 
+        private readonly bool _isAscending = true;
+
         private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
         private PagedList<WatchItem> _pagedList;
-        private readonly bool _isAscending = true;
 
+        private WatchItem _selectItem;
+        private IList _selectItems = new ArrayList();
         private int _curPage;
 
         private int CurPage
@@ -44,11 +54,13 @@ namespace WatchList.WPF.ViewModel
 
         public CinemaPageViewModel(IMessageBox messageBox,
                             ILogger<WatchItemRepository> logger,
+                            IServiceProvider serviceProvider,
                             WatchItemService watchItemService,
                             SortWatchItemModel sortField,
                             FilterItemModel filterItem,
                             PageService pageService)
         {
+            _serviceProvider = serviceProvider;
             _messageBox = messageBox;
             _logger = logger;
             _itemService = watchItemService;
@@ -59,6 +71,18 @@ namespace WatchList.WPF.ViewModel
             _pagedList = _itemService.GetPage(_searchRequests);
             CurPage = Page.Number;
             LoadDataAsync();
+        }
+
+        public WatchItem SelectItem
+        {
+            get => _selectItem;
+            set => SetValue(ref _selectItem, value);
+        }
+
+        public IList SelectItems
+        {
+            get => _selectItems;
+            set => SetValue(ref _selectItems, value);
         }
 
         public ObservableCollection<WatchItem> WatchItems
@@ -85,16 +109,67 @@ namespace WatchList.WPF.ViewModel
 
         public RelayCommandApp AddItemCommand
             => new RelayCommandApp(async async => await MoveAddItem());
-
+        public RelayCommandApp EditItemCommand
+            => new RelayCommandApp(async async => await EditItem());
+        public RelayCommandApp DeleteItemsCommand
+            => new RelayCommandApp(async async => await DeleteItems());
         public RelayCommandApp AddDataDBCommand
             => new RelayCommandApp(async async => await MoveAddData());
 
         private async Task MoveAddItem()
         {
-            var addWindow = new AddCinemaWindow();
+            var viewModel = _serviceProvider.GetRequiredService<AddCinemaViewModel>();
+            viewModel.InitializeDefaultValue();
+            var addWindow = new WatchCinemaWindow(viewModel);
+
             if (addWindow.ShowDialog() != true)
             {
                 return;
+            }
+
+            await LoadDataAsync();
+        }
+
+        private async Task EditItem()
+        {
+            if (SelectItems.Count != 1)
+            {
+                await _messageBox.ShowInfo(NotSelectSingleItemLine);
+                return;
+            }
+
+            var viewModel = _serviceProvider.GetRequiredService<EditCinemaViewModel>();
+            viewModel.InitializeDefaultValue(SelectItem);
+            var editWindow = new WatchCinemaWindow(viewModel);
+
+            if (editWindow.ShowDialog() != true)
+            {
+                return;
+            }
+
+            await LoadDataAsync();
+        }
+
+        private async Task DeleteItems()
+        {
+            if (SelectItems.Count == 0)
+            {
+                await _messageBox.ShowInfo(HighlightTheDesiredLine);
+                return;
+            }
+
+            if (!await _messageBox.ShowQuestion("Delete select items?"))
+            {
+                return;
+            }
+
+            foreach (var item in SelectItems)
+            {
+                var isWatchItem = item as WatchItem;
+                if (isWatchItem != null)
+                {
+                    _itemService.Remove(isWatchItem.Id);
+                }
             }
 
             await LoadDataAsync();

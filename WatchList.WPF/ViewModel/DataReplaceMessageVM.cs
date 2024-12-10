@@ -1,7 +1,6 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using WatchList.Core.Model.QuestionResult;
-using WatchList.WPF.Models.ModelDataLoad;
 
 namespace WatchList.WPF.ViewModel
 {
@@ -11,16 +10,13 @@ namespace WatchList.WPF.ViewModel
 
         private readonly string _titleLabel;
 
-        public DataReplaceMessageVM(string titleItem, DialogReplaceQuestionManager questionResult)
-        {
-            _titleLabel = titleItem;
-            ResultQuestion = questionResult;
-        }
+        public DataReplaceMessageVM(string titleItem)
+            => _titleLabel = titleItem;
 
         public string QuestionLabel => Question;
         public string TitleLabel => _titleLabel;
 
-        public DialogReplaceQuestionManager ResultQuestion { get; private set; }
+        public DialogReplaceItemQuestion ResultQuestion { get; private set; } = DialogReplaceItemQuestion.Unknown;
 
         public RelayCommand<Window> MoveYesCommand => new(MoveYesClick);
         public RelayCommand<Window> MoveAllYesCommand => new(MoveAllYesClick);
@@ -29,28 +25,28 @@ namespace WatchList.WPF.ViewModel
 
         private void MoveYesClick(Window window)
         {
-            ResultQuestion.UpdateData(DialogReplaceItemQuestion.Yes);
+            ResultQuestion = DialogReplaceItemQuestion.Yes;
             window.DialogResult = true;
             window?.Close();
         }
 
         private void MoveAllYesClick(Window window)
         {
-            ResultQuestion.UpdateData(DialogReplaceItemQuestion.AllYes);
+            ResultQuestion = DialogReplaceItemQuestion.AllYes;
             window.DialogResult = true;
             window?.Close();
         }
 
         private void MoveNoClick(Window window)
         {
-            ResultQuestion.UpdateData(DialogReplaceItemQuestion.No);
+            ResultQuestion = DialogReplaceItemQuestion.No;
             window.DialogResult = true;
             window?.Close();
         }
 
         private void MoveAllNoClick(Window window)
         {
-            ResultQuestion.UpdateData(DialogReplaceItemQuestion.AllNo);
+            ResultQuestion = DialogReplaceItemQuestion.AllNo;
             window.DialogResult = true;
             window?.Close();
         }

@@ -6,21 +6,21 @@ using WatchList.WPF.Models;
 
 namespace WatchList.WPF.ViewModel.ItemsView
 {
-    public class AddCinemaViewModel : CinemaViewModel
+    public class EditCinemaViewModel : CinemaViewModel
     {
-        public AddCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItemCreator watchItemCreator)
+        public EditCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItemCreator watchItemCreator)
             : base(messageBox, watchItemRepository, watchItemCreator)
         {
         }
 
-        public override void InitializeDefaultValue(WatchItem? watchItem = null)
+        public override void InitializeDefaultValue(WatchItem? watchItem)
         {
-            _defaultWatchItem = new WatchItemModel();
+            _defaultWatchItem = watchItem;
             SetDefaultValues();
             LabelSequelType = SelectedTypeCinema.TypeSequel;
         }
 
-        public override string TitleWindow => "Add Item";
+        public override string TitleWindow => "Edit Window";
 
         protected override async void SaveCinema(Window currentWindowAdd)
         {
@@ -30,17 +30,29 @@ namespace WatchList.WPF.ViewModel.ItemsView
                 return;
             }
 
-            currentWindowAdd.DialogResult = true;
-            _watchItemRepository.Add(GetCinema());
+            var item = GetCinema();
+
+            if (_defaultWatchItem.Equals(item))
+            {
+                await _messageBox.ShowInfo("No changed item cinema.");
+            }
+            else
+            {
+                currentWindowAdd.DialogResult = true;
+                _watchItemRepository.Update(item);
+            }
+
             currentWindowAdd.Close();
         }
 
         protected override void SetDefaultValues()
         {
+            SetId = _defaultWatchItem.Id;
             SetTitle = _defaultWatchItem.Title;
-            SetGrade = _defaultWatchItem.Grade;
             SelectedStatusCinema = _defaultWatchItem.Status;
             SelectedTypeCinema = _defaultWatchItem.Type;
+            SetGrade = _defaultWatchItem.Grade;
+            SetDateTime = _defaultWatchItem.Date;
         }
     }
 }
