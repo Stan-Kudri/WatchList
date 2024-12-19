@@ -4,6 +4,7 @@ using System.Windows;
 using DevExpress.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
@@ -13,7 +14,6 @@ using WatchList.WPF.Commands;
 using WatchList.WPF.Data;
 using WatchList.WPF.Extension;
 using WatchList.WPF.Models;
-using WatchList.WPF.Models.Filter;
 using WatchList.WPF.Models.Sorter;
 using WatchList.WPF.ViewModel.ItemsView;
 using WatchList.WPF.Views;
@@ -33,8 +33,10 @@ namespace WatchList.WPF.ViewModel
         private readonly PageService _pageService;
 
         private readonly SortWatchItemModel _sortField;
-        private readonly FilterItemModel _filterItem;
         private readonly ItemSearchRequest _searchRequests;
+
+        private string _pageDisplayText = string.Empty;
+        private IFilterItem _filterItem;
 
         private readonly bool _isAscending = true;
 
@@ -44,20 +46,13 @@ namespace WatchList.WPF.ViewModel
 
         private WatchItem _selectItem;
         private IList _selectItems = new ArrayList();
-        private int _curPage;
-
-        private int CurPage
-        {
-            get => _curPage;
-            set => SetValue(ref _curPage, value);
-        }
 
         public CinemaPageViewModel(IMessageBox messageBox,
                             ILogger<WatchItemRepository> logger,
                             IServiceProvider serviceProvider,
                             WatchItemService watchItemService,
                             SortWatchItemModel sortField,
-                            FilterItemModel filterItem,
+                            IFilterItem filterItem,
                             PageService pageService)
         {
             _serviceProvider = serviceProvider;
@@ -67,11 +62,13 @@ namespace WatchList.WPF.ViewModel
             _sortField = sortField;
             _filterItem = filterItem;
             _pageService = pageService;
+
             _searchRequests = new ItemSearchRequest(_filterItem, _sortField.GetSortItem(), Page.GetPage(), _isAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
-            CurPage = Page.Number;
             LoadDataAsync();
         }
+
+        private PageModel Page { get; set; } = new PageModel();
 
         public WatchItem SelectItem
         {
@@ -91,30 +88,49 @@ namespace WatchList.WPF.ViewModel
             private set => SetValue(ref _watchItems, value);
         }
 
-        private PageModel Page { get; set; } = new PageModel();
+        public IFilterItem FilterItemModel
+        {
+            get => _filterItem;
+            set => SetValue(ref _filterItem, value);
+        }
 
-        public string PageDisplayText => $"Page {CurPage} of {_pagedList.PageCount}";
+        public string PageDisplayText
+        {
+            get => _pageDisplayText;
+            set => SetValue(ref _pageDisplayText, value);
+        }
 
-        public List<WatchItemCreator> PageWatchItems { get; set; }
+        public RelayCommandApp UseFilterCommand
+            => new(async _ => await UseFilter());
+        public RelayCommandApp ClearFilterCommand
+            => new(async _ => await ClearFilter());
 
         public RelayCommandApp MoveToPreviousPage
-            => new RelayCommandApp(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
+            => new(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
         public RelayCommandApp MoveToFirstPage
-            => new RelayCommandApp(async _ => await LoadDataAsyncPage(1), _ => _pagedList.HasPreviousPage);
+            => new(async _ => await LoadDataAsyncPage(1), _ => _pagedList.HasPreviousPage);
 
         public RelayCommandApp MoveToNextPage
-            => new RelayCommandApp(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
         public RelayCommandApp MoveToLastPage
-            => new RelayCommandApp(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
         public RelayCommandApp AddItemCommand
-            => new RelayCommandApp(async async => await MoveAddItem());
+            => new(async async => await MoveAddItem());
         public RelayCommandApp EditItemCommand
-            => new RelayCommandApp(async async => await EditItem());
+            => new(async async => await EditItem());
         public RelayCommandApp DeleteItemsCommand
-            => new RelayCommandApp(async async => await DeleteItems());
+            => new(async async => await DeleteItems());
         public RelayCommandApp AddDataDBCommand
-            => new RelayCommandApp(async async => await MoveAddData());
+            => new(async async => await MoveAddData());
+
+        private async Task UseFilter() => await LoadDataAsync();
+
+        private async Task ClearFilter()
+        {
+            _filterItem.Clear();
+            await LoadDataAsync();
+        }
 
         private async Task MoveAddItem()
         {
@@ -203,6 +219,8 @@ namespace WatchList.WPF.ViewModel
                     Page.Number -= 1;
                     await LoadDataAsync();
                 }
+
+                PageDisplayText = $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
             }
             catch (Exception error)
             {
@@ -215,7 +233,7 @@ namespace WatchList.WPF.ViewModel
         /// </summary>
         private async Task LoadDataAsyncPage(int pageNumber)
         {
-            Page.Number = CurPage = pageNumber;
+            Page.Number = pageNumber;
             await LoadDataAsync();
         }
 

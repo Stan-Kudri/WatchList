@@ -1,5 +1,6 @@
 using DevExpress.Mvvm.POCO;
 using Microsoft.Extensions.DependencyInjection;
+using WatchList.Core.Model.Filter;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
@@ -26,7 +27,7 @@ namespace WatchList.WPF.Extension
                                       .AddScoped<WatchItemService>()
                                       .AddScoped<DownloadDataService>()
                                       .AddScoped<SortWatchItemModel>()
-                                      .AddScoped<FilterItemModel>()
+                                      .AddScoped<IFilterItem, FilterItemModel>()
                                       .AddSingleton<PageService>()
                                       .AddScoped<ViewModelLocator>()
                                       .AddScoped<FileLoaderDB>()

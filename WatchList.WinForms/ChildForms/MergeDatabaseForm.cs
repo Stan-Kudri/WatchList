@@ -21,8 +21,8 @@ namespace WatchList.WinForms.ChildForms
             InitializeComponent();
         }
 
-        private TypeLoadingCinema SelectTypeCinema =>
-            cmbTypeCinema.SelectedValue != null ? (TypeLoadingCinema)cmbTypeCinema.SelectedValue : throw new ArgumentNullException("Wrong combo box format");
+        private TypeCinemaModel SelectTypeCinema =>
+            cmbTypeCinema.SelectedValue != null ? (TypeCinemaModel)cmbTypeCinema.SelectedValue : throw new ArgumentNullException("Wrong combo box format");
 
         private Grade SelectGrade =>
             cmbGrade.SelectedValue != null ? (Grade)cmbGrade.SelectedValue : throw new ArgumentNullException("Wrong combo box format");

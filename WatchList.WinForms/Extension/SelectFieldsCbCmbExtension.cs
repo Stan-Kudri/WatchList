@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Ardalis.SmartEnum;
 using TestTask.Controls.CheckComboBox;
 using WatchList.WinForms.BindingItem.ModelBoxForm.Sorter;
@@ -7,7 +8,7 @@ namespace WatchList.WinForms.Extension
     public static class SelectFieldsCbCmbExtension
     {
         [Obsolete]
-        public static HashSet<T> SelectFieldCheckBoxCMB<T>(this CheckBoxComboBox checkBoxCMB)
+        public static ObservableCollection<T> SelectFieldCheckBoxCMB<T>(this CheckBoxComboBox checkBoxCMB)
             where T : SmartEnum<T>
         {
             var selectField = new HashSet<T>();
@@ -22,7 +23,7 @@ namespace WatchList.WinForms.Extension
                 }
             }
 
-            return selectField;
+            return new ObservableCollection<T>(selectField);
         }
 
         public static string[] GetSortFieldArray(this SortWatchItemModel sortField)
