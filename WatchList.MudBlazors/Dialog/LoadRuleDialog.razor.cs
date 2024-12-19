@@ -29,7 +29,7 @@ namespace WatchList.MudBlazors.Dialog
             DuplicateLoadingRules.CaseSensitive
         };
 
-        private TypeLoadingCinema _selectTypeCinema = new TypeLoadingCinema();
+        private TypeCinemaModel _selectTypeCinema = TypeCinemaModel.AllType;
         private Grade _selectGrade = Grade.AnyGrade;
 
         private void Close() => MudDialog.Cancel();

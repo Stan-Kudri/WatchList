@@ -33,10 +33,10 @@
 
         <div class="d-flex align-start">
 
-            <MudSelect T="TypeLoadingCinema" Label="Type" @bind-Value="_selectTypeCinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Style="width:200px" Class="mr-2">
-                @foreach (var item in TypeLoadingCinema.GetItemsType)
+            <MudSelect T="TypeCinemaModel" Label="Type" @bind-Value="_selectTypeCinema" AdornmentIcon="@Icons.Material.Filled.ShortText" Style="width:200px" Class="mr-2">
+                @foreach (var item in TypeCinemaModel.GetItemsType)
                 {
-                    <MudSelectItem T="TypeLoadingCinema" Value="@item" />
+                    <MudSelectItem T="TypeCinemaModel" Value="@item" />
                 }
             </MudSelect>
 

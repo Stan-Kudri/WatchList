@@ -5,20 +5,20 @@ namespace WatchList.WinForms.BindingItem.ModelDataLoad
 {
     public class ModelTypeCinemaUpload : ModelBase
     {
-        private TypeLoadingCinema _type = new TypeLoadingCinema();
+        private TypeCinemaModel _type = TypeCinemaModel.AllType;
 
         public ModelTypeCinemaUpload()
-            : this(new TypeLoadingCinema())
+            : this(new TypeCinemaModel())
         {
         }
 
-        public ModelTypeCinemaUpload(TypeLoadingCinema type)
+        public ModelTypeCinemaUpload(TypeCinemaModel type)
             => SelectedValue = type;
 
-        public ObservableCollection<TypeLoadingCinema> Items { get; set; }
-            = TypeLoadingCinema.GetItemsType;
+        public ObservableCollection<TypeCinemaModel> Items { get; set; }
+            = TypeCinemaModel.GetItemsType;
 
-        public TypeLoadingCinema SelectedValue
+        public TypeCinemaModel SelectedValue
         {
             get => _type;
             set => SetField(ref _type, value);

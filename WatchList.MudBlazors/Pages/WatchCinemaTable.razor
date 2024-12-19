@@ -45,7 +45,7 @@
         <MudSpacer/>
 
         <div style="align-items:end; width:250px">
-            <MudSelect T="TypeCinema" Label="Type cinema" MultiSelection="true"  @bind-SelectedValues="FilterWatchItem.FilterTypeField"
+            <MudSelect T="TypeCinema" Label="Type cinema" MultiSelection="true" @bind-SelectedValues="FilterWatchItem.FilterTypeField"
                        SelectAll="true" SelectAllText="All type" OnClose="@LoadData" Class="mr-1" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionTypeCinema))">
                 @foreach (var item in FilterWatchItem.TypeItems)
                 {

@@ -10,9 +10,9 @@ namespace WatchList.Core.Model.Filter
 
         IEnumerable<StatusCinema> FilterStatusField { get; set; }
 
-        ObservableCollection<TypeCinema> TypeItems { get; set; }
+        List<TypeCinema> TypeItems { get; set; }
 
-        ObservableCollection<StatusCinema> StatusItems { get; set; }
+        List<StatusCinema> StatusItems { get; set; }
 
         IQueryable<WatchItem> Apply(IQueryable<WatchItem> items)
         {
@@ -23,8 +23,8 @@ namespace WatchList.Core.Model.Filter
 
         void Clear()
         {
-            FilterTypeField = new HashSet<TypeCinema>(TypeCinema.List);
-            FilterStatusField = new HashSet<StatusCinema>(StatusCinema.List);
+            FilterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
+            FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
         }
 
         FilterWatchItem GetFilter();

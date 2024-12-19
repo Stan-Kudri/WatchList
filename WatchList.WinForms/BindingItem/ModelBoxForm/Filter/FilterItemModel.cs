@@ -13,8 +13,8 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
         {
             SelectTypeField = TypeItems.Select(e => e.ToString()).ToArray();
             SelectStatusField = StatusItems.Select(e => e.ToString()).ToArray();
-            _filterTypeField = TypeCinema.List;
-            _filterStatusField = StatusCinema.List;
+            FilterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
+            FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
         }
 
         public string[] SelectTypeField { get; }
@@ -61,18 +61,18 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Filter
             }
         }
 
-        public ObservableCollection<TypeCinema> TypeItems { get; set; }
-            = new ObservableCollection<TypeCinema>(TypeCinema.List);
+        public List<TypeCinema> TypeItems { get; set; }
+            = new List<TypeCinema>(TypeCinema.List);
 
-        public ObservableCollection<StatusCinema> StatusItems { get; set; }
-            = new ObservableCollection<StatusCinema>(StatusCinema.List);
+        public List<StatusCinema> StatusItems { get; set; }
+            = new List<StatusCinema>(StatusCinema.List);
 
         public FilterWatchItem GetFilter() => new FilterWatchItem(_filterTypeField, _filterStatusField);
 
         public void Clear()
         {
-            FilterTypeField = new HashSet<TypeCinema>(TypeCinema.List);
-            FilterStatusField = new HashSet<StatusCinema>(StatusCinema.List);
+            FilterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
+            FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
         }
     }
 }

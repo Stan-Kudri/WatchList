@@ -16,7 +16,7 @@ namespace WatchList.WPF.ViewModel
         private readonly FileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;
 
-        private TypeLoadingCinema _selectTypeLoadCinema;
+        private TypeCinemaModel _selectTypeLoadCinema;
         private Grade _selectGradeLoadCinema;
 
         private bool _isExistGrade;
@@ -35,7 +35,7 @@ namespace WatchList.WPF.ViewModel
             SetupDefaultValues();
         }
 
-        public TypeLoadingCinema SelectTypeLoadCinema
+        public TypeCinemaModel SelectTypeLoadCinema
         {
             get => _selectTypeLoadCinema;
             set => SetValue(ref _selectTypeLoadCinema, value);
@@ -71,7 +71,7 @@ namespace WatchList.WPF.ViewModel
             set => SetValue(ref _isCaseSensitive, value);
         }
 
-        public IEnumerable<TypeLoadingCinema> ListTypeLoadingCinema => TypeLoadingCinema.GetItemsType;
+        public IEnumerable<TypeCinemaModel> ListTypeLoadingCinema => TypeCinemaModel.GetItemsType;
         public IEnumerable<Grade> GradeLoadingCinema => Grade.List;
 
         public RelayCommand<Window> MergeDateFromDBCommand { get; private set; }
@@ -92,7 +92,7 @@ namespace WatchList.WPF.ViewModel
 
         private void SetupDefaultValues()
         {
-            SelectTypeLoadCinema = TypeLoadingCinema.AllType;
+            SelectTypeLoadCinema = TypeCinemaModel.AllType;
             SelectGradeLoadCinema = Grade.AnyGrade;
             IsExistGrade = IsConsiderDuplicate =
                 IsCaseSensitive = IsUpdateDuplicateItem = false;

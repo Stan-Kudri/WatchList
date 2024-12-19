@@ -16,16 +16,16 @@ namespace WatchList.Core.Model.Filter
         }
 
         public IEnumerable<TypeCinema> FilterTypeField { get; set; }
-            = TypeCinema.List.ToList();
-
-        public IEnumerable<StatusCinema> FilterStatusField { get; set; }
-            = StatusCinema.List.ToList();
-
-        public ObservableCollection<TypeCinema> TypeItems { get; set; }
             = new ObservableCollection<TypeCinema>(TypeCinema.List);
 
-        public ObservableCollection<StatusCinema> StatusItems { get; set; }
-            = new ObservableCollection<StatusCinema>(StatusCinema.List);
+        public IEnumerable<StatusCinema> FilterStatusField { get; set; }
+             = new ObservableCollection<StatusCinema>(StatusCinema.List);
+
+        public List<TypeCinema> TypeItems { get; set; }
+            = new List<TypeCinema>(TypeCinema.List);
+
+        public List<StatusCinema> StatusItems { get; set; }
+            = new List<StatusCinema>(StatusCinema.List);
 
         public FilterWatchItem GetFilter() => this;
 
