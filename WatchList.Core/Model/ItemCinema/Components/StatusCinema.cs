@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using Ardalis.SmartEnum;
 using WatchList.Core.Enums;
 
@@ -17,8 +16,5 @@ namespace WatchList.Core.Model.ItemCinema.Components
         }
 
         public static StatusCinema FromValue(Status status) => FromValue((int)status);
-
-        public static ObservableCollection<StatusCinema> StatusCinemasCollection
-            => new ObservableCollection<StatusCinema>(List);
     }
 }
