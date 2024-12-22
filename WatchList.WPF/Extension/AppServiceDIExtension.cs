@@ -27,6 +27,7 @@ namespace WatchList.WPF.Extension
                                       .AddScoped<WatchItemService>()
                                       .AddScoped<DownloadDataService>()
                                       .AddScoped<SortWatchItemModel>()
+                                      .AddScoped<TypeSortFields>()
                                       .AddScoped<IFilterItem, FilterItemModel>()
                                       .AddSingleton<PageService>()
                                       .AddScoped<ViewModelLocator>()

@@ -7,14 +7,8 @@ namespace WatchList.WPF.Models.Filter
 {
     public class FilterItemModel : BindableBase, IFilterItem
     {
-        private IEnumerable<TypeCinema> _filterTypeField;
-        private IEnumerable<StatusCinema> _filterStatusField;
-
-        public FilterItemModel()
-        {
-            FilterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
-            FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
-        }
+        private IEnumerable<TypeCinema> _filterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
+        private IEnumerable<StatusCinema> _filterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
 
         public IEnumerable<TypeCinema> FilterTypeField
         {
