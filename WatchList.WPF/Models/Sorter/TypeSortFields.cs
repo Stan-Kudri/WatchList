@@ -1,16 +1,26 @@
-using Ardalis.SmartEnum;
+using DevExpress.Mvvm;
 
 namespace WatchList.WPF.Models.Sorter
 {
-    public class TypeSortFields : SmartEnum<TypeSortFields>
+    public class TypeSortFields : BindableBase
     {
-        public static readonly TypeSortFields Unknown = new TypeSortFields("Unknown", 0);
-        public static readonly TypeSortFields Ascending = new TypeSortFields("↑", 1);
-        public static readonly TypeSortFields Descending = new TypeSortFields("↓", 2);
+        private bool _isAscending = false;
+        private string _buttonContent = null!;
 
-        public TypeSortFields(string name, int value)
-            : base(name, value)
+        public bool IsAscending
         {
+            get => _isAscending;
+            set
+            {
+                ButtonContent = _isAscending ? "↑" : "↓";
+                SetValue(ref _isAscending, value);
+            }
+        }
+
+        public string ButtonContent
+        {
+            get => _buttonContent;
+            set => SetValue(ref _buttonContent, value);
         }
     }
 }

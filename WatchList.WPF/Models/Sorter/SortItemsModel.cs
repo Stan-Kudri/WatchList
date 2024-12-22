@@ -10,17 +10,13 @@ namespace WatchList.WPF.Models.Sorter
 
         public SortItemsModel(ISortItem<T> sortType)
         {
-            _sortType = sortType;
-
             if (sortType == null || sortType.Items.Count == decimal.Zero)
             {
                 throw new ArgumentNullException("Error loading sort fields.");
             }
 
-            SelectField = Items.Select(e => e.ToString()).ToArray();
+            _sortType = sortType;
         }
-
-        public string[] SelectField { get; }
 
         public IEnumerable<ISortableSmartEnum<T>> SortFields
         {
@@ -37,7 +33,8 @@ namespace WatchList.WPF.Models.Sorter
                     return;
                 }
 
-                SetValue(_sortType.SortFields);
+                _sortType.SortFields = value;
+                RaisePropertyChanged(nameof(SortFields));
             }
         }
 
@@ -47,7 +44,7 @@ namespace WatchList.WPF.Models.Sorter
             set => _sortType.SortField = value;
         }
 
-        public ObservableCollection<ISortableSmartEnum<T>> Items
+        public List<ISortableSmartEnum<T>> Items
         {
             get => _sortType.Items;
             set => _sortType.Items = value;
@@ -57,6 +54,6 @@ namespace WatchList.WPF.Models.Sorter
             => _sortType.Apply(items, ascending);
 
         public virtual void Clear()
-            => SortFields = new HashSet<ISortableSmartEnum<T>>();
+            => SortFields = new ObservableCollection<ISortableSmartEnum<T>>();
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Windows;
 using DevExpress.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,13 +31,12 @@ namespace WatchList.WPF.ViewModel
         private readonly ILogger<WatchItemRepository> _logger;
         private readonly PageService _pageService;
 
-        private readonly SortWatchItemModel _sortField;
         private readonly ItemSearchRequest _searchRequests;
 
         private string _pageDisplayText = string.Empty;
         private IFilterItem _filterItem;
-
-        private readonly bool _isAscending = true;
+        private SortWatchItemModel _sortField;
+        private TypeSortFields _typeSortFields;
 
         private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
@@ -53,7 +51,8 @@ namespace WatchList.WPF.ViewModel
                             WatchItemService watchItemService,
                             SortWatchItemModel sortField,
                             IFilterItem filterItem,
-                            PageService pageService)
+                            PageService pageService,
+                            TypeSortFields typeSortFields)
         {
             _serviceProvider = serviceProvider;
             _messageBox = messageBox;
@@ -62,8 +61,10 @@ namespace WatchList.WPF.ViewModel
             _sortField = sortField;
             _filterItem = filterItem;
             _pageService = pageService;
+            _typeSortFields = typeSortFields;
 
-            _searchRequests = new ItemSearchRequest(_filterItem, _sortField.GetSortItem(), Page.GetPage(), _isAscending);
+            TypeSortField.IsAscending = true;
+            _searchRequests = new ItemSearchRequest(_filterItem, SortItemModel.GetSortItem(), Page.GetPage(), _typeSortFields.IsAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
             LoadDataAsync();
         }
@@ -94,16 +95,27 @@ namespace WatchList.WPF.ViewModel
             set => SetValue(ref _filterItem, value);
         }
 
+        public SortWatchItemModel SortItemModel
+        {
+            get => _sortField;
+            set => SetValue(ref _sortField, value);
+        }
+
+        public TypeSortFields TypeSortField
+        {
+            get => _typeSortFields;
+            set => SetValue(ref _typeSortFields, value);
+        }
+
         public string PageDisplayText
         {
             get => _pageDisplayText;
             set => SetValue(ref _pageDisplayText, value);
         }
 
-        public RelayCommandApp UseFilterCommand
-            => new(async _ => await UseFilter());
-        public RelayCommandApp ClearFilterCommand
-            => new(async _ => await ClearFilter());
+        public RelayCommandApp UseFilterCommand => new(async _ => await UseFilter());
+
+        public RelayCommandApp ClearFilterCommand => new(async _ => await ClearFilter());
 
         public RelayCommandApp MoveToPreviousPage
             => new(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
@@ -115,20 +127,17 @@ namespace WatchList.WPF.ViewModel
         public RelayCommandApp MoveToLastPage
             => new(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
-        public RelayCommandApp AddItemCommand
-            => new(async async => await MoveAddItem());
-        public RelayCommandApp EditItemCommand
-            => new(async async => await EditItem());
-        public RelayCommandApp DeleteItemsCommand
-            => new(async async => await DeleteItems());
-        public RelayCommandApp AddDataDBCommand
-            => new(async async => await MoveAddData());
+        public RelayCommandApp AddItemCommand => new(async async => await MoveAddItem());
+        public RelayCommandApp EditItemCommand => new(async async => await EditItem());
+        public RelayCommandApp DeleteItemsCommand => new(async async => await DeleteItems());
+        public RelayCommandApp AddDataDBCommand => new(async async => await MoveAddData());
 
         private async Task UseFilter() => await LoadDataAsync();
 
         private async Task ClearFilter()
         {
-            _filterItem.Clear();
+            FilterItemModel.Clear();
+            SortItemModel.Clear();
             await LoadDataAsync();
         }
 
@@ -245,7 +254,7 @@ namespace WatchList.WPF.ViewModel
             _searchRequests.Page = Page.GetPage();
             _searchRequests.Sort = _sortField.GetSortItem();
             _searchRequests.Filter = _filterItem.GetFilter();
-            _searchRequests.IsAscending = _isAscending;
+            _searchRequests.IsAscending = _typeSortFields.IsAscending;
         }
 
         /// <summary>
@@ -255,7 +264,5 @@ namespace WatchList.WPF.ViewModel
         /// True - The page contains no elements and is not the first.
         /// </returns>
         private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
-
-        private async void Window_Loaded(object sender, RoutedEventArgs e) => await LoadDataAsync();
     }
 }

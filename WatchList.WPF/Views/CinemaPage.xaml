@@ -9,13 +9,13 @@
       mc:Ignorable="d"
       Title="CinemaPage"
       DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}"
-      MinHeight="400" MinWidth="550">
+      MinHeight="500" MinWidth="650">
     <Grid Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition MinHeight="100"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -28,38 +28,59 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0"
-                    Grid.Column="3"
-                    Grid.ColumnSpan="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="8"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <mah:MultiSelectionComboBox Width="175"
+            <mah:MultiSelectionComboBox Width="160"
+                            Height="50"
+                            Margin="4 2 4 2"
+                            BorderBrush="Black"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            DataContext="{Binding SortItemModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding Items, Mode=TwoWay}"
+                            mah:MultiSelectorHelper.SelectedItems="{Binding SortFields, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            mah:TextBoxHelper.Watermark="Sorting field"
+                            SelectedItemContainerStyle="{DynamicResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable}"
+                            SelectionMode="Multiple"/>
+            <ToggleButton MaxHeight="35"
+                          MinWidth="30"
+                          VerticalAlignment="Center"
+                          Content="{Binding TypeSortField.ButtonContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          IsChecked="{Binding TypeSortField.IsAscending, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Command="{Binding UseFilterCommand}"
+                          Focusable="False"/>
+            <mah:MultiSelectionComboBox Width="160"
                                         Height="50"
                                         Margin="4 2 4 2"
                                         BorderBrush="Black"
                                         VerticalAlignment="Center" 
+                                        HorizontalAlignment="Left"
                                         DataContext="{Binding FilterItemModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding TypeItems, Mode=TwoWay}"
                                         mah:MultiSelectorHelper.SelectedItems="{Binding FilterTypeField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         mah:TextBoxHelper.Watermark="Type"
                                         SelectedItemContainerStyle="{DynamicResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable}"
                                         SelectionMode="Multiple"/>
-            <mah:MultiSelectionComboBox Width="175"
+            <mah:MultiSelectionComboBox Width="160"
                                         Height="50"
                                         Margin="4 2 4 2"  
                                         BorderBrush="Black"
                                         VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
                                         DataContext="{Binding FilterItemModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding StatusItems, Mode=TwoWay}"
                                         mah:MultiSelectorHelper.SelectedItems="{Binding FilterStatusField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         mah:TextBoxHelper.Watermark="Status"
                                         SelectedItemContainerStyle="{DynamicResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable}"
                                         SelectionMode="Multiple"/>
-            <StackPanel MinWidth="140"
+            <StackPanel MinWidth="120"
                         Orientation="Vertical"
                         HorizontalAlignment="Left">
                 <Button Margin="5 2 5 2"
                         Height="30"
-                        Width="140"
+                        Width="120"
                         FontSize="12"
                         Content="Use Filter"
                         Command="{Binding UseFilterCommand}" 
@@ -67,7 +88,7 @@
                 </Button>
                 <Button Margin="5 2 5 2" 
                         Height="30"
-                        Width="140"
+                        Width="120"
                         FontSize="12"
                         Content="Clear Filter"
                         Command="{Binding ClearFilterCommand}" 

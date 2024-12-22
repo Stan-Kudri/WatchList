@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using WatchList.Core.Model.Sortable;
 
 namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
@@ -9,12 +8,12 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
 
         public SortItemsModel(ISortItem<T> sortType)
         {
-            _sortType = sortType;
-
             if (sortType == null || sortType.Items.Count == decimal.Zero)
             {
                 throw new ArgumentNullException("Error loading sort fields.");
             }
+
+            _sortType = sortType;
 
             SelectField = Items.Select(e => e.ToString()).ToArray();
         }
@@ -37,7 +36,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
                 }
 
                 _sortType.SortFields = value;
-                OnPropertyChanged(nameof(_sortType.SortFields));
+                OnPropertyChanged(nameof(SortFields));
             }
         }
 
@@ -47,7 +46,7 @@ namespace WatchList.WinForms.BindingItem.ModelBoxForm.Sorter
             set => _sortType.SortField = value;
         }
 
-        public ObservableCollection<ISortableSmartEnum<T>> Items
+        public List<ISortableSmartEnum<T>> Items
         {
             get => _sortType.Items;
             set => _sortType.Items = value;
