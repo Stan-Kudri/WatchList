@@ -13,7 +13,7 @@
     <Grid Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
-            <RowDefinition MinHeight="100"/>
+            <RowDefinition MinHeight="100" Height="330"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
@@ -101,7 +101,7 @@
                               Grid.ColumnSpan="8"
                               ColumnWidth="Auto"
                               FontSize="12"
-                              AutoGenerateColumns="False"   
+                              AutoGenerateColumns="False"
                               FontStretch="ExtraCondensed"
                               IsReadOnly="True"
                               SelectionMode="Extended" 
@@ -117,7 +117,6 @@
                 <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=dd MMMM yyyy}" Width="Auto"/>
                 <DataGridTextColumn Header="Grade" Binding="{Binding Grade}" Width="Auto" />
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="Auto" />
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
             </local:CustomDataGrid.Columns>
         </local:CustomDataGrid>
         <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="6">
@@ -191,7 +190,7 @@
                     AutomationProperties.Name="Btn_Add_Item" 
                     Background="AliceBlue" 
                     Focusable="False"
-                    Command="{Binding AddItemCommand}"/>
+                    Command="{Binding MoveAddItemCommand}"/>
             <Button Content="Edit" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch"   
@@ -221,7 +220,7 @@
                     AutomationProperties.Name="Btn_Add_Data" 
                     Background="AliceBlue"
                     Focusable="False"
-                    Command="{Binding AddDataDBCommand}"/>
+                    Command="{Binding AddDataCommand}"/>
         </StackPanel>
 
     </Grid>

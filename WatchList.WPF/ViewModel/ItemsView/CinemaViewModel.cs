@@ -9,7 +9,7 @@ using WatchList.WPF.Models;
 
 namespace WatchList.WPF.ViewModel.ItemsView
 {
-    public abstract class CinemaViewModel : BindableBase
+    public abstract partial class CinemaViewModel : BindableBase
     {
         protected readonly IMessageBox _messageBox;
         protected readonly WatchItemRepository _watchItemRepository;
@@ -39,10 +39,6 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
             MaxDateWatched = DateTime.Now;
             MinDateWatched = new DateTime(1945, 1, 1);
-
-            MoveItemCommand = new RelayCommand<Window>(SaveCinema);
-            SetDefoultValueCommand = new RelayCommand(SetDefaultValues);
-            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
         public abstract void InitializeDefaultValue(WatchItem? watchItem = null);
@@ -72,11 +68,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
             get => _isWatch;
             set
             {
-                if (SetGrade != null && SetDateTime != null)
-                {
-                    SelectedStatusCinema = StatusCinema.Viewed;
-                }
-                else
+                if (SetGrade == null || SetDateTime == null)
                 {
                     SetGrade = value ? 1 : null;
                     SetDateTime = value ? DateTime.Now : null;
@@ -88,10 +80,6 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         public IEnumerable<StatusCinema> ListStatus => StatusCinema.List;
         public IEnumerable<TypeCinema> ListType => TypeCinema.List;
-
-        public RelayCommand<Window> MoveItemCommand { get; private set; }
-        public RelayCommand SetDefoultValueCommand { get; private set; }
-        public RelayCommand<Window> CloseWindowCommand { get; private set; }
 
         public TypeCinema SelectedTypeCinema
         {
@@ -142,10 +130,13 @@ namespace WatchList.WPF.ViewModel.ItemsView
             set => SetValue(ref _id, value);
         }
 
-        protected abstract void SaveCinema(Window currentWindowAdd);
+        [RelayCommand]
+        protected abstract Task SaveCinema(Window currentWindowAdd);
 
+        [RelayCommand]
         protected void CloseWindow(Window window) => window?.Close();
 
+        [RelayCommand]
         protected abstract void SetDefaultValues();
 
         protected bool ValidateFields(out string errorMessage)

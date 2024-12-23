@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:WatchList.WPF.Views.Message"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Class="WatchList.WPF.Views.Message.DataReplaceMessageWindow"
         mc:Ignorable="d"
-        Title="DataReplaceMessageWindow" Height="130" Width="400"
+        Title="Replace item" Height="130" Width="420"
         ResizeMode="NoResize"
         DataContext="{Binding DataReplaceMessageVM, Source={StaticResource ViewModelLocator}}">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
@@ -42,7 +42,7 @@
                        MinWidth="90" 
                        MinHeight="30" 
                        VerticalAlignment="Center"
-                       Command="{Binding MoveYesCommand}"
+                       Command="{Binding YesClickCommand}"
                        CommandParameter="{Binding ElementName=ReplaceItemWindow}"/>
             <ui:Button Content="All Yes" 
                        HorizontalAlignment="Center" 
@@ -50,7 +50,7 @@
                        MinWidth="90" 
                        MinHeight="30" 
                        VerticalAlignment="Center"
-                       Command="{Binding MoveAllYesCommand}"
+                       Command="{Binding AllYesClickCommand}"
                        CommandParameter="{Binding ElementName=ReplaceItemWindow}"/>
             <ui:Button Content="No" 
                        HorizontalAlignment="Center" 
@@ -58,7 +58,7 @@
                        MinWidth="90" 
                        MinHeight="30" 
                        VerticalAlignment="Center"
-                       Command="{Binding MoveNoCommand}"
+                       Command="{Binding NoClickCommand}"
                        CommandParameter="{Binding ElementName=ReplaceItemWindow}"/>
             <ui:Button Content="All No" 
                        HorizontalAlignment="Center" 
@@ -66,7 +66,7 @@
                        MinWidth="90" 
                        MinHeight="30" 
                        VerticalAlignment="Center"
-                       Command="{Binding MoveAllNoCommand}"
+                       Command="{Binding AllNoClickCommand}"
                        CommandParameter="{Binding ElementName=ReplaceItemWindow}"/>
         </StackPanel>
     </Grid>

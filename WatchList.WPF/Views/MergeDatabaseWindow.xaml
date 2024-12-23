@@ -120,7 +120,7 @@
             Grid.ColumnSpan="3" 
             Width="90" 
             Name="BtnOK" 
-            Command="{Binding MergeDateFromDBCommand}"
+            Command="{Binding LoadDBCommand}"
             CommandParameter="{Binding ElementName = LoadingDBWindow}"/>
         <Button 
             Grid.Column="3" 
@@ -131,7 +131,7 @@
             Grid.ColumnSpan="2"
             Width="90" 
             Name="BtnClear" 
-            Command="{Binding SetDefoultValueCommand}"/>
+            Command="{Binding SetupDefaultValuesCommand}"/>
         <Button 
             Grid.Column="5" 
             Content="Close" 

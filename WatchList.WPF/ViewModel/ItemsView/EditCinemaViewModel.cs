@@ -22,7 +22,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         public override string TitleWindow => "Edit Window";
 
-        protected override async void SaveCinema(Window currentWindowAdd)
+        protected override async Task SaveCinema(Window currentWindowAdd)
         {
             if (!ValidateFields(out var errorMessage))
             {

@@ -4,7 +4,7 @@ using WatchList.Core.Model.QuestionResult;
 
 namespace WatchList.WPF.ViewModel
 {
-    public class DataReplaceMessageVM
+    public partial class DataReplaceMessageVM
     {
         public const string Question = "The append item is a duplicate.Replace element?";
 
@@ -18,33 +18,32 @@ namespace WatchList.WPF.ViewModel
 
         public DialogReplaceItemQuestion ResultQuestion { get; private set; } = DialogReplaceItemQuestion.Unknown;
 
-        public RelayCommand<Window> MoveYesCommand => new(MoveYesClick);
-        public RelayCommand<Window> MoveAllYesCommand => new(MoveAllYesClick);
-        public RelayCommand<Window> MoveNoCommand => new(MoveNoClick);
-        public RelayCommand<Window> MoveAllNoCommand => new(MoveAllNoClick);
-
-        private void MoveYesClick(Window window)
+        [RelayCommand]
+        private void YesClick(Window window)
         {
             ResultQuestion = DialogReplaceItemQuestion.Yes;
             window.DialogResult = true;
             window?.Close();
         }
 
-        private void MoveAllYesClick(Window window)
+        [RelayCommand]
+        private void AllYesClick(Window window)
         {
             ResultQuestion = DialogReplaceItemQuestion.AllYes;
             window.DialogResult = true;
             window?.Close();
         }
 
-        private void MoveNoClick(Window window)
+        [RelayCommand]
+        private void NoClick(Window window)
         {
             ResultQuestion = DialogReplaceItemQuestion.No;
             window.DialogResult = true;
             window?.Close();
         }
 
-        private void MoveAllNoClick(Window window)
+        [RelayCommand]
+        private void AllNoClick(Window window)
         {
             ResultQuestion = DialogReplaceItemQuestion.AllNo;
             window.DialogResult = true;

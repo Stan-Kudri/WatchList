@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 using DevExpress.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,7 @@ using WatchList.WPF.Views.CinemaView;
 
 namespace WatchList.WPF.ViewModel
 {
-    public class CinemaPageViewModel : BindableBase
+    public partial class CinemaPageViewModel : BindableBase
     {
         private const string HighlightTheDesiredLine = "No items selected.";
         private const string NotSelectSingleItemLine = "Select one item.";
@@ -34,6 +35,7 @@ namespace WatchList.WPF.ViewModel
         private readonly ItemSearchRequest _searchRequests;
 
         private string _pageDisplayText = string.Empty;
+
         private IFilterItem _filterItem;
         private SortWatchItemModel _sortField;
         private TypeSortFields _typeSortFields;
@@ -113,10 +115,6 @@ namespace WatchList.WPF.ViewModel
             set => SetValue(ref _pageDisplayText, value);
         }
 
-        public RelayCommandApp UseFilterCommand => new(async _ => await UseFilter());
-
-        public RelayCommandApp ClearFilterCommand => new(async _ => await ClearFilter());
-
         public RelayCommandApp MoveToPreviousPage
             => new(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
         public RelayCommandApp MoveToFirstPage
@@ -127,13 +125,10 @@ namespace WatchList.WPF.ViewModel
         public RelayCommandApp MoveToLastPage
             => new(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
-        public RelayCommandApp AddItemCommand => new(async async => await MoveAddItem());
-        public RelayCommandApp EditItemCommand => new(async async => await EditItem());
-        public RelayCommandApp DeleteItemsCommand => new(async async => await DeleteItems());
-        public RelayCommandApp AddDataDBCommand => new(async async => await MoveAddData());
-
+        [RelayCommand]
         private async Task UseFilter() => await LoadDataAsync();
 
+        [RelayCommand]
         private async Task ClearFilter()
         {
             FilterItemModel.Clear();
@@ -141,6 +136,7 @@ namespace WatchList.WPF.ViewModel
             await LoadDataAsync();
         }
 
+        [RelayCommand]
         private async Task MoveAddItem()
         {
             var viewModel = _serviceProvider.GetRequiredService<AddCinemaViewModel>();
@@ -155,6 +151,7 @@ namespace WatchList.WPF.ViewModel
             await LoadDataAsync();
         }
 
+        [RelayCommand]
         private async Task EditItem()
         {
             if (SelectItems.Count != 1)
@@ -175,6 +172,7 @@ namespace WatchList.WPF.ViewModel
             await LoadDataAsync();
         }
 
+        [RelayCommand]
         private async Task DeleteItems()
         {
             if (SelectItems.Count == 0)
@@ -200,7 +198,8 @@ namespace WatchList.WPF.ViewModel
             await LoadDataAsync();
         }
 
-        private async Task MoveAddData()
+        [RelayCommand]
+        private async Task AddData()
         {
             var addDataWindow = new MergeDatabaseWindow();
             if (addDataWindow.ShowDialog() != true)

@@ -5,13 +5,12 @@ using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
 using WatchList.Core.Service.Component;
-using WatchList.WPF.Commands;
 using WatchList.WPF.Models.ModelDataLoad;
 using WatchList.WPF.Models.ModelDataLoad.LoadModel;
 
 namespace WatchList.WPF.ViewModel
 {
-    public class MergeDatabaseViewModel : BindableBase
+    public partial class MergeDatabaseViewModel : BindableBase
     {
         private readonly FileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;
@@ -29,9 +28,6 @@ namespace WatchList.WPF.ViewModel
         {
             _messageBox = messageBox;
             _fiileLoader = fiileLoader;
-            MergeDateFromDBCommand = new RelayCommand<Window>(MoveLoadDB);
-            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
-            SetDefoultValueCommand = new RelayCommandApp(_ => SetupDefaultValues());
             SetupDefaultValues();
         }
 
@@ -74,11 +70,8 @@ namespace WatchList.WPF.ViewModel
         public IEnumerable<TypeCinemaModel> ListTypeLoadingCinema => TypeCinemaModel.GetItemsType;
         public IEnumerable<Grade> GradeLoadingCinema => Grade.List;
 
-        public RelayCommand<Window> MergeDateFromDBCommand { get; private set; }
-        public RelayCommand<Window> CloseWindowCommand { get; private set; }
-        public RelayCommandApp SetDefoultValueCommand { get; private set; }
-
-        private async void MoveLoadDB(Window window)
+        [RelayCommand]
+        private async Task LoadDB(Window window)
         {
             if (await _messageBox.ShowQuestion("Add data from a file using the following algorithm?"))
             {
@@ -90,6 +83,7 @@ namespace WatchList.WPF.ViewModel
             window?.Close();
         }
 
+        [RelayCommand]
         private void SetupDefaultValues()
         {
             SelectTypeLoadCinema = TypeCinemaModel.AllType;
@@ -98,6 +92,7 @@ namespace WatchList.WPF.ViewModel
                 IsCaseSensitive = IsUpdateDuplicateItem = false;
         }
 
+        [RelayCommand]
         private void CloseWindow(Window window) => window?.Close();
 
         private ILoadRulesConfig GetLoadRuleConfig()

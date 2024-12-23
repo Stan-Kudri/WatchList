@@ -78,12 +78,12 @@
                                Maximum="50"
                                IsEnabled="True"
                                Value="{Binding SetSequel, Mode=TwoWay}"/>
-            <Label Content="Grid" 
-                   Width="35"
+            <Label Content="Grade" 
+                   Width="50"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
                    Margin="5 5 5 5"/>
-            <mah:NumericUpDown Width="85"
+            <mah:NumericUpDown Width="80"
                                Height="35"
                                Minimum="1"
                                Maximum="10"
@@ -128,14 +128,14 @@
                     Content="Save"    
                     Focusable="False"
                     Margin="5 5 5 5"
-                    Command="{Binding MoveItemCommand}"
+                    Command="{Binding SaveCinemaCommand}"
                     CommandParameter="{Binding ElementName=WatchWindow}">
             </Button>
             <Button Width="90" Height="30"
                     Content="Clear"
                     Margin="5 5 5 5"
                     Focusable="False"
-                    Command="{Binding SetDefoultValueCommand}">
+                    Command="{Binding SetDefaultValuesCommand}">
             </Button>
             <Button Width="90" Height="30"
                     Content="Close"
