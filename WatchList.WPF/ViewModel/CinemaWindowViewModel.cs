@@ -5,8 +5,7 @@ using WatchList.WPF.Views;
 
 namespace WatchList.WPF.ViewModel
 {
-    [ObservableObject]
-    public sealed partial class CinemaWindowViewModel
+    public sealed partial class CinemaWindowViewModel : ObservableObject
     {
         [ObservableProperty] private Page? currentPage;
 

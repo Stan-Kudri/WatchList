@@ -31,7 +31,9 @@ namespace WatchList.WPF.ViewModel.ItemsView
         private DateTime? _date;
         private int? _grade;
 
-        protected CinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItemCreator watchItemCreator)
+        protected CinemaViewModel(IMessageBox messageBox,
+                                  WatchItemRepository watchItemRepository,
+                                  WatchItemCreator watchItemCreator)
         {
             _messageBox = messageBox;
             _watchItemRepository = watchItemRepository;

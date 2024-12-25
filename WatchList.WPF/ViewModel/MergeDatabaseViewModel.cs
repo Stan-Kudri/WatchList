@@ -10,8 +10,7 @@ using WatchList.WPF.Models.ModelDataLoad.LoadModel;
 
 namespace WatchList.WPF.ViewModel
 {
-    [ObservableObject]
-    public partial class MergeDatabaseViewModel
+    public partial class MergeDatabaseViewModel : ObservableObject
     {
         private readonly FileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;

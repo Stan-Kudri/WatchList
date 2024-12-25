@@ -22,8 +22,7 @@ using WatchList.WPF.Views.CinemaView;
 
 namespace WatchList.WPF.ViewModel
 {
-    [ObservableObject]
-    public partial class CinemaPageViewModel
+    public partial class CinemaPageViewModel : ObservableObject
     {
         private const string HighlightTheDesiredLine = "No items selected.";
         private const string NotSelectSingleItemLine = "Select one item.";
@@ -36,9 +35,10 @@ namespace WatchList.WPF.ViewModel
 
         private readonly ItemSearchRequest _searchRequests;
 
+        private PagedList<WatchItem> _pagedList;
+
         [ObservableProperty] private string pageDisplayText = string.Empty;
         [ObservableProperty] private PageModel page = null!;
-        [ObservableProperty] private PagedList<WatchItem> pagedList = null!;
 
         [ObservableProperty] private IFilterItem filterItem = null!;
         [ObservableProperty] private SortWatchItemModel sortField = null!;
@@ -71,19 +71,19 @@ namespace WatchList.WPF.ViewModel
 
             typeSortFields.IsAscending = true;
             _searchRequests = new ItemSearchRequest(FilterItem, SortField.GetSortItem(), Page.GetPage(), TypeSortFields.IsAscending);
-            PagedList = _itemService.GetPage(_searchRequests);
+            _pagedList = _itemService.GetPage(_searchRequests);
             _ = LoadDataAsync();
         }
 
         public RelayCommandApp MoveToPreviousPage
-            => new(async _ => await LoadDataAsyncPage(--Page.Number), _ => PagedList.HasPreviousPage);
+            => new(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
         public RelayCommandApp MoveToFirstPage
-            => new(async _ => await LoadDataAsyncPage(1), _ => PagedList.HasPreviousPage);
+            => new(async _ => await LoadDataAsyncPage(1), _ => _pagedList.HasPreviousPage);
 
         public RelayCommandApp MoveToNextPage
-            => new(async _ => await LoadDataAsyncPage(++Page.Number), _ => PagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
         public RelayCommandApp MoveToLastPage
-            => new(async _ => await LoadDataAsyncPage(PagedList.PageCount), _ => PagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
         [RelayCommand]
         private async Task UseFilter() => await LoadDataAsync();
@@ -178,9 +178,9 @@ namespace WatchList.WPF.ViewModel
             try
             {
                 UpdataSearchRequests();
-                PagedList = _itemService.GetPage(_searchRequests);
+                _pagedList = _itemService.GetPage(_searchRequests);
 
-                WatchItems.UppdataItems(PagedList.Items);
+                WatchItems.UppdataItems(_pagedList.Items);
 
                 if (IsNotFirstPageEmpty())
                 {
@@ -188,7 +188,7 @@ namespace WatchList.WPF.ViewModel
                     await LoadDataAsync();
                 }
 
-                PageDisplayText = $"Page {PagedList.PageNumber} of {PagedList.PageCount}";
+                PageDisplayText = $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
             }
             catch (Exception error)
             {
@@ -222,6 +222,6 @@ namespace WatchList.WPF.ViewModel
         /// <returns>
         /// True - The page contains no elements and is not the first.
         /// </returns>
-        private bool IsNotFirstPageEmpty() => pagedList.Count == 0 && Page.Number != 1;
+        private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
     }
 }
