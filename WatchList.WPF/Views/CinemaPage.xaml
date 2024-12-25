@@ -5,8 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
-      xmlns:local="clr-namespace:WatchList.WPF.Component"
-      mc:Ignorable="d"
+      xmlns:local="clr-namespace:WatchList.WPF.Component" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    mc:Ignorable="d"
       Title="CinemaPage"
       DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}"
       MinHeight="500" MinWidth="650">
@@ -121,14 +121,20 @@
         </local:CustomDataGrid>
         <ComboBox Grid.Row="2"
                   Grid.Column="0"
-                  Grid.ColumnSpan="1"
+                  Grid.ColumnSpan="2"
                   VerticalAlignment="Center"
                   HorizontalAlignment="Left"
                   Width="80"
                   Height="35"
-                  Margin="10 2 5 2"
+                  Margin="10 2 2 2"
+                  FontSize="10"
                   ItemsSource="{Binding Page.Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedValue="{Binding Page.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding UseFilterCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </ComboBox>
         <StackPanel Orientation="Horizontal" 
                     HorizontalAlignment="Center"
