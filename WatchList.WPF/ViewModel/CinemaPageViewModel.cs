@@ -44,7 +44,7 @@ namespace WatchList.WPF.ViewModel
         [ObservableProperty] private SortWatchItemModel sortField = null!;
         [ObservableProperty] private TypeSortFields typeSortFields = null!;
 
-        [ObservableProperty] private ObservableCollection<WatchItem>? watchItems = new ObservableCollection<WatchItem>();
+        [ObservableProperty] private ObservableCollection<WatchItem> watchItems = new ObservableCollection<WatchItem>();
 
         [ObservableProperty] private WatchItem selectItem = null!;
         [ObservableProperty] private IList selectItems = new ArrayList();
@@ -70,20 +70,20 @@ namespace WatchList.WPF.ViewModel
             page = pageModel;
 
             typeSortFields.IsAscending = true;
-            _searchRequests = new ItemSearchRequest(filterItem, sortField.GetSortItem(), page.GetPage(), typeSortFields.IsAscending);
-            pagedList = _itemService.GetPage(_searchRequests);
+            _searchRequests = new ItemSearchRequest(FilterItem, SortField.GetSortItem(), Page.GetPage(), TypeSortFields.IsAscending);
+            PagedList = _itemService.GetPage(_searchRequests);
             _ = LoadDataAsync();
         }
 
         public RelayCommandApp MoveToPreviousPage
-            => new(async _ => await LoadDataAsyncPage(--page.Number), _ => pagedList.HasPreviousPage);
+            => new(async _ => await LoadDataAsyncPage(--Page.Number), _ => PagedList.HasPreviousPage);
         public RelayCommandApp MoveToFirstPage
-            => new(async _ => await LoadDataAsyncPage(1), _ => pagedList.HasPreviousPage);
+            => new(async _ => await LoadDataAsyncPage(1), _ => PagedList.HasPreviousPage);
 
         public RelayCommandApp MoveToNextPage
-            => new(async _ => await LoadDataAsyncPage(++page.Number), _ => pagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(++Page.Number), _ => PagedList.HasNextPage);
         public RelayCommandApp MoveToLastPage
-            => new(async _ => await LoadDataAsyncPage(pagedList.PageCount), _ => pagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(PagedList.PageCount), _ => PagedList.HasNextPage);
 
         [RelayCommand]
         private async Task UseFilter() => await LoadDataAsync();
@@ -91,8 +91,8 @@ namespace WatchList.WPF.ViewModel
         [RelayCommand]
         private async Task ClearFilter()
         {
-            filterItem.Clear();
-            sortField.Clear();
+            FilterItem.Clear();
+            SortField.Clear();
             await LoadDataAsync();
         }
 
@@ -178,9 +178,9 @@ namespace WatchList.WPF.ViewModel
             try
             {
                 UpdataSearchRequests();
-                pagedList = _itemService.GetPage(_searchRequests);
+                PagedList = _itemService.GetPage(_searchRequests);
 
-                WatchItems.UppdataItems(pagedList.Items);
+                WatchItems.UppdataItems(PagedList.Items);
 
                 if (IsNotFirstPageEmpty())
                 {
@@ -188,7 +188,7 @@ namespace WatchList.WPF.ViewModel
                     await LoadDataAsync();
                 }
 
-                pageDisplayText = $"Page {pagedList.PageNumber} of {pagedList.PageCount}";
+                PageDisplayText = $"Page {PagedList.PageNumber} of {PagedList.PageCount}";
             }
             catch (Exception error)
             {
@@ -210,10 +210,10 @@ namespace WatchList.WPF.ViewModel
         /// </summary>
         private void UpdataSearchRequests()
         {
-            _searchRequests.Page = page.GetPage();
-            _searchRequests.Sort = sortField.GetSortItem();
-            _searchRequests.Filter = filterItem.GetFilter();
-            _searchRequests.IsAscending = typeSortFields.IsAscending;
+            _searchRequests.Page = Page.GetPage();
+            _searchRequests.Sort = SortField.GetSortItem();
+            _searchRequests.Filter = FilterItem.GetFilter();
+            _searchRequests.IsAscending = TypeSortFields.IsAscending;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DevExpress.Mvvm;
 using WatchList.Core.Model.Load;
 using WatchList.Core.Model.Load.Components;
 using WatchList.Core.Model.Load.ItemActions;
@@ -10,61 +10,26 @@ using WatchList.WPF.Models.ModelDataLoad.LoadModel;
 
 namespace WatchList.WPF.ViewModel
 {
-    public partial class MergeDatabaseViewModel : BindableBase
+    [ObservableObject]
+    public partial class MergeDatabaseViewModel
     {
         private readonly FileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;
 
-        private TypeCinemaModel _selectTypeLoadCinema;
-        private Grade _selectGradeLoadCinema;
+        [ObservableProperty] private TypeCinemaModel selectTypeLoadCinema;
+        [ObservableProperty] private Grade selectGradeLoadCinema;
 
-        private bool _isExistGrade;
+        [ObservableProperty] private bool isExistGrade;
 
-        private bool _isConsiderDuplicate;
-        private bool _isUpdateDuplicateItem;
-        private bool _isCaseSensitive;
+        [ObservableProperty] private bool isConsiderDuplicate;
+        [ObservableProperty] private bool isUpdateDuplicateItem;
+        [ObservableProperty] private bool isCaseSensitive;
 
         public MergeDatabaseViewModel(IMessageBox messageBox, FileLoaderDB fiileLoader)
         {
             _messageBox = messageBox;
             _fiileLoader = fiileLoader;
             SetupDefaultValues();
-        }
-
-        public TypeCinemaModel SelectTypeLoadCinema
-        {
-            get => _selectTypeLoadCinema;
-            set => SetValue(ref _selectTypeLoadCinema, value);
-        }
-
-        public Grade SelectGradeLoadCinema
-        {
-            get => _selectGradeLoadCinema;
-            set => SetValue(ref _selectGradeLoadCinema, value);
-        }
-
-        public bool IsExistGrade
-        {
-            get => _isExistGrade;
-            set => SetValue(ref _isExistGrade, value);
-        }
-
-        public bool IsConsiderDuplicate
-        {
-            get => _isConsiderDuplicate;
-            set => SetValue(ref _isConsiderDuplicate, value);
-        }
-
-        public bool IsUpdateDuplicateItem
-        {
-            get => _isUpdateDuplicateItem;
-            set => SetValue(ref _isUpdateDuplicateItem, value);
-        }
-
-        public bool IsCaseSensitive
-        {
-            get => _isCaseSensitive;
-            set => SetValue(ref _isCaseSensitive, value);
         }
 
         public IEnumerable<TypeCinemaModel> ListTypeLoadingCinema => TypeCinemaModel.GetItemsType;

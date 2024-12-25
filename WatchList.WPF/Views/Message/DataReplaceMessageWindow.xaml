@@ -10,7 +10,8 @@
         mc:Ignorable="d"
         Title="Replace item" Height="130" Width="420"
         ResizeMode="NoResize"
-        DataContext="{Binding DataReplaceMessageVM, Source={StaticResource ViewModelLocator}}">
+        DataContext="{Binding DataReplaceMessageVM, Source={StaticResource ViewModelLocator}}"
+        WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

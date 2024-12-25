@@ -1,20 +1,19 @@
 using System.Windows.Controls;
-using DevExpress.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using WatchList.WPF.Data;
 using WatchList.WPF.Views;
 
 namespace WatchList.WPF.ViewModel
 {
-    public sealed class CinemaWindowViewModel : BindableBase
+    [ObservableObject]
+    public sealed partial class CinemaWindowViewModel
     {
-        private Page? _currentPage;
+        [ObservableProperty] private Page? currentPage;
 
         public CinemaWindowViewModel(PageService pageService)
         {
             pageService.PageChanged += (o, page) => CurrentPage = page;
             pageService.Open(this, new CinemaPage());
         }
-
-        public Page? CurrentPage { get => _currentPage; set => SetValue(ref _currentPage, value); }
     }
 }
