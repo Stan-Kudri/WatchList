@@ -5,15 +5,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
-      xmlns:local="clr-namespace:WatchList.WPF.Component"
-      mc:Ignorable="d"
+      xmlns:local="clr-namespace:WatchList.WPF.Component" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    mc:Ignorable="d"
       Title="CinemaPage"
       DataContext="{Binding CinemaPageViewModel, Source={StaticResource ViewModelLocator}}"
       MinHeight="500" MinWidth="650">
     <Grid Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
-            <RowDefinition MinHeight="100" Height="330"/>
+            <RowDefinition MinHeight="100" Height="*"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
@@ -119,64 +119,82 @@
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="Auto" />
             </local:CustomDataGrid.Columns>
         </local:CustomDataGrid>
-        <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="6">
-            <StackPanel Grid.Row="1" 
-                        Orientation="Horizontal" 
-                        HorizontalAlignment="Center">
-                <Button Margin="2 2 2 2" 
-                        Background="Transparent" 
-                        BorderBrush="Aquamarine"
-                        BorderThickness="2"
-                        Command="{Binding MoveToFirstPage}" 
-                        MinWidth="50" MinHeight="25"
-                        MaxWidth="70" MaxHeight="45" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"
-                        Focusable="False"
-                        Content="&lt;&lt;"
-                        />
-                <Button Margin="2 2 2 2" 
-                        Background="Transparent" 
-                        BorderBrush="Aquamarine"
-                        BorderThickness="2"
-                        Command="{Binding MoveToPreviousPage}"  
-                        MinWidth="50" MinHeight="25"
-                        MaxWidth="70" MaxHeight="45" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"
-                        Focusable="False"
-                        Content="&lt;"
-                        />
-                <Label Content="{Binding PageDisplayText, Mode=TwoWay}" 
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center" 
-                       Foreground="Black"/>
-                <Button Margin="2 2 2 2" 
-                        Background="Transparent" 
-                        BorderBrush="Aquamarine"
-                        BorderThickness="2"
-                        Command="{Binding MoveToNextPage}"  
-                        MinWidth="50" MinHeight="25"
-                        MaxWidth="70" MaxHeight="45" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"    
-                        Focusable="False"
-                        Content="&gt;"
-                        />
-                <Button Margin="2 2 2 2" 
-                        Background="Transparent"  
-                        BorderBrush="Aquamarine"
-                        BorderThickness="2"
-                        Command="{Binding MoveToLastPage}" 
-                        MinWidth="50" MinHeight="25"
-                        MaxWidth="70" MaxHeight="45" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        Focusable="False"
-                        Content="&gt;&gt;"
-                        />
-            </StackPanel>
-        </Grid>
+        <ComboBox Grid.Row="2"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Left"
+                  Width="80"
+                  Height="35"
+                  Margin="10 2 2 2"
+                  FontSize="10"
+                  ItemsSource="{Binding Page.Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValue="{Binding Page.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding UseFilterCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="6">
+            <Button Margin="2 2 2 2" 
+                    Background="Transparent" 
+                    BorderBrush="Aquamarine"
+                    BorderThickness="2"
+                    Command="{Binding MoveToFirstPage}" 
+                    MinWidth="50" MinHeight="25"
+                    MaxWidth="70" MaxHeight="45" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Focusable="False"
+                    Content="&lt;&lt;"
+            />
+            <Button Margin="2 2 2 2" 
+                    Background="Transparent" 
+                    BorderBrush="Aquamarine"
+                    BorderThickness="2"
+                    Command="{Binding MoveToPreviousPage}"  
+                    MinWidth="50" MinHeight="25"
+                    MaxWidth="70" MaxHeight="45" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Focusable="False"
+                    Content="&lt;"
+            />
+            <Label Content="{Binding PageDisplayText, Mode=TwoWay}" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   Foreground="Black"/>
+            <Button Margin="2 2 2 2" 
+                    Background="Transparent" 
+                    BorderBrush="Aquamarine"
+                    BorderThickness="2"
+                    Command="{Binding MoveToNextPage}"  
+                    MinWidth="50" MinHeight="25"
+                    MaxWidth="70" MaxHeight="45" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"    
+                    Focusable="False"
+                    Content="&gt;"
+            />
+            <Button Margin="2 2 2 2" 
+                    Background="Transparent"  
+                    BorderBrush="Aquamarine"
+                    BorderThickness="2"
+                    Command="{Binding MoveToLastPage}" 
+                    MinWidth="50" MinHeight="25"
+                    MaxWidth="70" MaxHeight="45" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Focusable="False"
+                    Content="&gt;&gt;"
+            />
+        </StackPanel>
         <StackPanel Grid.Row="3" 
                     Grid.ColumnSpan="8" 
                     Orientation="Horizontal" 
