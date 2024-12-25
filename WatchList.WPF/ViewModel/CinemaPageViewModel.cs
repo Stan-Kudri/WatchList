@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DevExpress.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,8 @@ using WatchList.WPF.Views.CinemaView;
 
 namespace WatchList.WPF.ViewModel
 {
-    public partial class CinemaPageViewModel : BindableBase
+    [ObservableObject]
+    public partial class CinemaPageViewModel
     {
         private const string HighlightTheDesiredLine = "No items selected.";
         private const string NotSelectSingleItemLine = "Select one item.";
@@ -34,103 +36,54 @@ namespace WatchList.WPF.ViewModel
 
         private readonly ItemSearchRequest _searchRequests;
 
-        private string _pageDisplayText = string.Empty;
+        [ObservableProperty] private string pageDisplayText = string.Empty;
+        [ObservableProperty] private PageModel page = null!;
+        [ObservableProperty] private PagedList<WatchItem> pagedList = null!;
 
-        private IFilterItem _filterItem;
-        private SortWatchItemModel _sortField;
-        private TypeSortFields _typeSortFields;
+        [ObservableProperty] private IFilterItem filterItem = null!;
+        [ObservableProperty] private SortWatchItemModel sortField = null!;
+        [ObservableProperty] private TypeSortFields typeSortFields = null!;
 
-        private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
+        [ObservableProperty] private ObservableCollection<WatchItem>? watchItems = new ObservableCollection<WatchItem>();
 
-        private PageModel _page;
-        private PagedList<WatchItem> _pagedList;
-
-        private WatchItem _selectItem;
-        private IList _selectItems = new ArrayList();
+        [ObservableProperty] private WatchItem selectItem = null!;
+        [ObservableProperty] private IList selectItems = new ArrayList();
 
         public CinemaPageViewModel(IMessageBox messageBox,
                             ILogger<WatchItemRepository> logger,
                             IServiceProvider serviceProvider,
                             WatchItemService watchItemService,
-                            SortWatchItemModel sortField,
-                            IFilterItem filterItem,
+                            SortWatchItemModel sortFieldModel,
+                            IFilterItem filterItemModel,
                             PageService pageService,
-                            TypeSortFields typeSortFields,
+                            TypeSortFields typeSortFieldsModel,
                             PageModel pageModel)
         {
             _serviceProvider = serviceProvider;
             _messageBox = messageBox;
             _logger = logger;
             _itemService = watchItemService;
-            _sortField = sortField;
-            _filterItem = filterItem;
             _pageService = pageService;
-            _typeSortFields = typeSortFields;
-            _page = pageModel;
+            sortField = sortFieldModel;
+            filterItem = filterItemModel;
+            typeSortFields = typeSortFieldsModel;
+            page = pageModel;
 
-            TypeSortField.IsAscending = true;
-            _searchRequests = new ItemSearchRequest(_filterItem, SortItemModel.GetSortItem(), Page.GetPage(), _typeSortFields.IsAscending);
-            _pagedList = _itemService.GetPage(_searchRequests);
+            typeSortFields.IsAscending = true;
+            _searchRequests = new ItemSearchRequest(filterItem, sortField.GetSortItem(), page.GetPage(), typeSortFields.IsAscending);
+            pagedList = _itemService.GetPage(_searchRequests);
             _ = LoadDataAsync();
         }
 
-        public PageModel Page
-        {
-            get => _page;
-            set => SetValue(ref _page, value);
-        }
-
-        public WatchItem SelectItem
-        {
-            get => _selectItem;
-            set => SetValue(ref _selectItem, value);
-        }
-
-        public IList SelectItems
-        {
-            get => _selectItems;
-            set => SetValue(ref _selectItems, value);
-        }
-
-        public ObservableCollection<WatchItem> WatchItems
-        {
-            get => _watchItems;
-            private set => SetValue(ref _watchItems, value);
-        }
-
-        public IFilterItem FilterItemModel
-        {
-            get => _filterItem;
-            set => SetValue(ref _filterItem, value);
-        }
-
-        public SortWatchItemModel SortItemModel
-        {
-            get => _sortField;
-            set => SetValue(ref _sortField, value);
-        }
-
-        public TypeSortFields TypeSortField
-        {
-            get => _typeSortFields;
-            set => SetValue(ref _typeSortFields, value);
-        }
-
-        public string PageDisplayText
-        {
-            get => _pageDisplayText;
-            set => SetValue(ref _pageDisplayText, value);
-        }
-
         public RelayCommandApp MoveToPreviousPage
-            => new(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
+            => new(async _ => await LoadDataAsyncPage(--page.Number), _ => pagedList.HasPreviousPage);
         public RelayCommandApp MoveToFirstPage
-            => new(async _ => await LoadDataAsyncPage(1), _ => _pagedList.HasPreviousPage);
+            => new(async _ => await LoadDataAsyncPage(1), _ => pagedList.HasPreviousPage);
 
         public RelayCommandApp MoveToNextPage
-            => new(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(++page.Number), _ => pagedList.HasNextPage);
         public RelayCommandApp MoveToLastPage
-            => new(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(pagedList.PageCount), _ => pagedList.HasNextPage);
 
         [RelayCommand]
         private async Task UseFilter() => await LoadDataAsync();
@@ -138,8 +91,8 @@ namespace WatchList.WPF.ViewModel
         [RelayCommand]
         private async Task ClearFilter()
         {
-            FilterItemModel.Clear();
-            SortItemModel.Clear();
+            filterItem.Clear();
+            sortField.Clear();
             await LoadDataAsync();
         }
 
@@ -225,9 +178,9 @@ namespace WatchList.WPF.ViewModel
             try
             {
                 UpdataSearchRequests();
-                _pagedList = _itemService.GetPage(_searchRequests);
+                pagedList = _itemService.GetPage(_searchRequests);
 
-                WatchItems.UppdataItems(_pagedList.Items);
+                WatchItems.UppdataItems(pagedList.Items);
 
                 if (IsNotFirstPageEmpty())
                 {
@@ -235,7 +188,7 @@ namespace WatchList.WPF.ViewModel
                     await LoadDataAsync();
                 }
 
-                PageDisplayText = $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
+                pageDisplayText = $"Page {pagedList.PageNumber} of {pagedList.PageCount}";
             }
             catch (Exception error)
             {
@@ -257,10 +210,10 @@ namespace WatchList.WPF.ViewModel
         /// </summary>
         private void UpdataSearchRequests()
         {
-            _searchRequests.Page = Page.GetPage();
-            _searchRequests.Sort = _sortField.GetSortItem();
-            _searchRequests.Filter = _filterItem.GetFilter();
-            _searchRequests.IsAscending = _typeSortFields.IsAscending;
+            _searchRequests.Page = page.GetPage();
+            _searchRequests.Sort = sortField.GetSortItem();
+            _searchRequests.Filter = filterItem.GetFilter();
+            _searchRequests.IsAscending = typeSortFields.IsAscending;
         }
 
         /// <summary>
@@ -269,6 +222,6 @@ namespace WatchList.WPF.ViewModel
         /// <returns>
         /// True - The page contains no elements and is not the first.
         /// </returns>
-        private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
+        private bool IsNotFirstPageEmpty() => pagedList.Count == 0 && Page.Number != 1;
     }
 }
