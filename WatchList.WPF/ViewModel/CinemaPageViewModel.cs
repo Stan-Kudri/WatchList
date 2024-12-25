@@ -42,6 +42,7 @@ namespace WatchList.WPF.ViewModel
 
         private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
+        private PageModel _page;
         private PagedList<WatchItem> _pagedList;
 
         private WatchItem _selectItem;
@@ -54,7 +55,8 @@ namespace WatchList.WPF.ViewModel
                             SortWatchItemModel sortField,
                             IFilterItem filterItem,
                             PageService pageService,
-                            TypeSortFields typeSortFields)
+                            TypeSortFields typeSortFields,
+                            PageModel pageModel)
         {
             _serviceProvider = serviceProvider;
             _messageBox = messageBox;
@@ -64,14 +66,19 @@ namespace WatchList.WPF.ViewModel
             _filterItem = filterItem;
             _pageService = pageService;
             _typeSortFields = typeSortFields;
+            _page = pageModel;
 
             TypeSortField.IsAscending = true;
             _searchRequests = new ItemSearchRequest(_filterItem, SortItemModel.GetSortItem(), Page.GetPage(), _typeSortFields.IsAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
-            LoadDataAsync();
+            _ = LoadDataAsync();
         }
 
-        private PageModel Page { get; set; } = new PageModel();
+        public PageModel Page
+        {
+            get => _page;
+            set => SetValue(ref _page, value);
+        }
 
         public WatchItem SelectItem
         {
