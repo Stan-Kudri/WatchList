@@ -37,8 +37,9 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         protected override void SetDefaultValues()
         {
-            SetTitle = _defaultWatchItem.Title;
-            SetGrade = _defaultWatchItem.Grade;
+            Title = _defaultWatchItem.Title;
+            Sequel = _defaultWatchItem.Sequel;
+            Grade = _defaultWatchItem.Grade;
             SelectedStatusCinema = _defaultWatchItem.Status;
             SelectedTypeCinema = _defaultWatchItem.Type;
         }

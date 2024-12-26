@@ -17,7 +17,8 @@
       ResizeMode="NoResize"
       d:DesignHeight="240" d:DesignWidth="420"
       Title="Loading data" Foreground="Black"
-      DataContext="{Binding MergeDatabaseViewModel, Source={StaticResource ViewModelLocator}}">
+      DataContext="{Binding MergeDatabaseViewModel, Source={StaticResource ViewModelLocator}}"
+      WindowStartupLocation="CenterScreen">
     <Grid x:Name="MergeDBPage">
         <Grid.RowDefinitions>
             <RowDefinition/>

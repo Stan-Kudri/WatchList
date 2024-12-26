@@ -15,7 +15,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         public override void InitializeDefaultValue(WatchItem? watchItem)
         {
-            _defaultWatchItem = watchItem;
+            _defaultWatchItem = watchItem ?? throw new ArgumentException("Error selecting item.");
             SetDefaultValues();
             LabelSequelType = SelectedTypeCinema.TypeSequel;
         }
@@ -47,12 +47,13 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         protected override void SetDefaultValues()
         {
-            SetId = _defaultWatchItem.Id;
-            SetTitle = _defaultWatchItem.Title;
+            Id = _defaultWatchItem.Id;
+            Title = _defaultWatchItem.Title;
+            Sequel = _defaultWatchItem.Sequel;
             SelectedStatusCinema = _defaultWatchItem.Status;
             SelectedTypeCinema = _defaultWatchItem.Type;
-            SetGrade = _defaultWatchItem.Grade;
-            SetDateTime = _defaultWatchItem.Date;
+            Grade = _defaultWatchItem.Grade;
+            Date = _defaultWatchItem.Date;
         }
     }
 }
