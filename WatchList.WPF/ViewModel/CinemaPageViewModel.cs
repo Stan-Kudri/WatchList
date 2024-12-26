@@ -37,17 +37,17 @@ namespace WatchList.WPF.ViewModel
 
         private PagedList<WatchItem> _pagedList;
 
-        [ObservableProperty] private string pageDisplayText = string.Empty;
-        [ObservableProperty] private PageModel page = null!;
+        [ObservableProperty] private string _pageDisplayText = string.Empty;
+        [ObservableProperty] private PageModel _page;
 
-        [ObservableProperty] private IFilterItem filterItem = null!;
-        [ObservableProperty] private SortWatchItemModel sortField = null!;
-        [ObservableProperty] private TypeSortFields typeSortFields = null!;
+        [ObservableProperty] private IFilterItem _filterItem;
+        [ObservableProperty] private SortWatchItemModel _sortField;
+        [ObservableProperty] private TypeSortFields _typeSortFields;
 
-        [ObservableProperty] private ObservableCollection<WatchItem> watchItems = new ObservableCollection<WatchItem>();
+        [ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
-        [ObservableProperty] private WatchItem selectItem = null!;
-        [ObservableProperty] private IList selectItems = new ArrayList();
+        [ObservableProperty] private WatchItem _selectItem;
+        [ObservableProperty] private IList _selectItems = new ArrayList();
 
         public CinemaPageViewModel(IMessageBox messageBox,
                             ILogger<WatchItemRepository> logger,
@@ -64,12 +64,12 @@ namespace WatchList.WPF.ViewModel
             _logger = logger;
             _itemService = watchItemService;
             _pageService = pageService;
-            sortField = sortFieldModel;
-            filterItem = filterItemModel;
-            typeSortFields = typeSortFieldsModel;
-            page = pageModel;
+            SortField = sortFieldModel;
+            FilterItem = filterItemModel;
+            TypeSortFields = typeSortFieldsModel;
+            Page = pageModel;
 
-            typeSortFields.IsAscending = true;
+            TypeSortFields.IsAscending = true;
             _searchRequests = new ItemSearchRequest(FilterItem, SortField.GetSortItem(), Page.GetPage(), TypeSortFields.IsAscending);
             _pagedList = _itemService.GetPage(_searchRequests);
             _ = LoadDataAsync();

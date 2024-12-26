@@ -15,14 +15,14 @@ namespace WatchList.WPF.ViewModel
         private readonly FileLoaderDB _fiileLoader;
         private readonly IMessageBox _messageBox;
 
-        [ObservableProperty] private TypeCinemaModel selectTypeLoadCinema;
-        [ObservableProperty] private Grade selectGradeLoadCinema;
+        [ObservableProperty] private TypeCinemaModel _selectTypeLoadCinema;
+        [ObservableProperty] private Grade _selectGradeLoadCinema;
 
-        [ObservableProperty] private bool isExistGrade;
+        [ObservableProperty] private bool _isExistGrade;
 
-        [ObservableProperty] private bool isConsiderDuplicate;
-        [ObservableProperty] private bool isUpdateDuplicateItem;
-        [ObservableProperty] private bool isCaseSensitive;
+        [ObservableProperty] private bool _isConsiderDuplicate;
+        [ObservableProperty] private bool _isUpdateDuplicateItem;
+        [ObservableProperty] private bool _isCaseSensitive;
 
         public MergeDatabaseViewModel(IMessageBox messageBox, FileLoaderDB fiileLoader)
         {

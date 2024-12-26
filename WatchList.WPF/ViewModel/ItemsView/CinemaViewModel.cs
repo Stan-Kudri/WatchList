@@ -1,6 +1,6 @@
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DevExpress.Mvvm;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Repository;
@@ -9,27 +9,28 @@ using WatchList.WPF.Models;
 
 namespace WatchList.WPF.ViewModel.ItemsView
 {
-    public abstract partial class CinemaViewModel : BindableBase
+    public abstract partial class CinemaViewModel : ObservableObject
     {
         protected readonly IMessageBox _messageBox;
         protected readonly WatchItemRepository _watchItemRepository;
         protected readonly WatchItemCreator _watchItemCreator;
 
-        protected WatchItem? _defaultWatchItem;
+        protected WatchItem _defaultWatchItem;
 
         private bool _isWatch;
 
-        private DateTime _maxDateWatched;
-        private DateTime _minDateWatched;
-        private string _labelSequelType;
-
-        private Guid _id;
-        private string _title;
         private TypeCinema _type;
-        private int _sequel;
         private StatusCinema _status;
-        private DateTime? _date;
-        private int? _grade;
+
+        [ObservableProperty] private DateTime _maxDateWatched;
+        [ObservableProperty] private DateTime _minDateWatched;
+        [ObservableProperty] private string _labelSequelType;
+
+        [ObservableProperty] private Guid _id;
+        [ObservableProperty] private string _title;
+        [ObservableProperty] private int _sequel;
+        [ObservableProperty] private DateTime? _date;
+        [ObservableProperty] private int? _grade;
 
         protected CinemaViewModel(IMessageBox messageBox,
                                   WatchItemRepository watchItemRepository,
@@ -47,41 +48,23 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         public abstract string TitleWindow { get; }
 
-        public DateTime MaxDateWatched
-        {
-            get => _maxDateWatched;
-            set => _maxDateWatched = value;
-        }
-
-        public DateTime MinDateWatched
-        {
-            get => _minDateWatched;
-            set => _minDateWatched = value;
-        }
-
-        public string LabelSequelType
-        {
-            get => _labelSequelType;
-            set => SetValue(ref _labelSequelType, value);
-        }
+        public IEnumerable<StatusCinema> ListStatus => StatusCinema.List;
+        public IEnumerable<TypeCinema> ListType => TypeCinema.List;
 
         public bool IsWatch
         {
             get => _isWatch;
             set
             {
-                if (SetGrade == null || SetDateTime == null)
+                if (Grade == null || Date == null)
                 {
-                    SetGrade = value ? 1 : null;
-                    SetDateTime = value ? DateTime.Now : null;
+                    Grade = value ? 1 : null;
+                    Date = value ? DateTime.Now : null;
                 }
 
-                SetValue(ref _isWatch, value);
+                SetProperty(ref _isWatch, value);
             }
         }
-
-        public IEnumerable<StatusCinema> ListStatus => StatusCinema.List;
-        public IEnumerable<TypeCinema> ListType => TypeCinema.List;
 
         public TypeCinema SelectedTypeCinema
         {
@@ -89,7 +72,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
             set
             {
                 LabelSequelType = value.TypeSequel;
-                SetValue(ref _type, value);
+                SetProperty(ref _type, value);
             }
         }
 
@@ -99,37 +82,8 @@ namespace WatchList.WPF.ViewModel.ItemsView
             set
             {
                 IsWatch = value != StatusCinema.Planned ? true : false;
-                SetValue(ref _status, value);
+                SetProperty(ref _status, value);
             }
-        }
-        public string SetTitle
-        {
-            get => _title;
-            set => SetValue(ref _title, value);
-        }
-
-        public int? SetGrade
-        {
-            get => _grade;
-            set => SetValue(ref _grade, value);
-        }
-
-        public DateTime? SetDateTime
-        {
-            get => _date;
-            set => SetValue(ref _date, value);
-        }
-
-        public int SetSequel
-        {
-            get => _sequel;
-            set => SetValue(ref _sequel, value);
-        }
-
-        public Guid SetId
-        {
-            get => _id;
-            set => SetValue(ref _id, value);
         }
 
         [RelayCommand]
@@ -143,17 +97,17 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         protected bool ValidateFields(out string errorMessage)
         {
-            if (SetTitle.Length <= 0)
+            if (Title.Length <= 0)
             {
                 errorMessage = $"Enter {SelectedTypeCinema.Name} title";
                 return false;
             }
-            else if (SetSequel == 0)
+            else if (Sequel == 0)
             {
                 errorMessage = $"Enter number {SelectedTypeCinema.Name}";
                 return false;
             }
-            else if (SetGrade == 0)
+            else if (Grade == 0)
             {
                 errorMessage = "Grade cinema above in zero";
                 return false;
@@ -165,7 +119,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         public WatchItem GetCinema()
             => SelectedStatusCinema == StatusCinema.Planned
-            ? _watchItemCreator.CreatePlanned(SetTitle, SetSequel, SelectedStatusCinema, SelectedTypeCinema, SetId)
-            : _watchItemCreator.CreateNonPlanned(SetTitle, SetSequel, SelectedStatusCinema, SelectedTypeCinema, SetDateTime, SetGrade, SetId);
+            ? _watchItemCreator.CreatePlanned(Title, Sequel, SelectedStatusCinema, SelectedTypeCinema, Id)
+            : _watchItemCreator.CreateNonPlanned(Title, Sequel, SelectedStatusCinema, SelectedTypeCinema, Date, Grade, Id);
     }
 }

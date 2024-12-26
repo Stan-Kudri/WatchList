@@ -1,6 +1,7 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using WatchList.Core.Model.QuestionResult;
+using WatchList.WPF.Extension;
 
 namespace WatchList.WPF.ViewModel
 {
@@ -22,32 +23,28 @@ namespace WatchList.WPF.ViewModel
         private void YesClick(Window window)
         {
             ResultQuestion = DialogReplaceItemQuestion.Yes;
-            window.DialogResult = true;
-            window?.Close();
+            window.ClickButtonWindow();
         }
 
         [RelayCommand]
         private void AllYesClick(Window window)
         {
             ResultQuestion = DialogReplaceItemQuestion.AllYes;
-            window.DialogResult = true;
-            window?.Close();
+            window.ClickButtonWindow();
         }
 
         [RelayCommand]
         private void NoClick(Window window)
         {
             ResultQuestion = DialogReplaceItemQuestion.No;
-            window.DialogResult = true;
-            window?.Close();
+            window.ClickButtonWindow();
         }
 
         [RelayCommand]
         private void AllNoClick(Window window)
         {
             ResultQuestion = DialogReplaceItemQuestion.AllNo;
-            window.DialogResult = true;
-            window?.Close();
+            window.ClickButtonWindow();
         }
     }
 }

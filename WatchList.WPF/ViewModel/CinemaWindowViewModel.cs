@@ -7,7 +7,7 @@ namespace WatchList.WPF.ViewModel
 {
     public sealed partial class CinemaWindowViewModel : ObservableObject
     {
-        [ObservableProperty] private Page? currentPage;
+        [ObservableProperty] private Page? _currentPage;
 
         public CinemaWindowViewModel(PageService pageService)
         {
