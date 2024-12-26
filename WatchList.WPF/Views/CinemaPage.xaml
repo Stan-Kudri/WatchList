@@ -31,7 +31,8 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="8"
                     Orientation="Horizontal"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
             <mah:MultiSelectionComboBox Width="160"
                             Height="50"
                             Margin="4 2 4 2"

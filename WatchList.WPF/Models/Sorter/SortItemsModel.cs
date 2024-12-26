@@ -1,10 +1,10 @@
 using System.Collections.ObjectModel;
-using DevExpress.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using WatchList.Core.Model.Sortable;
 
 namespace WatchList.WPF.Models.Sorter
 {
-    public class SortItemsModel<T> : BindableBase, ISortItem<T>
+    public class SortItemsModel<T> : ObservableObject, ISortItem<T>
     {
         private readonly ISortItem<T> _sortType;
 
@@ -34,7 +34,7 @@ namespace WatchList.WPF.Models.Sorter
                 }
 
                 _sortType.SortFields = value;
-                RaisePropertyChanged(nameof(SortFields));
+                OnPropertyChanged(nameof(SortFields));
             }
         }
 

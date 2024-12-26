@@ -1,16 +1,15 @@
-using System.Collections.ObjectModel;
-using DevExpress.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using WatchList.Core.PageItem;
 
 namespace WatchList.WPF.Models
 {
-    public class PageModel : BindableBase
+    public partial class PageModel : ObservableObject
     {
         private const int StartPageSize = 10;
         private const int NumberStartPage = 1;
 
-        private int _size;
-        private int _number;
+        [ObservableProperty] private int _size;
+        [ObservableProperty] private int _number;
 
         public PageModel(int pageNumber = NumberStartPage, int pageSize = StartPageSize)
         {
@@ -18,22 +17,10 @@ namespace WatchList.WPF.Models
             Size = pageSize;
         }
 
-        public ObservableCollection<int> Items { get; set; } = new ObservableCollection<int> { 10, 25, 50 };
+        public List<int> Items { get; set; } = new List<int> { 10, 25, 50 };
 
-        public int Number
-        {
-            get => _number;
-            set => SetValue(ref _number, value);
-        }
+        public Page GetPage() => new Page(Number, Size);
 
-        public int Size
-        {
-            get => _size;
-            set => SetValue(ref _size, value);
-        }
-
-        public Page GetPage() => new Page(_number, _size);
-
-        public bool ChangedPage(int pageSize) => pageSize != _size;
+        public bool ChangedPage(int pageSize) => pageSize != Size;
     }
 }

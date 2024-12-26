@@ -1,11 +1,12 @@
-using DevExpress.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace WatchList.WPF.Models.Sorter
 {
-    public class TypeSortFields : BindableBase
+    public partial class TypeSortFields : ObservableObject
     {
         private bool _isAscending = false;
-        private string _buttonContent = null!;
+
+        [ObservableProperty] private string _buttonContent = null!;
 
         public bool IsAscending
         {
@@ -13,14 +14,8 @@ namespace WatchList.WPF.Models.Sorter
             set
             {
                 ButtonContent = _isAscending ? "↑" : "↓";
-                SetValue(ref _isAscending, value);
+                SetProperty(ref _isAscending, value);
             }
-        }
-
-        public string ButtonContent
-        {
-            get => _buttonContent;
-            set => SetValue(ref _buttonContent, value);
         }
     }
 }

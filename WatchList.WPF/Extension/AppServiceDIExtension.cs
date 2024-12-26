@@ -1,4 +1,3 @@
-using DevExpress.Mvvm.POCO;
 using Microsoft.Extensions.DependencyInjection;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Repository;
