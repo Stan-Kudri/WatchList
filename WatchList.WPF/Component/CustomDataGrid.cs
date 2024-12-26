@@ -9,7 +9,7 @@ namespace WatchList.WPF.Component
         public CustomDataGrid()
             => SelectionChanged += CustomDataGrid_SelectionChanged;
 
-        void CustomDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void CustomDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
             => SelectedItemsList = SelectedItems;
 
         public IList SelectedItemsList
