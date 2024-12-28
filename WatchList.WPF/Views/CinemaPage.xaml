@@ -128,7 +128,7 @@
                   Width="80"
                   Height="35"
                   Margin="10 2 2 2"
-                  FontSize="10"
+                  FontSize="12"
                   ItemsSource="{Binding Page.Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedValue="{Binding Page.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
