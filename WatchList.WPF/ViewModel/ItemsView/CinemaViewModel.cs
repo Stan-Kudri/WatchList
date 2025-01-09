@@ -1,6 +1,7 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Repository;
@@ -14,6 +15,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
         protected readonly IMessageBox _messageBox;
         protected readonly WatchItemRepository _watchItemRepository;
         protected readonly WatchItemCreator _watchItemCreator;
+        protected readonly ILogger<WatchItemRepository> _logger;
 
         protected WatchItem _defaultWatchItem;
 
@@ -34,11 +36,13 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         protected CinemaViewModel(IMessageBox messageBox,
                                   WatchItemRepository watchItemRepository,
-                                  WatchItemCreator watchItemCreator)
+                                  WatchItemCreator watchItemCreator,
+                                  ILogger<WatchItemRepository> logger)
         {
             _messageBox = messageBox;
             _watchItemRepository = watchItemRepository;
             _watchItemCreator = watchItemCreator;
+            _logger = logger;
 
             MaxDateWatched = DateTime.Now;
             MinDateWatched = new DateTime(1945, 1, 1);

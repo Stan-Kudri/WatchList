@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
-using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.WPF.Commands;
-using WatchList.WPF.Data;
 using WatchList.WPF.Extension;
 using WatchList.WPF.Models;
 using WatchList.WPF.Models.Sorter;
@@ -26,8 +23,6 @@ namespace WatchList.WPF.ViewModel
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
         private readonly CinemaWindowCreator _cinemaWindowCreator;
-        private readonly ILogger<WatchItemRepository> _logger;
-        private readonly PageService _pageService;
 
         private readonly ItemSearchRequest _searchRequests;
 
@@ -47,19 +42,15 @@ namespace WatchList.WPF.ViewModel
         [ObservableProperty] private IList _selectItems = new ArrayList();
 
         public CinemaPageViewModel(IMessageBox messageBox,
-                            ILogger<WatchItemRepository> logger,
                             WatchItemService watchItemService,
                             SortWatchItemModel sortFieldModel,
                             IFilterItem filterItemModel,
-                            PageService pageService,
                             TypeSortFields typeSortFieldsModel,
                             PageModel pageModel,
                             CinemaWindowCreator cinemaWindowCreator)
         {
             _messageBox = messageBox;
-            _logger = logger;
             _itemService = watchItemService;
-            _pageService = pageService;
             _cinemaWindowCreator = cinemaWindowCreator;
             SortField = sortFieldModel;
             FilterItem = filterItemModel;
