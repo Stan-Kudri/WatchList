@@ -48,11 +48,9 @@ namespace WatchList.WPF.Models.Filter
             }
         }
 
-        public List<TypeCinema> TypeItems { get; set; }
-            = new List<TypeCinema>(TypeCinema.List);
+        public List<TypeCinema> TypeItems { get; set; } = new List<TypeCinema>(TypeCinema.List);
 
-        public List<StatusCinema> StatusItems { get; set; }
-            = new List<StatusCinema>(StatusCinema.List);
+        public List<StatusCinema> StatusItems { get; set; } = new List<StatusCinema>(StatusCinema.List);
 
         public FilterWatchItem GetFilter() => new FilterWatchItem(_filterTypeField, _filterStatusField);
 

@@ -59,6 +59,8 @@ namespace WatchList.Core.PageItem
 
         public bool HasNextPage => PageNumber < PageCount;
 
+        public bool HasEmptyPage => PageCount == 0;
+
         public int Count => Items.Count;
 
         public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();

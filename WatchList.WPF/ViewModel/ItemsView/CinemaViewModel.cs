@@ -86,14 +86,11 @@ namespace WatchList.WPF.ViewModel.ItemsView
             }
         }
 
-        [RelayCommand]
-        protected abstract Task SaveCinema(Window currentWindowAdd);
+        [RelayCommand] protected abstract Task SaveCinema(Window currentWindowAdd);
 
-        [RelayCommand]
-        protected void CloseWindow(Window window) => window?.Close();
+        [RelayCommand] protected void CloseWindow(Window window) => window?.Close();
 
-        [RelayCommand]
-        protected abstract void SetDefaultValues();
+        [RelayCommand] protected abstract void SetDefaultValues();
 
         protected bool ValidateFields(out string errorMessage)
         {

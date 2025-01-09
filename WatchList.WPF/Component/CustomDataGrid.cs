@@ -10,7 +10,8 @@ namespace WatchList.WPF.Component
         {
             SelectionChanged += CustomDataGrid_SelectionChanged;
             Loaded += (s, e) =>
-            { // Column widths
+            {
+                // Column widths
                 foreach (var column in Columns.AsParallel())
                 {
                     column.MinWidth = column.ActualWidth;

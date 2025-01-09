@@ -11,8 +11,7 @@ namespace WatchList.WPF.ViewModel
 
         private readonly string _titleLabel;
 
-        public DataReplaceMessageVM(string titleItem)
-            => _titleLabel = titleItem;
+        public DataReplaceMessageVM(string titleItem) => _titleLabel = titleItem;
 
         public string QuestionLabel => Question;
         public string TitleLabel => _titleLabel;

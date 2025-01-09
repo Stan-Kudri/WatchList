@@ -32,6 +32,7 @@ namespace WatchList.WPF.Extension
                                       .AddSingleton<PageService>()
                                       .AddScoped<ViewModelLocator>()
                                       .AddScoped<FileLoaderDB>()
+                                      .AddScoped<CinemaWindowCreator>()
                                       .AddLogging();
 
         public static IServiceCollection AppServicePageContainer(this IServiceCollection serviceCollection)
