@@ -10,7 +10,6 @@
         BorderThickness="1"
         WindowStartupLocation="CenterScreen"
         Title="CinemaWindow" 
-        Height="570" Width="700" 
         MinHeight="570" MinWidth="700"
         DataContext="{Binding CinemaWindowViewModel, Source={StaticResource ViewModelLocator}}">
     <Grid>

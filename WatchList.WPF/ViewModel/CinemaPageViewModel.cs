@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
@@ -15,9 +14,7 @@ using WatchList.WPF.Data;
 using WatchList.WPF.Extension;
 using WatchList.WPF.Models;
 using WatchList.WPF.Models.Sorter;
-using WatchList.WPF.ViewModel.ItemsView;
 using WatchList.WPF.Views;
-using WatchList.WPF.Views.CinemaView;
 
 namespace WatchList.WPF.ViewModel
 {
@@ -28,7 +25,7 @@ namespace WatchList.WPF.ViewModel
 
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly CinemaWindowCreator _cinemaWindowCreator;
         private readonly ILogger<WatchItemRepository> _logger;
         private readonly PageService _pageService;
 
@@ -37,6 +34,7 @@ namespace WatchList.WPF.ViewModel
         private PagedList<WatchItem> _pagedList;
 
         [ObservableProperty] private string _pageDisplayText = string.Empty;
+
         [ObservableProperty] private PageModel _page;
 
         [ObservableProperty] private IFilterItem _filterItem;
@@ -50,19 +48,19 @@ namespace WatchList.WPF.ViewModel
 
         public CinemaPageViewModel(IMessageBox messageBox,
                             ILogger<WatchItemRepository> logger,
-                            IServiceProvider serviceProvider,
                             WatchItemService watchItemService,
                             SortWatchItemModel sortFieldModel,
                             IFilterItem filterItemModel,
                             PageService pageService,
                             TypeSortFields typeSortFieldsModel,
-                            PageModel pageModel)
+                            PageModel pageModel,
+                            CinemaWindowCreator cinemaWindowCreator)
         {
-            _serviceProvider = serviceProvider;
             _messageBox = messageBox;
             _logger = logger;
             _itemService = watchItemService;
             _pageService = pageService;
+            _cinemaWindowCreator = cinemaWindowCreator;
             SortField = sortFieldModel;
             FilterItem = filterItemModel;
             TypeSortFields = typeSortFieldsModel;
@@ -74,14 +72,16 @@ namespace WatchList.WPF.ViewModel
             _ = LoadDataAsync();
         }
 
-        public RelayCommandApp MoveToPreviousPage
+        public RelayCommandApp MoveToPreviousPageCommand
             => new(async _ => await LoadDataAsyncPage(--Page.Number), _ => _pagedList.HasPreviousPage);
-        public RelayCommandApp MoveToFirstPage
+
+        public RelayCommandApp MoveToFirstPageCommand
             => new(async _ => await LoadDataAsyncPage(1), _ => _pagedList.HasPreviousPage);
 
-        public RelayCommandApp MoveToNextPage
+        public RelayCommandApp MoveToNextPageCommand
             => new(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
-        public RelayCommandApp MoveToLastPage
+
+        public RelayCommandApp MoveToLastPageCommand
             => new(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
         [RelayCommand]
@@ -98,9 +98,7 @@ namespace WatchList.WPF.ViewModel
         [RelayCommand]
         private async Task MoveAddItem()
         {
-            var viewModel = _serviceProvider.GetRequiredService<AddCinemaViewModel>();
-            viewModel.InitializeDefaultValue();
-            var addWindow = new WatchCinemaWindow(viewModel);
+            var addWindow = _cinemaWindowCreator.AddItemWindow();
 
             if (addWindow.ShowDialog() != true)
             {
@@ -119,9 +117,7 @@ namespace WatchList.WPF.ViewModel
                 return;
             }
 
-            var viewModel = _serviceProvider.GetRequiredService<EditCinemaViewModel>();
-            viewModel.InitializeDefaultValue(SelectItem);
-            var editWindow = new WatchCinemaWindow(viewModel);
+            var editWindow = _cinemaWindowCreator.EditItemWindow(SelectItem);
 
             if (editWindow.ShowDialog() != true)
             {
@@ -145,15 +141,7 @@ namespace WatchList.WPF.ViewModel
                 return;
             }
 
-            foreach (var item in SelectItems)
-            {
-                var isWatchItem = item as WatchItem;
-                if (isWatchItem != null)
-                {
-                    _itemService.Remove(isWatchItem.Id);
-                }
-            }
-
+            _itemService.RemoveRangeWatchItem(SelectItems);
             await LoadDataAsync();
         }
 
@@ -178,16 +166,10 @@ namespace WatchList.WPF.ViewModel
             {
                 UpdataSearchRequests();
                 _pagedList = _itemService.GetPage(_searchRequests);
-
                 WatchItems.UppdataItems(_pagedList.Items);
-
-                if (IsNotFirstPageEmpty())
-                {
-                    Page.Number -= 1;
-                    await LoadDataAsync();
-                }
-
-                PageDisplayText = $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
+                PageDisplayText = _pagedList.HasEmptyPage
+                                ? string.Empty
+                                : $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
             }
             catch (Exception error)
             {
@@ -214,13 +196,5 @@ namespace WatchList.WPF.ViewModel
             _searchRequests.Filter = FilterItem.GetFilter();
             _searchRequests.IsAscending = TypeSortFields.IsAscending;
         }
-
-        /// <summary>
-        /// The method checks if the page is empty.
-        /// </summary>
-        /// <returns>
-        /// True - The page contains no elements and is not the first.
-        /// </returns>
-        private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
     }
 }
