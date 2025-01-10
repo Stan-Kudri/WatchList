@@ -51,7 +51,8 @@ namespace WatchList.Core.Repository
                 throw new ArgumentNullException("The received parameters are not correct.");
             }
 
-            var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id) ?? throw new InvalidOperationException("Interaction element not found.");
+            var item = _db.WatchItem.FirstOrDefault(x => x.Id == editItem.Id)
+                        ?? throw new InvalidOperationException("Interaction element not found.");
 
             item.Sequel = editItem.Sequel;
             item.Date = editItem.Date;

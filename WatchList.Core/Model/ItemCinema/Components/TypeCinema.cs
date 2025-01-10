@@ -12,8 +12,7 @@ namespace WatchList.Core.Model.ItemCinema.Components
         public static readonly TypeCinema Cartoon = new TypeCinema("Cartoon", Types.Cartoon, "Part");
 
         private TypeCinema(string category, Types types, string typeSequel)
-            : base(category, (int)types)
-            => TypeSequel = typeSequel;
+            : base(category, (int)types) => TypeSequel = typeSequel;
 
         [JsonPropertyName("TypeSequel")]
         public string TypeSequel { get; }

@@ -462,7 +462,7 @@ namespace WatchList.WinForms
         /// <returns>
         /// True - The page contains no elements and is not the first.
         /// </returns>
-        private bool IsNotFirstPageEmpty() => _pagedList.Count == 0 && Page.Number != 1;
+        private bool IsNotFirstPageEmpty() => _pagedList.HasEmptyPage && Page.Number != 1;
 
         /// <summary>
         /// Get the size of the page data.

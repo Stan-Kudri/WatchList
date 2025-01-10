@@ -8,7 +8,8 @@ namespace WatchList.Core.Model.Sortable
     {
         public ISortableSmartEnum<T>? SortField { get; set; }
 
-        public IEnumerable<ISortableSmartEnum<T>> SortFields { get; set; } = new ObservableCollection<ISortableSmartEnum<T>>() { TSortField.DefaultValue };
+        public IEnumerable<ISortableSmartEnum<T>> SortFields { get; set; }
+            = new ObservableCollection<ISortableSmartEnum<T>>() { TSortField.DefaultValue };
 
         public List<ISortableSmartEnum<T>> Items { get; set; } = new List<ISortableSmartEnum<T>>(TSortField.List);
 
@@ -19,9 +20,7 @@ namespace WatchList.Core.Model.Sortable
         }
 
         public void Clear()
-            => SortFields = new HashSet<ISortableSmartEnum<T>>()
-            {
-                TSortField.DefaultValue,
-            };
+            => SortFields
+            = new HashSet<ISortableSmartEnum<T>>() { TSortField.DefaultValue };
     }
 }

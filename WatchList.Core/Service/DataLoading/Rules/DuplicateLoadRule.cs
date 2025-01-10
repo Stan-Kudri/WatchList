@@ -39,7 +39,10 @@ namespace WatchList.Core.Service.DataLoading.Rules
 
             foreach (var item in items.Items)
             {
-                var selectItem = _caseSensitive && _actionSelected ? _itemRepository.SelectDuplicateItems(item) : _itemRepository.DuplicateItemsCaseSensitive(item);
+                var selectItem = _caseSensitive && _actionSelected
+                                ? _itemRepository.SelectDuplicateItems(item)
+                                : _itemRepository.DuplicateItemsCaseSensitive(item);
+
                 if (selectItem.Count == 0)
                 {
                     idAddItems.Add(item.Id);

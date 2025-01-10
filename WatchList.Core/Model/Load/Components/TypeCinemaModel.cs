@@ -5,10 +5,9 @@ namespace WatchList.Core.Model.Load.Components
 {
     public class TypeCinemaModel : SmartEnumBaseWrapper<TypeCinema?>, IEquatable<TypeCinemaModel>
     {
-        public static ObservableCollection<TypeCinemaModel> GetItemsType = GetItems(TypeCinema.List, e => new TypeCinemaModel(e));
+        public TypeCinemaModel(TypeCinema? value = null) => Value = value;
 
-        public TypeCinemaModel(TypeCinema? value = null)
-            => Value = value;
+        public static ObservableCollection<TypeCinemaModel> GetItemsType => GetItems(TypeCinema.List, e => new TypeCinemaModel(e));
 
         public static TypeCinemaModel AllType
             => new TypeCinemaModel(null);

@@ -5,9 +5,7 @@ namespace WatchList.Core.Model.Sortable
         private readonly ISortableSmartEnum<T> _defaultValue;
 
         public Sorter(ISortableSmartEnum<T> defaultValue)
-        {
-            _defaultValue = defaultValue;
-        }
+            => _defaultValue = defaultValue;
 
         public IQueryable<T> Apply(IQueryable<T> items, IEnumerable<ISortableSmartEnum<T>> sortFields, bool? ascending = true)
         {

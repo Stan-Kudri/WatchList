@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using WatchList.Core.Enums;
 using WatchList.Core.Extension;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.Load;

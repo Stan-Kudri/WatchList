@@ -60,12 +60,12 @@ namespace WatchList.Core.Model.ItemCinema
             }
 
             return Id == other.Id
-                && Title == other.Title
-                && Status == other.Status
-                && Type == other.Type
-                && Sequel == other.Sequel
-                && Grade == other.Grade
-                && Date == other.Date;
+                    && Title == other.Title
+                    && Status == other.Status
+                    && Type == other.Type
+                    && Sequel == other.Sequel
+                    && Grade == other.Grade
+                    && Date == other.Date;
         }
 
         public override string ToString()

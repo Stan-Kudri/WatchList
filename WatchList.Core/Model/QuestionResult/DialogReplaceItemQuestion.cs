@@ -1,4 +1,5 @@
 using Ardalis.SmartEnum;
+using WatchList.Core.Enums;
 
 namespace WatchList.Core.Model.QuestionResult
 {

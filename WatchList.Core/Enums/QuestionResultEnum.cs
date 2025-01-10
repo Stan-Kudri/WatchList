@@ -1,4 +1,4 @@
-namespace WatchList.Core.Model.QuestionResult
+namespace WatchList.Core.Enums
 {
     public enum QuestionResultEnum
     {

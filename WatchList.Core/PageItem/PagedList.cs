@@ -61,7 +61,7 @@ namespace WatchList.Core.PageItem
 
         public bool HasEmptyPage => PageCount == 0;
 
-        public int Count => Items.Count;
+        public int Count => PageCount;
 
         public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
 

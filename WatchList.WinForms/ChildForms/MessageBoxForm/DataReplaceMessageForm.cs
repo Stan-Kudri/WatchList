@@ -1,4 +1,4 @@
-using WatchList.Core.Model.QuestionResult;
+using WatchList.Core.Enums;
 
 namespace WatchList.WinForms.ChildForms.MessageBoxForm
 {
