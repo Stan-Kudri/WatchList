@@ -55,15 +55,6 @@ namespace WatchList.MudBlazors.Dialog
             }
         }
 
-        private ILoadRulesConfig GetLoadRuleConfig()
-        {
-            var actionDuplicateItems = _isConsiderDuplicates
-                ? new ActionDuplicateItems(_isConsiderDuplicates, _actionDuplicateItems.ToList())
-                : new ActionDuplicateItems();
-
-            return new BaseLoadRulesConfigModel(_isDeleteGrade, actionDuplicateItems, _selectTypeCinema.Value, _selectGrade);
-        }
-
         private async Task<string> DownloadFile(IBrowserFile fileload)
         {
             var pathFile = Path.GetTempFileName();
@@ -77,6 +68,15 @@ namespace WatchList.MudBlazors.Dialog
             }
 
             return pathFile;
+        }
+
+        private ILoadRulesConfig GetLoadRuleConfig()
+        {
+            var actionDuplicateItems = _isConsiderDuplicates
+                ? new ActionDuplicateItems(_isConsiderDuplicates, _actionDuplicateItems.ToList())
+                : new ActionDuplicateItems();
+
+            return new BaseLoadRulesConfigModel(_isDeleteGrade, actionDuplicateItems, _selectTypeCinema.Value, _selectGrade);
         }
 
         private void RemoveFileByPath(string pathFile)

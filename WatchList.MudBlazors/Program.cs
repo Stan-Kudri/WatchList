@@ -1,16 +1,8 @@
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using MudBlazor.Services;
 using Serilog;
 using Serilog.Core;
 using WatchList.Core.Extension;
-using WatchList.Core.Model.Filter;
-using WatchList.Core.Model.Sortable;
-using WatchList.Core.Repository;
-using WatchList.Core.Service;
-using WatchList.Core.Service.Component;
-using WatchList.Core.Service.DataLoading;
-using WatchList.Migrations.SQLite;
-using WatchList.MudBlazors.Message;
+using WatchList.MudBlazors.Extension;
 
 Log.Logger = CreateLogger();
 
@@ -23,19 +15,7 @@ try
     StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
     // Add services to the container.
-    builder.Services.AddRazorPages();
-    builder.Services.AddServerSideBlazor();
-    builder.Services.AddMudServices();
-
-    builder.Services.AddSingleton(new DbContextFactoryMigrator("app.db"));
-    builder.Services.AddScoped(e => e.GetRequiredService<DbContextFactoryMigrator>().Create());
-    builder.Services.AddScoped<WatchItemRepository>();
-    builder.Services.AddScoped<IMessageBox, MessageBoxDialog>();
-    builder.Services.AddScoped<WatchItemService>();
-    builder.Services.AddScoped<SortWatchItem>();
-    builder.Services.AddScoped<IFilterItem, FilterWatchItem>();
-    builder.Services.AddScoped<DownloadDataService>();
-    builder.Services.AddLogging();
+    builder.AddAppService();
     builder.WebHost.UseDefaultServiceProvider(e =>
     {
         e.ValidateScopes = true;

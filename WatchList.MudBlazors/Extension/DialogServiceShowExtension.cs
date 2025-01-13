@@ -1,12 +1,38 @@
 using MudBlazor;
 using MudBlazor.Extensions;
 using WatchList.Core.Model.QuestionResult;
+using WatchList.MudBlazors.Dialog;
 using WatchList.MudBlazors.Message;
 
 namespace WatchList.MudBlazors.Extension
 {
-    public static class DialogServiceShow
+    public static class DialogServiceShowExtension
     {
+        public static async Task<IDialogReference> SaveItemDialogAsync(this IDialogService dialogService, Guid? id = null)
+        {
+            var parameters = new DialogParameters<WatchItemDialog> { { x => x.Id, id } };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
+            var title = id == null ? "Add Item" : "Edit Item";
+
+            return await dialogService.ShowAsync<WatchItemDialog>(title, parameters, options);
+        }
+
+        public static async Task<IDialogReference> UploadDataDialogAsync(this IDialogService dialogService)
+        {
+            var parameters = new DialogParameters<LoadRuleDialog>();
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
+
+            return await dialogService.ShowAsync<LoadRuleDialog>("Upload Data", parameters, options);
+        }
+        /*
+         private async Task UploadData()
+        {
+            var parameters = new DialogParameters<LoadRuleDialog>();
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
+
+            var dialog = await DialogService.ShowAsync<LoadRuleDialog>("Upload Data", parameters, options);
+         */
+
         public static async Task<DialogReplaceItemQuestion> DialogReplaceLoadData(this IDialogService dialogService, string title, string titleItem)
         {
             var parameters = new DialogParameters<DialogLoadData> { { e => e.TitleItem, titleItem } };
@@ -43,6 +69,7 @@ namespace WatchList.MudBlazors.Extension
             return await DialogShowAsync(parameters, dialogService, title, content);
         }
 
+        [Obsolete]
         private static async Task<bool> DialogShowAsync(DialogParameters<DialogYesNo> dialogParameters, IDialogService dialogService, string title, string content)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
