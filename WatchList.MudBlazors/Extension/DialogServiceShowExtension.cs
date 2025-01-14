@@ -8,6 +8,8 @@ namespace WatchList.MudBlazors.Extension
 {
     public static class DialogServiceShowExtension
     {
+        private static string TitleUploadData = "Upload Data";
+
         public static async Task<IDialogReference> SaveItemDialogAsync(this IDialogService dialogService, Guid? id = null)
         {
             var parameters = new DialogParameters<WatchItemDialog> { { x => x.Id, id } };
@@ -22,16 +24,8 @@ namespace WatchList.MudBlazors.Extension
             var parameters = new DialogParameters<LoadRuleDialog>();
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
 
-            return await dialogService.ShowAsync<LoadRuleDialog>("Upload Data", parameters, options);
+            return await dialogService.ShowAsync<LoadRuleDialog>(TitleUploadData, parameters, options);
         }
-        /*
-         private async Task UploadData()
-        {
-            var parameters = new DialogParameters<LoadRuleDialog>();
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
-
-            var dialog = await DialogService.ShowAsync<LoadRuleDialog>("Upload Data", parameters, options);
-         */
 
         public static async Task<DialogReplaceItemQuestion> DialogReplaceLoadData(this IDialogService dialogService, string title, string titleItem)
         {
@@ -70,7 +64,10 @@ namespace WatchList.MudBlazors.Extension
         }
 
         [Obsolete]
-        private static async Task<bool> DialogShowAsync(DialogParameters<DialogYesNo> dialogParameters, IDialogService dialogService, string title, string content)
+        private static async Task<bool> DialogShowAsync(DialogParameters<DialogYesNo> dialogParameters,
+                                                        IDialogService dialogService,
+                                                        string title,
+                                                        string content)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var dialog = await dialogService.ShowAsync<DialogYesNo>(title, dialogParameters, options);

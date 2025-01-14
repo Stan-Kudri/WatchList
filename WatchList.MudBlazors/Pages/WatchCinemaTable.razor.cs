@@ -17,7 +17,8 @@ namespace WatchList.MudBlazors.Pages
         private const int NonSelectItems = 0;
 
         private const string MessageNoSelectItems = "No items selected.";
-        private const string MessageDeleteSelectItems = "Delete select item?";
+        private const string MessageDeleteItem = "Delete item?";
+        private const string MessageDeleteSelectItems = "Delete select items?";
 
         [Inject] private WatchItemService WatchItemService { get; set; } = null!;
         [Inject] private IDialogService DialogService { get; set; } = null!;
@@ -79,7 +80,7 @@ namespace WatchList.MudBlazors.Pages
 
         private async Task RemoveItemDialog(Guid id)
         {
-            if (!await MessageBoxDialog.ShowQuestion(MessageDeleteSelectItems))
+            if (!await MessageBoxDialog.ShowQuestion(MessageDeleteItem))
             {
                 return;
             }
