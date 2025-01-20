@@ -19,7 +19,7 @@ namespace WatchList.MudBlazors.Dialog
         private WatchItem? _oldWatchItem = null;
         private bool _isAddItem = true;
 
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
         [Inject] private WatchItemService WatchItemService { get; set; } = null!;
         [Inject] private IMessageBox MessageBoxDialog { get; set; } = null!;

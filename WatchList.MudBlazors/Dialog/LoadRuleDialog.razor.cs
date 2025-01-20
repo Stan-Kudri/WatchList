@@ -18,7 +18,7 @@ namespace WatchList.MudBlazors.Dialog
         [Inject] private ILogger<WatchItemRepository> Logger { get; set; } = null!;
         [Inject] private DownloadDataService DownloadDataService { get; set; } = null!;
 
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
         private readonly bool _isDeleteGrade = false;
         private bool _isConsiderDuplicates = false;

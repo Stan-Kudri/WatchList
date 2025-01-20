@@ -8,7 +8,7 @@ namespace WatchList.MudBlazors.Extension
 {
     public static class DialogServiceShowExtension
     {
-        private static string TitleUploadData = "Upload Data";
+        private static readonly string TitleUploadData = "Upload Data";
 
         public static async Task<IDialogReference> SaveItemDialogAsync(this IDialogService dialogService, Guid? id = null)
         {
@@ -34,7 +34,7 @@ namespace WatchList.MudBlazors.Extension
             var dialog = await dialogService.ShowAsync<DialogLoadData>(title, parameters, options);
             var result = await dialog.Result;
 
-            if (result == null || !result.Cancelled)
+            if (result == null || !result.Canceled)
             {
                 return result.Data.As<DialogReplaceItemQuestion>();
             }
@@ -72,7 +72,7 @@ namespace WatchList.MudBlazors.Extension
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var dialog = await dialogService.ShowAsync<DialogYesNo>(title, dialogParameters, options);
             var result = await dialog.Result;
-            return result == null || !result.Cancelled;
+            return result == null || !result.Canceled;
         }
     }
 }

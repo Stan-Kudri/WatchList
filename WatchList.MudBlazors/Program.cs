@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Serilog;
 using Serilog.Core;
@@ -9,13 +10,13 @@ Log.Logger = CreateLogger();
 try
 {
     Log.Information("Starting web application");
-
     var builder = WebApplication.CreateBuilder(args);
 
     StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
     // Add services to the container.
     builder.AddAppService();
+
     builder.WebHost.UseDefaultServiceProvider(e =>
     {
         e.ValidateScopes = true;

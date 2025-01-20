@@ -73,11 +73,9 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// Gets the content of the pop-up.
         /// </summary>
-        public Control Content
-        {
-            get { return content; }
-        }
+        public Control Content => content;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="PopupControl.Popup"/> uses the fade effect.
         /// </summary>
@@ -97,6 +95,7 @@ namespace TestTask.Controls.CheckComboBox
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets or sets a value indicating whether to focus the content after the pop-up has been opened.
         /// </summary>
@@ -104,36 +103,44 @@ namespace TestTask.Controls.CheckComboBox
         /// <remarks>If the FocusOnOpen property is set to <c>false</c>, then pop-up cannot use the fade effect.</remarks>
         public bool FocusOnOpen { get; set; } = true;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets or sets a value indicating whether presing the alt key should close the pop-up.
         /// </summary>
         /// <value><c>true</c> if presing the alt key does not close the pop-up; otherwise, <c>false</c>.</value>
         public bool AcceptAlt { get; set; } = true;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets a value indicating whether this <see cref="PopupControl.Popup" /> is resizable.
         /// </summary>
         /// <value><c>true</c> if resizable; otherwise, <c>false</c>.</value>
         public bool Resizable { get; internal set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public VisualStyleRenderer SizeGripRenderer { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool Fade { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets the size that is the lower limit that <see cref="M:System.Windows.Forms.Control.GetPreferredSize(System.Drawing.Size)" /> can specify.
         /// </summary>
         /// <returns>An ordered pair of type <see cref="T:System.Drawing.Size" /> representing the width and height of a rectangle.</returns>
         public Size MinSize { get; private set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets the size that is the upper limit that <see cref="M:System.Windows.Forms.Control.GetPreferredSize(System.Drawing.Size)" /> can specify.
         /// </summary>
         /// <returns>An ordered pair of type <see cref="T:System.Drawing.Size" /> representing the width and height of a rectangle.</returns>
         public Size MaxSize { get; private set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Popup OwnerPopup { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Popup ChildPopup { get; set; }
 
         /// <summary>

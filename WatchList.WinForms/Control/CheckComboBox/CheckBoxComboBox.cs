@@ -87,6 +87,7 @@ namespace TestTask.Controls.CheckComboBox
         /// Gets or sets the DataSource of the combobox. Refreshes the CheckBox wrappers when this is set.
         /// </summary>
         [Obsolete]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new object DataSource
         {
             get => base.DataSource;
@@ -106,6 +107,7 @@ namespace TestTask.Controls.CheckComboBox
         /// Gets or sets the ValueMember of the combobox. Refreshes the CheckBox wrappers when this is set.
         /// </summary>
         [Obsolete]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new string ValueMember
         {
             get => base.ValueMember;
@@ -121,6 +123,7 @@ namespace TestTask.Controls.CheckComboBox
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets or sets in DataBinding operations, this property will be used as the DisplayMember in the CheckBoxComboBoxListBox.
         /// The normal/existing "DisplayMember" property is used by the TextBox of the ComboBox to display
@@ -151,6 +154,7 @@ namespace TestTask.Controls.CheckComboBox
         /// </summary>
         [Description("The properties that will be assigned to the checkboxes as default values.")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public CheckBoxProperties CheckBoxProperties
         {
             get => _checkBoxProperties;
@@ -173,8 +177,10 @@ namespace TestTask.Controls.CheckComboBox
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public new ObjectCollection Items => base.Items;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         internal CheckBoxComboBoxListControl CheckComboBoxListControl { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         internal bool MustAddHiddenItem { get; set; } = false;
 
         /// <summary>
