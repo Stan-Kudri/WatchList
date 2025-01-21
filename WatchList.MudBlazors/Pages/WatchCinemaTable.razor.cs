@@ -7,7 +7,7 @@ using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
-using WatchList.MudBlazors.Dialog;
+using WatchList.MudBlazors.Extension;
 using WatchList.MudBlazors.Model;
 
 namespace WatchList.MudBlazors.Pages
@@ -17,6 +17,8 @@ namespace WatchList.MudBlazors.Pages
         private const int NonSelectItems = 0;
 
         private const string MessageNoSelectItems = "No items selected.";
+        private const string MessageDeleteItem = "Delete item?";
+        private const string MessageDeleteSelectItems = "Delete select items?";
 
         [Inject] private WatchItemService WatchItemService { get; set; } = null!;
         [Inject] private IDialogService DialogService { get; set; } = null!;
@@ -43,22 +45,15 @@ namespace WatchList.MudBlazors.Pages
 
         private async Task UploadData()
         {
-            var parameters = new DialogParameters<LoadRuleDialog>();
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
-
-            var dialog = await DialogService.ShowAsync<LoadRuleDialog>("Upload Data", parameters, options);
-            var result = await dialog.Result;
+            var dialog = await DialogService.UploadDataDialogAsync();
+            await dialog.Result;
             LoadData();
         }
 
         private async Task SaveItemDialog(Guid? id = null)
         {
-            var parameters = new DialogParameters<WatchItemDialog> { { x => x.Id, id } };
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
-            var title = id == null ? "Add Item" : "Edit Item";
-
-            var dialog = await DialogService.ShowAsync<WatchItemDialog>(title, parameters, options);
-            var result = await dialog.Result;
+            var dialog = await DialogService.SaveItemDialogAsync(id);
+            await dialog.Result;
             LoadData();
         }
 
@@ -70,7 +65,7 @@ namespace WatchList.MudBlazors.Pages
                 return;
             }
 
-            if (!await MessageBoxDialog.ShowQuestion("Delete selecte items?"))
+            if (!await MessageBoxDialog.ShowQuestion(MessageDeleteSelectItems))
             {
                 return;
             }
@@ -85,7 +80,7 @@ namespace WatchList.MudBlazors.Pages
 
         private async Task RemoveItemDialog(Guid id)
         {
-            if (!await MessageBoxDialog.ShowQuestion("Delete selecte items?"))
+            if (!await MessageBoxDialog.ShowQuestion(MessageDeleteItem))
             {
                 return;
             }
@@ -121,6 +116,12 @@ namespace WatchList.MudBlazors.Pages
             LoadData();
         }
 
+        private void OnToggledChanged(bool toggled)
+        {
+            _itemsSearchRequest.IsAscending = toggled;
+            LoadData();
+        }
+
         private string GetMultiSelectionTypeCinema(List<string> selectedValues)
             => selectedValues.Count == TypeCinema.List.Count
             ? "All type"
@@ -130,11 +131,5 @@ namespace WatchList.MudBlazors.Pages
             => selectedValues.Count == StatusCinema.List.Count
             ? "All status"
             : string.Join(',', selectedValues);
-
-        public void OnToggledChanged(bool toggled)
-        {
-            _itemsSearchRequest.IsAscending = toggled;
-            LoadData();
-        }
     }
 }

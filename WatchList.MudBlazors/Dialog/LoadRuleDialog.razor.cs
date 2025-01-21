@@ -18,7 +18,7 @@ namespace WatchList.MudBlazors.Dialog
         [Inject] private ILogger<WatchItemRepository> Logger { get; set; } = null!;
         [Inject] private DownloadDataService DownloadDataService { get; set; } = null!;
 
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
         private readonly bool _isDeleteGrade = false;
         private bool _isConsiderDuplicates = false;
@@ -55,15 +55,6 @@ namespace WatchList.MudBlazors.Dialog
             }
         }
 
-        private ILoadRulesConfig GetLoadRuleConfig()
-        {
-            var actionDuplicateItems = _isConsiderDuplicates
-                ? new ActionDuplicateItems(_isConsiderDuplicates, _actionDuplicateItems.ToList())
-                : new ActionDuplicateItems();
-
-            return new BaseLoadRulesConfigModel(_isDeleteGrade, actionDuplicateItems, _selectTypeCinema.Value, _selectGrade);
-        }
-
         private async Task<string> DownloadFile(IBrowserFile fileload)
         {
             var pathFile = Path.GetTempFileName();
@@ -77,6 +68,15 @@ namespace WatchList.MudBlazors.Dialog
             }
 
             return pathFile;
+        }
+
+        private ILoadRulesConfig GetLoadRuleConfig()
+        {
+            var actionDuplicateItems = _isConsiderDuplicates
+                ? new ActionDuplicateItems(_isConsiderDuplicates, _actionDuplicateItems.ToList())
+                : new ActionDuplicateItems();
+
+            return new BaseLoadRulesConfigModel(_isDeleteGrade, actionDuplicateItems, _selectTypeCinema.Value, _selectGrade);
         }
 
         private void RemoveFileByPath(string pathFile)

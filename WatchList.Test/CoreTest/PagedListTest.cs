@@ -27,7 +27,7 @@ namespace WatchList.Test.CoreTest
 
         [Theory]
         [InlineData(null, 5, 1, 0)]
-        public void Exception_By_Null_List(List<WatchItem> watchItems, int pageSize, int numberPage, int totalItem)
+        public void Exception_By_Null_List(List<WatchItem>? watchItems, int pageSize, int numberPage, int totalItem)
         {
             // Assert
             Assert.Throws<ArgumentNullException>(() =>

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using WatchList.Core.Enums;
 
 namespace WatchList.WinForms.ChildForms.MessageBoxForm
@@ -13,6 +14,7 @@ namespace WatchList.WinForms.ChildForms.MessageBoxForm
             labelTitleItem.Text = $"Title: {titleItem}";
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public QuestionResultEnum ResultQuestion { get; private set; }
 
         private void BtnYes_Click(object sender, EventArgs e)

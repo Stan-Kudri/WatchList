@@ -1,4 +1,5 @@
-﻿@using WatchList.Core.Model
+﻿@using Microsoft.EntityFrameworkCore
+@using WatchList.Core.Model
 @using WatchList.Core.Model.ItemCinema.Components
 @using WatchList.Core.Model.Load
 @using WatchList.Core.Model.Load.ItemActions
@@ -22,9 +23,9 @@
 
             @if (_isConsiderDuplicates)
             {
-                 <MudToggleGroup T="DuplicateLoadingRules" SelectionMode="SelectionMode.MultiSelection" @bind-Values="_actionDuplicateItems" Color="Color.Surface" CheckMark Style="font-size:14px" FixedContent>
-                 <MudToggleItem Value=DuplicateLoadingRules.CaseSensitive UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox"/>
-                 <MudToggleItem Value=DuplicateLoadingRules.UpdateDuplicate UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                 <MudToggleGroup T="DuplicateLoadingRules" SelectionMode="SelectionMode.MultiSelection" @bind-Values="_actionDuplicateItems" Color="Color.Surface" CheckMark FixedContent>
+                 <MudToggleItem Value=DuplicateLoadingRules.CaseSensitive UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" Style="font-size:12px"/>
+                 <MudToggleItem Value=DuplicateLoadingRules.UpdateDuplicate UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" Style="font-size:12px"/>
              </MudToggleGroup>
             }
 
@@ -46,21 +47,25 @@
                     <MudSelectItem T="Grade" Value="@item" />
                 }
             </MudSelect>
-
+            
         </div>
+
+        <MudGrid Justify="Justify.FlexEnd" Class="mt-2">
+
+            <MudItem>
+                <MudFileUpload T="IBrowserFile" Accept=".db" FilesChanged="UploadData" Style="align-items:end;">
+                    <ActivatorContent>
+                        <MudButton HtmlTag="label" Style="max-width: 60px; max-height : 30px;" Variant="Variant.Filled" title="Import Data">Ok</MudButton>
+                    </ActivatorContent>
+                </MudFileUpload>
+            </MudItem>
+            <MudItem>
+                <MudButton OnClick="Close" Style="max-width: 60px; max-height : 30px;" Variant="Variant.Filled" title="Cancel">Cancel</MudButton>
+            </MudItem>
+
+        </MudGrid>
+
+        
     </DialogContent>
-
-    <DialogActions>
-
-        <MudContainer >
-            <MudFileUpload T="IBrowserFile" Accept=".db" FilesChanged="UploadData">
-                <ButtonTemplate>
-                    <MudButton HtmlTag="label" Style="max-width: 60px; max-height : 30px;" Variant="Variant.Filled" Class="mr-4" for="@context.Id" title="Import Data">Ok</MudButton>
-                    <MudButton OnClick="Close" Style="max-width: 60px; max-height : 30px;" Variant="Variant.Filled">Cancel</MudButton>
-                </ButtonTemplate>
-            </MudFileUpload>
-        </MudContainer>
-
-    </DialogActions>
 
 </MudDialog>

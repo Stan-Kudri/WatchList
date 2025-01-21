@@ -43,6 +43,7 @@ namespace WatchList.WinForms.Control.CheckComboBox.Component
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets a reference to the Item in ComboBox.Items that this object is extending.
         /// </summary>

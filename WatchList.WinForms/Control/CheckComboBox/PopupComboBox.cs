@@ -81,6 +81,7 @@ namespace TestTask.Controls.CheckComboBox
             set => base.ItemHeight = value;
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets or sets the drop down control.
         /// </summary>
