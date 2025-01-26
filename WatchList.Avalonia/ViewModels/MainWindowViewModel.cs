@@ -15,9 +15,6 @@ namespace WatchList.Avalonia.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        private const string HighlightTheDesiredLine = "No items selected.";
-        private const string NotSelectSingleItemLine = "Select one item.";
-
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
 

@@ -15,14 +15,14 @@ namespace WatchList.Avalonia.Models
 
         public PageModel(int pageNumber = NumberStartPage, int pageSize = StartPageSize)
         {
-            _number = pageNumber;
-            _size = pageSize;
+            Number = pageNumber;
+            Size = pageSize;
         }
 
         public List<int> Items { get; set; } = new List<int> { 10, 25, 50 };
 
-        public Page GetPage() => new(_number, _size);
+        public Page GetPage() => new(Number, Size);
 
-        public bool ChangedPage(int pageSize) => pageSize != _size;
+        public bool ChangedPage(int pageSize) => pageSize != Size;
     }
 }
