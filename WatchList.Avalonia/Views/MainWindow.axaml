@@ -1,0 +1,61 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:WatchList.Avalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="WatchList.Avalonia.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        MinWidth="500" MinHeight="450"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="WatchList.Avalonia">
+
+    <Grid RowDefinitions="Auto, *, *, *, *" ColumnDefinitions="*, *, *, *, *, *, *, *">
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="8">
+            <DataGrid Margin="20"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserSortColumns="False"
+                      GridLinesVisibility="All"
+                      BorderThickness="1" 
+                      BorderBrush="Gray"
+                      ItemsSource="{Binding WatchItems}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                    <DataGridTextColumn Header="Season/Part" Binding="{Binding Sequel}" Width="*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=dd MMMM yyyy}" Width="*"/>
+                    <DataGridTextColumn Header="Grade" Binding="{Binding Grade}" Width="*"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}"  Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>            
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="4" 
+                    HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Width="80" Height="25" 
+                    Content="Add" FontSize="12" HorizontalContentAlignment="Center"
+                    Background="LightSlateGray" Foreground="White"
+                    Margin="5">
+            </Button>
+            <Button Width="80" Height="25"
+                    Content="Edit" FontSize="12" HorizontalContentAlignment="Center"
+                    Background="LightSlateGray" Foreground="White"
+                    Margin="5">
+            </Button>
+            <Button Width="80" Height="25"
+                    Content="Delete" FontSize="12" HorizontalContentAlignment="Center"
+                    Background="LightSlateGray" Foreground="White"
+                    Margin="5">
+            </Button>
+            <Button Width="80" Height="25"
+                    Content="Add Data" FontSize="12" HorizontalContentAlignment="Center"
+                    Background="LightSlateGray" Foreground="White"
+                    Margin="5">
+            </Button>
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>
