@@ -75,8 +75,7 @@ namespace WatchList.WPF.ViewModel
         public RelayCommandApp MoveToLastPageCommand
             => new(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
-        [RelayCommand]
-        private async Task UseFilter() => await LoadDataAsync();
+        [RelayCommand] private async Task UseFilter() => await LoadDataAsync();
 
         [RelayCommand]
         private async Task ClearFilter()
@@ -155,8 +154,7 @@ namespace WatchList.WPF.ViewModel
         {
             try
             {
-                UpdataSearchRequests();
-                _pagedList = _itemService.GetPage(_searchRequests);
+                UpdataPagedList();
                 WatchItems.UppdataItems(_pagedList.Items);
                 PageDisplayText = _pagedList.HasEmptyPage
                                 ? string.Empty
@@ -175,6 +173,12 @@ namespace WatchList.WPF.ViewModel
         {
             Page.Number = pageNumber;
             await LoadDataAsync();
+        }
+
+        private void UpdataPagedList()
+        {
+            UpdataSearchRequests();
+            _pagedList = _itemService.GetPage(_searchRequests);
         }
 
         /// <summary>

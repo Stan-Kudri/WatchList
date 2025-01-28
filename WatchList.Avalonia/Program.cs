@@ -1,5 +1,6 @@
 using System;
 using Avalonia;
+using Avalonia.ReactiveUI;
 
 namespace WatchList.Avalonia
 {
@@ -17,6 +18,7 @@ namespace WatchList.Avalonia
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .WithInterFont()
-                .LogToTrace();
+                .LogToTrace()
+                .UseReactiveUI();
     }
 }
