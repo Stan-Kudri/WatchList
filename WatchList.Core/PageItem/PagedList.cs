@@ -4,8 +4,8 @@ namespace WatchList.Core.PageItem
 {
     public class PagedList<T> : IReadOnlyCollection<T>
     {
-        private const int StartPageSize = 10;
-        private const int NumberStartPage = 1;
+        protected const int StartPageSize = 10;
+        protected const int NumberStartPage = 1;
 
         public PagedList(IQueryable<T> items, int pageNumber = NumberStartPage, int pageSize = StartPageSize)
             : this(GetPage(items, pageNumber, pageSize), pageNumber, pageSize, items.Count())
@@ -45,7 +45,7 @@ namespace WatchList.Core.PageItem
             TotalItems = totalItems;
         }
 
-        public int PageNumber { get; private set; } = NumberStartPage;
+        public virtual int PageNumber { get; protected set; } = NumberStartPage;
 
         public int TotalItems { get; private set; } = 0;
 
