@@ -13,14 +13,12 @@
     <Grid RowDefinitions="*, Auto, 35, 35, *" ColumnDefinitions="*, *, *, *, *, *, *, *" Background="LightGray">
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="8" Grid.RowSpan="1">
             <DataGrid Margin="20"
-                      AutoGenerateColumns="False"
                       IsReadOnly="True"
                       CanUserSortColumns="False"
                       GridLinesVisibility="All"
-                      BorderThickness="1" 
                       BorderBrush="Gray"
                       Background="White"
-                      ItemsSource="{Binding WatchItems, UpdateSourceTrigger=PropertyChanged}">
+                      ItemsSource="{Binding WatchItems}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
                     <DataGridTextColumn Header="Season/Part" Binding="{Binding Sequel}" Width="*"/>

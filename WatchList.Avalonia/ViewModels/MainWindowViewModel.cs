@@ -30,7 +30,8 @@ namespace WatchList.Avalonia.ViewModels
         [ObservableProperty] private string _pageDisplayText = string.Empty;
         [ObservableProperty] private PageModel _page;
 
-        [ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
+        //[ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
+        public ObservableCollection<WatchItem> WatchItems { get; }
 
         public MainWindowViewModel(IMessageBox messageBox,
                             WatchItemService watchItemService,
