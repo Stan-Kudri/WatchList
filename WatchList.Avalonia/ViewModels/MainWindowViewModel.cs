@@ -1,6 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -23,7 +25,7 @@ namespace WatchList.Avalonia.ViewModels
 
         private readonly ItemSearchRequest _searchRequests;
 
-        private PagedList<WatchItem> _pagedList;
+        private PagedList<WatchItem>? _pagedList;
 
         [ObservableProperty] private string _pageDisplayText = string.Empty;
         [ObservableProperty] private PageModel _page;
@@ -37,29 +39,31 @@ namespace WatchList.Avalonia.ViewModels
             _messageBox = messageBox;
             _itemService = watchItemService;
             Page = pageModel;
-
             _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), true);
+            _pagedList = _itemService.GetPage(_searchRequests);
 
-            _ = LoadDataAsync();
+            var canExecuteMoveToPrevPage = Page.WhenAnyValue(x => x.Number).Select(number => number > 1);
+            MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number - 1), canExecuteMoveToPrevPage);
+            MoveToFirstPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(1), canExecuteMoveToPrevPage);
 
-            //MoveToFirstPageCommand = ReactiveCommand.CreateFromTask(async () => { await LoadDataAsyncPage(1); }, this.WhenAnyValue(x => x._pagedList, x => x != null && x.HasPreviousPage));
-            //MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(async () => { await LoadDataAsyncPage(--Page.Number); }, this.WhenAnyValue(x => x._pagedList, x => x != null && x.HasPreviousPage));
-            //MoveToNextPageCommand = ReactiveCommand.CreateFromTask(async () => { await LoadDataAsyncPage(++Page.Number); }, this.WhenAnyValue(x => x._pagedList, x => x != null && x.HasNextPage));
-            //MoveToLastPageCommand = ReactiveCommand.CreateFromTask(async () => { await LoadDataAsyncPage(_pagedList.PageCount); }, this.WhenAnyValue(x => x._pagedList, x => x != null && x.HasNextPage));
-            MoveToFirstPageCommand = ReactiveCommand.CreateFromTask(async () => { if (_pagedList != null && _pagedList.HasPreviousPage) { await LoadDataAsyncPage(1); } });
-            MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(async () => { if (_pagedList != null && _pagedList.HasPreviousPage) { await LoadDataAsyncPage(--_page.Number); } });
-            MoveToNextPageCommand = ReactiveCommand.CreateFromTask(async () => { if (_pagedList != null && _pagedList.HasNextPage) { await LoadDataAsyncPage(++Page.Number); } });
-            MoveToLastPageCommand = ReactiveCommand.CreateFromTask(async () => { if (_pagedList != null && _pagedList.HasNextPage) { await LoadDataAsyncPage(_pagedList.PageCount); } });
+            var canExecuteMoveToNextPage = Page.WhenAnyValue(x => x.Number).Select(number => number < _pagedList.PageCount);
+            MoveToNextPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number + 1), canExecuteMoveToNextPage);
+            MoveToLastPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(_pagedList.PageCount), canExecuteMoveToNextPage);
+
+            WatchItems = new ObservableCollection<WatchItem>(_pagedList.Items);
+            //WatchItems.UppdataItems(_pagedList.Items);
+            PageDisplayText = _pagedList.HasEmptyPage
+                            ? string.Empty
+                            : $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
         }
 
-        public ReactiveCommand<Unit, Unit> MoveToFirstPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToPreviousPageCommand { get; }
+        public ReactiveCommand<Unit, Unit> MoveToFirstPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToNextPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToLastPageCommand { get; }
 
         [RelayCommand]
-        private async Task AddData()
-            => await LoadDataAsync();
+        private async Task AddData() => await LoadDataAsync();
 
         /// <summary>
         /// Load data in table.
@@ -68,7 +72,8 @@ namespace WatchList.Avalonia.ViewModels
         {
             try
             {
-                UpdataPagedList();
+                _searchRequests.Page = Page.GetPage();
+                _pagedList = _itemService.GetPage(_searchRequests);
                 WatchItems.UppdataItems(_pagedList.Items);
                 PageDisplayText = _pagedList.HasEmptyPage
                                 ? string.Empty
@@ -87,20 +92,6 @@ namespace WatchList.Avalonia.ViewModels
         {
             Page.Number = pageNumber;
             await LoadDataAsync();
-        }
-
-        private void UpdataPagedList()
-        {
-            UpdataSearchRequests();
-            _pagedList = _itemService.GetPage(_searchRequests);
-        }
-
-        /// <summary>
-        /// Updating table data.
-        /// </summary>
-        private void UpdataSearchRequests()
-        {
-            _searchRequests.Page = Page.GetPage();
         }
     }
 }
