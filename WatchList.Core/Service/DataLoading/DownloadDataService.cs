@@ -51,7 +51,7 @@ namespace WatchList.Core.Service.DataLoading
                                                             new Page(1, NumberOfItemPerPage));
             var pagedList = repository.GetPage(itemSearchRequest);
 
-            while (itemSearchRequest.Page.Number <= pagedList.PageCount)
+            while (itemSearchRequest.Page.Number <= pagedList.Count)
             {
                 var watchItemCollection = new WatchItemCollection(pagedList);
                 watchItemCollection = loadRule.Apply(watchItemCollection);

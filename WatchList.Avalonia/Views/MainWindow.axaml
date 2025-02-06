@@ -44,7 +44,7 @@
                     Command="{Binding MoveToPreviousPageCommand}">
             </Button>
             <Label Height="25"
-                   Content="{Binding PageDisplayText}" FontSize="12" HorizontalContentAlignment="Center"
+                   Content="{Binding DisplayPagination.PageDisplayText, UpdateSourceTrigger=PropertyChanged}" FontSize="12" HorizontalContentAlignment="Center"
                    Background="Transparent" Foreground="White"> 
             </Label>
             <Button Width="40" Height="25" Margin="5"

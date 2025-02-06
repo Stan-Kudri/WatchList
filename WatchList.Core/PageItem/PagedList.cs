@@ -53,15 +53,13 @@ namespace WatchList.Core.PageItem
 
         public List<T> Items { get; private set; }
 
-        public int PageCount => PageSize != 0 ? (int)Math.Ceiling((double)TotalItems / PageSize) : 0;
-
         public bool HasPreviousPage => PageNumber > 1;
 
-        public bool HasNextPage => PageNumber < PageCount;
+        public bool HasNextPage => PageNumber < Count;
 
-        public bool HasEmptyPage => PageCount == 0;
+        public bool HasEmptyPage => Count == 0;
 
-        public int Count => PageCount;
+        public int Count => PageSize != 0 ? (int)Math.Ceiling((double)TotalItems / PageSize) : 0;
 
         public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
 
