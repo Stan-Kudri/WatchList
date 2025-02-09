@@ -15,13 +15,15 @@ namespace WatchList.Avalonia.Models
             get => _pagedList;
             set
             {
-                if (_pagedList != value)
+                if (_pagedList == value)
                 {
-                    SetProperty(ref _pagedList, value);
-                    PageDisplayText = _pagedList.HasEmptyPage
-                                       ? string.Empty
-                                       : $"Page {_pagedList.PageNumber} of {_pagedList.Count}";
+                    return;
                 }
+
+                SetProperty(ref _pagedList, value);
+                PageDisplayText = _pagedList.HasEmptyPage
+                                   ? string.Empty
+                                   : $"Page {_pagedList.PageNumber} of {_pagedList.Count}";
             }
         }
 

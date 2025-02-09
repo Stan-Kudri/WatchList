@@ -29,8 +29,7 @@ namespace WatchList.Avalonia.ViewModels
 
         [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
-
-        public ObservableCollection<WatchItem> WatchItems { get; }
+        public ObservableCollection<WatchItem> WatchItems { get; private set; } = new ObservableCollection<WatchItem>();
 
         public PagedList<WatchItem> PagedList
         {
@@ -62,7 +61,7 @@ namespace WatchList.Avalonia.ViewModels
 
             var canExecuteChangePage = Page.WhenAnyValue(x => x.Number).Select(number => number != PagedList.Count);
 
-            WatchItems = new ObservableCollection<WatchItem>(PagedList.Items);
+            WatchItems.UppdataItems(PagedList.Items);
         }
 
         public ReactiveCommand<Unit, Unit> MoveToPreviousPageCommand { get; }

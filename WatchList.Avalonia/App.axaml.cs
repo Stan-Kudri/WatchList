@@ -24,7 +24,7 @@ namespace WatchList.Avalonia
             try
             {
                 Log.Logger = CreateLogger();
-                Log.Information("Starting WPF applications");
+                Log.Information("Starting Avalonia applications");
                 var serviceCollection = new ServiceCollection();
                 serviceCollection.AppServiceContainer()
                                  .AppViewModelContainer()
@@ -55,6 +55,7 @@ namespace WatchList.Avalonia
             {
                 // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
                 // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
+
                 DisableAvaloniaDataAnnotationValidation();
                 desktop.MainWindow = new MainWindow
                 {
