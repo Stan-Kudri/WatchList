@@ -25,13 +25,21 @@ namespace WatchList.Avalonia.ViewModels
 
         private readonly ItemSearchRequest _searchRequests;
 
-        private PagedList<WatchItem>? _pagedList;
+        private PagedList<WatchItem> _pagedList;
 
-        [ObservableProperty] private string _pageDisplayText = string.Empty;
+        [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
+        public ObservableCollection<WatchItem> WatchItems { get; private set; } = new ObservableCollection<WatchItem>();
 
-        //[ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
-        public ObservableCollection<WatchItem> WatchItems { get; }
+        public PagedList<WatchItem> PagedList
+        {
+            get => _pagedList;
+            set
+            {
+                SetProperty(ref _pagedList, value);
+                DisplayPagination.Update(PagedList);
+            }
+        }
 
         public MainWindowViewModel(IMessageBox messageBox,
                             WatchItemService watchItemService,
@@ -41,21 +49,19 @@ namespace WatchList.Avalonia.ViewModels
             _itemService = watchItemService;
             Page = pageModel;
             _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), true);
-            _pagedList = _itemService.GetPage(_searchRequests);
+            PagedList = _itemService.GetPage(_searchRequests);
 
             var canExecuteMoveToPrevPage = Page.WhenAnyValue(x => x.Number).Select(number => number > 1);
             MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number - 1), canExecuteMoveToPrevPage);
             MoveToFirstPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(1), canExecuteMoveToPrevPage);
 
-            var canExecuteMoveToNextPage = Page.WhenAnyValue(x => x.Number).Select(number => number < _pagedList.PageCount);
+            var canExecuteMoveToNextPage = Page.WhenAnyValue(x => x.Number).Select(number => number < PagedList.Count);
             MoveToNextPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number + 1), canExecuteMoveToNextPage);
-            MoveToLastPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(_pagedList.PageCount), canExecuteMoveToNextPage);
+            MoveToLastPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(PagedList.Count), canExecuteMoveToNextPage);
 
-            WatchItems = new ObservableCollection<WatchItem>(_pagedList.Items);
-            //WatchItems.UppdataItems(_pagedList.Items);
-            PageDisplayText = _pagedList.HasEmptyPage
-                            ? string.Empty
-                            : $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
+            var canExecuteChangePage = Page.WhenAnyValue(x => x.Number).Select(number => number != PagedList.Count);
+
+            WatchItems.UppdataItems(PagedList.Items);
         }
 
         public ReactiveCommand<Unit, Unit> MoveToPreviousPageCommand { get; }
@@ -74,11 +80,8 @@ namespace WatchList.Avalonia.ViewModels
             try
             {
                 _searchRequests.Page = Page.GetPage();
-                _pagedList = _itemService.GetPage(_searchRequests);
-                WatchItems.UppdataItems(_pagedList.Items);
-                PageDisplayText = _pagedList.HasEmptyPage
-                                ? string.Empty
-                                : $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
+                PagedList = _itemService.GetPage(_searchRequests);
+                WatchItems.UppdataItems(PagedList.Items);
             }
             catch (Exception error)
             {
