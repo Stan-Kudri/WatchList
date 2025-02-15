@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using WatchList.Avalonia.Models;
 using WatchList.Avalonia.ViewModels;
+using WatchList.Avalonia.ViewModels.ItemsView;
 using WatchList.Avalonia.Views.Message;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
@@ -18,9 +19,12 @@ namespace WatchList.Avalonia.Extension
                                       .AddScoped<IMessageBox, MessageWindow>()
                                       .AddScoped<WatchItemService>()
                                       .AddScoped<PageModel>()
+                                      .AddScoped<WatchItemCreator>()
                                       .AddLogging();
 
         public static IServiceCollection AppViewModelContainer(this IServiceCollection serviceCollection)
-            => serviceCollection.AddTransient<MainWindowViewModel>();
+            => serviceCollection.AddTransient<MainWindowViewModel>()
+                                .AddTransient<AddCinemaViewModel>()
+                                .AddTransient<EditCinemaViewModel>();
     }
 }

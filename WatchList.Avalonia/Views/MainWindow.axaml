@@ -10,8 +10,9 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="WatchList.Avalonia">
 
-    <Grid RowDefinitions="*, Auto, 35, 35, *" ColumnDefinitions="*, *, *, *, *, *, *, *" Background="LightGray">
-
+    <Grid RowDefinitions="*, Auto, 35, 35, *" 
+          ColumnDefinitions="*, *, *, *, *, *, *, *" 
+          Background="Lavender">
 
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="8" Grid.RowSpan="1">
             <DataGrid Margin="20"
@@ -24,76 +25,108 @@
                       ItemsSource="{Binding WatchItems}">
 
                 <DataGrid.Columns>
-
-                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="2*"/>
-                    <DataGridTextColumn Header="Season/Part" Binding="{Binding Sequel}" Width="1*"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="2*"/>
+                    <DataGridTextColumn Header="Title" 
+                                        Binding="{Binding Title}" 
+                                        Width="2*"/>
+                    <DataGridTextColumn Header="Season/Part" 
+                                        Binding="{Binding Sequel}" 
+                                        Width="1*"/>
+                    <DataGridTextColumn Header="Status" 
+                                        Binding="{Binding Status}" 
+                                        Width="2*"/>
                     <DataGridTemplateColumn Header="Date">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="itemcinema:WatchItem">
-                                <TextBlock Text="{Binding Date, StringFormat={}{0:dd.MM.yyyy}}"
-                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Text="{Binding Date, StringFormat={}{0:dd.MM.yyyy}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Grade" Binding="{Binding Grade}" Width="1*"/>
-                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="1*"/>
+                    <DataGridTextColumn Header="Grade" 
+                                        Binding="{Binding Grade}" 
+                                        Width="1*"/>
+                    <DataGridTextColumn Header="Type" 
+                                        Binding="{Binding Type}" 
+                                        Width="1*"/>
                 </DataGrid.Columns>
+                
             </DataGrid>
         </StackPanel>        
 
-        <StackPanel Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="1"
-                    HorizontalAlignment="Center" Orientation="Horizontal">
+        <StackPanel Grid.Column="2" Grid.Row="2" 
+                    Grid.ColumnSpan="4" Grid.RowSpan="1"
+                    HorizontalAlignment="Center" 
+                    Orientation="Horizontal">
 
-            <Button Width="40" Height="25" Margin="5"
-                    Content="&lt;&lt;" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Background="LightSlateGray" Foreground="White"
-                    Command="{Binding MoveToFirstPageCommand}">
+            <Button Width="40" Height="25" 
+                    Margin="5" FontSize="12" 
+                    HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Center"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Command="{Binding MoveToFirstPageCommand}"
+                    Content="&lt;&lt;" >
             </Button>
-            <Button Width="40" Height="25" Margin="5"
-                    Content="&lt;" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Background="LightSlateGray" Foreground="White"
-                    Command="{Binding MoveToPreviousPageCommand}">
+            <Button Width="40" Height="25" 
+                    Margin="5" FontSize="12" 
+                    HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Center"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Command="{Binding MoveToPreviousPageCommand}"
+                    Content="&lt;">
             </Button>
-            <Label Height="25"
-                   Content="{Binding DisplayPagination.PageDisplayText, UpdateSourceTrigger=PropertyChanged}" FontSize="12" HorizontalContentAlignment="Center"
-                   Background="Transparent" Foreground="White"> 
+            <Label Height="25" FontSize="12"
+                   Content="{Binding DisplayPagination.PageDisplayText, UpdateSourceTrigger=PropertyChanged}" 
+                   HorizontalContentAlignment="Center"
+                   Background="Transparent" Foreground="Black"> 
             </Label>
-            <Button Width="40" Height="25" Margin="5"
-                    Content="&gt;" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Background="LightSlateGray" Foreground="White"
-                    Command="{Binding MoveToNextPageCommand}">
+            <Button Width="40" Height="25"
+                    Margin="5"  FontSize="12" 
+                    HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Center"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Command="{Binding MoveToNextPageCommand}"
+                    Content="&gt;" >
             </Button>
             <Button Width="40" Height="25" Margin="5"
                     Content="&gt;&gt;" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Background="LightSlateGray" Foreground="White"
+                    Background="DarkSlateBlue" Foreground="White"
                     Command="{Binding MoveToLastPageCommand}">
             </Button>
 
         </StackPanel>
 
-        <StackPanel Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="4" Grid.RowSpan="1" 
-                    HorizontalAlignment="Center" Orientation="Horizontal">
+        <StackPanel Grid.Column="2" Grid.Row="3" 
+                    Grid.ColumnSpan="4" Grid.RowSpan="1" 
+                    HorizontalAlignment="Center" 
+                    Orientation="Horizontal">
             
-            <Button Width="80" Height="25" 
-                    Content="Add" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Background="LightSlateGray" Foreground="White"
-                    Margin="5">
+            <Button Width="80" Height="25"
+                    Margin="5" FontSize="12"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Command="{Binding MoveAddItemCommand}"
+                    Content="Add" >
             </Button>
             <Button Width="80" Height="25"
                     Content="Edit" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Background="LightSlateGray" Foreground="White"
+                    Background="DarkSlateBlue" Foreground="White"
                     Margin="5">
             </Button>
             <Button Width="80" Height="25"
-                    Content="Delete" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Background="LightSlateGray" Foreground="White"
-                    Margin="5">
+                    Margin="5" FontSize="12"
+                    HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Center"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Content="Delete" >
             </Button>
             <Button Width="80" Height="25"
-                    Content="Add Data" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Background="LightSlateGray" Foreground="White"
-                    Margin="5">
+                    Margin="5" FontSize="12"
+                    HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Center"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Content="Add Data">
             </Button>
 
         </StackPanel>

@@ -1,0 +1,148 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:WatchList.Avalonia.ViewModels.ItemsView"
+        x:Class="WatchList.Avalonia.CinemaView.CinemaWindowView"
+        x:DataType="vm:CinemaViewModel"
+        x:Name="CurrentWindow"
+        Title="CinemaWindowView"         
+        FontSize="12"
+        MinHeight="200" MinWidth="460"
+        Height="250" Width="500">
+    
+    <Grid RowDefinitions="*, *, *, *" 
+          ColumnDefinitions="*, *, *, *, *, *, *, *" 
+          Background="Lavender">
+
+        <!--First Row-->
+        <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="8"
+                    Margin="5 5 5 5"
+                    Orientation="Horizontal">
+            <TextBox VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Width="430"
+                        Height="35"
+                        Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Name"
+                   VerticalContentAlignment="Center"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="15 5 15 5"
+                   Height="30"/>
+        </StackPanel>
+
+        <!--Second Row-->
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="8"
+                    Orientation="Horizontal">
+            <Label Content="Type"
+                   Width="40"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Margin="10 5 10 5"/>
+            <ComboBox Width="90"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center"
+                      SelectedValue="{Binding SelectedTypeCinema, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding ListType}"/>
+            <Label Content="{Binding LabelSequelType}"
+                   Width="55"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Margin="5 5 5 5"/>
+            <NumericUpDown Width="110"
+                           Height="35"
+                           Minimum="1"
+                           Maximum="50"
+                           IsEnabled="True"
+                           FormatString="0"
+                           Value="{Binding Sequel, Mode=TwoWay}"/>
+            <Label Content="Grade"
+                   Width="50"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Margin="5 5 5 5"/>
+            <NumericUpDown Width="110"
+                           Height="35"
+                           Minimum="1"
+                           Maximum="10"
+                           FormatString="0"
+                           IsEnabled="{Binding IsWatch}"
+                           Value="{Binding Grade, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <!--Third Row-->
+        <StackPanel Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Orientation="Horizontal">
+            <Label Content="Status"
+                   Width="50"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Margin="10 5 10 5"/>
+            <ComboBox Width="110"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Right"
+                      SelectedValue="{Binding SelectedStatusCinema, Mode=TwoWay}"
+                      ItemsSource="{Binding ListStatus}"/>
+        </StackPanel>
+        <DatePicker Grid.Row="2"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="5"
+                    VerticalAlignment="Center"
+                    Margin="15 5 15 5"
+                    ToolTip.Tip="Date"
+                    MaxYear="{Binding MaxDateWatched}"
+                    MinYear="{Binding MinDateWatched}"
+                    IsEnabled="{Binding IsWatch}"
+                    SelectedDate="{Binding Date, Mode=TwoWay}">
+        </DatePicker>
+
+        <!--Fourth Row-->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Grid.Row="3"
+                    Grid.ColumnSpan="8">
+            <Button Width="100" Height="30"
+                    Margin="5 5 5 5"
+                    FontSize="14"
+                    Focusable="False"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Command="{Binding SaveCinemaCommand}"
+                    CommandParameter="{Binding ElementName=CurrentWindow}"
+                    Content="Save">
+            </Button>
+            <Button Width="100" Height="30"
+                    Margin="5 5 5 5"
+                    FontSize="14"
+                    Focusable="False"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center" 
+                    Background="DarkSlateBlue" Foreground="White"
+                    Command="{Binding SetDefaultValuesCommand}"
+                    Content="Clear">
+            </Button>
+            <Button Width="100" Height="30"
+                    Margin="5 5 5 5"
+                    FontSize="14"
+                    Focusable="False"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Background="DarkSlateBlue" Foreground="White"
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=CurrentWindow}"
+                    Content="Close">
+            </Button>
+        </StackPanel>
+        
+    </Grid>
+
+</Window>

@@ -6,9 +6,11 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using WatchList.Avalonia.Extension;
 using WatchList.Avalonia.Models;
+using WatchList.Avalonia.ViewModels.ItemsView;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.Sortable;
@@ -22,6 +24,7 @@ namespace WatchList.Avalonia.ViewModels
     {
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
+        private readonly IServiceProvider _serviceProvider;
 
         private readonly ItemSearchRequest _searchRequests;
 
@@ -29,6 +32,7 @@ namespace WatchList.Avalonia.ViewModels
 
         [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
+
         public ObservableCollection<WatchItem> WatchItems { get; private set; } = new ObservableCollection<WatchItem>();
 
         public PagedList<WatchItem> PagedList
@@ -43,10 +47,12 @@ namespace WatchList.Avalonia.ViewModels
 
         public MainWindowViewModel(IMessageBox messageBox,
                             WatchItemService watchItemService,
-                            PageModel pageModel)
+                            PageModel pageModel,
+                            IServiceProvider serviceProvider)
         {
             _messageBox = messageBox;
             _itemService = watchItemService;
+            _serviceProvider = serviceProvider;
             Page = pageModel;
             _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), true);
             PagedList = _itemService.GetPage(_searchRequests);
@@ -64,10 +70,29 @@ namespace WatchList.Avalonia.ViewModels
             WatchItems.UppdataItems(PagedList.Items);
         }
 
+        public Interaction<AddCinemaViewModel?, bool> ShowAddCinemaDialog { get; } = new Interaction<AddCinemaViewModel?, bool>();
+        public Interaction<EditCinemaViewModel?, bool> ShowEditCinemaDialog { get; } = new Interaction<EditCinemaViewModel?, bool>();
+
         public ReactiveCommand<Unit, Unit> MoveToPreviousPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToFirstPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToNextPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToLastPageCommand { get; }
+
+        [RelayCommand]
+        private async Task MoveAddItem()
+        {
+            var viewModel = _serviceProvider.GetRequiredService<AddCinemaViewModel>();
+            viewModel.InitializeDefaultValue();
+            var result = await ShowAddCinemaDialog.Handle(viewModel);
+
+            /*
+            if (!result)
+            {
+                return;
+            }   */
+
+            await LoadDataAsync();
+        }
 
         [RelayCommand]
         private async Task AddData() => await LoadDataAsync();
