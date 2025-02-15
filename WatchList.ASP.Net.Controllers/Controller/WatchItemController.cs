@@ -15,7 +15,6 @@ namespace WatchList.ASP.Net.Controllers.Controller
         private readonly WatchItemRepository _watchItemRepository;
         private readonly WatchItemService _itemService;
         private readonly DownloadDataService _downloadDataService;
-        private readonly ILogger<WatchItemRepository> _logger;
 
         public WatchItemController(WatchItemService itemService, WatchItemRepository watchItemRepository, DownloadDataService downloadDataService)
         {
