@@ -123,7 +123,8 @@
                     HorizontalContentAlignment="Center" 
                     VerticalContentAlignment="Center"
                     Background="DarkSlateBlue" Foreground="White"
-                    Content="Delete" >
+                    Command="{Binding DeleteItemCommand}"
+                    Content="Delete">
             </Button>
             <Button Width="80" Height="25"
                     Margin="5" FontSize="12"

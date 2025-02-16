@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -22,6 +23,8 @@ namespace WatchList.Avalonia.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
+        private const string HighlightTheDesiredLine = "No items selected.";
+
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
         private readonly IServiceProvider _serviceProvider;
@@ -31,6 +34,8 @@ namespace WatchList.Avalonia.ViewModels
         private PagedList<WatchItem> _pagedList;
 
         [ObservableProperty] private WatchItem _selectItem;
+        [ObservableProperty] private IList _selectItems = new ArrayList();
+
         [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
 
@@ -105,6 +110,25 @@ namespace WatchList.Avalonia.ViewModels
             {
                 return;
             }
+
+            await LoadDataAsync();
+        }
+
+        [RelayCommand]
+        private async Task DeleteItem()
+        {
+            if (SelectItem == null)
+            {
+                await _messageBox.ShowInfo(HighlightTheDesiredLine);
+                return;
+            }
+
+            if (!await _messageBox.ShowQuestion("Delete select items?"))
+            {
+                return;
+            }
+
+            _itemService.Remove(SelectItem.Id);
 
             await LoadDataAsync();
         }
