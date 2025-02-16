@@ -85,11 +85,10 @@ namespace WatchList.Avalonia.ViewModels
             viewModel.InitializeDefaultValue();
             var result = await ShowAddCinemaDialog.Handle(viewModel);
 
-            /*
             if (!result)
             {
                 return;
-            }   */
+            }
 
             await LoadDataAsync();
         }

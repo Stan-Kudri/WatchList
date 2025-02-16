@@ -4,14 +4,18 @@ using Microsoft.Extensions.Logging;
 using WatchList.Avalonia.Models;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Repository;
+using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 
 namespace WatchList.Avalonia.ViewModels.ItemsView
 {
     public class AddCinemaViewModel : CinemaViewModel
     {
-        public AddCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItemCreator watchItemCreator, ILogger<WatchItemRepository> logger)
-            : base(messageBox, watchItemRepository, watchItemCreator, logger)
+        public AddCinemaViewModel(IMessageBox messageBox,
+                                  WatchItemService watchItemService,
+                                  WatchItemCreator watchItemCreator,
+                                  ILogger<WatchItemRepository> logger)
+            : base(messageBox, watchItemService, watchItemCreator, logger)
         {
         }
 
@@ -24,19 +28,18 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
 
         public override string TitleWindow => "Add Item";
 
-        protected override async Task<bool> SaveCinema(Window currentWindowAdd)
+        protected override async Task<bool?> SaveCinema(Window currentWindowAdd)
         {
             if (!ValidateFields(out var errorMessage))
             {
                 await _messageBox.ShowWarning(errorMessage);
-                return false;
+                return null;
             }
 
             var item = GetCinema();
             _logger.LogInformation($"Add Item : {item.Title}");
-            _watchItemRepository.Add(item);
+            await _watchItemService.AddAsync(item);
 
-            currentWindowAdd.Close();
             return true;
         }
 

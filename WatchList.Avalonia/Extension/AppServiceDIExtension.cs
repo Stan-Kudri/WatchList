@@ -16,8 +16,8 @@ namespace WatchList.Avalonia.Extension
             => serviceCollection.AddSingleton(new DbContextFactoryMigrator("app.db"))
                                       .AddScoped(e => e.GetRequiredService<DbContextFactoryMigrator>().Create())
                                       .AddScoped<WatchItemRepository>()
-                                      .AddScoped<IMessageBox, MessageWindow>()
                                       .AddScoped<WatchItemService>()
+                                      .AddScoped<IMessageBox, MessageWindow>()
                                       .AddScoped<PageModel>()
                                       .AddScoped<WatchItemCreator>()
                                       .AddLogging();

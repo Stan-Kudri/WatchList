@@ -2,6 +2,7 @@ using System.Windows;
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Repository;
+using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.WPF.Models;
 
@@ -9,8 +10,11 @@ namespace WatchList.WPF.ViewModel.ItemsView
 {
     public class AddCinemaViewModel : CinemaViewModel
     {
-        public AddCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItemCreator watchItemCreator, ILogger<WatchItemRepository> logger)
-            : base(messageBox, watchItemRepository, watchItemCreator, logger)
+        public AddCinemaViewModel(IMessageBox messageBox,
+                                  WatchItemService watchItemService,
+                                  WatchItemCreator watchItemCreator,
+                                  ILogger<WatchItemRepository> logger)
+            : base(messageBox, watchItemService, watchItemCreator, logger)
         {
         }
 
@@ -35,7 +39,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
             var item = GetCinema();
             _logger.LogInformation($"Add Item : {item.Title}");
-            _watchItemRepository.Add(item);
+            await _watchItemService.AddAsync(item);
 
             currentWindowAdd.Close();
         }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Repository;
+using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 using WatchList.WPF.Models;
 
@@ -13,7 +14,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
     public abstract partial class CinemaViewModel : ObservableObject
     {
         protected readonly IMessageBox _messageBox;
-        protected readonly WatchItemRepository _watchItemRepository;
+        protected readonly WatchItemService _watchItemService;
         protected readonly WatchItemCreator _watchItemCreator;
         protected readonly ILogger<WatchItemRepository> _logger;
 
@@ -35,12 +36,12 @@ namespace WatchList.WPF.ViewModel.ItemsView
         [ObservableProperty] private int? _grade;
 
         protected CinemaViewModel(IMessageBox messageBox,
-                                  WatchItemRepository watchItemRepository,
+                                  WatchItemService watchItemService,
                                   WatchItemCreator watchItemCreator,
                                   ILogger<WatchItemRepository> logger)
         {
             _messageBox = messageBox;
-            _watchItemRepository = watchItemRepository;
+            _watchItemService = watchItemService;
             _watchItemCreator = watchItemCreator;
             _logger = logger;
 

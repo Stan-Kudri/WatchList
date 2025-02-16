@@ -6,14 +6,18 @@ using WatchList.Avalonia.Extension;
 using WatchList.Avalonia.Models;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Repository;
+using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 
 namespace WatchList.Avalonia.ViewModels.ItemsView
 {
     public class EditCinemaViewModel : CinemaViewModel
     {
-        public EditCinemaViewModel(IMessageBox messageBox, WatchItemRepository watchItemRepository, WatchItemCreator watchItemCreator, ILogger<WatchItemRepository> logger)
-            : base(messageBox, watchItemRepository, watchItemCreator, logger)
+        public EditCinemaViewModel(IMessageBox messageBox,
+                                   WatchItemService watchItemService,
+                                   WatchItemCreator watchItemCreator,
+                                   ILogger<WatchItemRepository> logger)
+            : base(messageBox, watchItemService, watchItemCreator, logger)
         {
         }
 
@@ -26,12 +30,12 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
 
         public override string TitleWindow => "Edit Window";
 
-        protected override async Task<bool> SaveCinema(Window currentWindowAdd)
+        protected override async Task<bool?> SaveCinema(Window currentWindowAdd)
         {
             if (!ValidateFields(out var errorMessage))
             {
                 await _messageBox.ShowWarning(errorMessage);
-                return false;
+                return null;
             }
 
             var item = GetCinema();
@@ -42,12 +46,10 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
             }
             else
             {
-                //currentWindowAdd.DialogResult = true;
                 _logger.AddInformationEditItem(_defaultWatchItem, item);
-                _watchItemRepository.Update(item);
+                await _watchItemService.AddAsync(item);
             }
 
-            currentWindowAdd.Close();
             return true;
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Reactive.Linq;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using WatchList.Avalonia.ViewModels.ItemsView;
@@ -12,7 +13,12 @@ public partial class CinemaWindowView : ReactiveWindow<CinemaViewModel>
         DataContext = viewModel;
         InitializeComponent();
         CanResize = false;
-        this.WhenActivated(action => action(ViewModel!.CloseWindowCommand.Subscribe(e => Close(e))));
-        this.WhenActivated(action => action(ViewModel!.SaveCinemaCommand.Subscribe(e => Close(e))));
+        this.WhenActivated(action => action(ViewModel!.SaveCinemaCommand.Subscribe(e =>
+        {
+            if (e is not null)
+            {
+                Close(e);
+            }
+        })));
     }
 }

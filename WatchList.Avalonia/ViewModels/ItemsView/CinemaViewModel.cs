@@ -10,6 +10,7 @@ using WatchList.Avalonia.Models;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Repository;
+using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 
 namespace WatchList.Avalonia.ViewModels.ItemsView
@@ -17,7 +18,7 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
     public abstract partial class CinemaViewModel : ViewModelBase
     {
         protected readonly IMessageBox _messageBox;
-        protected readonly WatchItemRepository _watchItemRepository;
+        protected readonly WatchItemService _watchItemService;
         protected readonly WatchItemCreator _watchItemCreator;
         protected readonly ILogger<WatchItemRepository> _logger;
 
@@ -39,19 +40,19 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
         [ObservableProperty] private int? _grade;
 
         protected CinemaViewModel(IMessageBox messageBox,
-                                  WatchItemRepository watchItemRepository,
+                                  WatchItemService watchItemService,
                                   WatchItemCreator watchItemCreator,
                                   ILogger<WatchItemRepository> logger)
         {
             _messageBox = messageBox;
-            _watchItemRepository = watchItemRepository;
+            _watchItemService = watchItemService;
             _watchItemCreator = watchItemCreator;
             _logger = logger;
 
-            MaxDateWatched = new DateTimeOffset(DateTime.Now);
-            MinDateWatched = new DateTimeOffset(new DateTime(1945, 1, 1));
+            MaxDateWatched = DateTime.Now;
+            MinDateWatched = new DateTime(1945, 1, 1);
 
-            SaveCinemaCommand = ReactiveCommand.CreateFromTask<Window, bool>(SaveCinema);
+            SaveCinemaCommand = ReactiveCommand.CreateFromTask<Window, bool?>(SaveCinema);
         }
 
         public abstract void InitializeDefaultValue(WatchItem? watchItem = null);
@@ -96,14 +97,13 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
             }
         }
 
-        protected abstract Task<bool> SaveCinema(Window currentWindowAdd);
+        protected abstract Task<bool?> SaveCinema(Window currentWindowAdd);
 
         [RelayCommand] protected abstract void SetDefaultValues();
 
-        public ReactiveCommand<Window, bool> CloseWindowCommand { get; }
-            = ReactiveCommand.Create<Window, bool>(window => { window.Close(); return false; });
+        [RelayCommand] public void CloseWindow(Window window) => window.Close();
 
-        public ReactiveCommand<Window, bool> SaveCinemaCommand { get; }
+        public ReactiveCommand<Window, bool?> SaveCinemaCommand { get; }
 
         protected bool ValidateFields(out string errorMessage)
         {
