@@ -22,7 +22,8 @@
                       GridLinesVisibility="All"
                       BorderBrush="Gray"
                       Background="White"
-                      ItemsSource="{Binding WatchItems}">
+                      ItemsSource="{Binding WatchItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectItem}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title" 
@@ -110,9 +111,12 @@
                     Content="Add" >
             </Button>
             <Button Width="80" Height="25"
-                    Content="Edit" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Margin="5" FontSize="12" 
+                    HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Center"
                     Background="DarkSlateBlue" Foreground="White"
-                    Margin="5">
+                    Command="{Binding MoveEditItemCommand}"
+                    Content="Edit">
             </Button>
             <Button Width="80" Height="25"
                     Margin="5" FontSize="12"

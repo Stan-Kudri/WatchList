@@ -21,11 +21,19 @@ namespace WatchList.Avalonia.Views
 
             this.WhenActivated(action =>
             {
-                action(ViewModel!.ShowAddCinemaDialog.RegisterHandler(DoShowDialogAsync));
+                action(ViewModel!.ShowAddCinemaDialog.RegisterHandler(DoShowAddIemDialogAsync));
+                action(ViewModel!.ShowEditCinemaDialog.RegisterHandler(DoShowEditIemDialogAsync));
             });
         }
 
-        private async Task DoShowDialogAsync(IInteractionContext<AddCinemaViewModel, bool> interaction)
+        private async Task DoShowAddIemDialogAsync(IInteractionContext<AddCinemaViewModel, bool> interaction)
+        {
+            var dialog = new CinemaWindowView(interaction.Input);
+            var result = await dialog.ShowDialog<bool>(this);
+            interaction.SetOutput(result);
+        }
+
+        private async Task DoShowEditIemDialogAsync(IInteractionContext<EditCinemaViewModel, bool> interaction)
         {
             var dialog = new CinemaWindowView(interaction.Input);
             var result = await dialog.ShowDialog<bool>(this);

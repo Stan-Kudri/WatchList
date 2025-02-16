@@ -30,6 +30,7 @@ namespace WatchList.Avalonia.ViewModels
 
         private PagedList<WatchItem> _pagedList;
 
+        [ObservableProperty] private WatchItem _selectItem;
         [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
 
@@ -84,6 +85,21 @@ namespace WatchList.Avalonia.ViewModels
             var viewModel = _serviceProvider.GetRequiredService<AddCinemaViewModel>();
             viewModel.InitializeDefaultValue();
             var result = await ShowAddCinemaDialog.Handle(viewModel);
+
+            if (!result)
+            {
+                return;
+            }
+
+            await LoadDataAsync();
+        }
+
+        [RelayCommand]
+        private async Task MoveEditItem()
+        {
+            var viewModel = _serviceProvider.GetRequiredService<EditCinemaViewModel>();
+            viewModel.InitializeDefaultValue(SelectItem);
+            var result = await ShowEditCinemaDialog.Handle(viewModel);
 
             if (!result)
             {

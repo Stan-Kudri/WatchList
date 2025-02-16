@@ -47,7 +47,7 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
             else
             {
                 _logger.AddInformationEditItem(_defaultWatchItem, item);
-                await _watchItemService.AddAsync(item);
+                await _watchItemService.UpdateAsync(_defaultWatchItem, item);
             }
 
             return true;
@@ -61,7 +61,7 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
             SelectedStatusCinema = _defaultWatchItem.Status;
             SelectedTypeCinema = _defaultWatchItem.Type;
             Grade = _defaultWatchItem.Grade;
-            Date = new DateTimeOffset(_defaultWatchItem.Date!.Value);
+            Date = _defaultWatchItem.Date == null ? null : new DateTimeOffset(_defaultWatchItem.Date!.Value);
         }
     }
 }
