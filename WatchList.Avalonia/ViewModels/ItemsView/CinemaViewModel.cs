@@ -1,17 +1,21 @@
-using System.Windows;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using ReactiveUI;
+using WatchList.Avalonia.Models;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
-using WatchList.WPF.Models;
 
-namespace WatchList.WPF.ViewModel.ItemsView
+namespace WatchList.Avalonia.ViewModels.ItemsView
 {
-    public abstract partial class CinemaViewModel : ObservableObject
+    public abstract partial class CinemaViewModel : ViewModelBase
     {
         protected readonly IMessageBox _messageBox;
         protected readonly WatchItemService _watchItemService;
@@ -25,14 +29,14 @@ namespace WatchList.WPF.ViewModel.ItemsView
         private TypeCinema _type;
         private StatusCinema _status;
 
-        [ObservableProperty] private DateTime _maxDateWatched;
-        [ObservableProperty] private DateTime _minDateWatched;
+        [ObservableProperty] private DateTimeOffset _maxDateWatched;
+        [ObservableProperty] private DateTimeOffset _minDateWatched;
         [ObservableProperty] private string _labelSequelType;
 
         [ObservableProperty] private Guid _id;
         [ObservableProperty] private string _title;
         [ObservableProperty] private int _sequel;
-        [ObservableProperty] private DateTime? _date;
+        [ObservableProperty] private DateTimeOffset? _date;
         [ObservableProperty] private int? _grade;
 
         protected CinemaViewModel(IMessageBox messageBox,
@@ -47,6 +51,8 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
             MaxDateWatched = DateTime.Now;
             MinDateWatched = new DateTime(1945, 1, 1);
+
+            SaveCinemaCommand = ReactiveCommand.CreateFromTask<Window, bool?>(SaveCinema);
         }
 
         public abstract void InitializeDefaultValue(WatchItem? watchItem = null);
@@ -64,7 +70,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
                 if (Grade == null || Date == null)
                 {
                     Grade = value ? 1 : null;
-                    Date = value ? DateTime.Now : null;
+                    Date = value ? MaxDateWatched : null;
                 }
 
                 SetProperty(ref _isWatch, value);
@@ -91,11 +97,13 @@ namespace WatchList.WPF.ViewModel.ItemsView
             }
         }
 
-        [RelayCommand] protected abstract Task SaveCinema(Window currentWindowAdd);
-
-        [RelayCommand] protected void CloseWindow(Window window) => window?.Close();
+        protected abstract Task<bool?> SaveCinema(Window currentWindowAdd);
 
         [RelayCommand] protected abstract void SetDefaultValues();
+
+        [RelayCommand] public void CloseWindow(Window window) => window.Close();
+
+        public ReactiveCommand<Window, bool?> SaveCinemaCommand { get; }
 
         protected bool ValidateFields(out string errorMessage)
         {
@@ -122,6 +130,6 @@ namespace WatchList.WPF.ViewModel.ItemsView
         public WatchItem GetCinema()
             => SelectedStatusCinema == StatusCinema.Planned
             ? _watchItemCreator.CreatePlanned(Title, Sequel, SelectedStatusCinema, SelectedTypeCinema, Id)
-            : _watchItemCreator.CreateNonPlanned(Title, Sequel, SelectedStatusCinema, SelectedTypeCinema, Date, Grade, Id);
+            : _watchItemCreator.CreateNonPlanned(Title, Sequel, SelectedStatusCinema, SelectedTypeCinema, Date!.Value.DateTime, Grade, Id);
     }
 }

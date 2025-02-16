@@ -1,13 +1,15 @@
-using System.Windows;
+using System;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 using Microsoft.Extensions.Logging;
+using WatchList.Avalonia.Extension;
+using WatchList.Avalonia.Models;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
-using WatchList.WPF.Extension;
-using WatchList.WPF.Models;
 
-namespace WatchList.WPF.ViewModel.ItemsView
+namespace WatchList.Avalonia.ViewModels.ItemsView
 {
     public class EditCinemaViewModel : CinemaViewModel
     {
@@ -28,12 +30,12 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         public override string TitleWindow => "Edit Window";
 
-        protected override async Task SaveCinema(Window currentWindowAdd)
+        protected override async Task<bool?> SaveCinema(Window currentWindowAdd)
         {
             if (!ValidateFields(out var errorMessage))
             {
                 await _messageBox.ShowWarning(errorMessage);
-                return;
+                return null;
             }
 
             var item = GetCinema();
@@ -44,12 +46,11 @@ namespace WatchList.WPF.ViewModel.ItemsView
             }
             else
             {
-                currentWindowAdd.DialogResult = true;
                 _logger.AddInformationEditItem(_defaultWatchItem, item);
-                await _watchItemService.UpdateAsync(_defaultWatchItem, item);
+                await _watchItemService.AddAsync(item);
             }
 
-            currentWindowAdd.Close();
+            return true;
         }
 
         protected override void SetDefaultValues()
@@ -60,7 +61,7 @@ namespace WatchList.WPF.ViewModel.ItemsView
             SelectedStatusCinema = _defaultWatchItem.Status;
             SelectedTypeCinema = _defaultWatchItem.Type;
             Grade = _defaultWatchItem.Grade;
-            Date = _defaultWatchItem.Date;
+            Date = new DateTimeOffset(_defaultWatchItem.Date!.Value);
         }
     }
 }

@@ -1,12 +1,13 @@
-using System.Windows;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 using Microsoft.Extensions.Logging;
+using WatchList.Avalonia.Models;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
-using WatchList.WPF.Models;
 
-namespace WatchList.WPF.ViewModel.ItemsView
+namespace WatchList.Avalonia.ViewModels.ItemsView
 {
     public class AddCinemaViewModel : CinemaViewModel
     {
@@ -27,21 +28,19 @@ namespace WatchList.WPF.ViewModel.ItemsView
 
         public override string TitleWindow => "Add Item";
 
-        protected override async Task SaveCinema(Window currentWindowAdd)
+        protected override async Task<bool?> SaveCinema(Window currentWindowAdd)
         {
             if (!ValidateFields(out var errorMessage))
             {
                 await _messageBox.ShowWarning(errorMessage);
-                return;
+                return null;
             }
-
-            currentWindowAdd.DialogResult = true;
 
             var item = GetCinema();
             _logger.LogInformation($"Add Item : {item.Title}");
             await _watchItemService.AddAsync(item);
 
-            currentWindowAdd.Close();
+            return true;
         }
 
         protected override void SetDefaultValues()
