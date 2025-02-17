@@ -40,7 +40,6 @@ namespace WatchList.Avalonia.ViewModels
 
         [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
-
         public ObservableCollection<WatchItem> WatchItems { get; private set; } = new ObservableCollection<WatchItem>();
 
         public PagedList<WatchItem> PagedList
