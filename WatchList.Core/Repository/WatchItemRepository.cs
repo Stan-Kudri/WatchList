@@ -62,8 +62,7 @@ namespace WatchList.Core.Repository
             item.Status = editItem.Status;
 
             _db.SaveChanges();
-
-            _logger.LogInformation("Edit item with ID {0}", item.Id);
+            _logger.LogInformation($"Update Item with ID:{item.Id} on Title:{editItem.Title}");
         }
 
         public List<Guid> SelectDuplicateItems(WatchItem item)

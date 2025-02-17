@@ -102,7 +102,7 @@ namespace WatchList.WinForms
                 return;
             }
 
-            _logger.LogInformation("Click save add item");
+            _logger.LogInformation("Click save add item.");
             var itemCinema = addForm.GetCinema();
             await _itemService.AddAsync(itemCinema.ToWatchItem());
 
@@ -122,7 +122,7 @@ namespace WatchList.WinForms
                     return;
                 }
 
-                _logger.LogInformation("Click save edit item");
+                _logger.LogInformation("Click save edit item.");
                 var updateItem = updateForm.GetEditItemCinema();
                 await _itemService.UpdateAsync(oldItem.ToWatchItem(), updateItem.ToWatchItem());
                 await UpdateGridData();
@@ -150,7 +150,7 @@ namespace WatchList.WinForms
                 return;
             }
 
-            _logger.LogInformation("Click delite item");
+            _logger.LogInformation("Click delite item.");
             foreach (var id in selectedRowIds)
             {
                 RemoveItemRowGrid(id);
@@ -175,7 +175,7 @@ namespace WatchList.WinForms
             }
 
             var pathFile = openReplaceDataFromFile.FileName;
-            _logger.LogInformation("Add item from the selected file <{0}>", pathFile);
+            _logger.LogInformation($"Add item from the selected file <{0}>.", pathFile);
 
             var dbContext = new DbContextFactoryMigrator(pathFile).Create();
             var loadRuleConfig = dataLoadingForm.GetLoadRuleConfig();

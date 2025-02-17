@@ -29,10 +29,9 @@ namespace WatchList.ASP.Net.Controllers.Controller
             var item = watchItem.GetWatchItem();
             await _itemService.AddAsync(item);
 
-            return CreatedAtAction(
-                                    nameof(AddItem),
-                                    new { id = item.Id },
-                                    item);
+            return CreatedAtAction(nameof(AddItem),
+                                   new { id = item.Id },
+                                   item);
         }
 
         [HttpDelete("delete")]

@@ -1,9 +1,7 @@
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using Microsoft.Extensions.Logging;
 using WatchList.Avalonia.Models;
 using WatchList.Core.Model.ItemCinema;
-using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
 
@@ -13,9 +11,8 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
     {
         public AddCinemaViewModel(IMessageBox messageBox,
                                   WatchItemService watchItemService,
-                                  WatchItemCreator watchItemCreator,
-                                  ILogger<WatchItemRepository> logger)
-            : base(messageBox, watchItemService, watchItemCreator, logger)
+                                  WatchItemCreator watchItemCreator)
+            : base(messageBox, watchItemService, watchItemCreator)
         {
         }
 
@@ -37,7 +34,6 @@ namespace WatchList.Avalonia.ViewModels.ItemsView
             }
 
             var item = GetCinema();
-            _logger.LogInformation($"Add Item : {item.Title}");
             await _watchItemService.AddAsync(item);
 
             return true;
