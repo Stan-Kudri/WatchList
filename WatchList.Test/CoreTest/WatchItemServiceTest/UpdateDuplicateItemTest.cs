@@ -65,7 +65,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).ReturnsAsync(true);
-            var service = new WatchItemService(itemRepository, messageBox.Object);
+            var service = new WatchItemService(itemRepository, messageBox.Object, loggerRepository);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
 
@@ -88,7 +88,7 @@ namespace WatchList.Test.CoreTest.WatchItemServiceTest
             var itemRepository = new WatchItemRepository(dbContext, loggerRepository);
             var messageBox = new Mock<IMessageBox>();
             messageBox.Setup(foo => foo.ShowQuestionSaveItem(WatchItemService.DuplicateReplaceMessage)).ReturnsAsync(false);
-            var service = new WatchItemService(itemRepository, messageBox.Object);
+            var service = new WatchItemService(itemRepository, messageBox.Object, loggerRepository);
             dbContext.AddRange(items);
             dbContext.SaveChanges();
 

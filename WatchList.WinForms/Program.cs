@@ -29,7 +29,7 @@ namespace WatchList.WinForms
 
             try
             {
-                Log.Information("Starting WinForms applications");
+                Log.Information("Starting WinForms applications.");
 
                 // To customize application configuration such as set high DPI settings or default font,
                 // see https://aka.ms/applicationconfiguration.
@@ -53,7 +53,7 @@ namespace WatchList.WinForms
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Application terminated unexpectedly");
+                Log.Fatal(ex, "Application terminated unexpectedly.");
             }
             finally
             {

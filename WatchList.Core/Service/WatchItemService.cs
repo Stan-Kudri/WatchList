@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.PageItem;
 using WatchList.Core.Repository;
@@ -10,18 +11,23 @@ namespace WatchList.Core.Service
         public const string DuplicateReplaceMessage = "The append item is a duplicate. Replace element?";
 
         private readonly WatchItemRepository _repository;
-
+        private readonly ILogger<WatchItemRepository> _logger;
         private readonly IMessageBox _messageBox;
 
-        public WatchItemService(WatchItemRepository itemRepository, IMessageBox messageBox)
+        public WatchItemService(WatchItemRepository itemRepository, IMessageBox messageBox, ILogger<WatchItemRepository> logger)
         {
             _repository = itemRepository;
             _messageBox = messageBox;
+            _logger = logger;
         }
 
         public PagedList<WatchItem> GetPage(ItemSearchRequest itemSearchRequest) => _repository.GetPage(itemSearchRequest);
 
-        public void Remove(Guid id) => _repository.Remove(id);
+        public void Remove(Guid id)
+        {
+            _repository.Remove(id);
+            _logger.LogInformation($"Remove item with ID: {id}");
+        }
 
         public async Task AddAsync(WatchItem item)
         {
@@ -52,6 +58,7 @@ namespace WatchList.Core.Service
                 {
                     modifiedItem.Id = selectItem[0];
                     Remove(oldItem.Id);
+                    _logger.LogInformation($"Update Item with ID:{oldItem.Id} on Title:{modifiedItem.Title}.\n Remove duplicate Item with ID:{selectItem[0]}");
                 }
                 else
                 {
@@ -68,10 +75,8 @@ namespace WatchList.Core.Service
             await UpdateAsync(oldItem, modifiedItem);
         }
 
-        public WatchItem GetItemById(Guid id)
-            => _repository.GetItemById(id);
+        public WatchItem GetItemById(Guid id) => _repository.GetItemById(id);
 
-        private void Update(WatchItem item)
-            => _repository.Update(item);
+        private void Update(WatchItem item) => _repository.Update(item);
     }
 }
