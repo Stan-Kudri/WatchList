@@ -23,7 +23,9 @@
                       BorderBrush="Gray"
                       Background="White"
                       ItemsSource="{Binding WatchItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding SelectItem}">
+                      SelectedItem="{Binding SelectItem}"
+                      Name="GridItem"
+                      SelectionMode="Extended">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title" 
@@ -116,6 +118,7 @@
                     VerticalContentAlignment="Center"
                     Background="DarkSlateBlue" Foreground="White"
                     Command="{Binding MoveEditItemCommand}"
+                    CommandParameter="{Binding ElementName=GridItem, Path=SelectedItems}"
                     Content="Edit">
             </Button>
             <Button Width="80" Height="25"
@@ -124,6 +127,7 @@
                     VerticalContentAlignment="Center"
                     Background="DarkSlateBlue" Foreground="White"
                     Command="{Binding DeleteItemCommand}"
+                    CommandParameter="{Binding ElementName=GridItem, Path=SelectedItems}"
                     Content="Delete">
             </Button>
             <Button Width="80" Height="25"

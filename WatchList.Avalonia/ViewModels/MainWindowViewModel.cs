@@ -24,6 +24,9 @@ namespace WatchList.Avalonia.ViewModels
     public partial class MainWindowViewModel : ViewModelBase
     {
         private const string HighlightTheDesiredLine = "No items selected.";
+        private const string NotSelectSingleItemLine = "Select one item.";
+        private const string MessageDeleteItems = "Delete select items?";
+        private const string MessageDeleteItem = "Delete item?";
 
         private readonly WatchItemService _itemService;
         private readonly IMessageBox _messageBox;
@@ -34,7 +37,6 @@ namespace WatchList.Avalonia.ViewModels
         private PagedList<WatchItem> _pagedList;
 
         [ObservableProperty] private WatchItem _selectItem;
-        [ObservableProperty] private IList _selectItems = new ArrayList();
 
         [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
@@ -100,8 +102,14 @@ namespace WatchList.Avalonia.ViewModels
         }
 
         [RelayCommand]
-        private async Task MoveEditItem()
+        private async Task MoveEditItem(IList selectedItems)
         {
+            if (selectedItems.Count != 1)
+            {
+                await _messageBox.ShowInfo(NotSelectSingleItemLine);
+                return;
+            }
+
             var viewModel = _serviceProvider.GetRequiredService<EditCinemaViewModel>();
             viewModel.InitializeDefaultValue(SelectItem);
             var result = await ShowEditCinemaDialog.Handle(viewModel);
@@ -115,20 +123,22 @@ namespace WatchList.Avalonia.ViewModels
         }
 
         [RelayCommand]
-        private async Task DeleteItem()
+        private async Task DeleteItem(IList selectedItems)
         {
-            if (SelectItem == null)
+            switch (selectedItems.Count)
             {
-                await _messageBox.ShowInfo(HighlightTheDesiredLine);
-                return;
+                case 0:
+                    await _messageBox.ShowInfo(HighlightTheDesiredLine);
+                    return;
+                case > 1 when await _messageBox.ShowQuestion(MessageDeleteItems):
+                    _itemService.RemoveRangeWatchItem(selectedItems);
+                    break;
+                case 1 when await _messageBox.ShowQuestion(MessageDeleteItem):
+                    _itemService.Remove(SelectItem.Id);
+                    break;
+                default:
+                    return;
             }
-
-            if (!await _messageBox.ShowQuestion("Delete select items?"))
-            {
-                return;
-            }
-
-            _itemService.Remove(SelectItem.Id);
 
             await LoadDataAsync();
         }
