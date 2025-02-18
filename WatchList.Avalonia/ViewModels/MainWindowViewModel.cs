@@ -40,7 +40,7 @@ namespace WatchList.Avalonia.ViewModels
 
         [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
-        public ObservableCollection<WatchItem> WatchItems { get; private set; } = new ObservableCollection<WatchItem>();
+        [ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
         public PagedList<WatchItem> PagedList
         {
@@ -154,7 +154,7 @@ namespace WatchList.Avalonia.ViewModels
             {
                 _searchRequests.Page = Page.GetPage();
                 PagedList = _itemService.GetPage(_searchRequests);
-                WatchItems.UppdataItems(PagedList.Items);
+                WatchItems = new ObservableCollection<WatchItem>(PagedList.Items);
             }
             catch (Exception error)
             {
