@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using WatchList.Avalonia.Data;
+using WatchList.Avalonia.Extension;
 using WatchList.Core.Model.QuestionResult;
 using WatchList.Core.Service.Component;
 
@@ -10,7 +11,7 @@ namespace WatchList.Avalonia.Views.Message
     public class MessageWindow : IMessageBox
     {
         public Task<DialogReplaceItemQuestion> ShowDataReplaceQuestion(string titleItem)
-            => Task.FromResult(DialogReplaceItemQuestion.AllYes);
+            => titleItem.GetDialogReplaceItem();
 
         public Task ShowError(string message)
         {
