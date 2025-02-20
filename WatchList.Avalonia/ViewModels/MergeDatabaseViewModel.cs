@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -34,18 +35,18 @@ namespace WatchList.Avalonia.ViewModel
         }
 
         public IEnumerable<TypeCinemaModel> ListTypeLoadingCinema => TypeCinemaModel.GetItemsType;
-        public IEnumerable<Grade> GradeLoadingCinema => Grade.List;
+        public IEnumerable<Grade> GradeLoadingCinema => [.. Grade.List.OrderBy(e => e.Value)];
 
         [RelayCommand]
         private async Task LoadDB(Window window)
         {
-            if (await _messageBox.ShowQuestion("Add data from a file using the following algorithm?"))
+            if (!await _messageBox.ShowQuestion("Add data from a file using the following algorithm?"))
             {
-                var loadRuleConfig = GetLoadRuleConfig();
-                await _fiileLoader.DownloadDataToDB(loadRuleConfig);
+                return;
             }
 
-            window?.Close();
+            var loadRuleConfig = GetLoadRuleConfig();
+            await _fiileLoader.DownloadDataToDB(loadRuleConfig);
         }
 
         [RelayCommand]

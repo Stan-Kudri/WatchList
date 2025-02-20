@@ -149,9 +149,7 @@ namespace WatchList.Avalonia.ViewModels
         {
             var viewModel = _serviceProvider.GetRequiredService<MergeDatabaseViewModel>();
             var window = new MergeDatabaseWindow(viewModel);
-
             await window.ShowDialog(currentWindow);
-
             await LoadDataAsync();
         }
 

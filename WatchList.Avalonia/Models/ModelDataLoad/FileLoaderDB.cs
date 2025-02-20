@@ -43,11 +43,10 @@ namespace WatchList.Avalonia.Models.ModelDataLoad
                 if ((await file.GetBasicPropertiesAsync()).Size <= 1024 * 1024 * 1)
                 {
                     var pathFile = file.Path.LocalPath;
-
-                    _logger.LogInformation($"Add item from the selected file <{0}>", pathFile);
-
                     var dbContext = new DbContextFactoryMigrator(pathFile).Create();
+
                     await _downloadDataService.DownloadDataByDB(dbContext, loadRulesConfig);
+                    _logger.LogInformation($"Add item from the selected file <{0}>", pathFile);
                 }
                 else
                 {
@@ -69,7 +68,6 @@ namespace WatchList.Avalonia.Models.ModelDataLoad
             }
 
             var files = await provider.OpenFilePickerAsync(DBFilePickerOpenOption);
-
             return files?.Count >= 1 ? files[0] : null;
         }
 
