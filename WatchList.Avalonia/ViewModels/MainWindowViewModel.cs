@@ -5,12 +5,14 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using WatchList.Avalonia.Extension;
 using WatchList.Avalonia.Models;
+using WatchList.Avalonia.ViewModel;
 using WatchList.Avalonia.ViewModels.ItemsView;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
@@ -143,7 +145,15 @@ namespace WatchList.Avalonia.ViewModels
         }
 
         [RelayCommand]
-        private async Task AddData() => await LoadDataAsync();
+        private async Task AddData(Window currentWindow)
+        {
+            var viewModel = _serviceProvider.GetRequiredService<MergeDatabaseViewModel>();
+            var window = new MergeDatabaseWindow(viewModel);
+
+            await window.ShowDialog(currentWindow);
+
+            await LoadDataAsync();
+        }
 
         /// <summary>
         /// Load data in table.
