@@ -7,15 +7,17 @@
         x:Class="WatchList.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         x:Name="Main"
-        MinWidth="500" MinHeight="450"
+        MinWidth="700" MinHeight="520"
+        Width="800" Height="520"
         Icon="/Assets/avalonia-logo.ico"
         Title="WatchList.Avalonia">
 
-    <Grid RowDefinitions="*, Auto, 35, 35, *" 
+    <Grid RowDefinitions="55, *, 40, 40" 
           ColumnDefinitions="*, *, *, *, *, *, *, *" 
           Background="Lavender">
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="8" Grid.RowSpan="1">
+        <StackPanel Grid.Column="0" Grid.Row="1" 
+                    Grid.ColumnSpan="8" Grid.RowSpan="1">
             <DataGrid Margin="20"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
@@ -26,7 +28,8 @@
                       ItemsSource="{Binding WatchItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding SelectItem}"
                       Name="GridItem"
-                      SelectionMode="Extended">
+                      SelectionMode="Extended"
+                      HorizontalScrollBarVisibility="Auto">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title" 
@@ -56,7 +59,26 @@
                 </DataGrid.Columns>
                 
             </DataGrid>
-        </StackPanel>        
+        </StackPanel>
+
+        <ComboBox Grid.Row="2"
+                  Grid.RowSpan="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Left"
+                  Width="80"
+                  Height="35"
+                  Margin="10 2 2 2"
+                  FontSize="12"
+                  ItemsSource="{Binding Page.Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValue="{Binding Page.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <Interaction.Behaviors>
+                <EventTriggerBehavior EventName="SelectionChanged">
+                    <InvokeCommandAction Command="{Binding UseFilterCommand}"/>                     
+                </EventTriggerBehavior>
+            </Interaction.Behaviors>
+        </ComboBox>
 
         <StackPanel Grid.Column="2" Grid.Row="2" 
                     Grid.ColumnSpan="4" Grid.RowSpan="1"
@@ -69,7 +91,7 @@
                     VerticalContentAlignment="Center"
                     Background="DarkSlateBlue" Foreground="White"
                     Command="{Binding MoveToFirstPageCommand}"
-                    Content="&lt;&lt;" >
+                    Content="&lt;&lt;">
             </Button>
             <Button Width="40" Height="25" 
                     Margin="5" FontSize="12" 
