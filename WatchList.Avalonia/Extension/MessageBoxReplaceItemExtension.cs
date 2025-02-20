@@ -10,7 +10,7 @@ namespace WatchList.Avalonia.Extension
 {
     public static class MessageBoxReplaceItemExtension
     {
-        public static Task<DialogReplaceItemQuestion> GetDialogReplaceItem(this string titleItem)
+        public static async Task<DialogReplaceItemQuestion> GetDialogReplaceItem(this string titleItem)
         {
             var menager = MessageBoxManager.GetMessageBoxCustom(
                                                                  new MessageBoxCustomParams
@@ -33,8 +33,8 @@ namespace WatchList.Avalonia.Extension
                                                                      ShowInCenter = true,
                                                                      Topmost = false,
                                                                  });
-            var messageShow = menager.ShowWindowAsync();
-            return messageShow.Result.ConvertToDialogReplaceItem();
+            var messageShow = await menager.ShowWindowAsync();
+            return await messageShow.ConvertToDialogReplaceItem();
         }
 
         private static Task<DialogReplaceItemQuestion> ConvertToDialogReplaceItem(this string? buttonDefinitionsName)
