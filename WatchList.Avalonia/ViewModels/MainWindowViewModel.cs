@@ -87,6 +87,8 @@ namespace WatchList.Avalonia.ViewModels
         public ReactiveCommand<Unit, Unit> MoveToNextPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToLastPageCommand { get; }
 
+        [RelayCommand] private async Task UseFilter() => await LoadDataAsync();
+
         [RelayCommand]
         private async Task MoveAddItem()
         {
