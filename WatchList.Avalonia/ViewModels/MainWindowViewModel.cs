@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData.Binding;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using WatchList.Avalonia.Extension;
@@ -66,15 +67,18 @@ namespace WatchList.Avalonia.ViewModels
             _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), true);
             PagedList = _itemService.GetPage(_searchRequests);
 
-            var canExecuteMoveToPrevPage = Page.WhenAnyValue(x => x.Number).Select(number => number > 1);
+            var numberObservable = Page.WhenAnyValue(x => x.Number, x => x.Size).Select(tuple => tuple.Item1);
+            var watchItemListObservable = WatchItems.ObserveCollectionChanges().Select(e => Page.Number);
+
+            var canExecuteMoveToPrevPage = numberObservable.Merge(watchItemListObservable).Select(number => number > 1);
             MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number - 1), canExecuteMoveToPrevPage);
             MoveToFirstPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(1), canExecuteMoveToPrevPage);
 
-            var canExecuteMoveToNextPage = Page.WhenAnyValue(x => x.Number).Select(number => number < PagedList.Count);
+            var canExecuteMoveToNextPage = numberObservable.Merge(watchItemListObservable).Select(number => number < PagedList.PageCount);
             MoveToNextPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number + 1), canExecuteMoveToNextPage);
-            MoveToLastPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(PagedList.Count), canExecuteMoveToNextPage);
+            MoveToLastPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(PagedList.PageCount), canExecuteMoveToNextPage);
 
-            var canExecuteChangePage = Page.WhenAnyValue(x => x.Number).Select(number => number != PagedList.Count);
+            var canExecuteChangePage = Page.WhenAnyValue(x => x.Number).Select(number => number != PagedList.PageCount);
 
             WatchItems.UppdataItems(PagedList.Items);
         }
@@ -87,7 +91,16 @@ namespace WatchList.Avalonia.ViewModels
         public ReactiveCommand<Unit, Unit> MoveToNextPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToLastPageCommand { get; }
 
-        [RelayCommand] private async Task UseFilter() => await LoadDataAsync();
+        [RelayCommand]
+        private async Task UseFilter()
+        {
+            var searchRequests = _searchRequests;
+            searchRequests.Page = Page.GetPage();
+            var pagedList = _itemService.GetPage(searchRequests);
+            var pageNumber = pagedList.Count == 0 ? pagedList.PageCount : searchRequests.Page.Number;
+
+            await LoadDataAsync(pageNumber, searchRequests.Page.Size);
+        }
 
         [RelayCommand]
         private async Task MoveAddItem()
@@ -101,7 +114,7 @@ namespace WatchList.Avalonia.ViewModels
                 return;
             }
 
-            await LoadDataAsync();
+            await LoadDataAsync(Page.Number, Page.Size);
         }
 
         [RelayCommand]
@@ -122,7 +135,7 @@ namespace WatchList.Avalonia.ViewModels
                 return;
             }
 
-            await LoadDataAsync();
+            await LoadDataAsync(Page.Number, Page.Size);
         }
 
         [RelayCommand]
@@ -143,7 +156,7 @@ namespace WatchList.Avalonia.ViewModels
                     return;
             }
 
-            await LoadDataAsync();
+            await LoadDataAsync(Page.Number, Page.Size);
         }
 
         [RelayCommand]
@@ -152,19 +165,21 @@ namespace WatchList.Avalonia.ViewModels
             var viewModel = _serviceProvider.GetRequiredService<MergeDatabaseViewModel>();
             var window = new MergeDatabaseWindow(viewModel);
             await window.ShowDialog(currentWindow);
-            await LoadDataAsync();
+            await LoadDataAsync(Page.Number, Page.Size);
         }
 
         /// <summary>
         /// Load data in table.
         /// </summary>
-        private async Task LoadDataAsync()
+        private async Task LoadDataAsync(int pageNumber, int pageSize)
         {
             try
             {
-                _searchRequests.Page = Page.GetPage();
+                _searchRequests.Page = new Page(pageNumber, pageSize);
                 PagedList = _itemService.GetPage(_searchRequests);
-                WatchItems = new ObservableCollection<WatchItem>(PagedList.Items);
+                WatchItems = WatchItems.UppdataItems(PagedList.Items);
+                Page.Number = pageNumber;
+                Page.Size = pageSize;
             }
             catch (Exception error)
             {
@@ -177,8 +192,7 @@ namespace WatchList.Avalonia.ViewModels
         /// </summary>
         private async Task LoadDataAsyncPage(int pageNumber)
         {
-            Page.Number = pageNumber;
-            await LoadDataAsync();
+            await LoadDataAsync(pageNumber, Page.Size);
         }
     }
 }

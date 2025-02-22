@@ -73,7 +73,7 @@ namespace WatchList.WPF.ViewModel
             => new(async _ => await LoadDataAsyncPage(++Page.Number), _ => _pagedList.HasNextPage);
 
         public RelayCommandApp MoveToLastPageCommand
-            => new(async _ => await LoadDataAsyncPage(_pagedList.Count), _ => _pagedList.HasNextPage);
+            => new(async _ => await LoadDataAsyncPage(_pagedList.PageCount), _ => _pagedList.HasNextPage);
 
         [RelayCommand] private async Task UseFilter() => await LoadDataAsync();
 
@@ -158,7 +158,7 @@ namespace WatchList.WPF.ViewModel
                 WatchItems.UppdataItems(_pagedList.Items);
                 PageDisplayText = _pagedList.HasEmptyPage
                                 ? string.Empty
-                                : $"Page {_pagedList.PageNumber} of {_pagedList.Count}";
+                                : $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
             }
             catch (Exception error)
             {
