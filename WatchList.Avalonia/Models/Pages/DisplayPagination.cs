@@ -23,7 +23,7 @@ namespace WatchList.Avalonia.Models
                 SetProperty(ref _pagedList, value);
                 PageDisplayText = _pagedList.HasEmptyPage
                                    ? string.Empty
-                                   : $"Page {_pagedList.PageNumber} of {_pagedList.Count}";
+                                   : $"Page {_pagedList.PageNumber} of {_pagedList.PageCount}";
             }
         }
 

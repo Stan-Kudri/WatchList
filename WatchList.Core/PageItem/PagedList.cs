@@ -45,21 +45,23 @@ namespace WatchList.Core.PageItem
             TotalItems = totalItems;
         }
 
-        public virtual int PageNumber { get; protected set; } = NumberStartPage;
+        public virtual int PageNumber { get; } = NumberStartPage;
 
-        public int TotalItems { get; private set; } = 0;
+        public int TotalItems { get; } = 0;
 
-        public int PageSize { get; private set; } = StartPageSize;
+        public int PageSize { get; } = StartPageSize;
 
-        public List<T> Items { get; private set; }
+        public List<T> Items { get; }
 
         public bool HasPreviousPage => PageNumber > 1;
 
-        public bool HasNextPage => PageNumber < Count;
+        public bool HasNextPage => PageNumber < PageCount;
 
-        public bool HasEmptyPage => Count == 0;
+        public bool HasEmptyPage => PageCount == 0;
 
-        public int Count => PageSize != 0 ? (int)Math.Ceiling((double)TotalItems / PageSize) : 0;
+        public int PageCount => PageSize != 0 ? (int)Math.Ceiling((double)TotalItems / PageSize) : 0;
+
+        public int Count => Items.Count;
 
         public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
 

@@ -217,7 +217,7 @@ namespace WatchList.WinForms
         {
             if (_pagedList.HasNextPage)
             {
-                Page.Number = _pagedList.Count;
+                Page.Number = _pagedList.PageCount;
                 await LoadDataAsync();
             }
         }
@@ -270,7 +270,7 @@ namespace WatchList.WinForms
         private async void TextBoxPage_TextChanged(object sender, EventArgs e)
         {
             if (!int.TryParse(textBoxPage.Text, out var pageNumber)
-                || pageNumber > _pagedList.Count
+                || pageNumber > _pagedList.PageCount
                 || _pagedList.PageNumber == Page.Number)
             {
                 textBoxPage.Text = _pagedList.PageNumber.ToString();
@@ -331,7 +331,7 @@ namespace WatchList.WinForms
                 FillGrid(item);
                 CustomUpdateFormState();
 
-                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.Count, 1));
+                labelTotalPage.Text = labelTotalPage.Text = string.Format("/{0}", Math.Max(_pagedList.PageCount, 1));
                 textBoxPage.Text = _pagedList.PageNumber.ToString();
             }
             catch (Exception error)
@@ -369,7 +369,7 @@ namespace WatchList.WinForms
         /// </summary>
         private void CustomUpdateFormState()
         {
-            var hasPageControl = _pagedList.Count > 0 ? true : false;
+            var hasPageControl = _pagedList.PageCount > 0 ? true : false;
 
             btnBackPage.Enabled =
                 btnEndPage.Enabled =
