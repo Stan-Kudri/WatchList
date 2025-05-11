@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using WatchList.Avalonia.Extension;
 using WatchList.Avalonia.Models;
+using WatchList.Avalonia.Models.Sorter;
 using WatchList.Avalonia.ViewModel;
 using WatchList.Avalonia.ViewModels.ItemsView;
 using WatchList.Core.Model.Filter;
@@ -39,11 +41,18 @@ namespace WatchList.Avalonia.ViewModels
 
         private PagedList<WatchItem> _pagedList;
 
+        private bool _isDropdownOpen;
+
+        [ObservableProperty] private IFilterItem _filterItem;
+        [ObservableProperty] private List<SelectableSortFieldWatchItem> _sortFieldWatchItems;
+        [ObservableProperty] private SortWatchItemModel _sortField;
+        [ObservableProperty] private TypeSortFields _typeSortFields;
+
         [ObservableProperty] private WatchItem _selectItem;
+        [ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
         [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
         [ObservableProperty] private PageModel _page;
-        [ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
 
         public PagedList<WatchItem> PagedList
         {
@@ -55,15 +64,32 @@ namespace WatchList.Avalonia.ViewModels
             }
         }
 
+        public bool IsDropdownOpen
+        {
+            get => _isDropdownOpen;
+            set
+            {
+                SetProperty(ref _isDropdownOpen, value);
+                OnPropertyChanged(nameof(SelectedItemsDisplay));
+            }
+        }
+
         public MainWindowViewModel(IMessageBox messageBox,
                             WatchItemService watchItemService,
                             PageModel pageModel,
-                            IServiceProvider serviceProvider)
+                            IServiceProvider serviceProvider,
+                            IFilterItem filterItem,
+                            SortWatchItemModel sortField,
+                            TypeSortFields typeSortFields)
         {
             _messageBox = messageBox;
             _itemService = watchItemService;
             _serviceProvider = serviceProvider;
+            FilterItem = filterItem;
+            SortField = sortField;
+            TypeSortFields = typeSortFields;
             Page = pageModel;
+            SortFieldWatchItems = [.. SortFieldWatchItem.List.Select(item => new SelectableSortFieldWatchItem(item))];
             _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), true);
             PagedList = _itemService.GetPage(_searchRequests);
 
@@ -83,6 +109,10 @@ namespace WatchList.Avalonia.ViewModels
             WatchItems.UppdataItems(PagedList.Items);
         }
 
+        public string SelectedItemsDisplay => SortFieldWatchItems.Where(e => e.IsSelected).Select(e => e.SortField != SortFieldWatchItem.Title).Any()
+                                                ? string.Join(", ", SortFieldWatchItems.Where(e => e.IsSelected).Select(e => e.SortField.Name))
+                                                : SortFieldWatchItem.Title.ToString();
+
         public Interaction<AddCinemaViewModel?, bool> ShowAddCinemaDialog { get; } = new Interaction<AddCinemaViewModel?, bool>();
         public Interaction<EditCinemaViewModel?, bool> ShowEditCinemaDialog { get; } = new Interaction<EditCinemaViewModel?, bool>();
 
@@ -98,8 +128,14 @@ namespace WatchList.Avalonia.ViewModels
             searchRequests.Page = Page.GetPage();
             var pagedList = _itemService.GetPage(searchRequests);
             var pageNumber = pagedList.Count == 0 ? pagedList.PageCount : searchRequests.Page.Number;
-
             await LoadDataAsync(pageNumber, searchRequests.Page.Size);
+        }
+
+        [RelayCommand]
+        private async Task UseSort(object sorter)
+        {
+            SortField.SortFields = new ObservableCollection<SortFieldWatchItem>(SortFieldWatchItems.Where(e => e.IsSelected).Select(e => e.SortField));
+            await UseFilter();
         }
 
         [RelayCommand]
@@ -175,6 +211,7 @@ namespace WatchList.Avalonia.ViewModels
         {
             try
             {
+                _searchRequests.Sort = SortField.GetSortItem();
                 _searchRequests.Page = new Page(pageNumber, pageSize);
                 PagedList = _itemService.GetPage(_searchRequests);
                 WatchItems = WatchItems.UppdataItems(PagedList.Items);

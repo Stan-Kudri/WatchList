@@ -20,7 +20,6 @@ namespace WatchList.Core.Model.Sortable
         }
 
         public void Clear()
-            => SortFields
-            = new HashSet<ISortableSmartEnum<T>>() { TSortField.DefaultValue };
+            => SortFields = new HashSet<ISortableSmartEnum<T>>() { TSortField.DefaultValue };
     }
 }

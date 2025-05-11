@@ -1,9 +1,11 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema.Components;
 
-namespace WatchList.WPF.Models.Filter
+namespace WatchList.Avalonia.Models.Filter
 {
     public class FilterItemModel : ObservableObject, IFilterItem
     {

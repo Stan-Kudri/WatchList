@@ -2,12 +2,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:WatchList.Avalonia.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        xmlns:itemcinema="using:WatchList.Core.Model.ItemCinema"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        xmlns:itemcinema="using:WatchList.Core.Model.ItemCinema"        xmlns:sorter="using:WatchList.Avalonia.Models.Sorter"
+        xmlns:sortable="using:WatchList.Core.Model.Sortable"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WatchList.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         x:Name="Main"
-        MinWidth="700" MinHeight="520"
+        MinWidth="800" MinHeight="520"
         Width="800" Height="520"
         Icon="/Assets/avalonia-logo.ico"
         Title="WatchList.Avalonia">
@@ -16,20 +17,50 @@
           ColumnDefinitions="*, *, *, *, *, *, *, *" 
           Background="Lavender">
 
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="15 0 5 0">
+            <Grid Margin="5">
+                <ToggleButton Content="{Binding SelectedItemsDisplay}"
+                              IsChecked="{Binding IsDropdownOpen, Mode=TwoWay}"
+                              Name="SortComboBox"/>
+                <Popup IsOpen="{Binding IsDropdownOpen}">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <ListBox ItemsSource="{Binding SortFieldWatchItems}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="sorter:SelectableSortFieldWatchItem">
+                                    <CheckBox Content="{Binding SortField.Name}"
+                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Popup>
+            </Grid>
+
+            <Button Content="Use Filter"
+                    Margin="5 0 0 5"
+                    Command="{Binding UseSortCommand}"
+                    CommandParameter="{Binding ElementName=SortComboBox}">
+            </Button>
+                    
+        </StackPanel>
+        
         <DataGrid Margin="20"
-                      AutoGenerateColumns="False"
-                      IsReadOnly="True"
-                      CanUserSortColumns="False"
-                      GridLinesVisibility="All"
-                      BorderBrush="Gray"
-                      Background="White"
-                      Grid.Column="0" Grid.Row="1"
-                      Grid.ColumnSpan="8" Grid.RowSpan="1"
-                      ItemsSource="{Binding WatchItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding SelectItem}"
-                      Name="GridItem"
-                      SelectionMode="Extended"
-                      HorizontalScrollBarVisibility="Auto">
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserSortColumns="False"
+                  GridLinesVisibility="All"
+                  BorderBrush="Gray"
+                  Background="White"
+                  Grid.Column="0" Grid.Row="1"
+                  Grid.ColumnSpan="8" Grid.RowSpan="1"
+                  ItemsSource="{Binding WatchItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectItem}"
+                  Name="GridItem"
+                  SelectionMode="Extended"
+                  HorizontalScrollBarVisibility="Auto">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title"
@@ -68,7 +99,7 @@
                   HorizontalAlignment="Left"
                   Width="80"
                   Height="35"
-                  Margin="10 2 2 2"
+                  Margin="20 2 2 2"
                   FontSize="12"
                   ItemsSource="{Binding Page.Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedValue="{Binding Page.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
