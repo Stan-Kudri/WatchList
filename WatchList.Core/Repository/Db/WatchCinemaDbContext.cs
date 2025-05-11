@@ -4,8 +4,13 @@ using WatchList.Core.Repository.Extension;
 
 namespace WatchList.Core.Repository.Db
 {
-    public class WatchCinemaDbContext(DbContextOptions options) : DbContext(options)
+    public class WatchCinemaDbContext : DbContext
     {
+        public WatchCinemaDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
+
         public DbSet<WatchItem> WatchItem { get; set; } = null!;
 
         public override int SaveChanges()
