@@ -20,7 +20,7 @@ namespace WatchList.Core.Repository
 
         public PagedList<WatchItem> GetPage(ItemSearchRequest searchRequest)
         {
-            var query = searchRequest.ApplyFilter(_db.WatchItem);
+            var query = searchRequest.ApplyFilter(_db.WatchItem.AsNoTracking());
             query = searchRequest.ApplyOrderBy(query);
             return query.GetPagedList(searchRequest.Page);
         }

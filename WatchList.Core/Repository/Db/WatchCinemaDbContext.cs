@@ -4,13 +4,8 @@ using WatchList.Core.Repository.Extension;
 
 namespace WatchList.Core.Repository.Db
 {
-    public class WatchCinemaDbContext : DbContext
+    public class WatchCinemaDbContext(DbContextOptions options) : DbContext(options)
     {
-        public WatchCinemaDbContext(DbContextOptions options)
-            : base(options)
-        {
-        }
-
         public DbSet<WatchItem> WatchItem { get; set; } = null!;
 
         public override int SaveChanges()
@@ -33,9 +28,9 @@ namespace WatchList.Core.Repository.Db
                 buildAction.Property(x => x.Title).HasMaxLength(50).IsRequired();
                 buildAction.Property(x => x.TitleNormalized).HasMaxLength(50).IsRequired().HasDefaultValue(string.Empty);
                 buildAction.Property(x => x.Id).ValueGeneratedOnAdd();
-                buildAction.Property(x => x.Sequel).HasColumnType("INTEGER").IsRequired();
-                buildAction.Property(x => x.Date).HasColumnType("DATETIME");
-                buildAction.Property(x => x.Grade).HasColumnType("INTEGER");
+                buildAction.Property(x => x.Sequel).IsRequired();
+                buildAction.Property(x => x.Date);
+                buildAction.Property(x => x.Grade);
                 buildAction.Property(x => x.Type).SmartEnumConversion();
                 buildAction.Property(x => x.Status).SmartEnumConversion();
                 buildAction.HasIndex(x => x.TitleNormalized);
