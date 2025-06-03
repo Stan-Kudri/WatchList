@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using WatchList.Avalonia.Extension;
 using WatchList.Avalonia.Models;
+using WatchList.Avalonia.Models.Filter;
 using WatchList.Avalonia.Models.Sorter;
 using WatchList.Avalonia.ViewModel;
 using WatchList.Avalonia.ViewModels.ItemsView;
@@ -42,9 +43,11 @@ namespace WatchList.Avalonia.ViewModels
         private PagedList<WatchItem> _pagedList;
 
         private bool _isDropdownOpen;
+        private bool _isDropdownOpen2;
 
-        [ObservableProperty] private IFilterItem _filterItem;
-        [ObservableProperty] private List<SelectableSortFieldWatchItem> _sortFieldWatchItems;
+        [ObservableProperty] private FilterItemModel _filterItem;
+        [ObservableProperty] private List<SelectFilterTypeFieldWatchItem> _filterTypeFieldWatchItems;
+
         [ObservableProperty] private SortWatchItemModel _sortField;
         [ObservableProperty] private TypeSortFields _typeSortFields;
 
@@ -74,11 +77,21 @@ namespace WatchList.Avalonia.ViewModels
             }
         }
 
+        public bool IsDropdownOpen2
+        {
+            get => _isDropdownOpen2;
+            set
+            {
+                SetProperty(ref _isDropdownOpen2, value);
+                OnPropertyChanged(nameof(SelectedTypeFilterDisplay));
+            }
+        }
+
         public MainWindowViewModel(IMessageBox messageBox,
                             WatchItemService watchItemService,
                             PageModel pageModel,
                             IServiceProvider serviceProvider,
-                            IFilterItem filterItem,
+                            FilterItemModel filterItem,
                             SortWatchItemModel sortField,
                             TypeSortFields typeSortFields)
         {
@@ -89,7 +102,6 @@ namespace WatchList.Avalonia.ViewModels
             SortField = sortField;
             TypeSortFields = typeSortFields;
             Page = pageModel;
-            SortFieldWatchItems = [.. SortFieldWatchItem.List.Select(item => new SelectableSortFieldWatchItem(item))];
             _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), true);
             PagedList = _itemService.GetPage(_searchRequests);
 
@@ -109,9 +121,9 @@ namespace WatchList.Avalonia.ViewModels
             WatchItems.UppdataItems(PagedList.Items);
         }
 
-        public string SelectedItemsDisplay => SortFieldWatchItems.Where(e => e.IsSelected).Select(e => e.SortField != SortFieldWatchItem.Title).Any()
-                                                ? string.Join(", ", SortFieldWatchItems.Where(e => e.IsSelected).Select(e => e.SortField.Name))
-                                                : SortFieldWatchItem.Title.ToString();
+        public string SelectedItemsDisplay => SortField.GetSelectItems;
+
+        public string SelectedTypeFilterDisplay => FilterItem.GetSelectTypeFilter;
 
         public Interaction<AddCinemaViewModel?, bool> ShowAddCinemaDialog { get; } = new Interaction<AddCinemaViewModel?, bool>();
         public Interaction<EditCinemaViewModel?, bool> ShowEditCinemaDialog { get; } = new Interaction<EditCinemaViewModel?, bool>();
@@ -134,7 +146,8 @@ namespace WatchList.Avalonia.ViewModels
         [RelayCommand]
         private async Task UseSort(object sorter)
         {
-            SortField.SortFields = new ObservableCollection<SortFieldWatchItem>(SortFieldWatchItems.Where(e => e.IsSelected).Select(e => e.SortField));
+            FilterItem.SetTypeFilter();
+            SortField.SetSortFields();
             await UseFilter();
         }
 
@@ -211,7 +224,8 @@ namespace WatchList.Avalonia.ViewModels
         {
             try
             {
-                _searchRequests.Sort = SortField.GetSortItem();
+                _searchRequests.Sort = SortField.SortItem;
+                _searchRequests.Filter = FilterItem.GetFilter();
                 _searchRequests.Page = new Page(pageNumber, pageSize);
                 PagedList = _itemService.GetPage(_searchRequests);
                 WatchItems = WatchItems.UppdataItems(PagedList.Items);

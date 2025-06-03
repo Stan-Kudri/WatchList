@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:WatchList.Avalonia.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        xmlns:itemcinema="using:WatchList.Core.Model.ItemCinema"        xmlns:sorter="using:WatchList.Avalonia.Models.Sorter"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        xmlns:itemcinema="using:WatchList.Core.Model.ItemCinema"        xmlns:sorter="using:WatchList.Avalonia.Models.Sorter"        xmlns:filterType="using:WatchList.Avalonia.Models.Filter"
         xmlns:sortable="using:WatchList.Core.Model.Sortable"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WatchList.Avalonia.Views.MainWindow"
@@ -21,15 +21,16 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="15 0 5 0">
+            
             <Grid Margin="5">
                 <ToggleButton Content="{Binding SelectedItemsDisplay}"
                               IsChecked="{Binding IsDropdownOpen, Mode=TwoWay}"
                               Name="SortComboBox"/>
                 <Popup IsOpen="{Binding IsDropdownOpen}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <ListBox ItemsSource="{Binding SortFieldWatchItems}">
+                        <ListBox ItemsSource="{Binding SortField.SortFieldWatchItems}">
                             <ListBox.ItemTemplate>
-                                <DataTemplate DataType="sorter:SelectableSortFieldWatchItem">
+                                <DataTemplate DataType="sorter:SelectSortFieldWatchItem">
                                     <CheckBox Content="{Binding SortField.Name}"
                                               IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
                                 </DataTemplate>
@@ -45,6 +46,31 @@
                     CommandParameter="{Binding ElementName=SortComboBox}">
             </Button>
                     
+        </StackPanel>
+
+        <StackPanel Grid.Row="0"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="3"
+                    Margin="15 0 5 0">
+            
+            <Grid Margin="5">
+                <ToggleButton Content="{Binding SelectedTypeFilterDisplay}"
+                              IsChecked="{Binding IsDropdownOpen2, Mode=TwoWay}"
+                              Name="TypeFilterComboBox"/>
+                <Popup IsOpen="{Binding IsDropdownOpen2}">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <ListBox ItemsSource="{Binding FilterItem.SelectFilterTypeField}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="filterType:SelectFilterTypeFieldWatchItem">
+                                    <CheckBox Content="{Binding TypeField.Name}"
+                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Popup>
+            </Grid>
+            
         </StackPanel>
         
         <DataGrid Margin="20"
