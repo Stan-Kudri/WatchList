@@ -23,10 +23,10 @@
                     Margin="15 0 5 0">
             
             <Grid Margin="5">
-                <ToggleButton Content="{Binding SelectedItemsDisplay}"
-                              IsChecked="{Binding IsDropdownOpen, Mode=TwoWay}"
+                <ToggleButton Content="{Binding SortDropDown.SelectedDisplay}"
+                              IsChecked="{Binding SortDropDown.IsOpen, Mode=TwoWay}"
                               Name="SortComboBox"/>
-                <Popup IsOpen="{Binding IsDropdownOpen}">
+                <Popup IsOpen="{Binding SortDropDown.IsOpen}">
                     <Border BorderBrush="Black" BorderThickness="1">
                         <ListBox ItemsSource="{Binding SortField.SortFieldWatchItems}">
                             <ListBox.ItemTemplate>
@@ -54,10 +54,10 @@
                     Margin="15 0 5 0">
             
             <Grid Margin="5">
-                <ToggleButton Content="{Binding SelectedTypeFilterDisplay}"
-                              IsChecked="{Binding IsDropdownOpen2, Mode=TwoWay}"
+                <ToggleButton Content="{Binding FilterDropDown.SelectedDisplay}"
+                              IsChecked="{Binding FilterDropDown.IsOpen, Mode=TwoWay}"
                               Name="TypeFilterComboBox"/>
-                <Popup IsOpen="{Binding IsDropdownOpen2}">
+                <Popup IsOpen="{Binding FilterDropDown.IsOpen}">
                     <Border BorderBrush="Black" BorderThickness="1">
                         <ListBox ItemsSource="{Binding FilterItem.SelectFilterTypeField}">
                             <ListBox.ItemTemplate>

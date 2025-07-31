@@ -42,9 +42,6 @@ namespace WatchList.Avalonia.ViewModels
 
         private PagedList<WatchItem> _pagedList;
 
-        private bool _isDropdownOpen;
-        private bool _isDropdownOpen2;
-
         [ObservableProperty] private FilterItemModel _filterItem;
         [ObservableProperty] private List<SelectFilterTypeFieldWatchItem> _filterTypeFieldWatchItems;
 
@@ -67,25 +64,8 @@ namespace WatchList.Avalonia.ViewModels
             }
         }
 
-        public bool IsDropdownOpen
-        {
-            get => _isDropdownOpen;
-            set
-            {
-                SetProperty(ref _isDropdownOpen, value);
-                OnPropertyChanged(nameof(SelectedItemsDisplay));
-            }
-        }
-
-        public bool IsDropdownOpen2
-        {
-            get => _isDropdownOpen2;
-            set
-            {
-                SetProperty(ref _isDropdownOpen2, value);
-                OnPropertyChanged(nameof(SelectedTypeFilterDisplay));
-            }
-        }
+        public DropDownManager<SortWatchItemModel> SortDropDown { get; }
+        public DropDownManager<FilterItemModel> FilterDropDown { get; }
 
         public MainWindowViewModel(IMessageBox messageBox,
                             WatchItemService watchItemService,
@@ -108,6 +88,9 @@ namespace WatchList.Avalonia.ViewModels
             var numberObservable = Page.WhenAnyValue(x => x.Number, x => x.Size).Select(tuple => tuple.Item1);
             var watchItemListObservable = WatchItems.ObserveCollectionChanges().Select(e => Page.Number);
 
+            SortDropDown = new DropDownManager<SortWatchItemModel>(() => SortField.GetSelectItems);
+            FilterDropDown = new DropDownManager<FilterItemModel>(() => FilterItem.GetSelectTypeFilter);
+
             var canExecuteMoveToPrevPage = numberObservable.Merge(watchItemListObservable).Select(number => number > 1);
             MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number - 1), canExecuteMoveToPrevPage);
             MoveToFirstPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(1), canExecuteMoveToPrevPage);
@@ -120,10 +103,6 @@ namespace WatchList.Avalonia.ViewModels
 
             WatchItems.UppdataItems(PagedList.Items);
         }
-
-        public string SelectedItemsDisplay => SortField.GetSelectItems;
-
-        public string SelectedTypeFilterDisplay => FilterItem.GetSelectTypeFilter;
 
         public Interaction<AddCinemaViewModel?, bool> ShowAddCinemaDialog { get; } = new Interaction<AddCinemaViewModel?, bool>();
         public Interaction<EditCinemaViewModel?, bool> ShowEditCinemaDialog { get; } = new Interaction<EditCinemaViewModel?, bool>();
@@ -141,6 +120,7 @@ namespace WatchList.Avalonia.ViewModels
             var pagedList = _itemService.GetPage(searchRequests);
             var pageNumber = pagedList.Count == 0 ? pagedList.PageCount : searchRequests.Page.Number;
             await LoadDataAsync(pageNumber, searchRequests.Page.Size);
+            FilterDropDown.UpdateDisplay();
         }
 
         [RelayCommand]
@@ -148,6 +128,7 @@ namespace WatchList.Avalonia.ViewModels
         {
             FilterItem.SetTypeFilter();
             SortField.SetSortFields();
+            SortDropDown.UpdateDisplay();
             await UseFilter();
         }
 
