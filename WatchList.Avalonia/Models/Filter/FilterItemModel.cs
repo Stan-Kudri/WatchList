@@ -1,16 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Avalonia.Models.Filter
 {
-    public class FilterItemModel : ObservableObject, IFilterItem
+    public partial class FilterItemModel : ObservableObject, IFilterItem
     {
+        [ObservableProperty] private List<SelectFilterTypeFieldWatchItem> _selectFilterTypeField = [.. TypeCinema.List.Select(item => new SelectFilterTypeFieldWatchItem(item))];
+
         private IEnumerable<TypeCinema> _filterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
         private IEnumerable<StatusCinema> _filterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
+
+        public FilterItemModel()
+        {
+        }
 
         public IEnumerable<TypeCinema> FilterTypeField
         {
@@ -54,12 +61,19 @@ namespace WatchList.Avalonia.Models.Filter
 
         public List<StatusCinema> StatusItems { get; set; } = [.. StatusCinema.List];
 
-        public FilterWatchItem GetFilter() => new FilterWatchItem(_filterTypeField, _filterStatusField);
+        public FilterWatchItem GetFilter() => new FilterWatchItem(FilterTypeField, FilterStatusField);
 
         public void Clear()
         {
             FilterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
             FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
         }
+
+        public void SetTypeFilter() => FilterTypeField = new ObservableCollection<TypeCinema>(SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField));
+
+        public string GetSelectTypeFilter => (SelectFilterTypeField.Any(e => e.IsSelected) && SelectFilterTypeField.Count(e => e.IsSelected) != TypeCinema.List.Count)
+                                             || (SelectFilterTypeField.Count(e => e.IsSelected) < TypeCinema.List.Count && SelectFilterTypeField.Any(e => e.IsSelected))
+                                              ? string.Join(", ", SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField.Name))
+                                              : "All Type Cinema";
     }
 }

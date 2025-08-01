@@ -7,7 +7,6 @@ using WatchList.Avalonia.ViewModel;
 using WatchList.Avalonia.ViewModels;
 using WatchList.Avalonia.ViewModels.ItemsView;
 using WatchList.Avalonia.Views.Message;
-using WatchList.Core.Model.Filter;
 using WatchList.Core.Repository;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
@@ -30,7 +29,7 @@ namespace WatchList.Avalonia.Extension
                                       .AddScoped<DownloadDataService>()
                                       .AddScoped<SortWatchItemModel>()
                                       .AddScoped<TypeSortFields>()
-                                      .AddScoped<IFilterItem, FilterItemModel>()
+                                      .AddScoped<FilterItemModel>()
                                       .AddLogging();
 
         public static IServiceCollection AppViewModelContainer(this IServiceCollection serviceCollection)

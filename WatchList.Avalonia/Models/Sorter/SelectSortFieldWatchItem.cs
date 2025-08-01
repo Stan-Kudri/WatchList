@@ -4,12 +4,12 @@ using WatchList.Core.Model.Sortable;
 
 namespace WatchList.Avalonia.Models.Sorter
 {
-    public partial class SelectableSortFieldWatchItem : ViewModelBase
+    public partial class SelectSortFieldWatchItem : ViewModelBase
     {
         [ObservableProperty] private bool _isSelected;
 
         public SortFieldWatchItem SortField { get; }
 
-        public SelectableSortFieldWatchItem(SortFieldWatchItem sortField) => SortField = sortField;
+        public SelectSortFieldWatchItem(SortFieldWatchItem sortField) => SortField = sortField;
     }
 }

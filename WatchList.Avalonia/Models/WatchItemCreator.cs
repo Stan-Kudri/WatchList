@@ -10,22 +10,11 @@ namespace WatchList.Avalonia.Models
         {
         }
 
-        public WatchItem CreateNonPlanned(
-                                        string title,
-                                        int sequel,
-                                        StatusCinema status,
-                                        TypeCinema type,
-                                        DateTime? date = null,
-                                        int? grade = null,
-                                        Guid? id = null)
+        public WatchItem CreateNonPlanned(string title, int sequel, StatusCinema status, TypeCinema type,
+                                          DateTime? date = null, int? grade = null, Guid? id = null)
             => new WatchItem(title, sequel, status, type, id, date, grade);
 
-        public WatchItem CreatePlanned(
-                                    string title,
-                                    int sequel,
-                                    StatusCinema status,
-                                    TypeCinema type,
-                                    Guid? id)
+        public WatchItem CreatePlanned(string title, int sequel, StatusCinema status, TypeCinema type, Guid? id)
             => new WatchItem(title, sequel, status, type, id, null, null);
     }
 }
