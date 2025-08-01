@@ -14,7 +14,11 @@ namespace WatchList.Avalonia.Models
         public bool IsOpen
         {
             get => _isOpen;
-            set => SetProperty(ref _isOpen, value);
+            set
+            {
+                SetProperty(ref _isOpen, value);
+                UpdateDisplay();
+            }
         }
 
         public string SelectedDisplay
