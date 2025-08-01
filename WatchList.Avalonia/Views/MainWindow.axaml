@@ -17,22 +17,22 @@
           ColumnDefinitions="*, *, *, *, *, *, *, *" 
           Background="Lavender">
 
-        <StackPanel Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Margin="15 0 5 0">
-            
+        <StackPanel Orientation="Horizontal" Margin="15 0 5 0">
+            <!-- SortComboBox -->
             <Grid Margin="5">
                 <ToggleButton Content="{Binding SortDropDown.SelectedDisplay}"
-                              IsChecked="{Binding SortDropDown.IsOpen, Mode=TwoWay}"
-                              Name="SortComboBox"/>
+                            IsChecked="{Binding SortDropDown.IsOpen, Mode=TwoWay}"
+                            Name="SortComboBox"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Stretch"
+                            MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+
                 <Popup IsOpen="{Binding SortDropDown.IsOpen}">
                     <Border BorderBrush="Black" BorderThickness="1">
                         <ListBox ItemsSource="{Binding SortField.SortFieldWatchItems}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="sorter:SelectSortFieldWatchItem">
-                                    <CheckBox Content="{Binding SortField.Name}"
-                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding SortField.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -40,37 +40,36 @@
                 </Popup>
             </Grid>
 
-            <Button Content="Use Filter"
-                    Margin="5 0 0 5"
-                    Command="{Binding UseSortCommand}"
-                    CommandParameter="{Binding ElementName=SortComboBox}">
-            </Button>
-                    
-        </StackPanel>
-
-        <StackPanel Grid.Row="0"
-                    Grid.Column="3"
-                    Grid.ColumnSpan="3"
-                    Margin="15 0 5 0">
-            
-            <Grid Margin="5">
+            <!-- TypeFilterComboBox -->
+            <Grid Margin="5 0">
                 <ToggleButton Content="{Binding FilterDropDown.SelectedDisplay}"
-                              IsChecked="{Binding FilterDropDown.IsOpen, Mode=TwoWay}"
-                              Name="TypeFilterComboBox"/>
+                            IsChecked="{Binding FilterDropDown.IsOpen, Mode=TwoWay}"
+                            Name="TypeFilterComboBox"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Stretch"
+                            MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+
                 <Popup IsOpen="{Binding FilterDropDown.IsOpen}">
                     <Border BorderBrush="Black" BorderThickness="1">
                         <ListBox ItemsSource="{Binding FilterItem.SelectFilterTypeField}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="filterType:SelectFilterTypeFieldWatchItem">
-                                    <CheckBox Content="{Binding TypeField.Name}"
-                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding TypeField.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </Border>
                 </Popup>
             </Grid>
-            
+
+            <!-- Use Filter Button -->
+            <Button Content="Use Filter"
+                    Margin="5 0 0 0"
+                    Command="{Binding UseSortCommand}"
+                    CommandParameter="{Binding ElementName=SortComboBox}"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Stretch"
+                    MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
         </StackPanel>
         
         <DataGrid Margin="20"
