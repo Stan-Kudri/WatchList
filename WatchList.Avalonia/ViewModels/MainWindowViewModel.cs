@@ -43,7 +43,8 @@ namespace WatchList.Avalonia.ViewModels
         private PagedList<WatchItem> _pagedList;
 
         [ObservableProperty] private FilterItemModel _filterItem;
-        [ObservableProperty] private List<SelectFilterTypeFieldWatchItem> _filterTypeFieldWatchItems;
+        [ObservableProperty] private List<SelectFilterTypeField> _filterTypeFieldWatchItems;
+        [ObservableProperty] private List<SelectFilterStatusField> _filterStatusFieldWatchItems;
 
         [ObservableProperty] private SortWatchItemModel _sortField;
         [ObservableProperty] private TypeSortFields _typeSortFields;
@@ -65,7 +66,8 @@ namespace WatchList.Avalonia.ViewModels
         }
 
         public DropDownManager<SortWatchItemModel> SortDropDown { get; }
-        public DropDownManager<FilterItemModel> FilterDropDown { get; }
+        public DropDownManager<FilterItemModel> FilterTypeDropDown { get; }
+        public DropDownManager<FilterItemModel> FilterStatusDropDown { get; }
 
         public MainWindowViewModel(IMessageBox messageBox,
                             WatchItemService watchItemService,
@@ -89,7 +91,8 @@ namespace WatchList.Avalonia.ViewModels
             var watchItemListObservable = WatchItems.ObserveCollectionChanges().Select(e => Page.Number);
 
             SortDropDown = new DropDownManager<SortWatchItemModel>(() => SortField.GetSelectItems);
-            FilterDropDown = new DropDownManager<FilterItemModel>(() => FilterItem.GetSelectTypeFilter);
+            FilterTypeDropDown = new DropDownManager<FilterItemModel>(() => FilterItem.GetSelectTypeFilter);
+            FilterStatusDropDown = new DropDownManager<FilterItemModel>(() => FilterItem.GetSelectStatusFilter);
 
             var canExecuteMoveToPrevPage = numberObservable.Merge(watchItemListObservable).Select(number => number > 1);
             MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number - 1), canExecuteMoveToPrevPage);
@@ -120,7 +123,8 @@ namespace WatchList.Avalonia.ViewModels
             var pagedList = _itemService.GetPage(searchRequests);
             var pageNumber = pagedList.Count == 0 ? pagedList.PageCount : searchRequests.Page.Number;
             await LoadDataAsync(pageNumber, searchRequests.Page.Size);
-            FilterDropDown.UpdateDisplay();
+            FilterTypeDropDown.UpdateDisplay();
+            FilterStatusDropDown.UpdateDisplay();
         }
 
         [RelayCommand]
