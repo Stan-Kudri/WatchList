@@ -10,7 +10,7 @@ namespace WatchList.Avalonia.Models.Filter
 {
     public partial class FilterItemModel : ObservableObject, IFilterItem
     {
-        [ObservableProperty] private List<SelectFilterTypeFieldWatchItem> _selectFilterTypeField = [.. TypeCinema.List.Select(item => new SelectFilterTypeFieldWatchItem(item))];
+        [ObservableProperty] private List<SelectFilterTypeField> _selectFilterTypeField = [.. TypeCinema.List.Select(item => new SelectFilterTypeField(item))];
 
         private IEnumerable<TypeCinema> _filterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
         private IEnumerable<StatusCinema> _filterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
@@ -71,9 +71,15 @@ namespace WatchList.Avalonia.Models.Filter
 
         public void SetTypeFilter() => FilterTypeField = new ObservableCollection<TypeCinema>(SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField));
 
-        public string GetSelectTypeFilter => (SelectFilterTypeField.Any(e => e.IsSelected) && SelectFilterTypeField.Count(e => e.IsSelected) != TypeCinema.List.Count)
+        public string GetSelectTypeFilter
+        {
+            get
+            {
+                return (SelectFilterTypeField.Any(e => e.IsSelected) && SelectFilterTypeField.Count(e => e.IsSelected) != TypeCinema.List.Count)
                                              || (SelectFilterTypeField.Count(e => e.IsSelected) < TypeCinema.List.Count && SelectFilterTypeField.Any(e => e.IsSelected))
-                                              ? string.Join(", ", SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField.Name))
-                                              : "All Type Cinema";
+                        ? string.Join(", ", SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField.Name))
+                        : SelectFilterTypeField.Any(e => e.IsSelected) == false ? "No items selected" : "All Type Cinema";
+            }
+        }
     }
 }

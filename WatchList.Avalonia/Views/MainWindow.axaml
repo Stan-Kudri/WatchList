@@ -53,7 +53,7 @@
                     <Border BorderBrush="Black" BorderThickness="1">
                         <ListBox ItemsSource="{Binding FilterItem.SelectFilterTypeField}">
                             <ListBox.ItemTemplate>
-                                <DataTemplate DataType="filterType:SelectFilterTypeFieldWatchItem">
+                                <DataTemplate DataType="filterType:SelectFilterTypeField">
                                     <CheckBox Content="{Binding TypeField.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

@@ -43,7 +43,7 @@ namespace WatchList.Avalonia.ViewModels
         private PagedList<WatchItem> _pagedList;
 
         [ObservableProperty] private FilterItemModel _filterItem;
-        [ObservableProperty] private List<SelectFilterTypeFieldWatchItem> _filterTypeFieldWatchItems;
+        [ObservableProperty] private List<SelectFilterTypeField> _filterTypeFieldWatchItems;
 
         [ObservableProperty] private SortWatchItemModel _sortField;
         [ObservableProperty] private TypeSortFields _typeSortFields;
