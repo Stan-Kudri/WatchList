@@ -11,6 +11,7 @@ namespace WatchList.Avalonia.Models.Filter
     public partial class FilterItemModel : ObservableObject, IFilterItem
     {
         [ObservableProperty] private List<SelectFilterTypeField> _selectFilterTypeField = [.. TypeCinema.List.Select(item => new SelectFilterTypeField(item))];
+        [ObservableProperty] private List<SelectFilterStatusField> _selectFilterStatusFields = [.. StatusCinema.List.Select(item => new SelectFilterStatusField(item))];
 
         private IEnumerable<TypeCinema> _filterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
         private IEnumerable<StatusCinema> _filterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
@@ -69,17 +70,24 @@ namespace WatchList.Avalonia.Models.Filter
             FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
         }
 
-        public void SetTypeFilter() => FilterTypeField = new ObservableCollection<TypeCinema>(SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField));
-
-        public string GetSelectTypeFilter
+        public void SetTypeFilter()
         {
-            get
-            {
-                return (SelectFilterTypeField.Any(e => e.IsSelected) && SelectFilterTypeField.Count(e => e.IsSelected) != TypeCinema.List.Count)
-                                             || (SelectFilterTypeField.Count(e => e.IsSelected) < TypeCinema.List.Count && SelectFilterTypeField.Any(e => e.IsSelected))
-                        ? string.Join(", ", SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField.Name))
-                        : SelectFilterTypeField.Any(e => e.IsSelected) == false ? "No items selected" : "All Type Cinema";
-            }
+            FilterTypeField = new ObservableCollection<TypeCinema>(SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField));
+            FilterStatusField = new ObservableCollection<StatusCinema>(SelectFilterStatusFields.Where(e => e.IsSelected).Select(e => e.StatusField));
         }
+
+        public string GetSelectTypeFilter => (SelectFilterTypeField.Any(e => e.IsSelected) && SelectFilterTypeField.Count(e => e.IsSelected) != TypeCinema.List.Count)
+                                              || (SelectFilterTypeField.Count(e => e.IsSelected) < TypeCinema.List.Count && SelectFilterTypeField.Any(e => e.IsSelected))
+                                             ? string.Join(", ", SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField.Name))
+                                             : SelectFilterTypeField.Any(e => e.IsSelected) == false
+                                                ? "No items selected"
+                                                : "All Type Cinema";
+
+        public string GetSelectStatusFilter => (SelectFilterStatusFields.Any(e => e.IsSelected) && SelectFilterStatusFields.Count(e => e.IsSelected) != StatusCinema.List.Count)
+                                                || (SelectFilterStatusFields.Count(e => e.IsSelected) < StatusCinema.List.Count && SelectFilterStatusFields.Any(e => e.IsSelected))
+                                               ? string.Join(", ", SelectFilterStatusFields.Where(e => e.IsSelected).Select(e => e.StatusField.Name))
+                                               : SelectFilterStatusFields.Any(e => e.IsSelected) == false
+                                                    ? "No items selected"
+                                                    : "All Status Cinema";
     }
 }

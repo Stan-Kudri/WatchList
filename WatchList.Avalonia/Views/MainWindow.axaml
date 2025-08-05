@@ -42,19 +42,41 @@
 
             <!-- TypeFilterComboBox -->
             <Grid Margin="5 0">
-                <ToggleButton Content="{Binding FilterDropDown.SelectedDisplay}"
-                            IsChecked="{Binding FilterDropDown.IsOpen, Mode=TwoWay}"
+                <ToggleButton Content="{Binding FilterTypeDropDown.SelectedDisplay}"
+                            IsChecked="{Binding FilterTypeDropDown.IsOpen, Mode=TwoWay}"
                             Name="TypeFilterComboBox"
                             HorizontalAlignment="Left"
                             HorizontalContentAlignment="Stretch"
                             MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
 
-                <Popup IsOpen="{Binding FilterDropDown.IsOpen}">
+                <Popup IsOpen="{Binding FilterTypeDropDown.IsOpen}">
                     <Border BorderBrush="Black" BorderThickness="1">
                         <ListBox ItemsSource="{Binding FilterItem.SelectFilterTypeField}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="filterType:SelectFilterTypeField">
                                     <CheckBox Content="{Binding TypeField.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Popup>
+            </Grid>
+
+            <!-- StatusFilterComboBox -->
+            <Grid Margin="5 0">
+                <ToggleButton Content="{Binding FilterStatusDropDown.SelectedDisplay}"
+                            IsChecked="{Binding FilterStatusDropDown.IsOpen, Mode=TwoWay}"
+                            Name="StatusFilterComboBox"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Stretch"
+                            MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+
+                <Popup IsOpen="{Binding FilterStatusDropDown.IsOpen}">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <ListBox ItemsSource="{Binding FilterItem.SelectFilterStatusFields}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="filterType:SelectFilterStatusField">
+                                    <CheckBox Content="{Binding StatusField.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
