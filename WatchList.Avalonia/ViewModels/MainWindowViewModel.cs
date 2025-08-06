@@ -84,7 +84,7 @@ namespace WatchList.Avalonia.ViewModels
             SortField = sortField;
             TypeSortFields = typeSortFields;
             Page = pageModel;
-            _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), true);
+            _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), TypeSortFields.IsAscending);
             PagedList = _itemService.GetPage(_searchRequests);
 
             var numberObservable = Page.WhenAnyValue(x => x.Number, x => x.Size).Select(tuple => tuple.Item1);
@@ -116,24 +116,32 @@ namespace WatchList.Avalonia.ViewModels
         public ReactiveCommand<Unit, Unit> MoveToLastPageCommand { get; }
 
         [RelayCommand]
+        private async Task UseSort()
+        {
+            FilterItem.SetFilter();
+            SortField.SetSortFields();
+            SortDropDown.UpdateDisplay();
+            await UseFilter();
+        }
+
+        [RelayCommand]
+        private async Task ClearFilter()
+        {
+            FilterItem.Clear();
+            SortField.Clear();
+            await UseSort();
+        }
+
+        [RelayCommand]
         private async Task UseFilter()
         {
             var searchRequests = _searchRequests;
             searchRequests.Page = Page.GetPage();
             var pagedList = _itemService.GetPage(searchRequests);
             var pageNumber = pagedList.Count == 0 ? pagedList.PageCount : searchRequests.Page.Number;
-            await LoadDataAsync(pageNumber, searchRequests.Page.Size);
             FilterTypeDropDown.UpdateDisplay();
             FilterStatusDropDown.UpdateDisplay();
-        }
-
-        [RelayCommand]
-        private async Task UseSort(object sorter)
-        {
-            FilterItem.SetTypeFilter();
-            SortField.SetSortFields();
-            SortDropDown.UpdateDisplay();
-            await UseFilter();
+            await LoadDataAsync(pageNumber, searchRequests.Page.Size);
         }
 
         [RelayCommand]
@@ -212,6 +220,7 @@ namespace WatchList.Avalonia.ViewModels
                 _searchRequests.Sort = SortField.SortItem;
                 _searchRequests.Filter = FilterItem.GetFilter();
                 _searchRequests.Page = new Page(pageNumber, pageSize);
+                _searchRequests.IsAscending = TypeSortFields.IsAscending;
                 PagedList = _itemService.GetPage(_searchRequests);
                 WatchItems = WatchItems.UppdataItems(PagedList.Items);
                 Page.Number = pageNumber;
@@ -227,8 +236,6 @@ namespace WatchList.Avalonia.ViewModels
         /// Load data in table.
         /// </summary>
         private async Task LoadDataAsyncPage(int pageNumber)
-        {
-            await LoadDataAsync(pageNumber, Page.Size);
-        }
+            => await LoadDataAsync(pageNumber, Page.Size);
     }
 }

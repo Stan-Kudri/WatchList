@@ -40,6 +40,14 @@
                 </Popup>
             </Grid>
 
+            <ToggleButton MaxHeight="35"
+                          MinWidth="30"
+                          VerticalAlignment="Center"
+                          Content="{Binding TypeSortFields.ButtonContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          IsChecked="{Binding TypeSortFields.IsAscending, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Command="{Binding UseSortCommand}"
+                          Focusable="False"/>
+
             <!-- TypeFilterComboBox -->
             <Grid Margin="5 0">
                 <ToggleButton Content="{Binding FilterTypeDropDown.SelectedDisplay}"
@@ -88,6 +96,15 @@
             <Button Content="Use Filter"
                     Margin="5 0 0 0"
                     Command="{Binding UseSortCommand}"
+                    CommandParameter="{Binding ElementName=SortComboBox}"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Stretch"
+                    MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+
+            <!-- Use Filter Button -->
+            <Button Content="Clear Filter"
+                    Margin="5 0 0 0"
+                    Command="{Binding ClearFilterCommand}"
                     CommandParameter="{Binding ElementName=SortComboBox}"
                     HorizontalAlignment="Left"
                     HorizontalContentAlignment="Stretch"

@@ -8,13 +8,15 @@ namespace WatchList.Avalonia.Models.Sorter
 
         [ObservableProperty] private string _buttonContent = null!;
 
+        public TypeSortFields() => IsAscending = false;
+
         public bool IsAscending
         {
             get => _isAscending;
             set
             {
-                ButtonContent = _isAscending ? "↑" : "↓";
                 SetProperty(ref _isAscending, value);
+                ButtonContent = _isAscending ? "↑" : "↓";
             }
         }
     }
