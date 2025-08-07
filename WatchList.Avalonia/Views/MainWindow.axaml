@@ -18,21 +18,24 @@
           Background="Lavender">
 
         <StackPanel Orientation="Horizontal" Margin="15 0 5 0">
+            
             <!-- SortComboBox -->
             <Grid Margin="5">
                 <ToggleButton Content="{Binding SortDropDown.SelectedDisplay}"
-                            IsChecked="{Binding SortDropDown.IsOpen, Mode=TwoWay}"
-                            Name="SortComboBox"
-                            HorizontalAlignment="Left"
-                            HorizontalContentAlignment="Stretch"
-                            MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+                              IsChecked="{Binding SortDropDown.IsOpen, Mode=TwoWay}"
+                              Background="DarkSlateBlue" Foreground="White"
+                              Name="SortComboBox"
+                              HorizontalAlignment="Left"
+                              HorizontalContentAlignment="Stretch"
+                              MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
 
                 <Popup IsOpen="{Binding SortDropDown.IsOpen}">
                     <Border BorderBrush="Black" BorderThickness="1">
                         <ListBox ItemsSource="{Binding SortField.SortFieldWatchItems}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="sorter:SelectSortFieldWatchItem">
-                                    <CheckBox Content="{Binding SortField.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding SortField.Name}" 
+                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -46,69 +49,83 @@
                           Content="{Binding TypeSortFields.ButtonContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           IsChecked="{Binding TypeSortFields.IsAscending, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Command="{Binding UseSortCommand}"
-                          Focusable="False"/>
+                          Focusable="False"
+                          Background="DarkSlateBlue" Foreground="White"/>
 
-            <!-- TypeFilterComboBox -->
-            <Grid Margin="5 0">
-                <ToggleButton Content="{Binding FilterTypeDropDown.SelectedDisplay}"
-                            IsChecked="{Binding FilterTypeDropDown.IsOpen, Mode=TwoWay}"
-                            Name="TypeFilterComboBox"
-                            HorizontalAlignment="Left"
-                            HorizontalContentAlignment="Stretch"
-                            MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+            <StackPanel Orientation="Vertical" Margin="5 0 5 0">
 
-                <Popup IsOpen="{Binding FilterTypeDropDown.IsOpen}">
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <ListBox ItemsSource="{Binding FilterItem.SelectFilterTypeField}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate DataType="filterType:SelectFilterTypeField">
-                                    <CheckBox Content="{Binding TypeField.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Border>
-                </Popup>
-            </Grid>
+                    <!-- TypeFilterComboBox -->
+                    <Grid Margin="0 2 0 2">
+                        <ToggleButton Content="{Binding FilterTypeDropDown.SelectedDisplay}"
+                                      IsChecked="{Binding FilterTypeDropDown.IsOpen, Mode=TwoWay}"
+                                      Background="DarkSlateBlue" Foreground="White"
+                                      Name="TypeFilterComboBox"
+                                      HorizontalAlignment="Center"
+                                      HorizontalContentAlignment="Stretch"
+                                      MinWidth="{Binding #StatusFilterComboBox.MinWidth, Converter={StaticResource TextToMinWidthConverter}}"/>
 
-            <!-- StatusFilterComboBox -->
-            <Grid Margin="5 0">
-                <ToggleButton Content="{Binding FilterStatusDropDown.SelectedDisplay}"
-                            IsChecked="{Binding FilterStatusDropDown.IsOpen, Mode=TwoWay}"
-                            Name="StatusFilterComboBox"
-                            HorizontalAlignment="Left"
-                            HorizontalContentAlignment="Stretch"
-                            MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+                        <Popup IsOpen="{Binding FilterTypeDropDown.IsOpen}">
+                            <Border BorderBrush="Black" BorderThickness="1">
+                                <ListBox ItemsSource="{Binding FilterItem.SelectFilterTypeField}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="filterType:SelectFilterTypeField">
+                                            <CheckBox Content="{Binding TypeField.Name}" 
+                                                      IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                        </Popup>
+                    </Grid>
 
-                <Popup IsOpen="{Binding FilterStatusDropDown.IsOpen}">
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <ListBox ItemsSource="{Binding FilterItem.SelectFilterStatusFields}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate DataType="filterType:SelectFilterStatusField">
-                                    <CheckBox Content="{Binding StatusField.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Border>
-                </Popup>
-            </Grid>
+                    <!-- StatusFilterComboBox -->
+                    <Grid Margin="0 2 0 2">
+                        <ToggleButton Content="{Binding FilterStatusDropDown.SelectedDisplay}"
+                                      IsChecked="{Binding FilterStatusDropDown.IsOpen, Mode=TwoWay}"
+                                      Background="DarkSlateBlue" Foreground="White"
+                                      Name="StatusFilterComboBox"
+                                      HorizontalAlignment="Center"
+                                      HorizontalContentAlignment="Stretch"
+                                      MinWidth="{Binding #TypeFilterComboBox.MinWidth, Converter={StaticResource TextToMinWidthConverter}}"/>
 
-            <!-- Use Filter Button -->
-            <Button Content="Use Filter"
-                    Margin="5 0 0 0"
-                    Command="{Binding UseSortCommand}"
-                    CommandParameter="{Binding ElementName=SortComboBox}"
-                    HorizontalAlignment="Left"
-                    HorizontalContentAlignment="Stretch"
-                    MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+                        <Popup IsOpen="{Binding FilterStatusDropDown.IsOpen}">
+                            <Border BorderBrush="Black" BorderThickness="1">
+                                <ListBox ItemsSource="{Binding FilterItem.SelectFilterStatusFields}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="filterType:SelectFilterStatusField">
+                                            <CheckBox Content="{Binding StatusField.Name}" 
+                                                      IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                
+            </StackPanel>
+            
 
-            <!-- Use Filter Button -->
-            <Button Content="Clear Filter"
-                    Margin="5 0 0 0"
-                    Command="{Binding ClearFilterCommand}"
-                    CommandParameter="{Binding ElementName=SortComboBox}"
-                    HorizontalAlignment="Left"
-                    HorizontalContentAlignment="Stretch"
-                    MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}"/>
+            <StackPanel Orientation="Vertical" Margin="5 0 5 0" MinWidth="{Binding $parent[StackPanel].Width, Converter={StaticResource TextToMinWidthConverter}}">
+
+                <!-- UseFilter Button -->
+                <Button Content="Use Filter"
+                        Margin="0 2 0 2"
+                        Command="{Binding UseSortCommand}"
+                        CommandParameter="{Binding ElementName=SortComboBox}"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Background="DarkSlateBlue" Foreground="White"/>
+
+                <!-- ClearFilter Button -->
+                <Button Content="Clear Filter"
+                        Margin="0 2 0 2"
+                        Command="{Binding ClearFilterCommand}"
+                        CommandParameter="{Binding ElementName=SortComboBox}"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Background="DarkSlateBlue" Foreground="White"/>
+            </StackPanel>
+            
         </StackPanel>
         
         <DataGrid Margin="20"

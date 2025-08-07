@@ -44,7 +44,7 @@ namespace WatchList.Avalonia.ViewModels
 
         [ObservableProperty] private FilterItemModel _filterItem;
         [ObservableProperty] private List<SelectFilterTypeField> _filterTypeFieldWatchItems;
-        [ObservableProperty] private List<SelectFilterStatusField> _filterStatusFieldWatchItems;
+        [ObservableProperty] private List<SelectFilterStatusField> _filterStatusField;
 
         [ObservableProperty] private SortWatchItemModel _sortField;
         [ObservableProperty] private TypeSortFields _typeSortFields;
@@ -217,10 +217,7 @@ namespace WatchList.Avalonia.ViewModels
         {
             try
             {
-                _searchRequests.Sort = SortField.SortItem;
-                _searchRequests.Filter = FilterItem.GetFilter();
-                _searchRequests.Page = new Page(pageNumber, pageSize);
-                _searchRequests.IsAscending = TypeSortFields.IsAscending;
+                UpdataSearchRequests(pageNumber, pageSize);
                 PagedList = _itemService.GetPage(_searchRequests);
                 WatchItems = WatchItems.UppdataItems(PagedList.Items);
                 Page.Number = pageNumber;
@@ -237,5 +234,16 @@ namespace WatchList.Avalonia.ViewModels
         /// </summary>
         private async Task LoadDataAsyncPage(int pageNumber)
             => await LoadDataAsync(pageNumber, Page.Size);
+
+        /// <summary>
+        /// Updating table data by Filter and Sorting.
+        /// </summary>
+        private void UpdataSearchRequests(int pageNumber, int pageSize)
+        {
+            _searchRequests.Page = new Page(pageNumber, pageSize);
+            _searchRequests.Sort = SortField.GetSortItem();
+            _searchRequests.Filter = FilterItem.GetFilter();
+            _searchRequests.IsAscending = TypeSortFields.IsAscending;
+        }
     }
 }

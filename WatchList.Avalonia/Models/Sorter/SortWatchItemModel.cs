@@ -16,7 +16,7 @@ namespace WatchList.Avalonia.Models.Sorter
         {
         }
 
-        public SortWatchItem SortItem => new SortWatchItem() { SortFields = SortFields };
+        public SortWatchItem GetSortItem() => new() { SortFields = SortFields };
 
         public void SetSortFields() => SortFields = new ObservableCollection<SortFieldWatchItem>(SortFieldWatchItems.Where(e => e.IsSelected).Select(e => e.SortField));
 

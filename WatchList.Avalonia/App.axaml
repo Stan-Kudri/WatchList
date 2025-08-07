@@ -1,7 +1,7 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="WatchList.Avalonia.App"
-             xmlns:local="using:WatchList.Avalonia"             xmlns:controls="using:MsBox.Avalonia.Controls"             xmlns:localConnverter="using:WatchList.Avalonia.Controller"
+             xmlns:local="using:WatchList.Avalonia"             xmlns:controls="using:MsBox.Avalonia.Controls"             xmlns:localConnverter="using:WatchList.Avalonia.Converter"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
