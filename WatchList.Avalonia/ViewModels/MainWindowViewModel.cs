@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DynamicData.Binding;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using WatchList.Avalonia.Extension;
@@ -18,9 +17,7 @@ using WatchList.Avalonia.Models.Filter;
 using WatchList.Avalonia.Models.Sorter;
 using WatchList.Avalonia.ViewModel;
 using WatchList.Avalonia.ViewModels.ItemsView;
-using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema;
-using WatchList.Core.Model.Sortable;
 using WatchList.Core.PageItem;
 using WatchList.Core.Service;
 using WatchList.Core.Service.Component;
@@ -38,8 +35,6 @@ namespace WatchList.Avalonia.ViewModels
         private readonly IMessageBox _messageBox;
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly ItemSearchRequest _searchRequests;
-
         private PagedList<WatchItem> _pagedList;
 
         [ObservableProperty] private FilterItemModel _filterItem;
@@ -50,15 +45,15 @@ namespace WatchList.Avalonia.ViewModels
         [ObservableProperty] private TypeSortFields _typeSortFields;
 
         [ObservableProperty] private WatchItem _selectItem;
-        [ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new ObservableCollection<WatchItem>();
+        [ObservableProperty] private ObservableCollection<WatchItem> _watchItems = new();
 
-        [ObservableProperty] private DisplayPagination _displayPagination = new DisplayPagination();
+        [ObservableProperty] private DisplayPagination _displayPagination = new();
         [ObservableProperty] private PageModel _page;
 
         public PagedList<WatchItem> PagedList
         {
             get => _pagedList;
-            set
+            private set
             {
                 SetProperty(ref _pagedList, value);
                 DisplayPagination.Update(PagedList);
@@ -69,100 +64,82 @@ namespace WatchList.Avalonia.ViewModels
         public DropDownManager<FilterItemModel> FilterTypeDropDown { get; }
         public DropDownManager<FilterItemModel> FilterStatusDropDown { get; }
 
-        public MainWindowViewModel(IMessageBox messageBox,
-                            WatchItemService watchItemService,
-                            PageModel pageModel,
-                            IServiceProvider serviceProvider,
-                            FilterItemModel filterItem,
-                            SortWatchItemModel sortField,
-                            TypeSortFields typeSortFields)
-        {
-            _messageBox = messageBox;
-            _itemService = watchItemService;
-            _serviceProvider = serviceProvider;
-            FilterItem = filterItem;
-            SortField = sortField;
-            TypeSortFields = typeSortFields;
-            Page = pageModel;
-            _searchRequests = new ItemSearchRequest(new FilterWatchItem(), new SortWatchItem(), Page.GetPage(), TypeSortFields.IsAscending);
-            PagedList = _itemService.GetPage(_searchRequests);
-
-            var numberObservable = Page.WhenAnyValue(x => x.Number, x => x.Size).Select(tuple => tuple.Item1);
-            var watchItemListObservable = WatchItems.ObserveCollectionChanges().Select(e => Page.Number);
-
-            SortDropDown = new DropDownManager<SortWatchItemModel>(() => SortField.GetSelectItems);
-            FilterTypeDropDown = new DropDownManager<FilterItemModel>(() => FilterItem.GetSelectTypeFilter);
-            FilterStatusDropDown = new DropDownManager<FilterItemModel>(() => FilterItem.GetSelectStatusFilter);
-
-            var canExecuteMoveToPrevPage = numberObservable.Merge(watchItemListObservable).Select(number => number > 1);
-            MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number - 1), canExecuteMoveToPrevPage);
-            MoveToFirstPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(1), canExecuteMoveToPrevPage);
-
-            var canExecuteMoveToNextPage = numberObservable.Merge(watchItemListObservable).Select(number => number < PagedList.PageCount);
-            MoveToNextPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(Page.Number + 1), canExecuteMoveToNextPage);
-            MoveToLastPageCommand = ReactiveCommand.CreateFromTask(() => LoadDataAsyncPage(PagedList.PageCount), canExecuteMoveToNextPage);
-
-            var canExecuteChangePage = Page.WhenAnyValue(x => x.Number).Select(number => number != PagedList.PageCount);
-
-            WatchItems.UppdataItems(PagedList.Items);
-        }
-
-        public Interaction<AddCinemaViewModel?, bool> ShowAddCinemaDialog { get; } = new Interaction<AddCinemaViewModel?, bool>();
-        public Interaction<EditCinemaViewModel?, bool> ShowEditCinemaDialog { get; } = new Interaction<EditCinemaViewModel?, bool>();
+        public Interaction<AddCinemaViewModel?, bool> ShowAddCinemaDialog { get; } = new();
+        public Interaction<EditCinemaViewModel?, bool> ShowEditCinemaDialog { get; } = new();
 
         public ReactiveCommand<Unit, Unit> MoveToPreviousPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToFirstPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToNextPageCommand { get; }
         public ReactiveCommand<Unit, Unit> MoveToLastPageCommand { get; }
 
-        [RelayCommand]
-        private async Task UseSort()
+        public MainWindowViewModel(
+                                   IMessageBox messageBox,
+                                   WatchItemService watchItemService,
+                                   PageModel pageModel,
+                                   IServiceProvider serviceProvider,
+                                   FilterItemModel filterItem,
+                                   SortWatchItemModel sortField,
+                                   TypeSortFields typeSortFields)
         {
-            FilterItem.SetFilter();
-            SortField.SetSortFields();
-            SortDropDown.UpdateDisplay();
-            await UseFilter();
+            _messageBox = messageBox;
+            _itemService = watchItemService;
+            _serviceProvider = serviceProvider;
+
+            FilterItem = filterItem;
+            SortField = sortField;
+            TypeSortFields = typeSortFields;
+            Page = pageModel;
+
+            SortDropDown = new DropDownManager<SortWatchItemModel>(() => SortField.GetSelectItems);
+            FilterTypeDropDown = new DropDownManager<FilterItemModel>(() => FilterItem.GetSelectTypeFilter);
+            FilterStatusDropDown = new DropDownManager<FilterItemModel>(() => FilterItem.GetSelectStatusFilter);
+
+            // First load page
+            PagedList = _itemService.GetPage(BuildSearchRequest(Page.Number, Page.Size));
+            WatchItems.UppdataItems(PagedList.Items);
+
+            // canExecute for pagination
+            var canGoPrev = this.WhenAnyValue(viewModel => viewModel.Page.Number).Select(n => n > 1);
+            var canGoNext = this.WhenAnyValue(viewModel => viewModel.Page.Number, vm => vm.PagedList.PageCount, (n, count) => n < Math.Max(1, count));
+
+            MoveToPreviousPageCommand = ReactiveCommand.CreateFromTask(() => GoToPageAsync(Page.Number - 1), canGoPrev);
+            MoveToFirstPageCommand = ReactiveCommand.CreateFromTask(() => GoToPageAsync(1), canGoPrev);
+            MoveToNextPageCommand = ReactiveCommand.CreateFromTask(() => GoToPageAsync(Page.Number + 1), canGoNext);
+            MoveToLastPageCommand = ReactiveCommand.CreateFromTask(() => GoToPageAsync(PagedList.PageCount), canGoNext);
         }
+
+        [RelayCommand]
+        private async Task UseSort() => await LoadDataAsync(resetToFirstPage: false);
 
         [RelayCommand]
         private async Task ClearFilter()
         {
             FilterItem.Clear();
             SortField.Clear();
-            await UseSort();
+            await LoadDataAsync(resetToFirstPage: true);
         }
 
         [RelayCommand]
-        private async Task UseFilter()
-        {
-            var searchRequests = _searchRequests;
-            searchRequests.Page = Page.GetPage();
-            var pagedList = _itemService.GetPage(searchRequests);
-            var pageNumber = pagedList.Count == 0 ? pagedList.PageCount : searchRequests.Page.Number;
-            FilterTypeDropDown.UpdateDisplay();
-            FilterStatusDropDown.UpdateDisplay();
-            await LoadDataAsync(pageNumber, searchRequests.Page.Size);
-        }
+        private async Task UseFilter() => await LoadDataAsync(resetToFirstPage: false);
 
         [RelayCommand]
         private async Task MoveAddItem()
         {
             var viewModel = _serviceProvider.GetRequiredService<AddCinemaViewModel>();
             viewModel.InitializeDefaultValue();
+
             var result = await ShowAddCinemaDialog.Handle(viewModel);
 
-            if (!result)
+            if (result)
             {
-                return;
+                await RefreshAsync(Page.Number, Page.Size);
             }
-
-            await LoadDataAsync(Page.Number, Page.Size);
         }
 
         [RelayCommand]
         private async Task MoveEditItem(IList selectedItems)
         {
-            if (selectedItems.Count != 1)
+            if (selectedItems?.Count != 1)
             {
                 await _messageBox.ShowInfo(NotSelectSingleItemLine);
                 return;
@@ -170,35 +147,39 @@ namespace WatchList.Avalonia.ViewModels
 
             var viewModel = _serviceProvider.GetRequiredService<EditCinemaViewModel>();
             viewModel.InitializeDefaultValue(SelectItem);
+
             var result = await ShowEditCinemaDialog.Handle(viewModel);
 
-            if (!result)
+            if (result)
             {
-                return;
+                await RefreshAsync(Page.Number, Page.Size);
             }
-
-            await LoadDataAsync(Page.Number, Page.Size);
         }
 
         [RelayCommand]
         private async Task DeleteItem(IList selectedItems)
         {
-            switch (selectedItems.Count)
+            if (selectedItems is null || selectedItems.Count == 0)
             {
-                case 0:
-                    await _messageBox.ShowInfo(HighlightTheDesiredLine);
-                    return;
-                case > 1 when await _messageBox.ShowQuestion(MessageDeleteItems):
-                    _itemService.RemoveRangeWatchItem(selectedItems);
-                    break;
-                case 1 when await _messageBox.ShowQuestion(MessageDeleteItem):
-                    _itemService.Remove(SelectItem.Id);
-                    break;
-                default:
-                    return;
+                await _messageBox.ShowInfo(HighlightTheDesiredLine);
+                return;
             }
 
-            await LoadDataAsync(Page.Number, Page.Size);
+            if (selectedItems.Count > 1)
+            {
+                if (await _messageBox.ShowQuestion(MessageDeleteItems))
+                {
+                    _itemService.RemoveRangeWatchItem(selectedItems);
+                    await RefreshAsync(Page.Number, Page.Size);
+                }
+                return;
+            }
+
+            if (await _messageBox.ShowQuestion(MessageDeleteItem))
+            {
+                _itemService.Remove(SelectItem.Id);
+                await RefreshAsync(Page.Number, Page.Size);
+            }
         }
 
         [RelayCommand]
@@ -207,43 +188,57 @@ namespace WatchList.Avalonia.ViewModels
             var viewModel = _serviceProvider.GetRequiredService<MergeDatabaseViewModel>();
             var window = new MergeDatabaseWindow(viewModel);
             await window.ShowDialog(currentWindow);
-            await LoadDataAsync(Page.Number, Page.Size);
+            await RefreshAsync(Page.Number, Page.Size);
         }
 
-        /// <summary>
-        /// Load data in table.
-        /// </summary>
-        private async Task LoadDataAsync(int pageNumber, int pageSize)
+        private ItemSearchRequest BuildSearchRequest(int pageNumber, int pageSize)
+            => new ItemSearchRequest(FilterItem.GetFilter(), SortField.GetSortItem(), new Page(pageNumber, pageSize), TypeSortFields.IsAscending);
+
+        private async Task GoToPageAsync(int pageNumber) => await RefreshAsync(pageNumber, Page.Size);
+
+        private async Task LoadDataAsync(bool resetToFirstPage)
         {
             try
             {
-                UpdataSearchRequests(pageNumber, pageSize);
-                PagedList = _itemService.GetPage(_searchRequests);
-                WatchItems = WatchItems.UppdataItems(PagedList.Items);
-                Page.Number = pageNumber;
-                Page.Size = pageSize;
+                // Update filter and sort states
+                FilterItem.SetFilter();
+                SortField.SetSortFields();
+
+                SortDropDown.UpdateDisplay();
+                FilterTypeDropDown.UpdateDisplay();
+                FilterStatusDropDown.UpdateDisplay();
+
+                var targetPage = resetToFirstPage ? 1 : Page.Number;
+
+                // Pre-query to adjust page number if current page is out of range after filtering
+                var preview = _itemService.GetPage(BuildSearchRequest(targetPage, Page.Size));
+                var pageNumber = preview.Count == 0 ? Math.Max(1, preview.PageCount) : targetPage;
+
+                await RefreshAsync(pageNumber, Page.Size);
             }
-            catch (Exception error)
+            catch (Exception ex)
             {
-                await _messageBox.ShowError(error.Message);
+                await _messageBox.ShowError(ex.Message);
             }
         }
 
-        /// <summary>
-        /// Load data in table.
-        /// </summary>
-        private async Task LoadDataAsyncPage(int pageNumber)
-            => await LoadDataAsync(pageNumber, Page.Size);
-
-        /// <summary>
-        /// Updating table data by Filter and Sorting.
-        /// </summary>
-        private void UpdataSearchRequests(int pageNumber, int pageSize)
+        private async Task RefreshAsync(int pageNumber, int pageSize)
         {
-            _searchRequests.Page = new Page(pageNumber, pageSize);
-            _searchRequests.Sort = SortField.GetSortItem();
-            _searchRequests.Filter = FilterItem.GetFilter();
-            _searchRequests.IsAscending = TypeSortFields.IsAscending;
+            try
+            {
+                var request = BuildSearchRequest(pageNumber, pageSize);
+                var page = _itemService.GetPage(request);
+
+                PagedList = page;
+                WatchItems = WatchItems.UppdataItems(page.Items);
+
+                Page.Number = pageNumber;
+                Page.Size = pageSize;
+            }
+            catch (Exception ex)
+            {
+                await _messageBox.ShowError(ex.Message);
+            }
         }
     }
 }
