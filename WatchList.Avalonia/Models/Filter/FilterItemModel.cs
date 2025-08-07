@@ -66,11 +66,13 @@ namespace WatchList.Avalonia.Models.Filter
 
         public void Clear()
         {
-            FilterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
-            FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
+            SelectFilterTypeField = [.. TypeCinema.List.Select(item => new SelectFilterTypeField(item))];
+            SelectFilterStatusFields = [.. StatusCinema.List.Select(item => new SelectFilterStatusField(item))];
+            FilterTypeField = new ObservableCollection<TypeCinema>(SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField));
+            FilterStatusField = new ObservableCollection<StatusCinema>(SelectFilterStatusFields.Where(e => e.IsSelected).Select(e => e.StatusField));
         }
 
-        public void SetTypeFilter()
+        public void SetFilter()
         {
             FilterTypeField = new ObservableCollection<TypeCinema>(SelectFilterTypeField.Where(e => e.IsSelected).Select(e => e.TypeField));
             FilterStatusField = new ObservableCollection<StatusCinema>(SelectFilterStatusFields.Where(e => e.IsSelected).Select(e => e.StatusField));

@@ -3,7 +3,7 @@ using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 
-namespace WatchList.Avalonia.Controller
+namespace WatchList.Avalonia.Converter
 {
     public class TextToMinWidthConverter : IValueConverter
     {
