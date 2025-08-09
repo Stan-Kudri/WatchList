@@ -6,7 +6,7 @@ namespace WatchList.MudBlazors.Model
     {
         private const int FirstSizePage = 20;
 
-        public int[] Items { get; set; } = new int[] { FirstSizePage, 40, 60 };
+        public int[] Items { get; set; } = [FirstSizePage, 40, 60];
 
         public PageModel() : base(NumberStartPage, FirstSizePage)
         {

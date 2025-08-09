@@ -17,7 +17,6 @@ namespace WatchList.MudBlazors.Extension
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddMudServices();
-
             builder.Services.AddSingleton(new DbContextFactoryMigrator("app.db"));
             builder.Services.AddScoped(e => e.GetRequiredService<DbContextFactoryMigrator>().Create());
             builder.Services.AddScoped<WatchItemRepository>();

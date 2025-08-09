@@ -9,12 +9,10 @@ namespace WatchList.WPF.ViewModel
     {
         public const string Question = "The append item is a duplicate.Replace element?";
 
-        private readonly string _titleLabel;
-
-        public DataReplaceMessageVM(string titleItem) => _titleLabel = titleItem;
+        public DataReplaceMessageVM(string titleItem) => TitleLabel = titleItem;
 
         public string QuestionLabel => Question;
-        public string TitleLabel => _titleLabel;
+        public string TitleLabel { get; private set; }
 
         public DialogReplaceItemQuestion ResultQuestion { get; private set; } = DialogReplaceItemQuestion.Unknown;
 

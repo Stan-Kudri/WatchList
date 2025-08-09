@@ -10,8 +10,7 @@ namespace WatchList.WPF.Extension
         {
             foreach (var item in selectItems)
             {
-                var isWatchItem = item as WatchItem;
-                if (isWatchItem != null)
+                if (item is WatchItem isWatchItem)
                 {
                     itemService.Remove(isWatchItem.Id);
                 }

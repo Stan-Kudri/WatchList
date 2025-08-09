@@ -8,6 +8,8 @@ namespace WatchList.WPF.Models.Sorter
 
         [ObservableProperty] private string _buttonContent = null!;
 
+        public TypeSortFields() => IsAscending = false;
+
         public bool IsAscending
         {
             get => _isAscending;

@@ -22,10 +22,10 @@ namespace WatchList.Core.Model.Filter
              = new ObservableCollection<StatusCinema>(StatusCinema.List);
 
         public List<TypeCinema> TypeItems { get; set; }
-            = new List<TypeCinema>(TypeCinema.List);
+            = [.. TypeCinema.List];
 
         public List<StatusCinema> StatusItems { get; set; }
-            = new List<StatusCinema>(StatusCinema.List);
+            = [.. StatusCinema.List];
 
         public FilterWatchItem GetFilter() => this;
 

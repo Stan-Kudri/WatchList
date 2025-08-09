@@ -93,7 +93,7 @@ namespace WatchList.Test.CoreTest
 
         [Theory]
         [MemberData(nameof(WatchListItemUpdate))]
-        public void Verifying_The_Use_Of_The_Update_Item_Method(
+        public async Task Verifying_The_Use_Of_The_Update_Item_Method(
             List<WatchItem> watchItems,
             WatchItem updateItem,
             List<WatchItem> expectWatchItems)
@@ -108,7 +108,7 @@ namespace WatchList.Test.CoreTest
             appDbContext.SaveChanges();
 
             // Act
-            itemRepository.Update(updateItem);
+            await itemRepository.UpdateAsync(updateItem);
             var actualItemPage = itemRepository.GetPage(searchRequest).Items;
 
             // Assert

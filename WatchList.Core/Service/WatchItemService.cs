@@ -77,6 +77,6 @@ namespace WatchList.Core.Service
 
         public WatchItem GetItemById(Guid id) => _repository.GetItemById(id);
 
-        private void Update(WatchItem item) => _repository.Update(item);
+        private async Task Update(WatchItem item) => await _repository.UpdateAsync(item);
     }
 }

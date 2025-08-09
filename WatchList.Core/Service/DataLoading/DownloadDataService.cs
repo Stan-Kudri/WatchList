@@ -103,7 +103,7 @@ namespace WatchList.Core.Service.DataLoading
                     if (itemCollection.IdDuplicateFromDatabase.TryGetValue(item.Id, out Guid value))
                     {
                         item.Id = value;
-                        _repository.Update(item);
+                        await _repository.UpdateAsync(item);
                     }
                     else
                     {
