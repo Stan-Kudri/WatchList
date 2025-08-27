@@ -1,5 +1,5 @@
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using WatchList.Core.Extension;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.ItemCinema.Components;
 
@@ -7,8 +7,8 @@ namespace WatchList.WPF.Models.Filter
 {
     public class FilterItemModel : ObservableObject, IFilterItem
     {
-        private IEnumerable<TypeCinema> _filterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
-        private IEnumerable<StatusCinema> _filterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
+        private IEnumerable<TypeCinema> _filterTypeField = TypeCinema.List.ToObservableCollection();
+        private IEnumerable<StatusCinema> _filterStatusField = StatusCinema.List.ToObservableCollection();
 
         public IEnumerable<TypeCinema> FilterTypeField
         {
@@ -48,16 +48,16 @@ namespace WatchList.WPF.Models.Filter
             }
         }
 
-        public List<TypeCinema> TypeItems { get; set; } = [.. TypeCinema.List];
+        public List<TypeCinema> TypeItems { get; set; } = TypeCinema.List.ToListCollection();
 
-        public List<StatusCinema> StatusItems { get; set; } = [.. StatusCinema.List];
+        public List<StatusCinema> StatusItems { get; set; } = StatusCinema.List.ToListCollection();
 
-        public FilterWatchItem GetFilter() => new FilterWatchItem(_filterTypeField, _filterStatusField);
+        public FilterWatchItem GetFilter() => new FilterWatchItem(FilterTypeField, FilterStatusField);
 
         public void Clear()
         {
-            FilterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
-            FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
+            FilterTypeField = TypeCinema.List.ToObservableCollection();
+            FilterStatusField = StatusCinema.List.ToObservableCollection();
         }
     }
 }

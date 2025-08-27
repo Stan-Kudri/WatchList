@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using WatchList.Core.Extension;
 using WatchList.Core.Model.ItemCinema.Components;
 
 namespace WatchList.Core.Model.Filter
@@ -16,16 +16,14 @@ namespace WatchList.Core.Model.Filter
         }
 
         public IEnumerable<TypeCinema> FilterTypeField { get; set; }
-            = new ObservableCollection<TypeCinema>(TypeCinema.List);
+            = TypeCinema.List.ToObservableCollection();
 
         public IEnumerable<StatusCinema> FilterStatusField { get; set; }
-             = new ObservableCollection<StatusCinema>(StatusCinema.List);
+             = StatusCinema.List.ToObservableCollection();
 
-        public List<TypeCinema> TypeItems { get; set; }
-            = [.. TypeCinema.List];
+        public List<TypeCinema> TypeItems { get; set; } = TypeCinema.List.ToListCollection();
 
-        public List<StatusCinema> StatusItems { get; set; }
-            = [.. StatusCinema.List];
+        public List<StatusCinema> StatusItems { get; set; } = StatusCinema.List.ToListCollection();
 
         public FilterWatchItem GetFilter() => this;
 

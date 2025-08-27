@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using WatchList.Core.Extension;
 using WatchList.Core.Model.ItemCinema;
 using WatchList.Core.Model.ItemCinema.Components;
 
@@ -23,8 +23,8 @@ namespace WatchList.Core.Model.Filter
 
         void Clear()
         {
-            FilterTypeField = new ObservableCollection<TypeCinema>(TypeCinema.List);
-            FilterStatusField = new ObservableCollection<StatusCinema>(StatusCinema.List);
+            FilterTypeField = TypeCinema.List.ToObservableCollection();
+            FilterStatusField = StatusCinema.List.ToObservableCollection();
         }
 
         FilterWatchItem GetFilter();

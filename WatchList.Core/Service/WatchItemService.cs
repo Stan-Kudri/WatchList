@@ -43,7 +43,7 @@ namespace WatchList.Core.Service
             if (await _messageBox.ShowQuestionSaveItem(DuplicateReplaceMessage))
             {
                 item.Id = selectItem[0];
-                Update(item);
+                await Update(item);
             }
         }
 
@@ -66,7 +66,7 @@ namespace WatchList.Core.Service
                 }
             }
 
-            Update(modifiedItem);
+            await Update(modifiedItem);
         }
 
         public async Task UpdateByIdAsync(Guid oldId, WatchItem modifiedItem)

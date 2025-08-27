@@ -269,6 +269,7 @@ dotnet_diagnostic.SA1101.severity=none
 dotnet_diagnostic.SA1309.severity=none
 dotnet_diagnostic.SA1200.severity=none
 dotnet_diagnostic.SA1600.severity=none
+dotnet_diagnostic.SA1010.severity=none
 dotnet_diagnostic.SA1649.severity=error
 dotnet_diagnostic.SA1500.severity=error
 dotnet_diagnostic.SA1501.severity=error

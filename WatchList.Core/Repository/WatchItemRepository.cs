@@ -8,7 +8,8 @@ using WatchList.Core.Repository.Extension;
 
 namespace WatchList.Core.Repository
 {
-    public class WatchItemRepository(WatchCinemaDbContext db, ILogger<WatchItemRepository> logger) : IWatchItemRepository
+    public class WatchItemRepository(WatchCinemaDbContext db, ILogger<WatchItemRepository> logger)
+        : IWatchItemRepository
     {
         public PagedList<WatchItem> GetPage(ItemSearchRequest searchRequest)
         {
