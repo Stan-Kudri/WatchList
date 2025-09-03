@@ -6,15 +6,9 @@ using WatchList.WPF.Models;
 
 namespace WatchList.WPF.ViewModel.ItemsView
 {
-    public class EditCinemaViewModel : CinemaViewModel
+    public class EditCinemaViewModel(IMessageBox messageBox, WatchItemService watchItemService, WatchItemCreator watchItemCreator)
+        : CinemaViewModel(messageBox, watchItemService, watchItemCreator)
     {
-        public EditCinemaViewModel(IMessageBox messageBox,
-                                   WatchItemService watchItemService,
-                                   WatchItemCreator watchItemCreator)
-            : base(messageBox, watchItemService, watchItemCreator)
-        {
-        }
-
         public override void InitializeDefaultValue(WatchItem? watchItem)
         {
             _defaultWatchItem = watchItem ?? throw new ArgumentException("Error selecting item.");

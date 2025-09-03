@@ -6,7 +6,7 @@ namespace WatchList.Avalonia.Models
 {
     public partial class DisplayPagination : ObservableObject
     {
-        private PagedList<WatchItem> _pagedList;
+        private PagedList<WatchItem> _pagedList = null!;
 
         [ObservableProperty] private string _pageDisplayText = string.Empty;
 

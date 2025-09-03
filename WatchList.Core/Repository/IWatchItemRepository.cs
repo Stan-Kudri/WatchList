@@ -5,10 +5,10 @@ namespace WatchList.Core.Repository
 {
     public interface IWatchItemRepository
     {
-        public PagedList<WatchItem> GetPage(ItemSearchRequest searchRequest);
+        PagedList<WatchItem> GetPage(ItemSearchRequest searchRequest);
 
-        public void Add(WatchItem items);
+        void Add(WatchItem items);
 
-        public void Remove(Guid id);
+        void Remove(Guid id);
     }
 }

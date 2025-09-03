@@ -32,6 +32,7 @@ namespace WatchList.WPF.ViewModel
         }
 
         public IEnumerable<TypeCinemaModel> ListTypeLoadingCinema => TypeCinemaModel.GetItemsType;
+
         public IEnumerable<Grade> GradeLoadingCinema => Grade.List;
 
         [RelayCommand]

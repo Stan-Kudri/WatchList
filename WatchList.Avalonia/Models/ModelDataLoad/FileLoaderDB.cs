@@ -14,6 +14,7 @@ namespace WatchList.Avalonia.Models.ModelDataLoad
 {
     public class FileLoaderDB
     {
+        private const long MaxFileSizeBytes = 1 * 1024 * 1024; // 1 MB
         private const string MessageSelectSingleFile = "Please select one item to download.";
 
         private readonly DownloadDataService _downloadDataService;
@@ -40,7 +41,7 @@ namespace WatchList.Avalonia.Models.ModelDataLoad
                 }
 
                 // Limit the text file to 1MB so that the demo won't lag.
-                if ((await file.GetBasicPropertiesAsync()).Size <= 1024 * 1024 * 1)
+                if ((await file.GetBasicPropertiesAsync()).Size <= MaxFileSizeBytes)
                 {
                     var pathFile = file.Path.LocalPath;
                     var dbContext = new DbContextFactoryMigrator(pathFile).Create();

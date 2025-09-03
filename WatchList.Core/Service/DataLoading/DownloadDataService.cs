@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using WatchList.Core.Enums;
+using WatchList.Core.Exceptions;
 using WatchList.Core.Extension;
 using WatchList.Core.Model.Filter;
 using WatchList.Core.Model.Load;
@@ -13,33 +14,18 @@ using WatchList.Core.Service.DataLoading.Rules;
 
 namespace WatchList.Core.Service.DataLoading
 {
-    public class DownloadDataService
+    public class DownloadDataService(WatchItemRepository repository,
+                                     IMessageBox messageBox,
+                                     ILogger<DownloadDataService> logger,
+                                     ILogger<WatchItemRepository> loggerWatchItemRepository,
+                                     int numberOfItemPerPage = 500)
     {
-        private readonly WatchItemRepository _repository;
-        private readonly IMessageBox _messageBox;
-        private readonly ILogger<DownloadDataService> _loggerDownloadDataService;
-        private readonly ILogger<WatchItemRepository> _loggerWatchItemRepository;
-
-        public DownloadDataService(
-                                    WatchItemRepository repository,
-                                    IMessageBox messageBox,
-                                    ILogger<DownloadDataService> logger,
-                                    ILogger<WatchItemRepository> loggerWatchItemRepository,
-                                    int numberOfItemPerPage = 500)
-        {
-            _repository = repository;
-            _messageBox = messageBox;
-            _loggerDownloadDataService = logger;
-            _loggerWatchItemRepository = loggerWatchItemRepository;
-            NumberOfItemPerPage = numberOfItemPerPage;
-        }
-
-        public int NumberOfItemPerPage { get; set; }
+        public int NumberOfItemPerPage { get; set; } = numberOfItemPerPage;
 
         public async Task DownloadDataByDB(WatchCinemaDbContext dbContext, ILoadRulesConfig loadRuleConfig)
         {
-            var aggregateRules = loadRuleConfig.GetAggregateRules(_repository);
-            var repositoryDataDownload = new WatchItemRepository(dbContext, _loggerWatchItemRepository);
+            var aggregateRules = loadRuleConfig.GetAggregateRules(repository);
+            var repositoryDataDownload = new WatchItemRepository(dbContext, loggerWatchItemRepository);
             await Download(repositoryDataDownload, aggregateRules);
         }
 
@@ -56,7 +42,7 @@ namespace WatchList.Core.Service.DataLoading
                 var watchItemCollection = new WatchItemCollection(pagedList);
                 watchItemCollection = loadRule.Apply(watchItemCollection);
 
-                _loggerDownloadDataService.LogInformation("Load items according to selected rules");
+                logger.LogInformation("Load items according to selected rules");
                 AddItems(watchItemCollection);
                 await UpdateItems(watchItemCollection);
 
@@ -74,7 +60,7 @@ namespace WatchList.Core.Service.DataLoading
 
             foreach (var item in itemCollection.NewItems)
             {
-                _repository.Add(item);
+                repository.Add(item);
             }
         }
 
@@ -94,7 +80,7 @@ namespace WatchList.Core.Service.DataLoading
                     case QuestionResultEnum.Unknown:
                     case QuestionResultEnum.Yes:
                     case QuestionResultEnum.No:
-                        dialogResultReplaceItem = await _messageBox.ShowDataReplaceQuestion(item.Title);
+                        dialogResultReplaceItem = await messageBox.ShowDataReplaceQuestion(item.Title);
                         break;
                 }
 
@@ -103,11 +89,11 @@ namespace WatchList.Core.Service.DataLoading
                     if (itemCollection.IdDuplicateFromDatabase.TryGetValue(item.Id, out Guid value))
                     {
                         item.Id = value;
-                        await _repository.UpdateAsync(item);
+                        await repository.UpdateAsync(item);
                     }
                     else
                     {
-                        throw new ArgumentException("Element not found with id.");
+                        throw new BusinessLogicException("Element not found with id.");
                     }
                 }
             }

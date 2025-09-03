@@ -54,18 +54,15 @@ namespace WatchList.Core.Model.ItemCinema
 
         public bool Equals(WatchItem? other)
         {
-            if (other == null)
-            {
-                return false;
-            }
-
-            return Id == other.Id
-                    && Title == other.Title
-                    && Status == other.Status
-                    && Type == other.Type
-                    && Sequel == other.Sequel
-                    && Grade == other.Grade
-                    && Date == other.Date;
+            return other == null
+                   ? false
+                   : Id == other.Id
+                     && Title == other.Title
+                     && Status == other.Status
+                     && Type == other.Type
+                     && Sequel == other.Sequel
+                     && Grade == other.Grade
+                     && Date == other.Date;
         }
 
         public override string ToString()

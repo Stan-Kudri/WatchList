@@ -6,10 +6,6 @@ namespace WatchList.Avalonia.Models
 {
     public class WatchItemCreator
     {
-        public WatchItemCreator()
-        {
-        }
-
         public WatchItem CreateNonPlanned(string title, int sequel, StatusCinema status, TypeCinema type,
                                           DateTime? date = null, int? grade = null, Guid? id = null)
             => new WatchItem(title, sequel, status, type, id, date, grade);
