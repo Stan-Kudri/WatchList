@@ -4,9 +4,9 @@ namespace WatchList.MudBlazors.Model
 {
     public class PageModel : Page
     {
-        private const int FirstSizePage = 20;
+        private const int FirstSizePage = 15;
 
-        public int[] Items { get; set; } = [FirstSizePage, 40, 60];
+        public int[] Items { get; set; } = [FirstSizePage, 30, 60];
 
         public PageModel() : base(NumberStartPage, FirstSizePage)
         {
