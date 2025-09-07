@@ -14,22 +14,22 @@ This is a cross-platform application for keeping track of movies, TV series, ani
 - Avalonia (cross-platform UI for Desktop);
 - Blazor WebAssembly (MudBlazor) for working in the browser.
 
-### MudBlazor
+## Blazor
 <p align="center">
-  <img src="WatchList.MudBlazor.png" alt="MudBlazor" width="600"/>
+  <img src="WatchList.MudBlazor.png" alt="Blazor" width="600"/>
 </p>
 
-### WinForms
+## WinForms
 <p align="center">
   <img src="WatchList.WinForms.png" alt="WinForms" width="600"/>
 </p>
 
-### Avalonia
+## Avalonia
 <p align="center">
   <img src="WatchList.Avalonia.png" alt="Avalonia" width="600"/>
 </p>
 
-### WPF
+## WPF
 <p align="center">
   <img src="WatchList.WPF.png" alt="WPF" width="600"/>
 </p>
