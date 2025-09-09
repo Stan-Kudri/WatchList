@@ -14,6 +14,14 @@ This is a cross-platform application for keeping track of movies, TV series, ani
 - Avalonia (cross-platform UI for Desktop);
 - Blazor WebAssembly (MudBlazor) for working in the browser.
 
+## Import & Export Options:
+- Clear grade on imported items (They’ll default to "Planned");
+- Handle duplicates:
+    * Update existing records;
+    * Match titles with or without case sensitivity;
+- Choose which media types to load (One specific type or all types);
+- Filter by rating threshold (Import items with any grade or only those at or above a selected grade).
+
 ## Blazor
 <p align="center">
   <img src="WatchList.MudBlazor.png" alt="Blazor" width="600"/>
