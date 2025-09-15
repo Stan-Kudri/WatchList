@@ -3,10 +3,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:61949"
+      "applicationUrl": "http://localhost:5000"
     }
   },
   "profiles": {
+    "Electron.NET App": {
+      "commandName": "Executable",
+      "executablePath": "electronize",
+      "commandLineArgs": "start",
+      "workingDirectory": "."
+    },
+
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,

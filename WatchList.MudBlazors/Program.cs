@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using ElectronNET.API;
+using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Serilog;
 using Serilog.Core;
@@ -12,38 +13,40 @@ try
     Log.Information("Starting web application");
     var builder = WebApplication.CreateBuilder(args);
 
+    // Electron.NET
+    builder.WebHost.UseElectron(args);
+
     StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
-
-    // Add services to the container.
     builder.AddAppService();
-
     builder.WebHost.UseDefaultServiceProvider(e =>
     {
         e.ValidateScopes = true;
         e.ValidateOnBuild = true;
     });
-
     builder.Host.UseSerilog();
+    builder.Services.AddElectron();
+
     var app = builder.Build();
 
-    // Configure the HTTP request pipeline.
+    // Конфигурация HTTP-конвейера
     if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }
-
     app.UseHttpsRedirection();
-
     app.UseStaticFiles();
-
     app.UseRouting();
-
     app.MapBlazorHub();
     app.MapFallbackToPage("/_Host");
 
-    app.Run();
+    await app.StartAsync();
+    if (HybridSupport.IsElectronActive)
+    {
+        await Electron.WindowManager.CreateWindowAsync();
+    }
+
+    await app.WaitForShutdownAsync();
 }
 catch (Exception ex)
 {
